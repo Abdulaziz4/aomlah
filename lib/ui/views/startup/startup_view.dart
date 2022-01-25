@@ -9,6 +9,7 @@ class StartupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StartupViewModel>.nonReactive(
         viewModelBuilder: () => StartupViewModel(),
+        onModelReady: (viewmodel) => viewmodel.initApp(),
         builder: (context, viewmodel, _) {
           return Scaffold(
             body: Center(
