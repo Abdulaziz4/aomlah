@@ -13,6 +13,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: # Add this line
+    sdk: flutter
   firebase_core: ^1.11.0
   firebase_auth: ^3.3.5
   stacked: ^2.2.8
