@@ -1,6 +1,5 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
-import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/custom_theme.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,5 @@
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
+import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,6 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
     // Register all views
     MaterialRoute(page: StartupView, initial: true),
     MaterialRoute(page: NavigationView),
+    MaterialRoute(page: ProfileView),
   ],
   dependencies: [
     // Register all services and deps.

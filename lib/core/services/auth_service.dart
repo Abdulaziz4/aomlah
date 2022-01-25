@@ -90,6 +90,7 @@ class AuthService {
         email: email,
         password: password,
       );
+
       final success = authRes.user != null;
       // if (success) {
       //   await initUserAndToken();
