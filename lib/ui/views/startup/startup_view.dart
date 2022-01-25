@@ -13,10 +13,7 @@ class StartupView extends StatelessWidget {
         builder: (context, viewmodel, _) {
           return Scaffold(
             body: Center(
-              child: Text(
-                "Aomlah",
-                style: TextStyle(fontSize: 20),
-              ),
+              child: CircularProgressIndicator(),
             ),
           );
         });

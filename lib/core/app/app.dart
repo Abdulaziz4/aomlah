@@ -1,3 +1,4 @@
+import 'package:aomlah/ui/views/navigation/navigation_view.dart';
 import 'package:aomlah/ui/views/offers_discovery/offers_discovery_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -6,7 +7,7 @@ import 'package:stacked/stacked_annotations.dart';
   routes: [
     // Register all views
     MaterialRoute(page: StartupView, initial: true),
-    MaterialRoute(page: OffersDiscoveryView),
+    MaterialRoute(page: NavigationView),
   ],
   dependencies: [
     // Register all services and deps.

@@ -10,15 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
-import '../../ui/views/offers_discovery/offers_discovery_view.dart';
+import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startupView = '/';
-  static const String offersDiscoveryView = '/offers-discovery-view';
+  static const String navigationView = '/navigation-view';
   static const all = <String>{
     startupView,
-    offersDiscoveryView,
+    navigationView,
   };
 }
 
@@ -27,7 +27,7 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
-    RouteDef(Routes.offersDiscoveryView, page: OffersDiscoveryView),
+    RouteDef(Routes.navigationView, page: NavigationView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -38,9 +38,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    OffersDiscoveryView: (data) {
+    NavigationView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const OffersDiscoveryView(),
+        builder: (context) => const NavigationView(),
         settings: data,
       );
     },

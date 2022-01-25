@@ -1,3 +1,7 @@
+import 'package:aomlah/ui/views/market/market_view.dart';
+import 'package:aomlah/ui/views/offers_discovery/offers_discovery_view.dart';
+import 'package:aomlah/ui/views/prediction/prediction_view.dart';
+import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class NavigationView extends StatefulWidget {
@@ -8,7 +12,12 @@ class NavigationView extends StatefulWidget {
 }
 
 class _NavigationViewState extends State<NavigationView> {
-  final List<Widget> _pagesList = [];
+  final List<Widget> _pagesList = [
+    OffersDiscoveryView(),
+    PredictionView(),
+    MarketView(),
+    ProfileView(),
+  ];
 
   int _selectedPage = 0; // current page index
 
