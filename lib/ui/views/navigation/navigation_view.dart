@@ -1,8 +1,10 @@
+import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/views/market/market_view.dart';
 import 'package:aomlah/ui/views/offers_discovery/offers_discovery_view.dart';
 import 'package:aomlah/ui/views/prediction/prediction_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class NavigationView extends StatefulWidget {
   const NavigationView({Key? key}) : super(key: key);
@@ -30,28 +32,27 @@ class _NavigationViewState extends State<NavigationView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
+        backgroundColor: Constants.black2dp,
         iconSize: 28,
-        items: const <BottomNavigationBarItem>[
+        elevation: 5,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
+            icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
+            label: 'التداول',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.movie_creation_outlined),
-            label: '',
+            icon: SvgPicture.asset("assets/icons/prediction-icon.svg"),
+            label: 'التوقعات',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group_outlined),
-            label: '',
+            icon: SvgPicture.asset("assets/icons/markets-icon.svg"),
+            label: 'الاسواق',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: '',
+            icon: SvgPicture.asset("assets/icons/profile-icon.svg"),
+            label: 'الملف الشخصي',
           ),
         ],
         currentIndex: _selectedPage,

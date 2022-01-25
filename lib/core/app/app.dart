@@ -1,7 +1,7 @@
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
-import 'package:aomlah/ui/views/offers_discovery/offers_discovery_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 @StackedApp(
   routes: [
@@ -11,6 +11,7 @@ import 'package:stacked/stacked_annotations.dart';
   ],
   dependencies: [
     // Register all services and deps.
+    LazySingleton(classType: NavigationService),
   ],
 )
 class App {
