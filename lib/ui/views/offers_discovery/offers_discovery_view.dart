@@ -6,9 +6,17 @@ class OffersDiscoveryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Offers ....."),
-      ),
+      body: const OfferBody()
+    );
+  }
+}
+
+class OfferBody extends StatelessWidget {
+  const OfferBody({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text("Offers ....."),
     );
   }
 }
