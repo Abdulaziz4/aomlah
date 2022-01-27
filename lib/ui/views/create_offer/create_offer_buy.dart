@@ -16,12 +16,8 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
   @override
   Widget build(BuildContext context) {
-    if (cListVal == null) {
-      cListVal = cryptoList.first as String;
-    };
-    if (currencyList == null) {
-      currListVal = cryptoList.first as String;
-    };
+    cListVal ??= cryptoList.first;
+    currListVal ??= currencyList.first;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
