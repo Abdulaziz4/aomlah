@@ -38,7 +38,7 @@ class ProfileView extends StatelessWidget {
               ),
               Positioned(
                 child: SvgPicture.asset("assets/icons/verifyBadge.svg"),
-                bottom: 100,
+                bottom: 120,
                 left: 0,
               ),
             ],
