@@ -12,6 +12,7 @@ class CreateOfferView extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Constants.black3dp,
             title: Text(
               'انشاء اعلان',
               style: TextStyle(
