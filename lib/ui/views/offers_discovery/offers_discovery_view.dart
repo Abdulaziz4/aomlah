@@ -8,19 +8,35 @@ class OffersDiscoveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        // appBar: AppBar(
+        //   actions: [
+        //     IconButton(
+        //       onPressed: () {
+        //         locator<NavigationService>().navigateTo(Routes.createOfferView);
+        //       },
+        //       icon: Icon(Icons.add),
+        //     ),
+        //   ],
+        //   automaticallyImplyLeading: false,
+        // ),
         appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                locator<NavigationService>().navigateTo(Routes.createOfferView);
-              },
-              icon: Icon(Icons.add),
-            ),
-          ],
+          title: Text("التداول"),
           automaticallyImplyLeading: false,
+          bottom: TabBar(
+            unselectedLabelColor: Colors.grey,
+            labelStyle: Theme.of(context).textTheme.headline4,
+            tabs: const [
+              Tab(text: "شراء"),
+              Tab(text: "بيع"),
+            ],
+          ),
         ),
-        body: const OfferBody());
+        body: const OfferBody(),
+      ),
+    );
   }
 }
 
