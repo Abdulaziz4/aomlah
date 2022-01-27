@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
+import 'package:aomlah/ui/views/offers_discovery/components/offer_card.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -8,8 +9,11 @@ class OffersDiscoveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
         appBar: AppBar(
+          title: Text("التداول"),
           actions: [
             IconButton(
               onPressed: () {
@@ -19,17 +23,52 @@ class OffersDiscoveryView extends StatelessWidget {
             ),
           ],
           automaticallyImplyLeading: false,
+          bottom: TabBar(
+            unselectedLabelColor: Colors.grey,
+            labelStyle: Theme.of(context).textTheme.headline4,
+            tabs: const [
+              Tab(text: "شراء"),
+              Tab(text: "بيع"),
+            ],
+          ),
         ),
-        body: const OfferBody());
-  }
-}
-
-class OfferBody extends StatelessWidget {
-  const OfferBody({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text("Offers ....."),
+        body: TabBarView(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: const [
+                  OfferCard(),
+                  OfferCard(),
+                  OfferCard(),
+                  OfferCard(),
+                  OfferCard(),
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: const [
+                  OfferCard(
+                    isBuy: false,
+                  ),
+                  OfferCard(
+                    isBuy: false,
+                  ),
+                  OfferCard(
+                    isBuy: false,
+                  ),
+                  OfferCard(
+                    isBuy: false,
+                  ),
+                  OfferCard(
+                    isBuy: false,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

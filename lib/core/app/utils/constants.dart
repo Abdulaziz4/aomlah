@@ -37,4 +37,31 @@ class Constants {
 
   /// The TextStyle for Roboto font in the app.
   static TextStyle robotoFont = GoogleFonts.cairo();
+
+  // Shadow
+  static List<BoxShadow> shadow = [
+    BoxShadow(
+      blurRadius: 4,
+      spreadRadius: 2,
+      offset: Offset(0, 4),
+      color: Colors.black.withOpacity(0.1),
+    )
+  ];
+
+  static TextStyle veryLargeText = GoogleFonts.cairo().copyWith(
+    fontSize: 24,
+  );
+
+  static TextStyle largeText = GoogleFonts.cairo().copyWith(
+    fontSize: 22,
+  );
+  static TextStyle mediumText = GoogleFonts.cairo().copyWith(
+    fontSize: 19,
+  );
+  static TextStyle smallText = GoogleFonts.cairo().copyWith(
+    fontSize: 17,
+  );
+  static TextStyle verySmallText = GoogleFonts.cairo().copyWith(
+    fontSize: 15,
+  );
 }
