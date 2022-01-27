@@ -1,5 +1,4 @@
 import 'package:aomlah/core/app/app.router.dart';
-import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
