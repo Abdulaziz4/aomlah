@@ -24,6 +24,13 @@ class CustomTheme {
     ),
     scaffoldBackgroundColor: Constants.black1dp,
     fontFamily: Constants.robotoFont.fontFamily,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Constants.black1dp,
+      titleTextStyle: Constants.robotoFont.copyWith(
+        fontSize: 24,
+        color: Constants.darkBlue,
+      ),
+    ),
     textTheme: TextTheme(
       headline1: Constants.robotoFont.copyWith(
         fontWeight: FontWeight.bold,
