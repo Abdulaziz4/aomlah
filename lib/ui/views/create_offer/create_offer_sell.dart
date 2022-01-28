@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 
+import '../../shared/custom_button.dart';
+
 class CreateOfferSell extends StatefulWidget {
   const CreateOfferSell({Key? key}) : super(key: key);
 
@@ -43,7 +45,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                    color: Constants.black3dp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: Constants.black3dp,
+                    ),
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
                     child:
@@ -51,7 +56,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
               ),
               Expanded(
                 child: Container(
-                    color: Constants.black3dp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: Constants.black3dp,
+                    ),
                     margin: EdgeInsets.fromLTRB(20, 0, 10, 10),
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
                     child:
@@ -63,6 +71,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ///Price Margin
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
+
             children: const <Widget>[
               SizedBox(width: 20),
               Text(
@@ -117,7 +126,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ),
           ///Amount of Crypto text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
 
@@ -157,7 +169,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ),
           ///min tradeamount text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               children: [
@@ -182,19 +197,28 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           
           ///Bank account selection
           Container(
-            color: Constants.black3dp,
+            // color: Constants.black3dp,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
             child: Column(
               children: [
                 Row(
+                  
                   children:  [
                     SizedBox(width: 15,),
                     Expanded(child: Text('الحسابات البنكية')),
-                    Expanded(child: TextButton(
-                        child: Text('اضف'),
-                      onPressed: (){
-                      },
-                      style: TextButton.styleFrom(backgroundColor: Constants.darkBlue,) ,
+                    Expanded(child: Container(
+                      margin: EdgeInsets.fromLTRB(10,5,0,0),
+                      child: CustomButton(
+
+                        onPressed: (){
+                        },
+                         text: 'اضف' ,
+                        
+                      ),
                     )
                     )
                   ],
@@ -238,7 +262,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ),
           ///Trade Terms and Conditions text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

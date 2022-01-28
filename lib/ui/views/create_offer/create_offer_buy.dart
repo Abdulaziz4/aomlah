@@ -48,7 +48,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                    color: Constants.black3dp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: Constants.black3dp,
+                    ),
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
                     child:
@@ -56,7 +59,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ),
               Expanded(
                 child: Container(
-                    color: Constants.black3dp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: Constants.black3dp,
+                    ),
                     margin: EdgeInsets.fromLTRB(20, 0, 10, 10),
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
                     child:
@@ -122,7 +128,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
           ///Amount of Crypto text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
 
@@ -164,7 +173,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
           ///min trade amount text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               children: [
@@ -202,7 +214,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
           ///Trade Terms and Conditions text form
           Container(
-            color: Constants.black3dp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Constants.black3dp,
+            ),
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
