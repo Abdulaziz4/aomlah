@@ -13,7 +13,16 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   String? cListVal;
   final currencyList = ['ر.س', 'USD'];
   String? currListVal;
+  // double cryptoAmount=0.0;
+  // double minTrade=0.0;
+  // String terms='';
   int margin = 100;
+
+  TextEditingController _cryptoAmountController = TextEditingController();
+  TextEditingController _minTradeController = TextEditingController();
+  TextEditingController _termsController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
         children: <Widget>[
 
           ///Crypto and Currency type
-
           Row(
             children: const <Widget>[
               SizedBox(
@@ -69,6 +77,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ),
             ],
           ),
+          ///Price Margin value
           Card(
             color: Constants.black3dp,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
@@ -99,7 +108,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
             ),
           ),
 
-          ///Amount of Crypto to buy
+          ///Amount of Crypto
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const <Widget>[
@@ -111,6 +120,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ),
             ],
           ),
+          ///Amount of Crypto text form
           Container(
             color: Constants.black3dp,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
@@ -126,13 +136,15 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ),
                 Expanded(
                   flex: 4,
-                  child: TextField(
-
+                  child: TextFormField(
+                    controller: _cryptoAmountController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 0),
                         hintText: 'ادخل الكمية الاجمالية',
                         border: InputBorder.none),
                     keyboardType: TextInputType.number,
+
+                    // onChanged: (value1)=> setState(() => this.cryptoAmount=value1 as double ),
                   ),),
               ],
             ),
@@ -150,6 +162,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ),
             ],
           ),
+          ///min trade amount text form
           Container(
             color: Constants.black3dp,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
@@ -163,11 +176,13 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ),
                 Expanded(
                   flex: 4,
-                  child: TextField(
+                  child: TextFormField(
+                    controller: _minTradeController,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 0),
                         hintText: 'ادخل الحد الادنى', border: InputBorder.none),
                     keyboardType: TextInputType.number,
+                    // onChanged: (value)=> setState(() => this.minTrade=value as double ),
                   ),),
               ],
             ),
@@ -185,28 +200,61 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ),
             ],
           ),
+          ///Trade Terms and Conditions text form
           Container(
             color: Constants.black3dp,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
 
-              children: const <Widget>[
+              children:  <Widget>[
                 SizedBox(width: 20,),
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
+                    controller: _termsController,
 
                     maxLines: 3,
                     decoration: InputDecoration(
                         hintText: 'ادخل الشروط والاحكام',
                         border: InputBorder.none),
                     keyboardType: TextInputType.text,
+                    // onChanged: (value)=> setState(() => this.terms=value),
                   ),
                 ),
               ],
             ),
           ),
 
+          ///Submit Form
+          Container(
+            color: Constants.primaryColor,
+            child: Row(
+
+              children: [
+                Expanded(
+                  child: TextButton(
+
+
+                      onPressed: (){
+                        print('Crypro type: '+ cListVal.toString());
+                        print('Currency Type: '+ currListVal.toString());
+                        print('price margin: '+ margin.toString());
+                        print('Total Crypto: '+ _cryptoAmountController.text);
+                        print('Min Trade: '+ _minTradeController.text);
+                        print('Terms: '+ _termsController.text);
+
+
+                        // print('Total Crypto: '+ cryptoAmount.toString());
+                        // print('Min Trade: '+ minTrade.toString());
+                        // print('Terms: '+ terms);
+
+                      },
+                      child: Text('submit',style: TextStyle(color: Colors.white),),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
