@@ -13,142 +13,223 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   String? cListVal;
   final currencyList = ['ر.س', 'USD'];
   String? currListVal;
+  int margin = 100;
 
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
     currListVal ??= currencyList.first;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        ///Crypto and Currency type
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   children: <Widget>[
-        //     SizedBox(
-        //       width: 20,
-        //     ),
-        //     Column(
-        //       mainAxisAlignment: MainAxisAlignment.start,
-        //       children: [
-        //         Text('عملة')
-        //         // DropdownButton(),
-        //       ],
-        //     )
-        //   ],
-        // ),
-        Row(
-          children: [
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(child: Text('عملة')),
-            Expanded(child: Text('مقابل العملة التقليدية'))
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                  color: Constants.black3dp,
-                  margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                  padding: EdgeInsets.all(16),
-                  child: DropdownButtonHideUnderline(child: menuCryptoButton())),
-            ),
-            Expanded(
-              child: Container(
-                  color: Constants.black3dp,
-                  margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                  padding: EdgeInsets.all(16),
-                  child: DropdownButtonHideUnderline(child: menuCurrencyButton())),
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
 
-        // Row(
-        //   children:  <Widget>[
-        //     Column(
-        //       children: [
-        //
-        //       ],
-        //     ),
-        //     Expanded(child: TextButton(onPressed: null,child: Icon(Icons.email),)),
-        //     // Expanded(child: TextButton(onPressed: null,child: Icon(Icons.email),))
-        //
-        //   ],
-        // ),
+          ///Crypto and Currency type
 
-        ///Amount of Crypto to buy
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const <Widget>[
-            SizedBox(width: 20),
-            Text(
-              'الكمية الاجمالية',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.right,
-            ),
-          ],
-        ),
-        Card(
-          color: Constants.black3dp,
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: ListTile(
-            // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
-            leading: Text(cListVal as String),
-            title: TextField(
-              decoration: InputDecoration(
-                  hintText: 'ادخل الكمية الاجمالية', border: InputBorder.none),
-              keyboardType: TextInputType.number,
+          Row(
+            children: const <Widget>[
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(child: Text('عملة')),
+              Expanded(child: Text('مقابل العملة التقليدية'))
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    color: Constants.black3dp,
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
+                    child:
+                    DropdownButtonHideUnderline(child: menuCryptoButton())),
+              ),
+              Expanded(
+                child: Container(
+                    color: Constants.black3dp,
+                    margin: EdgeInsets.fromLTRB(20, 0, 10, 10),
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
+                    child:
+                    DropdownButtonHideUnderline(child: menuCurrencyButton())),
+              ),
+            ],
+          ),
+
+          ///Price Margin
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const <Widget>[
+              SizedBox(width: 20),
+              Text(
+                'نسبة هامش السعر ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          Card(
+            color: Constants.black3dp,
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: ListTile(
+              // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
+              leading: TextButton(
+                  onPressed: () {
+                    if (margin < 200) {
+                      setState(() {
+                        margin++;
+                      });
+                    };
+                  },
+                  child: Text('+')
+              ),
+
+              title: Center(child: Text(margin.toString() + "%")),
+              trailing: TextButton(
+                  onPressed: () {
+                    if (margin > 50) {
+                      setState(() {
+                        margin--;
+                      });
+                    };
+                  },
+                  child: Text('-')
+              ),
             ),
           ),
-        ),
-        // Text(''),
 
-        ///min trade amount
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const <Widget>[
-            SizedBox(width: 20),
-            Text(
-              'الحد الادنى للتبادل',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.right,
-            ),
-          ],
-        ),
-        Card(
-          color: Constants.black3dp,
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: ListTile(
-            // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
-            leading: Text(currListVal as String),
-            title: TextField(
-              decoration: InputDecoration(
-                  hintText: 'ادخل الحد الادنى', border: InputBorder.none),
-              keyboardType: TextInputType.number,
+          ///Amount of Crypto to buy
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const <Widget>[
+              SizedBox(width: 20),
+              Text(
+                'الكمية الاجمالية',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          Container(
+            color: Constants.black3dp,
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Row(
+
+              children: [
+                Expanded(child:
+                Text(
+
+                  cListVal as String
+                  , textAlign: TextAlign.center,),
+                  flex: 1,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: TextField(
+
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 0),
+                        hintText: 'ادخل الكمية الاجمالية',
+                        border: InputBorder.none),
+                    keyboardType: TextInputType.number,
+                  ),),
+              ],
             ),
           ),
-        ),
-      ],
+
+          ///min trade amount
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const <Widget>[
+              SizedBox(width: 20),
+              Text(
+                'الحد الادنى للتبادل',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          Container(
+            color: Constants.black3dp,
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Row(
+              children: [
+                Expanded(child:
+                Text(
+                  currListVal as String
+                  , textAlign: TextAlign.center,),
+                  flex: 1,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: TextField(
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 0),
+                        hintText: 'ادخل الحد الادنى', border: InputBorder.none),
+                    keyboardType: TextInputType.number,
+                  ),),
+              ],
+            ),
+          ),
+
+          ///Trade Terms and Conditions
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const <Widget>[
+              SizedBox(width: 20),
+              Text(
+                'الشروط والاحكام',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          Container(
+            color: Constants.black3dp,
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+
+              children: const <Widget>[
+                SizedBox(width: 20,),
+                Expanded(
+                  child: TextField(
+
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                        hintText: 'ادخل الشروط والاحكام',
+                        border: InputBorder.none),
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 
-  DropdownButton menuCryptoButton() => DropdownButton(
+  DropdownButton menuCryptoButton() =>
+      DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
         onChanged: (value) => setState(() => this.cListVal = value as String?),
         value: cListVal,
         // isExpanded: true,
       );
-  DropdownButton menuCurrencyButton() => DropdownButton(
-    items: currencyList.map(buildCryptoItems).toList(),
-    onChanged: (value) => setState(() => this.currListVal = value as String?),
-    value: currListVal,
-    // isExpanded: true,
-  );
 
-  DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(
+  DropdownButton menuCurrencyButton() =>
+      DropdownButton(
+        items: currencyList.map(buildCryptoItems).toList(),
+        onChanged: (value) =>
+            setState(() => this.currListVal = value as String?),
+        value: currListVal,
+      );
+
+  DropdownMenuItem<String> buildCryptoItems(String item) =>
+      DropdownMenuItem(
         value: item,
         child: Text(
           item,
@@ -157,11 +238,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
         ),
       );
-}
-// class _menuCrypto extends State<CreateOfferBuy>{
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text('data');
-//   }
 
-// }
+
+}
+
