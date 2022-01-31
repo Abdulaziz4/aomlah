@@ -1,8 +1,11 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/custom_theme.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 void main() {
@@ -15,10 +18,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ArabicMaterialApp(
-      theme: CustomTheme.mainTheme,
-      navigatorKey: StackedService.navigatorKey,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+    return StreamProvider<AomlahUser>(
+      initialData: AomlahUser.anonymous(),
+      create: (_) => locator<UserService>().userController.stream,
+      child: ArabicMaterialApp(
+        theme: CustomTheme.mainTheme,
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
+      ),
     );
   }
 }
