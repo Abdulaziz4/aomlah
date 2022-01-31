@@ -16,11 +16,12 @@ import 'package:stacked_services/stacked_services.dart';
   ],
   dependencies: [
     // Register all services and deps.
+    LazySingleton<NavigationService>(classType: NavigationService),
+
     Presolve(
       classType: SupabaseService,
       presolveUsing: SupabaseService.getInstance,
     ),
-    LazySingleton<NavigationService>(classType: NavigationService),
   ],
 )
 class App {

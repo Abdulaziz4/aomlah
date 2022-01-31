@@ -21,8 +21,7 @@ Future setupLocator(
       environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
+  locator.registerLazySingleton(() => NavigationService());
   final supabaseService = await SupabaseService.getInstance();
   locator.registerSingleton(supabaseService);
-
-  locator.registerLazySingleton(() => NavigationService());
 }
