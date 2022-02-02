@@ -5,7 +5,6 @@ import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../shared/rounded_button.dart';
 
 class VerifyAccountPromotionView extends StatelessWidget {
   const VerifyAccountPromotionView({Key? key}) : super(key: key);

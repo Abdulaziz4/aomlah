@@ -4,7 +4,7 @@ import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
 import 'package:aomlah/ui/views/auth/login/login_viewmodel.dart';
-import 'package:aomlah/ui/views/auth/reset_password/reset_screen.dart';
+import 'package:aomlah/ui/views/auth/reset_password/reset_password_screen.dart';
 import 'package:aomlah/ui/views/auth/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
