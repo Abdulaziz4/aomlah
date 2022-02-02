@@ -1,12 +1,11 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/rounded_button.dart';
 import '../Login/login_screen.dart';
 import '../Signup/signup_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+class WelcomeView extends StatelessWidget {
+  const WelcomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
