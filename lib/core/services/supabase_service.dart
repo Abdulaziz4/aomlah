@@ -11,9 +11,9 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> initlizeSupabase() async {
     await Supabase.initialize(
-      url: 'https://mpkaipwsgfzlxhpcuvrn.supabase.co',
+      url: 'https://ovnvhtboyihfvpujfynw.supabase.co',
       anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MTE2MjYwNywiZXhwIjoxOTU2NzM4NjA3fQ.Q8xH88Z122zm93dKqDifCHfwJTG69t7X2dDsKxplgkg',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzYzNjg5NCwiZXhwIjoxOTU5MjEyODk0fQ.Fgqh3Fs8ovWy0BgSd1FokQimrMNtYPa4_-uPh7B9FtY',
       debug: true,
     );
     supabase = Supabase.instance.client;
