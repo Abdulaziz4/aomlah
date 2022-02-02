@@ -1,3 +1,4 @@
+import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
@@ -14,21 +15,20 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        Text(
+          login ? " لديك حساب؟ " : "ليس لديك حساب؟ ",
+          style: Constants.verySmallText.copyWith(color: Colors.white),
+        ),
         GestureDetector(
           onTap: press,
           child: Text(
             login ? " تسجيل الدخول" : " إنشاء حساب ",
-            style: TextStyle(
-              color: Colors.teal,
+            style: Constants.verySmallText.copyWith(
+              color: Constants.primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Text(
-          login ? " لديك حساب؟ " : "ليس لديك حساب؟ ",
-          style: TextStyle(color: Colors.white),
-        ),
-
       ],
     );
   }

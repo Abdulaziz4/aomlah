@@ -13,7 +13,6 @@ class ResetScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF00101F),
-
       body: Container(
         width: double.infinity,
         height: size.height,
@@ -29,10 +28,11 @@ class ResetScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     alignment: Alignment.topRight,
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_forward_ios,
+                    icon: Icon(
+                      Icons.arrow_forward_ios,
                       size: 30,
                       color: Colors.white,
                     ),
@@ -40,8 +40,6 @@ class ResetScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -64,11 +62,10 @@ class ResetScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
+              children: const <Widget>[
                 Text(
                   'سيتم إرسال رابط على الإيميل المدخل يمكنك من إعادة تعيين كلمة السر',
                   style: TextStyle(color: Colors.white),
@@ -84,7 +81,7 @@ class ResetScreen extends StatelessWidget {
                 ),
                 RoundedInputField(
                   hintText: "ادخل البريد الالكتروني",
-                  onChanged: (value) {},
+                  label: "",
                 ),
               ],
             ),
@@ -95,11 +92,9 @@ class ResetScreen extends StatelessWidget {
               press: () {},
             ),
             SizedBox(height: 20),
-
           ],
         ),
       ),
     );
   }
 }
-

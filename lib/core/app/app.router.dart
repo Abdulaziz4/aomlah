@@ -8,8 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
+import '../../ui/views/auth/Welcome/welcome_screen.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
@@ -20,11 +20,13 @@ class Routes {
   static const String navigationView = '/navigation-view';
   static const String profileView = '/profile-view';
   static const String createOfferView = '/create-offer-view';
+  static const String welcomeScreen = '/welcome-screen';
   static const all = <String>{
     startupView,
     navigationView,
     profileView,
     createOfferView,
+    welcomeScreen,
   };
 }
 
@@ -36,6 +38,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.navigationView, page: NavigationView),
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.createOfferView, page: CreateOfferView),
+    RouteDef(Routes.welcomeScreen, page: WelcomeScreen),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -61,6 +64,12 @@ class StackedRouter extends RouterBase {
     CreateOfferView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const CreateOfferView(),
+        settings: data,
+      );
+    },
+    WelcomeScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => WelcomeScreen(),
         settings: data,
       );
     },

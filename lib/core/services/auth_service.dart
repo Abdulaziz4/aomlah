@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/auth_exception.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
-import 'package:stacked_services/stacked_services.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
   final _logger = getLogger("AuthService");
@@ -22,13 +22,12 @@ class AuthService {
   Future<void> initUser() async {
     _logger.i("initUserAndToken");
     try {
-      // if (isUserLoggedIn()) {
-      //   final user = await _supabaseService.fetchUserById(currentUser!.id);
-      //   _userService.updateUser(user);
-      // } else {
-      //   _userService.updateUser(DarbUser.anonymous());
-      // }
-
+      if (isUserLoggedIn()) {
+        // final user = await _supabaseService.fetchUserById(currentUser!.id);
+        // _userService.updateUser(user);
+      } else {
+        // _userService.updateUser(DarbUser.anonymous());
+      }
     } catch (e) {
       _logger.e("Initlizing user failed :" + e.toString());
       // _dialogService.showCustomDialog(

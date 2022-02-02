@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 // الكلاس هـذا متعلق بالازرار والكلام اللي فيها والستايل المتعلق بها
 class RoundedButton extends StatelessWidget {
   static const kPrimaryColor = Color(0xFF169c94);
@@ -18,7 +17,6 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       width: 216,
@@ -39,13 +37,17 @@ class RoundedButton extends StatelessWidget {
     return ElevatedButton(
       child: Text(
         text,
-        style: TextStyle(color: textColor, ),
+        style: TextStyle(
+          color: textColor,
+        ),
       ),
       onPressed: press,
       style: ElevatedButton.styleFrom(
-        alignment: Alignment.center,
+          alignment: Alignment.center,
           primary: color,
-          padding: EdgeInsets.symmetric(horizontal: 40, ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 40,
+          ),
           textStyle: TextStyle(
               color: textColor, fontSize: 14, fontWeight: FontWeight.w500)),
     );
