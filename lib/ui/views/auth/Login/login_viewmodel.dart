@@ -6,16 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class SignupViewModel extends BaseViewModel {
+class LoginViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
+
   final formKey = GlobalKey<FormState>();
 
-  String name = "";
   String email = "";
   String password = "";
 
   String? errorMessage;
+
   Future<void> submit() async {
     errorMessage = null;
     notifyListeners();
@@ -23,21 +24,15 @@ class SignupViewModel extends BaseViewModel {
     if (!isValid) {
       return;
     }
-    formKey.currentState!.save();
-
     try {
       setBusy(true);
-
-      await _authService.signUpWithEmail(
-        email: email,
-        password: password,
-        name: name,
-      );
-      _navService.navigateTo(Routes.verifyAccountPromotionView);
+      formKey.currentState!.save();
+      await _authService.loginWithEmail(email: email, password: password);
+      _navService.navigateTo(Routes.navigationView);
     } on AuthException catch (e) {
       errorMessage = e.message;
     } catch (error) {
-      errorMessage = "حدث خطأ";
+      errorMessage = "جدث خطأ";
     } finally {
       setBusy(false);
     }

@@ -15,7 +15,7 @@ class StartupViewModel extends BaseViewModel {
     await setupLocator();
     final _navService = locator<NavigationService>();
     final _authService = locator<AuthService>();
-    _navService.navigateTo(Routes.verifyAccountPromotionView);
+    _navService.navigateTo(Routes.welcomeView);
     // if (_authService.isUserLoggedIn()) {
     //   _authService.initUser();
     //   _navService.navigateTo(Routes.navigationView);

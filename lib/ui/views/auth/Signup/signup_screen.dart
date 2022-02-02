@@ -134,6 +134,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                       ),
                                     ],
                                   ),
+                                  if (viewmodel.errorMessage != null)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15.0),
+                                      child: Text(
+                                        viewmodel.errorMessage ?? "",
+                                        style: Constants.verySmallText.copyWith(
+                                          color: Constants.redColor,
+                                        ),
+                                      ),
+                                    ),
                                   CustomButton(
                                     text: "إنشاء حساب",
                                     color: Color(0xFF16A79E),

@@ -59,7 +59,6 @@ class AuthService {
   }) async {
     _logger.i("signUpWithEmail | email=$email , password=$password");
     try {
-      Supabase.instance.client.auth;
       final authRes = await _supabaseAuth.signUp(
         email,
         password,
@@ -76,7 +75,7 @@ class AuthService {
       }
     } on AuthException catch (exp) {
       _logger.e(
-          'Signup Failed with error code: ${exp.code} , Message:${exp.message} ');
+          'Signup Failed with AuthException: ${exp.code} , Message:${exp.message} ');
       rethrow;
     } catch (exp) {
       _logger.e('Signup Failed with error code: $exp , Message: $exp');
