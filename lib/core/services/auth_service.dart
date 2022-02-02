@@ -53,6 +53,7 @@ class AuthService {
 
   // Creates a new user
   Future<void> signUpWithEmail({
+    required String name,
     required String email,
     required String password,
   }) async {

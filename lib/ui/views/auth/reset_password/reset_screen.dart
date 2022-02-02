@@ -6,7 +6,7 @@ import '../../../shared/rounded_input_field.dart';
 import '../../../shared/rounded_password_field.dart';
 import '../Login/login_screen.dart';
 
-class ResetScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

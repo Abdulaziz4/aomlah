@@ -4,7 +4,7 @@ import '../../../shared/already_have_an_account_acheck.dart';
 import '../../../shared/rounded_button.dart';
 import '../../../shared/rounded_input_field.dart';
 import '../../../shared/rounded_password_field.dart';
-import '../ResetPass/reset_screen.dart';
+import '../reset_password/reset_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return ResetScreen();
+                      return ResetPasswordScreen();
                     },
                   ),
                 );
