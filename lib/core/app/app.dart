@@ -1,3 +1,4 @@
+import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
@@ -15,7 +16,12 @@ import 'package:stacked_services/stacked_services.dart';
   ],
   dependencies: [
     // Register all services and deps.
-    LazySingleton(classType: NavigationService),
+    LazySingleton<NavigationService>(classType: NavigationService),
+
+    Presolve(
+      classType: SupabaseService,
+      presolveUsing: SupabaseService.getInstance,
+    ),
   ],
 )
 class App {
