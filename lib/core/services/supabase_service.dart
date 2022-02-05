@@ -1,3 +1,5 @@
+import 'package:aomlah/core/enums/aomlah_tables.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,4 +20,12 @@ class SupabaseService extends AbstractSupabase {
     );
     supabase = Supabase.instance.client;
   }
+
+  Future<List<Offer>> getAllOffer() async {
+    return get(AomlahTable.offers, Offer.fromJson);
+  }
+
+  // Future<bool> createOffer(Offer offer) async {
+  //   upsert(AomlahTable.offers, offer.toJson());
+  // }
 }
