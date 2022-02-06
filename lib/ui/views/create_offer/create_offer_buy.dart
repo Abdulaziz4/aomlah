@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class CreateOfferBuy extends StatefulWidget {
@@ -251,12 +252,18 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
 
                       onPressed: (){
-                        print('Crypro type: '+ cListVal.toString());
-                        print('Currency Type: '+ currListVal.toString());
-                        print('price margin: '+ margin.toString());
-                        print('Total Crypto: '+ _cryptoAmountController.text);
-                        print('Min Trade: '+ _minTradeController.text);
-                        print('Terms: '+ _termsController.text);
+                        CreateOfferViewModel m = new CreateOfferViewModel();
+                        // print(_cryptoAmountController.text);
+                        double cryptoAmount=double.parse(_cryptoAmountController.text);
+                        double minTrade=double.parse(_minTradeController.text);
+
+                        var x=m.submitBuyOffer(cListVal.toString(), currListVal.toString(), margin, cryptoAmount, minTrade, _termsController.text);
+                        // print('Crypro type: '+ cListVal.toString());
+                        // print('Currency Type: '+ currListVal.toString());
+                        // print('price margin: '+ margin.toString());
+                        // print('Total Crypto: '+ _cryptoAmountController.text);
+                        // print('Min Trade: '+ _minTradeController.text);
+                        // print('Terms: '+ _termsController.text);
 
 
                         // print('Total Crypto: '+ cryptoAmount.toString());

@@ -3,20 +3,15 @@ import 'package:flutter_svg/svg.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("الحساب الشخصي"),
-
         ),
-
-        body:
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-
               Stack(
                 children: <Widget>[
                   Container(
@@ -60,11 +55,9 @@ class ProfileView extends StatelessWidget {
                           top: BorderSide(
                             width: 2,
                             color: Colors.black,
-                          )
-                      )
-                  ),
+                          ))),
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -79,20 +72,17 @@ class ProfileView extends StatelessWidget {
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
+                      ))),
               Container(
                   decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      )
-                  ),
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xff3D4955),
+                    ),
+                  )),
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -101,26 +91,24 @@ class ProfileView extends StatelessWidget {
                       ),
                       child: Row(
                         children: <Widget>[
-                          SvgPicture.asset("assets/icons/Transaction_profile.svg"),
+                          SvgPicture.asset(
+                              "assets/icons/Transaction_profile.svg"),
                           Container(width: 10),
                           Text("عمليات التداول"),
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
+                      ))),
               Container(
                   decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      )
-                  ),
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xff3D4955),
+                    ),
+                  )),
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -135,20 +123,17 @@ class ProfileView extends StatelessWidget {
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
+                      ))),
               Container(
                   decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      )
-                  ),
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xff3D4955),
+                    ),
+                  )),
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -163,20 +148,17 @@ class ProfileView extends StatelessWidget {
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
+                      ))),
               Container(
                   decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      )
-                  ),
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xff3D4955),
+                    ),
+                  )),
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -185,18 +167,17 @@ class ProfileView extends StatelessWidget {
                       ),
                       child: Row(
                         children: <Widget>[
-                          SvgPicture.asset("assets/icons/ControlPannel_profile.svg"),
+                          SvgPicture.asset(
+                              "assets/icons/ControlPannel_profile.svg"),
                           Container(width: 10),
                           Text("لوحة التحكم"),
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
+                      ))),
               Container(
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),
@@ -211,13 +192,9 @@ class ProfileView extends StatelessWidget {
                           Spacer(flex: 3),
                           SvgPicture.asset("assets/icons/LeftArrow_Profile.svg"),
                         ],
-                      )
-                  )
-              ),
-
+                      ))),
             ],
           ),
-        )
-    );
+        ));
   }
 }

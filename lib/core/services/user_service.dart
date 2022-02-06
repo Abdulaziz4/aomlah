@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
-import 'package:rxdart/rxdart.dart';
 
 class UserService {
   late AomlahUser user;
