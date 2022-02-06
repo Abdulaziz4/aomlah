@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/core/services/wallet_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:aomlah/core/app/app.locator.dart';
@@ -16,11 +17,13 @@ class AuthService {
   // final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
 
+  final _walletService = locator<WalletService>();
+
   final GoTrueClient _supabaseAuth = Supabase.instance.client.auth;
 
   User? get currentUser => _supabaseAuth.currentUser;
 
-  Future<void> initUser() async {
+  Future<void> setUser() async {
     _logger.i("initUserAndToken");
     try {
       if (isUserLoggedIn()) {
@@ -36,6 +39,16 @@ class AuthService {
       // );
       rethrow;
     }
+  }
+
+  Future<void> setupNewUser(String uuid, String name) async {
+    await _supabaseService.createUserProfile(
+      name: name,
+      uuid: uuid,
+    );
+    final wallet = await _walletService.createWallet(uuid);
+    await _supabaseService.createWallet(wallet);
+    await setUser();
   }
 
   bool isUserLoggedIn() {
@@ -68,12 +81,7 @@ class AuthService {
       if (hasError || hasNoData) {
         throw AuthException(authRes.error?.message ?? "");
       } else {
-        await _supabaseService.createUserProfile(
-          name: name,
-          uuid: authRes.user?.id ?? "",
-        );
-
-        await initUser();
+        await setupNewUser(authRes.user?.id ?? "", name);
       }
     } on AuthException catch (exp) {
       _logger.e(
@@ -101,7 +109,7 @@ class AuthService {
       if (hasError) {
         throw AuthException(authRes.error?.message ?? "");
       } else {
-        await initUser();
+        await setUser();
       }
     } on AuthException catch (exp) {
       _logger.e(

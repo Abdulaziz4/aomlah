@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/wallet.dart';
 
@@ -40,6 +42,8 @@ class AomlahUser {
           .map((e) => BankAccount.fromJson(e))
           .toList();
     }
+    // map["wallet"] = jsonDecode(map["wallet"]);
+    print(map["wallet"]);
     return AomlahUser(
       profileId: map['profile_id'] ?? '',
       name: map['name'] ?? '',
