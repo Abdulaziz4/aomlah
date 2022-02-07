@@ -17,6 +17,16 @@ abstract class AbstractSupabase {
         .execute();
   }
 
+  Future<PostgrestResponse> insert(
+    AomlahTable table,
+    Map<String, dynamic> payload,
+  ) async {
+    return supabase
+        .from(table.name)
+        .insert(payload, returning: ReturningOption.minimal)
+        .execute();
+  }
+
   Future<PostgrestResponse> delete(
     AomlahTable table,
     Map<String, dynamic> query,
@@ -35,6 +45,7 @@ abstract class AbstractSupabase {
     AomlahTable table,
     T Function(Map<String, dynamic> json) fromJson, {
     Map<String, dynamic>? query,
+    String? select,
     int? limit,
   }) async {
     logger.i("GET ${table.name} | query= $query, limit=$limit");
@@ -42,6 +53,7 @@ abstract class AbstractSupabase {
     final response = await selectEq(
       supabase.from(table.name),
       query: query,
+      select: select,
     ).execute();
 
     if (response.error != null) {
@@ -59,9 +71,11 @@ abstract class AbstractSupabase {
   PostgrestFilterBuilder selectEq(
     SupabaseQueryBuilder table, {
     Map<String, dynamic>? query,
+    String? select,
     int? limit,
   }) {
-    PostgrestFilterBuilder selectBuilder = table.select();
+    PostgrestFilterBuilder selectBuilder =
+        select == null ? table.select() : table.select(select);
     if (query == null) return selectBuilder;
     query.forEach((key, value) {
       selectBuilder = selectBuilder.eq(key, value);
@@ -90,7 +104,6 @@ abstract class AbstractSupabase {
     if (result.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
     }
-
     try {
       return _jsonListToObjectList(result.data, fromJson);
     } catch (error) {

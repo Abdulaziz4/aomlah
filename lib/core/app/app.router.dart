@@ -8,9 +8,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
-import '../../ui/views/auth/welcome/welcome_screen.dart';
+import '../../ui/views/auth/welcome/welcome_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
@@ -21,16 +22,16 @@ class Routes {
   static const String navigationView = '/navigation-view';
   static const String profileView = '/profile-view';
   static const String createOfferView = '/create-offer-view';
-  static const String welcomeView = '/welcome-view';
   static const String verifyAccountPromotionView =
       '/verify-account-promotion-view';
+  static const String welcomeView = '/welcome-view';
   static const all = <String>{
     startupView,
     navigationView,
     profileView,
     createOfferView,
-    welcomeView,
     verifyAccountPromotionView,
+    welcomeView,
   };
 }
 
@@ -42,9 +43,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.navigationView, page: NavigationView),
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.createOfferView, page: CreateOfferView),
-    RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.verifyAccountPromotionView,
         page: VerifyAccountPromotionView),
+    RouteDef(Routes.welcomeView, page: WelcomeView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -73,15 +74,15 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    WelcomeView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const WelcomeView(),
-        settings: data,
-      );
-    },
     VerifyAccountPromotionView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const VerifyAccountPromotionView(),
+        settings: data,
+      );
+    },
+    WelcomeView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WelcomeView(),
         settings: data,
       );
     },
