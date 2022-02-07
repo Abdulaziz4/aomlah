@@ -1,4 +1,5 @@
 import 'package:aomlah/core/services/auth_service.dart';
+import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/wallet_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +15,9 @@ class StartupViewModel extends BaseViewModel {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await setupLocator();
+
+    final _priceService = locator<PriceService>();
+    _priceService.connect();
 
     final _navService = locator<NavigationService>();
     final _authService = locator<AuthService>();
