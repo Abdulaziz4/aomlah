@@ -16,6 +16,7 @@ import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/startup/startup_view.dart';
+import '../../ui/views/trading/trader/buy_coin_overview_view.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -25,6 +26,7 @@ class Routes {
   static const String verifyAccountPromotionView =
       '/verify-account-promotion-view';
   static const String welcomeView = '/welcome-view';
+  static const String buyCoinOverviewView = '/buy-coin-overview-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -32,6 +34,7 @@ class Routes {
     createOfferView,
     verifyAccountPromotionView,
     welcomeView,
+    buyCoinOverviewView,
   };
 }
 
@@ -46,6 +49,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.verifyAccountPromotionView,
         page: VerifyAccountPromotionView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
+    RouteDef(Routes.buyCoinOverviewView, page: BuyCoinOverviewView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -83,6 +87,12 @@ class StackedRouter extends RouterBase {
     WelcomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WelcomeView(),
+        settings: data,
+      );
+    },
+    BuyCoinOverviewView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const BuyCoinOverviewView(),
         settings: data,
       );
     },

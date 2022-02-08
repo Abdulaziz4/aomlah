@@ -9,6 +9,7 @@ import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
+import 'package:aomlah/ui/views/trading/trader/buy_coin_overview_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -21,6 +22,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: CreateOfferView),
     MaterialRoute(page: VerifyAccountPromotionView),
     MaterialRoute(page: WelcomeView),
+    MaterialRoute(page: BuyCoinOverviewView),
   ],
   dependencies: [
     // Register all services and deps.
