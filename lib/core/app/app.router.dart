@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_screen.dart';

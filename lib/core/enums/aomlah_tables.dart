@@ -1,1 +1,1 @@
-enum AomlahTable { user }
+enum AomlahTable { profiles, offers }

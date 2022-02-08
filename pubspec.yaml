@@ -36,6 +36,8 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   stacked_generator:
+  dependencies:
+  json_serializable: ^6.1.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

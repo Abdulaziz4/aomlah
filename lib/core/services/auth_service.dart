@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:aomlah/core/app/app.locator.dart';
@@ -23,10 +24,10 @@ class AuthService {
     _logger.i("initUserAndToken");
     try {
       if (isUserLoggedIn()) {
-        // final user = await _supabaseService.fetchUserById(currentUser!.id);
-        // _userService.updateUser(user);
+        final user = await _supabaseService.getUser(currentUser!.id);
+        _userService.updateUser(user);
       } else {
-        // _userService.updateUser(DarbUser.anonymous());
+        _userService.updateUser(AomlahUser.anonymous());
       }
     } catch (e) {
       _logger.e("Initlizing user failed :" + e.toString());
@@ -45,10 +46,6 @@ class AuthService {
     _logger.i("signOut");
 
     await _supabaseAuth.signOut();
-  }
-
-  void signinAnonymously() {
-    // _userService.updateUser(DarbUser.anonymous());
   }
 
   // Creates a new user
@@ -71,6 +68,11 @@ class AuthService {
       if (hasError || hasNoData) {
         throw AuthException(authRes.error?.message ?? "");
       } else {
+        await _supabaseService.createUserProfile(
+          name: name,
+          uuid: authRes.user?.id ?? "",
+        );
+
         await initUser();
       }
     } on AuthException catch (exp) {

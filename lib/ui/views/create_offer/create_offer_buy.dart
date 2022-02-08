@@ -1,6 +1,10 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
+import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
+
+import 'common/custom_container.dart';
 
 class CreateOfferBuy extends StatefulWidget {
   const CreateOfferBuy({Key? key}) : super(key: key);
@@ -11,19 +15,13 @@ class CreateOfferBuy extends StatefulWidget {
 
 class _CreateOfferBuyState extends State<CreateOfferBuy> {
   final cryptoList = ['BTC', 'ETH', 'USDT'];
-  String? cListVal;
   final currencyList = ['ر.س', 'USD'];
-  String? currListVal;
-  // double cryptoAmount=0.0;
-  // double minTrade=0.0;
-  // String terms='';
+  String? cListVal, currListVal;
   int margin = 100;
 
   TextEditingController _cryptoAmountController = TextEditingController();
   TextEditingController _minTradeController = TextEditingController();
   TextEditingController _termsController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,56 +32,28 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-
           ///Crypto and Currency type
           Row(
             children: const <Widget>[
-              SizedBox(
-                width: 20,
-              ),
+              SizedBox(width: 20),
               Expanded(child: Text('عملة')),
               Expanded(child: Text('مقابل العملة التقليدية'))
             ],
           ),
           Row(
             children: <Widget>[
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Constants.black3dp,
-                    ),
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                    child:
-                    DropdownButtonHideUnderline(child: menuCryptoButton())),
-              ),
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Constants.black3dp,
-                    ),
-                    margin: EdgeInsets.fromLTRB(20, 0, 10, 10),
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                    child:
-                    DropdownButtonHideUnderline(child: menuCurrencyButton())),
-              ),
+              CusMenu(
+                  dropdownButton: menuCryptoButton(),
+                  menuMargin: EdgeInsets.fromLTRB(20, 0, 20, 10)),
+              CusMenu(
+                  dropdownButton: menuCurrencyButton(),
+                  menuMargin: EdgeInsets.fromLTRB(20, 0, 10, 10)),
             ],
           ),
 
           ///Price Margin
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'نسبة هامش السعر ',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'نسبة هامش السعر '),
+
           ///Price Margin value
           Card(
             color: Constants.black3dp,
@@ -96,10 +66,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                       setState(() {
                         margin++;
                       });
-                    };
+                    }
+                    ;
                   },
-                  child: Text('+')
-              ),
+                  child: Text('+')),
 
               title: Center(child: Text(margin.toString() + "%")),
               trailing: TextButton(
@@ -108,40 +78,25 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                       setState(() {
                         margin--;
                       });
-                    };
+                    }
+                    ;
                   },
-                  child: Text('-')
-              ),
+                  child: Text('-')),
             ),
           ),
 
           ///Amount of Crypto
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الكمية الاجمالية',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'الكمية الاجمالية'),
+
           ///Amount of Crypto text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusContainer(
             child: Row(
-
-              children: [
-                Expanded(child:
-                Text(
-
-                  cListVal as String
-                  , textAlign: TextAlign.center,),
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    cListVal as String,
+                    textAlign: TextAlign.center,
+                  ),
                   flex: 1,
                 ),
                 Expanded(
@@ -149,42 +104,30 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                   child: TextFormField(
                     controller: _cryptoAmountController,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 0),
+                        contentPadding: EdgeInsets.symmetric(vertical: 0),
                         hintText: 'ادخل الكمية الاجمالية',
                         border: InputBorder.none),
                     keyboardType: TextInputType.number,
 
                     // onChanged: (value1)=> setState(() => this.cryptoAmount=value1 as double ),
-                  ),),
+                  ),
+                ),
               ],
             ),
           ),
 
           ///min trade amount
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الحد الادنى للتبادل',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'الحد الادنى للتبادل'),
+
           ///min trade amount text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusContainer(
             child: Row(
               children: [
-                Expanded(child:
-                Text(
-                  currListVal as String
-                  , textAlign: TextAlign.center,),
+                Expanded(
+                  child: Text(
+                    currListVal as String,
+                    textAlign: TextAlign.center,
+                  ),
                   flex: 1,
                 ),
                 Expanded(
@@ -193,42 +136,30 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     controller: _minTradeController,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 0),
-                        hintText: 'ادخل الحد الادنى', border: InputBorder.none),
+                        hintText: 'ادخل الحد الادنى',
+                        border: InputBorder.none),
                     keyboardType: TextInputType.number,
                     // onChanged: (value)=> setState(() => this.minTrade=value as double ),
-                  ),),
+                  ),
+                ),
               ],
             ),
           ),
 
           ///Trade Terms and Conditions
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الشروط والاحكام',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'الشروط والاحكام'),
+
           ///Trade Terms and Conditions text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusContainer(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-
-              children:  <Widget>[
-                SizedBox(width: 20,),
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
                 Expanded(
                   child: TextFormField(
                     controller: _termsController,
-
                     maxLines: 3,
                     decoration: InputDecoration(
                         hintText: 'ادخل الشروط والاحكام',
@@ -245,33 +176,39 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           Container(
             color: Constants.primaryColor,
             child: Row(
-
               children: [
                 Expanded(
                   child: TextButton(
+                    onPressed: () {
+                      CreateOfferViewModel m = new CreateOfferViewModel();
+                      // print(_cryptoAmountController.text);
+                      double cryptoAmount =
+                          double.parse(_cryptoAmountController.text);
+                      double minTrade = double.parse(_minTradeController.text);
 
+                      var x = m.submitBuyOffer(
+                          cListVal.toString(),
+                          currListVal.toString(),
+                          margin,
+                          cryptoAmount,
+                          minTrade,
+                          _termsController.text);
 
-                      onPressed: (){
-                        CreateOfferViewModel m = new CreateOfferViewModel();
-                        // print(_cryptoAmountController.text);
-                        double cryptoAmount=double.parse(_cryptoAmountController.text);
-                        double minTrade=double.parse(_minTradeController.text);
+                      // print('Crypro type: '+ cListVal.toString());
+                      // print('Currency Type: '+ currListVal.toString());
+                      // print('price margin: '+ margin.toString());
+                      // print('Total Crypto: '+ _cryptoAmountController.text);
+                      // print('Min Trade: '+ _minTradeController.text);
+                      // print('Terms: '+ _termsController.text);
 
-                        var x=m.submitBuyOffer(cListVal.toString(), currListVal.toString(), margin, cryptoAmount, minTrade, _termsController.text);
-                        // print('Crypro type: '+ cListVal.toString());
-                        // print('Currency Type: '+ currListVal.toString());
-                        // print('price margin: '+ margin.toString());
-                        // print('Total Crypto: '+ _cryptoAmountController.text);
-                        // print('Min Trade: '+ _minTradeController.text);
-                        // print('Terms: '+ _termsController.text);
-
-
-                        // print('Total Crypto: '+ cryptoAmount.toString());
-                        // print('Min Trade: '+ minTrade.toString());
-                        // print('Terms: '+ terms);
-
-                      },
-                      child: Text('submit',style: TextStyle(color: Colors.white),),
+                      // print('Total Crypto: '+ cryptoAmount.toString());
+                      // print('Min Trade: '+ minTrade.toString());
+                      // print('Terms: '+ terms);
+                    },
+                    child: Text(
+                      'submit',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -282,24 +219,21 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
     );
   }
 
-  DropdownButton menuCryptoButton() =>
-      DropdownButton(
+  DropdownButton menuCryptoButton() => DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
         onChanged: (value) => setState(() => this.cListVal = value as String?),
         value: cListVal,
         // isExpanded: true,
       );
 
-  DropdownButton menuCurrencyButton() =>
-      DropdownButton(
+  DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
         onChanged: (value) =>
             setState(() => this.currListVal = value as String?),
         value: currListVal,
       );
 
-  DropdownMenuItem<String> buildCryptoItems(String item) =>
-      DropdownMenuItem(
+  DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(
         value: item,
         child: Text(
           item,
@@ -308,7 +242,4 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
         ),
       );
-
-
 }
-

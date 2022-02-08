@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
+import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
+import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
+import 'package:flutter/material.dart';
 
 import '../../shared/custom_button.dart';
+import 'common/custom_container.dart';
 
 class CreateOfferSell extends StatefulWidget {
   const CreateOfferSell({Key? key}) : super(key: key);
@@ -12,14 +16,14 @@ class CreateOfferSell extends StatefulWidget {
 
 class _CreateOfferSellState extends State<CreateOfferSell> {
   final cryptoList = ['BTC', 'ETH', 'USDT'];
-  String? cListVal;
   final currencyList = ['ر.س', 'USD'];
-  String? currListVal;
+  String? cListVal, currListVal;
   int margin = 100;
 
   TextEditingController _cryptoAmountController = TextEditingController();
   TextEditingController _minTradeController = TextEditingController();
   TextEditingController _termsController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
@@ -29,58 +33,28 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-
-          ///Crypto type
+          ///Crypto and Currency type
           Row(
             children: const <Widget>[
-              SizedBox(
-                width: 20,
-              ),
+              SizedBox(width: 20),
               Expanded(child: Text('عملة')),
               Expanded(child: Text('مقابل العملة التقليدية'))
             ],
           ),
-          ///Currency type
           Row(
             children: <Widget>[
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Constants.black3dp,
-                    ),
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                    child:
-                    DropdownButtonHideUnderline(child: menuCryptoButton())),
-              ),
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Constants.black3dp,
-                    ),
-                    margin: EdgeInsets.fromLTRB(20, 0, 10, 10),
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                    child:
-                    DropdownButtonHideUnderline(child: menuCurrencyButton())),
-              ),
+              CusMenu(
+                  dropdownButton: menuCryptoButton(),
+                  menuMargin: EdgeInsets.fromLTRB(20, 0, 20, 10)),
+              CusMenu(
+                  dropdownButton: menuCurrencyButton(),
+                  menuMargin: EdgeInsets.fromLTRB(20, 0, 10, 10)),
             ],
           ),
 
           ///Price Margin
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          CusCardTitle(title: 'نسبة هامش السعر '),
 
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'نسبة هامش السعر ',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
           ///Price Margin value
           Card(
             color: Constants.black3dp,
@@ -93,10 +67,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                       setState(() {
                         margin++;
                       });
-                    };
+                    }
+                    ;
                   },
-                  child: Text('+')
-              ),
+                  child: Text('+')),
 
               title: Center(child: Text(margin.toString() + "%")),
               trailing: TextButton(
@@ -105,40 +79,25 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                       setState(() {
                         margin--;
                       });
-                    };
+                    }
+                    ;
                   },
-                  child: Text('-')
-              ),
+                  child: Text('-')),
             ),
           ),
 
           ///Amount of Crypto
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الكمية الاجمالية',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'الكمية الاجمالية'),
+
           ///Amount of Crypto text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusContainer(
             child: Row(
-
               children: [
-                Expanded(child:
-                Text(
-
-                  cListVal as String
-                  , textAlign: TextAlign.center,),
+                Expanded(
+                  child: Text(
+                    cListVal as String,
+                    textAlign: TextAlign.center,
+                  ),
                   flex: 1,
                 ),
                 Expanded(
@@ -150,36 +109,24 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                         hintText: 'ادخل الكمية الاجمالية',
                         border: InputBorder.none),
                     keyboardType: TextInputType.number,
-                  ),),
+                  ),
+                ),
               ],
             ),
           ),
 
           ///min trade amount
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الحد الادنى للتبادل',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
-          ///min tradeamount text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusCardTitle(title: 'الحد الادنى للتبادل'),
+
+          ///min trade amount text form
+          CusContainer(
             child: Row(
               children: [
-                Expanded(child:
-                Text(
-                  currListVal as String
-                  , textAlign: TextAlign.center,),
+                Expanded(
+                  child: Text(
+                    currListVal as String,
+                    textAlign: TextAlign.center,
+                  ),
                   flex: 1,
                 ),
                 Expanded(
@@ -188,90 +135,78 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                     controller: _minTradeController,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 0),
-                        hintText: 'ادخل الحد الادنى', border: InputBorder.none),
+                        hintText: 'ادخل الحد الادنى',
+                        border: InputBorder.none),
                     keyboardType: TextInputType.number,
-                  ),),
+                    // onChanged: (value)=> setState(() => this.minTrade=value as double ),
+                  ),
+                ),
               ],
             ),
           ),
-          
+
           ///Bank account selection
-          Container(
-            // color: Constants.black3dp,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          SizedBox(
+            height: 10,
+          ),
+          CusContainer(
             child: Column(
               children: [
                 Row(
-                  
-                  children:  [
-                    SizedBox(width: 15,),
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
                     Expanded(child: Text('الحسابات البنكية')),
-                    Expanded(child: Container(
-                      margin: EdgeInsets.fromLTRB(10,5,0,0),
+                    Expanded(
+                        child: Container(
+                      margin: EdgeInsets.fromLTRB(10, 5, 0, 0),
                       child: CustomButton(
-
-                        onPressed: (){
-                        },
-                         text: 'اضف' ,
-                        
+                        onPressed: () {},
+                        text: 'اضف',
+                      ),
+                    ))
+                  ],
+                ),
+                Row(
+                  children: const [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      '*اختر ثلاث حسابات كحد اقصى',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
                       ),
                     )
-                    )
                   ],
                 ),
                 Row(
-                  children: [
-                    SizedBox(width: 15,),
-                    Text('*اختر ثلاث حسابات كحد اقصى',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
+                  children: const [
+                    SizedBox(
+                      width: 15,
                     ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: const[
-                    SizedBox(width: 15,),
                     Expanded(child: Text('b1')),
                     Expanded(child: Text('b2')),
                     Expanded(child: Text('b3')),
-
                   ],
                 ),
               ],
             ),
-            
           ),
-          
+
           ///Trade Terms and Conditions
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              SizedBox(width: 20),
-              Text(
-                'الشروط والاحكام',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
+          CusCardTitle(title: 'الشروط والاحكام'),
+
           ///Trade Terms and Conditions text form
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Constants.black3dp,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          CusContainer(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-
-              children:  <Widget>[
-                SizedBox(width: 20,),
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
                 Expanded(
                   child: TextFormField(
                     controller: _termsController,
@@ -280,6 +215,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                         hintText: 'ادخل الشروط والاحكام',
                         border: InputBorder.none),
                     keyboardType: TextInputType.text,
+                    // onChanged: (value)=> setState(() => this.terms=value),
                   ),
                 ),
               ],
@@ -290,53 +226,69 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           Container(
             color: Constants.primaryColor,
             child: Row(
-
               children: [
                 Expanded(
                   child: TextButton(
+                    onPressed: () {
+                      // print('Crypro type: ' + cListVal.toString());
+                      // print('Currency Type: ' + currListVal.toString());
+                      // print('price margin: ' + margin.toString());
+                      // print('Total Crypto: ' + _cryptoAmountController.text);
+                      // print('Min Trade: ' + _minTradeController.text);
+                      // print('Terms: ' + _termsController.text);
+                      CreateOfferViewModel m = new CreateOfferViewModel();
+                      // print(_cryptoAmountController.text);
+                      double cryptoAmount, minTrade;
+                      if (_cryptoAmountController.text.isEmpty) {
+                        cryptoAmount = 0;
+                      } else {
+                        cryptoAmount =
+                            double.parse(_cryptoAmountController.text);
+                      }
 
-                    onPressed: (){
-                      print('Crypro type: '+ cListVal.toString());
-                      print('Currency Type: '+ currListVal.toString());
-                      print('price margin: '+ margin.toString());
-                      print('Total Crypto: '+ _cryptoAmountController.text);
-                      print('Min Trade: '+ _minTradeController.text);
-                      print('Terms: '+ _termsController.text);
+                      if (_minTradeController.text.isEmpty) {
+                        minTrade = 0;
+                      } else {
+                        minTrade = double.parse(_minTradeController.text);
+                      }
 
+                      var x = m.submitSellOffer(
+                          cListVal.toString(),
+                          currListVal.toString(),
+                          margin,
+                          cryptoAmount,
+                          minTrade,
+                          _termsController.text);
                     },
-                    child: Text('submit',style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      'submit',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           )
-
-
-
-
         ],
       ),
     );
   }
 
-  DropdownButton menuCryptoButton() =>
-      DropdownButton(
+  DropdownButton menuCryptoButton() => DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
         onChanged: (value) => setState(() => this.cListVal = value as String?),
         value: cListVal,
         // isExpanded: true,
       );
 
-  DropdownButton menuCurrencyButton() =>
-      DropdownButton(
+  DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
         onChanged: (value) =>
             setState(() => this.currListVal = value as String?),
         value: currListVal,
       );
 
-  DropdownMenuItem<String> buildCryptoItems(String item) =>
-      DropdownMenuItem(
+  DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(
         value: item,
         child: Text(
           item,
@@ -345,6 +297,4 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ),
         ),
       );
-
-
 }
