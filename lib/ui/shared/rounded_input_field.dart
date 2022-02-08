@@ -10,6 +10,8 @@ class RoundedInputField extends StatefulWidget {
   final TextEditingController? controller;
   final String hintText;
   final bool obscure;
+  final Color? fillColor;
+  final Widget? suffix;
   const RoundedInputField({
     Key? key,
     this.onSave,
@@ -20,6 +22,8 @@ class RoundedInputField extends StatefulWidget {
     this.focusNode,
     this.hintText = "",
     this.obscure = false,
+    this.fillColor,
+    this.suffix,
   }) : super(key: key);
 
   @override
@@ -52,7 +56,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               filled: true,
-              fillColor: Constants.black3dp,
+              fillColor: widget.fillColor ?? Constants.black3dp,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: Colors.white),
@@ -75,6 +79,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
+              suffixIcon: widget.suffix,
             ),
             onFieldSubmitted: widget.onFieldSubmited,
           ),

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Constants {
-  const Constants._();
+  Constants._();
 
   /// The main green color used for theming the app.
   static const Color primaryColor = Color(0xFF16A79E);
@@ -27,13 +27,22 @@ class Constants {
   static const Color black2dp = Color(0xFF0F1E2C);
 
   // The color black with third elevation.
-  static const Color black3dp = Color(0xFF0F1E2C);
+  static const Color black3dp = Color(0x0f1e2cd4);
 
   // The color black with fourth elevation.
   static const Color black4dp = Color(0xFF33404C);
 
   // The color black with fifth elevation.
   static const Color black5dp = Color(0xFF404C57);
+
+  // List of randomized colors
+  static final List<Color> randomizeColors = [
+    Color(0xFF7E8CE0),
+    Color(0xFFF59078),
+    Color(0xFFFFAE5F),
+    Color(0xFFE3E496),
+    Color(0xFFAFE496),
+  ];
 
   /// The TextStyle for Roboto font in the app.
   static TextStyle robotoFont = GoogleFonts.cairo();
