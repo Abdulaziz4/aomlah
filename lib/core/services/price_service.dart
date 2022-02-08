@@ -26,7 +26,7 @@ class PriceService {
       channel.stream.listen((event) {
         final Map<String, dynamic> response = jsonDecode(event);
         if (response["TYPE"] == "2" && (response["PRICE"] != null)) {
-          final bitcoin = Bitcoin(response["PRICE"]);
+          final bitcoin = Bitcoin(double.parse(response["PRICE"]));
           priceContrller.sink.add(bitcoin);
         }
       });
