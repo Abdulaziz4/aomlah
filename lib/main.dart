@@ -2,6 +2,8 @@ import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/custom_theme.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +20,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<AomlahUser>(
-      initialData: AomlahUser.anonymous(),
-      create: (_) => locator<UserService>().userController.stream,
-      child: ArabicMaterialApp(
-        theme: CustomTheme.mainTheme,
-        navigatorKey: StackedService.navigatorKey,
-        onGenerateRoute: StackedRouter().onGenerateRoute,
+    return MultiProvider(
+      providers: [
+        StreamProvider<AomlahUser>(
+          create: (_) => locator<UserService>().userController.stream,
+          initialData: AomlahUser.anonymous(),
+        ),
+        StreamProvider<Bitcoin>(
+          create: (_) => locator<PriceService>().priceContrller.stream,
+          initialData: Bitcoin(0.0),
+        ),
+      ],
+      child: StreamProvider<AomlahUser>(
+        initialData: AomlahUser.anonymous(),
+        create: (_) => locator<UserService>().userController.stream,
+        child: ArabicMaterialApp(
+          theme: CustomTheme.mainTheme,
+          navigatorKey: StackedService.navigatorKey,
+          onGenerateRoute: StackedRouter().onGenerateRoute,
+        ),
       ),
     );
   }
