@@ -1,4 +1,5 @@
 import 'package:aomlah/core/services/auth_service.dart';
+import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_service.dart';
@@ -27,6 +28,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton<WalletService>(classType: WalletService),
     LazySingleton<AuthService>(classType: AuthService),
     LazySingleton<UserService>(classType: UserService),
+    LazySingleton<PriceService>(classType: PriceService),
 
     Presolve(
       classType: SupabaseService,
