@@ -60,6 +60,7 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                       buildPurchaseWindow(
                         key: viewmodel.formKey,
                         onSave: viewmodel.setAmount,
+                        submit: viewmodel.submit,
                       ),
                       Row(
                         children: [
@@ -138,9 +139,11 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
     );
   }
 
-  Widget buildPurchaseWindow(
-      {required GlobalKey<FormState> key,
-      required void Function(String) onSave}) {
+  Widget buildPurchaseWindow({
+    required GlobalKey<FormState> key,
+    required void Function(String) onSave,
+    required void Function() submit,
+  }) {
     return Form(
       key: key,
       child: Container(
@@ -160,8 +163,13 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
               fillColor: Constants.black4dp,
               validator: (val) {
                 // TODO: Check min limit and balance for sell
-                if (val == null) {
+
+                if (val == null || val.isEmpty) {
                   return "الرجاء إدخال المبلغ";
+                }
+                final amount = double.parse(val) * 1.0;
+                if (amount <= 0) {
+                  return "الرحاء إدخال مبلغ صحيح";
                 }
                 return null;
               },
@@ -197,7 +205,7 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: CustomButton(
-                onPressed: () {},
+                onPressed: submit,
                 text: "شراء BTC",
                 width: double.infinity,
                 height: 43,

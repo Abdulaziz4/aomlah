@@ -1,3 +1,4 @@
+import 'package:aomlah/core/app/utils/colors_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,7 +28,7 @@ class Constants {
   static const Color black2dp = Color(0xFF0F1E2C);
 
   // The color black with third elevation.
-  static const Color black3dp = Color(0x0f1e2cd4);
+  static Color black3dp = brighten(Color(0xFF00101F), 10);
 
   // The color black with fourth elevation.
   static const Color black4dp = Color(0xFF33404C);

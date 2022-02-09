@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -13,9 +14,15 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
   double amount = 0;
 
   void submit() {
+    bool isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
     setBusy(true);
     //TODO: Create Trade
     setBusy(false);
+    _navService.navigateTo(Routes.traderBuyCoinView);
   }
 
   void setAmount(String reqAmount) {
