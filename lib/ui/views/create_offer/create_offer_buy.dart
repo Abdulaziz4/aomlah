@@ -1,12 +1,16 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
 import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/rounded_input_field.dart';
 import 'common/custom_container.dart';
+import 'common/custom_input_field.dart';
 
 class CreateOfferBuy extends StatefulWidget {
   const CreateOfferBuy({Key? key}) : super(key: key);
@@ -20,23 +24,36 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   final currencyList = ['ر.س', 'USD'];
   String? cListVal, currListVal;
   double margin = 100;
+  double? cryptoAmount,minTrade;
 
   final TextEditingController _cryptoAmountController = TextEditingController();
   final TextEditingController _minTradeController = TextEditingController();
   final TextEditingController _termsController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
+    double realTimePrice;
+    if(currListVal=='ر.س') {
+      realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100)*3.75;}
+    else {realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100);}
+
+    realTimePrice=double.parse(realTimePrice.toStringAsFixed(3));
+
     cListVal ??= cryptoList.first;
     currListVal ??= currencyList.first;
 
-
     return ViewModelBuilder<CreateOfferViewModel>.reactive(
-      viewModelBuilder: (){return CreateOfferViewModel();},
-      builder: (context,viewmodel,_) {
-        return BusyOverlay(
-          isBusy: viewmodel.isBusy,
-          child: SingleChildScrollView(
+        viewModelBuilder: () {
+      return CreateOfferViewModel();
+    }, builder: (context, viewmodel, _) {
+      return BusyOverlay(
+        isBusy: viewmodel.isBusy,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -65,7 +82,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ///Price Margin value
                 Card(
                   color: Constants.black3dp,
-                  margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: ListTile(
                     // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
                     leading: TextButton(
@@ -93,68 +110,74 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                   ),
                 ),
 
+                ///CryptoPrice Info
+                Row(
+                  children: [
+                    SizedBox(width: 20,),
+
+                    Text('سعرك هو $realTimePrice $currListVal',style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey,
+                    ), ),
+                  ],
+                ),
+                SizedBox(height: 5,),
+
                 ///Amount of Crypto
                 CusCardTitle(title: 'الكمية الاجمالية'),
 
                 ///Amount of Crypto text form
-                CusContainer(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          cListVal as String,
-                          textAlign: TextAlign.center,
-                        ),
-                        flex: 1,
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: TextFormField(
-                          controller: _cryptoAmountController,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 0),
-                              hintText: 'ادخل الكمية الاجمالية',
-                              border: InputBorder.none),
-                          keyboardType: TextInputType.number,
-
-                          // onChanged: (value1)=> setState(() => this.cryptoAmount=value1 as double ),
-                        ),
+                CustomInputField(
+                  hintText: 'ادخل الكمية الاجمالية',
+                  suffix: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '$cListVal',
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return 'Enter Amount';
+                  },
+                  controller: _cryptoAmountController,
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    cryptoAmount = double.parse(value!);
+                  },
                 ),
+
 
                 ///min trade amount
                 CusCardTitle(title: 'الحد الادنى للتبادل'),
 
                 ///min trade amount text form
-                CusContainer(
-                  child: Row(
+                CustomInputField(
+                  suffix: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Text(
-                          currListVal as String,
-                          textAlign: TextAlign.center,
-                        ),
-                        flex: 1,
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: TextFormField(
-                          controller: _minTradeController,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 0),
-                              hintText: 'ادخل الحد الادنى',
-                              border: InputBorder.none),
-                          keyboardType: TextInputType.number,
-                          // onChanged: (value)=> setState(() => this.minTrade=value as double ),
-                        ),
+                      Text(
+                        '$currListVal',
+                        textAlign: TextAlign.center,
                       ),
                     ],
-                  ),
+                ),
+                  hintText: 'ادخل الحد الادنى',
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return 'Enter Amount';
+                  },
+                  onSaved: (value) {
+                    minTrade= double.parse(value!);
+                  },
+
                 ),
 
+
+
                 ///Trade Terms and Conditions
+
                 CusCardTitle(title: 'الشروط والاحكام'),
 
                 ///Trade Terms and Conditions text form
@@ -188,20 +211,23 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
+                            // double cryptoAmount =
+                            //     double.parse(_cryptoAmountController.text);
+                            // double minTrade = double.parse(_minTradeController.text);
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
+                            _formKey.currentState?.save();
+                            print('Amount: $cryptoAmount');
+                            print('Min Trade: $minTrade');
 
-
-                            double cryptoAmount =
-                                double.parse(_cryptoAmountController.text);
-                            double minTrade = double.parse(_minTradeController.text);
-
-                            viewmodel.submitBuyOffer(
-                                cListVal.toString(),
-                                currListVal.toString(),
-                                margin,
-                                cryptoAmount,
-                                minTrade,
-                                _termsController.text);
-
+                            // viewmodel.submitBuyOffer(
+                            //     cListVal.toString(),
+                            //     currListVal.toString(),
+                            //     margin,
+                            //     cryptoAmount!,
+                            //     minTrade,
+                            //     _termsController.text);
                           },
                           child: Text(
                             'submit',
@@ -215,9 +241,9 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
               ],
             ),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 
   DropdownButton menuCryptoButton() => DropdownButton(
@@ -243,4 +269,5 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
         ),
       );
+
 }
