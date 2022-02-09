@@ -259,18 +259,15 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                                 return;
                               }
                               _formKey.currentState?.save();
-                              print('Amount: $cryptoAmount');
-                              print('Min Trade: $minTrade');
 
 
-
-                            //   viewmodel.submitSellOffer(
-                            //       cListVal.toString(),
-                            //       currListVal.toString(),
-                            //       margin,
-                            //       cryptoAmount,
-                            //       minTrade,
-                            //       _termsController.text);
+                              viewmodel.submitSellOffer(
+                                  cListVal.toString(),
+                                  currListVal.toString(),
+                                  margin,
+                                  cryptoAmount!,
+                                  minTrade!,
+                                  _termsController.text);
                             },
                             child: Text(
                               'submit',

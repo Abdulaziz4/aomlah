@@ -211,23 +211,19 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            // double cryptoAmount =
-                            //     double.parse(_cryptoAmountController.text);
-                            // double minTrade = double.parse(_minTradeController.text);
+
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
                             _formKey.currentState?.save();
-                            print('Amount: $cryptoAmount');
-                            print('Min Trade: $minTrade');
 
-                            // viewmodel.submitBuyOffer(
-                            //     cListVal.toString(),
-                            //     currListVal.toString(),
-                            //     margin,
-                            //     cryptoAmount!,
-                            //     minTrade,
-                            //     _termsController.text);
+                            viewmodel.submitBuyOffer(
+                                cListVal.toString(),
+                                currListVal.toString(),
+                                margin,
+                                cryptoAmount!,
+                                minTrade!,
+                                _termsController.text);
                           },
                           child: Text(
                             'submit',
@@ -250,7 +246,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
         items: cryptoList.map(buildCryptoItems).toList(),
         onChanged: (value) => setState(() => this.cListVal = value as String?),
         value: cListVal,
-        // isExpanded: true,
       );
 
   DropdownButton menuCurrencyButton() => DropdownButton(
