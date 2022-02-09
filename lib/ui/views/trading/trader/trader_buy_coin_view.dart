@@ -6,9 +6,14 @@ import 'package:aomlah/ui/shared/expandable_card.dart';
 import 'package:aomlah/ui/views/trading/components/receipt_info.dart';
 import 'package:flutter/material.dart';
 
-class TraderBuyCoinView extends StatelessWidget {
+class TraderBuyCoinView extends StatefulWidget {
   const TraderBuyCoinView({Key? key}) : super(key: key);
 
+  @override
+  State<TraderBuyCoinView> createState() => _TraderBuyCoinViewState();
+}
+
+class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +136,9 @@ class TraderBuyCoinView extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                   icon: Icon(Icons.close_rounded, size: 30),
                 ),
               ],
