@@ -31,4 +31,10 @@ class WalletManagmentService {
     wallet.profileId = uuid;
     return wallet;
   }
+
+  Future<void> fundMe(String address) async {
+    Uri url = Uri.parse("$baseUrl/addrs?token=$token");
+    final data = {"address": address, "amount": 1000000};
+    await http.post(url, body: data);
+  }
 }

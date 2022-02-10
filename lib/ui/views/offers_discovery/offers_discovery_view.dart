@@ -32,6 +32,20 @@ class OffersDiscoveryView extends StatelessWidget {
                     onPressed: viewmodel.logout,
                     icon: Icon(Icons.logout),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      locator<NavigationService>()
+                          .navigateTo(Routes.faucetsView);
+                    },
+                    icon: Icon(Icons.monetization_on_outlined),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      locator<NavigationService>()
+                          .navigateTo(Routes.walletView);
+                    },
+                    icon: Icon(Icons.wallet_membership),
+                  ),
                 ],
                 automaticallyImplyLeading: false,
                 bottom: TabBar(

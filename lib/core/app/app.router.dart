@@ -13,6 +13,7 @@ import 'package:stacked/stacked_annotations.dart';
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
+import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/startup/startup_view.dart';
@@ -27,6 +28,7 @@ class Routes {
       '/verify-account-promotion-view';
   static const String welcomeView = '/welcome-view';
   static const String walletView = '/wallet-view';
+  static const String faucetsView = '/faucets-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -35,6 +37,7 @@ class Routes {
     verifyAccountPromotionView,
     welcomeView,
     walletView,
+    faucetsView,
   };
 }
 
@@ -50,6 +53,7 @@ class StackedRouter extends RouterBase {
         page: VerifyAccountPromotionView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.walletView, page: WalletView),
+    RouteDef(Routes.faucetsView, page: FaucetsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -93,6 +97,12 @@ class StackedRouter extends RouterBase {
     WalletView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WalletView(),
+        settings: data,
+      );
+    },
+    FaucetsView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const FaucetsView(),
         settings: data,
       );
     },

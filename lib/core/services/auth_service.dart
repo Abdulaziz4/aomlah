@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:aomlah/core/models/aomlah_user.dart';
-import 'package:aomlah/core/services/wallet_service.dart';
+import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:aomlah/core/app/app.locator.dart';

@@ -15,7 +15,7 @@ import '../services/price_service.dart';
 import '../services/realtime_wallet_service.dart';
 import '../services/supabase_service.dart';
 import '../services/user_service.dart';
-import '../services/wallet_service.dart';
+import '../services/wallet_managment_service.dart';
 
 final locator = StackedLocator.instance;
 
