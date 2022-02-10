@@ -17,7 +17,7 @@ class AuthService {
   // final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
 
-  final _walletService = locator<WalletService>();
+  final _walletService = locator<WalletManagmentService>();
 
   final GoTrueClient _supabaseAuth = Supabase.instance.client.auth;
 
@@ -27,8 +27,7 @@ class AuthService {
     _logger.i("initUserAndToken");
     try {
       if (isUserLoggedIn()) {
-        final user = await _supabaseService.getUser(currentUser!.id);
-        _userService.updateUser(user);
+        await _userService.initUser(currentUser!.id);
       } else {
         _userService.updateUser(AomlahUser.anonymous());
       }

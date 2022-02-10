@@ -4,7 +4,6 @@ import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/ui/views/offers_discovery/components/offer_card.dart';
 import 'package:aomlah/ui/views/offers_discovery/offers_discovery_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +12,6 @@ class OffersDiscoveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<Bitcoin>(context).price);
     return ViewModelBuilder<OffersDiscoveryViewModel>.reactive(
         viewModelBuilder: () => OffersDiscoveryViewModel(),
         builder: (context, viewmodel, _) {

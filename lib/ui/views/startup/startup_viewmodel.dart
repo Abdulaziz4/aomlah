@@ -1,5 +1,6 @@
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/price_service.dart';
+import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/wallet_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stacked/stacked.dart';

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 
-class WalletService {
-  static const token = "14409c2675354b03924f8889e6bcd60c";
+class WalletManagmentService {
+  static const token = APIKeys.blockcypherKey;
   static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
   Future<dynamic> sendRequest({

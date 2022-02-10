@@ -1,5 +1,7 @@
+import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/price_service.dart';
+import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_service.dart';
@@ -9,6 +11,7 @@ import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
+import 'package:aomlah/ui/views/wallet/wallet_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -21,14 +24,16 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: CreateOfferView),
     MaterialRoute(page: VerifyAccountPromotionView),
     MaterialRoute(page: WelcomeView),
+    MaterialRoute(page: WalletView),
   ],
   dependencies: [
     // Register all services and deps.
     LazySingleton<NavigationService>(classType: NavigationService),
-    LazySingleton<WalletService>(classType: WalletService),
+    LazySingleton<WalletManagmentService>(classType: WalletManagmentService),
     LazySingleton<AuthService>(classType: AuthService),
     LazySingleton<UserService>(classType: UserService),
     LazySingleton<PriceService>(classType: PriceService),
+    LazySingleton<RealtimeWalletService>(classType: RealtimeWalletService),
 
     Presolve(
       classType: SupabaseService,
