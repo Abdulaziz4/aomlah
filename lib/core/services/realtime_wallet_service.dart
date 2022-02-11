@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:aomlah/core/app/logger.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:aomlah/core/app/api_keys.dart';
@@ -8,6 +9,8 @@ import 'package:rxdart/subjects.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class RealtimeWalletService {
+  final _logger = getLogger("RealtimeWalletService");
+
   static const token = APIKeys.blockcypherKey;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
   static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
@@ -15,9 +18,10 @@ class RealtimeWalletService {
   BehaviorSubject<Map<String, dynamic>> walletController =
       BehaviorSubject<Map<String, dynamic>>();
 
-  void connectSocket(String address) {
+  void connectWalletBalance(String address) {
+    _logger.i("connectWalletBalance | address= $address");
     String url = "$baseUrl/addrs/$address";
-    Timer walletTimer = Timer.periodic(Duration(seconds: 10), (timer) async {
+    Timer walletTimer = Timer.periodic(Duration(seconds: 30), (timer) async {
       print("Request balance");
       print(address);
       final response = await http.get(Uri.parse(url));
@@ -28,8 +32,7 @@ class RealtimeWalletService {
 
   // void connectSocket(String uuid) {
   //   print("Connect Socket");
-  //   // const url = "$baseSocketUrl?token=$token";
-  //   const url = "$baseSocketUrl";
+  //   const url = "$baseSocketUrl?token=$token";
 
   //   final channel = WebSocketChannel.connect(
   //     Uri.parse(url),
@@ -39,16 +42,19 @@ class RealtimeWalletService {
 
   //   channel.stream.listen((event) {
   //     print(event);
+
   //     final decodedEvent = jsonDecode(event);
-  //     walletController.sink.add(decodedEvent);
+  //     if (decodedEvent["event"] != "pong") {
+  //       walletController.sink.add(decodedEvent);
+  //     }
   //   });
   // }
 
   Map<String, dynamic> connectionMessage(String uuid) {
     return {
-      "event": "unconfirmed-tx",
-      // "wallet_name": uuid,
-      // "token": token,
+      "event": "confirmed-tx",
+      "wallet_name": uuid,
+      "token": token,
     };
   }
 

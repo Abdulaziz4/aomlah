@@ -19,7 +19,7 @@ class UserService {
   Future<void> initUser(String uuid) async {
     final user = await _supabaseService.getUser(uuid);
     updateUser(user);
-    _realtimeWalletService.connectSocket(user.wallet?.address ?? "");
+    _realtimeWalletService.connectWalletBalance(user.wallet?.address ?? "");
   }
 
   void updateUser(AomlahUser user) {

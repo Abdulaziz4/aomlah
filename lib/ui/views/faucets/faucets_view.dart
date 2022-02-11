@@ -20,9 +20,12 @@ class FaucetsView extends StatelessWidget {
             ),
             body: Center(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "PLEASE DON'T FUND YOUR WALLET UNLESS YOU NEED IT!",
+                    textAlign: TextAlign.center,
                     style: Constants.mediumText,
                   ),
                   CustomButton(

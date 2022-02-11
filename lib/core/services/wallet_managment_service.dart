@@ -34,7 +34,7 @@ class WalletManagmentService {
 
   Future<void> fundMe(String address) async {
     Uri url = Uri.parse("$baseUrl/addrs?token=$token");
-    final data = {"address": address, "amount": 1000000};
+    final data = jsonEncode({"address": address, "amount": 1000000});
     await http.post(url, body: data);
   }
 }
