@@ -13,7 +13,7 @@ class JsonLogger {
   }
 
   static void _log(String message) {
-    developer.log(message, name: '☁️ API Service');
+    developer.log(message, name: '☁️ AuthService');
   }
 }
 
