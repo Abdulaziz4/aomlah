@@ -20,8 +20,8 @@ class CreateOfferSell extends StatefulWidget {
 }
 
 class _CreateOfferSellState extends State<CreateOfferSell> {
-  final cryptoList = ['BTC', 'ETH', 'USDT'];
-  final currencyList = ['ر.س', 'USD'];
+  final cryptoList = ['BTC'];
+  final currencyList = ['ر.س'];
   String? cListVal, currListVal;
   double margin = 100;
   double? cryptoAmount,minTrade;
@@ -113,11 +113,12 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                       SizedBox(width: 20,),
 
                       Text('سعرك هو $realTimePrice $currListVal',style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 15,
                         color: Colors.grey,
                       ), ),
                     ],
                   ),
+                  SizedBox(height: 10,),
 
                   ///Amount of Crypto
                   CusCardTitle(title: 'الكمية الاجمالية'),
@@ -135,7 +136,8 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                       ],
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter Amount';
+                      if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
+                      else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
                     },
                     controller: _cryptoAmountController,
                     keyboardType: TextInputType.number,
@@ -161,7 +163,8 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                     hintText: 'ادخل الحد الادنى',
                     keyboardType: TextInputType.number,
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter Amount';
+                      if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
+                      else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
                     },
                     onSaved: (value) {
                       minTrade= double.parse(value!);
@@ -186,6 +189,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                                 child: Container(
                               margin: EdgeInsets.fromLTRB(10, 5, 0, 0),
                               child: CustomButton(
+                                color: Constants.lighBlue,
                                 onPressed: () {},
                                 text: 'اضف',
                               ),
@@ -273,7 +277,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                                   _termsController.text);
                             },
                             child: Text(
-                              'submit',
+                              'إنشاء',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

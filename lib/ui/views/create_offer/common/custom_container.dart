@@ -13,7 +13,7 @@ class CusContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(7),
           color: Constants.black3dp,
         ),
-        margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
         child: child
     );
   }

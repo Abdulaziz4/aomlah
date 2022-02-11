@@ -34,7 +34,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+      margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
       padding: EdgeInsets.symmetric(vertical: 0),
       child: TextFormField(
         textDirection: TextDirection.rtl,
