@@ -46,7 +46,7 @@ class RealtimeWalletService {
       Uri.parse(socketUrl),
     );
 
-    channel.sink.add(jsonEncode(connectionMessage(uuid)));
+    channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
     Pinger.ping(channel, ping());
 
     channel.stream.listen((event) async {
@@ -61,11 +61,12 @@ class RealtimeWalletService {
     });
   }
 
-  Map<String, dynamic> connectionMessage(String uuid) {
+  Map<String, dynamic> connectionMessage(String uuid, String address) {
     return {
       "event": "confirmed-tx",
       "wallet_name": uuid,
       "token": token,
+      "address": address,
     };
   }
 
