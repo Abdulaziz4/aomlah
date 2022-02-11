@@ -624,7 +624,7 @@ packages:
     source: hosted
     version: "2.1.5"
   realtime_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: realtime_client
       url: "https://pub.dartlang.org"
