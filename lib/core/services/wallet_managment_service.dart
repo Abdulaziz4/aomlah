@@ -37,4 +37,9 @@ class WalletManagmentService {
     final data = jsonEncode({"address": address, "amount": 1000000});
     await http.post(url, body: data);
   }
+
+  Future<Map<String, dynamic>> getWalletInfo(String address) async {
+    // final response = await sendRequest(path: "addrs/$address");
+    return {};
+  }
 }
