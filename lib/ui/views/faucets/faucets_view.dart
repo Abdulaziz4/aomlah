@@ -1,10 +1,9 @@
-import 'package:aomlah/core/app/app.locator.dart';
-import 'package:aomlah/core/app/utils/constants.dart';
-import 'package:aomlah/core/services/wallet_managment_service.dart';
-import 'package:aomlah/ui/shared/custom_button.dart';
-import 'package:aomlah/ui/views/faucets/faucets_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/shared/custom_button.dart';
+import 'package:aomlah/ui/views/faucets/faucets_viewmodel.dart';
 
 class FaucetsView extends StatelessWidget {
   const FaucetsView({Key? key}) : super(key: key);
@@ -27,6 +26,11 @@ class FaucetsView extends StatelessWidget {
                     "PLEASE DON'T FUND YOUR WALLET UNLESS YOU NEED IT!",
                     textAlign: TextAlign.center,
                     style: Constants.mediumText,
+                  ),
+                  Text(
+                    "Transactions takes up to 30 sec to arrive",
+                    textAlign: TextAlign.center,
+                    style: Constants.smallText,
                   ),
                   CustomButton(
                     onPressed: () {

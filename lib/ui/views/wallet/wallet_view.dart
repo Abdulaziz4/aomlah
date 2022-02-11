@@ -11,7 +11,13 @@ class WalletView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text(wallet.toString()),
+        child: Column(
+          children: [
+            Text("Address: " + wallet["address"]),
+            Text("Satoshi Balance: " + wallet["balance"].toString()),
+            Text("Num of Transaction: " + wallet["n_tx"].toString()),
+          ],
+        ),
       ),
     );
   }
