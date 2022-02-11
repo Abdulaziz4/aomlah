@@ -259,6 +259,9 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                                 return;
                               }
                               _formKey.currentState?.save();
+                              print('Amount: $cryptoAmount');
+                              print('Min Trade: $minTrade');
+
 
 
                               viewmodel.submitSellOffer(
@@ -291,7 +294,6 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
         items: cryptoList.map(buildCryptoItems).toList(),
         onChanged: (value) => setState(() => this.cListVal = value as String?),
         value: cListVal,
-        // isExpanded: true,
       );
 
   DropdownButton menuCurrencyButton() => DropdownButton(

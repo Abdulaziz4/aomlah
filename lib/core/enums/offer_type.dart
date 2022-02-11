@@ -1,1 +1,0 @@
-enum OfferType{ buy,sell}

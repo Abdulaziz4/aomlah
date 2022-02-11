@@ -1,3 +1,5 @@
+import 'package:aomlah/core/models/bank_account.dart';
+
 class Offer {
   final String offerID;
   final String ownerID;
@@ -9,7 +11,7 @@ class Offer {
   final String terms;
   ///BUY OFFER= TRUE, SELL OFFER= False
   final bool offerType;
-  final bank;
+  final List<BankAccount>? bank;
 
   Offer({
     required this.offerID,
@@ -27,13 +29,13 @@ class Offer {
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
     offerID: json['offer_id'],
     ownerID: json['owner_id'],
-    cryptoType: json['cryptoType'],
-    currencyType: json['currencyType'],
+    cryptoType: json['crypto_type'],
+    currencyType: json['currency_type'],
     margin: json['margin'],
-    cryptoAmount: json['cryptoAmount'],
-    minTrade: json['minTrade'],
+    cryptoAmount: json['crypto_amount'],
+    minTrade: json['min_trade'],
     terms: json['terms'],
-    offerType: json['isBuy'],
+    offerType: json['is_buy'],
     bank: json['bank'] ?? '',
 
   );
@@ -43,13 +45,13 @@ class Offer {
   return {
     'offer_id': offerID,
     'owner_id': ownerID,
-    'cryptoType': cryptoType,
-    'currencyType': currencyType,
+    'crypto_type': cryptoType,
+    'currency_type': currencyType,
     'margin': margin,
-    'cryptoAmount': cryptoAmount,
-    'minTrade': minTrade,
+    'crypto_amount': cryptoAmount,
+    'min_trade': minTrade,
     'terms': terms,
-    'isBuy': offerType,
+    'is_buy': offerType,
     'bank': bank,
   };
 }

@@ -28,7 +28,7 @@ class CreateOfferViewModel extends BaseViewModel {
         terms: terms,
       ));
       setBusy(false);
-      // navService.back();
+      navService.back();
     }catch(e){print(e);}
 
 
@@ -49,7 +49,7 @@ class CreateOfferViewModel extends BaseViewModel {
         terms: terms,
       ));
       setBusy(false);
-      // navService.back();
+      navService.back();
     }catch(e){print(e);}
   }
 }
