@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import '../components/user_trading_card.dart';
 
-import '../components/offer_details_card.dart';
-
-class BuyingTrades extends StatefulWidget {
-  const BuyingTrades({Key? key}) : super(key: key);
+class UserSellingTrades extends StatefulWidget {
+  const UserSellingTrades({Key? key}) : super(key: key);
 
   @override
-  _BuyingTradesState createState() => _BuyingTradesState();
+  _UserSellingTradesState createState() => _UserSellingTradesState();
 }
 
-class _BuyingTradesState extends State<BuyingTrades> {
+class _UserSellingTradesState extends State<UserSellingTrades> {
   @override
   Widget build(BuildContext context) {
     return TabBarView(
@@ -17,24 +16,19 @@ class _BuyingTradesState extends State<BuyingTrades> {
         SingleChildScrollView(
           child: Column(
             children: const [
-              UserOfferCard(
-                isBuy: false,
+              UserTradingCard(
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
-                isBuy: false,
+              UserTradingCard(
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
-                isBuy: false,
+              UserTradingCard(
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
-                isBuy: false,
+              UserTradingCard(
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
-                isBuy: false,
+              UserTradingCard(
                 stat: 'بانتظار الدفع',
               ),
             ],
@@ -43,23 +37,23 @@ class _BuyingTradesState extends State<BuyingTrades> {
         SingleChildScrollView(
           child: Column(
             children: const [
-              UserOfferCard(
+              UserTradingCard(
                 isBuy: true,
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
+              UserTradingCard(
                 isBuy: false,
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
+              UserTradingCard(
                 isBuy: true,
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
+              UserTradingCard(
                 isBuy: false,
                 stat: 'بانتظار الدفع',
               ),
-              UserOfferCard(
+              UserTradingCard(
                 isBuy: false,
                 stat: 'بانتظار الدفع',
               ),
