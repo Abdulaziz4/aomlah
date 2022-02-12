@@ -21,4 +21,8 @@ class Bitcoin {
 
   factory Bitcoin.fromJson(String source) =>
       Bitcoin.fromMap(json.decode(source));
+
+  double priceFromMargin(double margin) {
+    return price * (margin / 100) * 3.75;
+  }
 }

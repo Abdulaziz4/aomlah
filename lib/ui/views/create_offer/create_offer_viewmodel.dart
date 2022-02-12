@@ -8,19 +8,19 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../core/app/app.locator.dart';
 
 class CreateOfferViewModel extends BaseViewModel {
-  final UserService userService= locator<UserService>();
+  final UserService userService = locator<UserService>();
   final supabaseService = locator<SupabaseService>();
   final navService = locator<NavigationService>();
 
-
-  Future<void> submitBuyOffer(String cryptoType,String currencyType,double margin,double cryptoAmount,double minTrade,String terms) async {
+  Future<void> submitBuyOffer(String cryptoType, String currencyType,
+      double margin, double cryptoAmount, double minTrade, String terms) async {
     try {
       setBusy(true);
       await supabaseService.createOffer(Offer(
         offerID: UuidHelper.generate(),
         ownerID: userService.user.profileId,
         cryptoType: cryptoType,
-        offerType: true,
+        isBuy: true,
         currencyType: currencyType,
         margin: margin,
         cryptoAmount: cryptoAmount,
@@ -29,19 +29,20 @@ class CreateOfferViewModel extends BaseViewModel {
       ));
       setBusy(false);
       navService.back();
-    }catch(e){print(e);}
-
-
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Future<void> submitSellOffer(String cryptoType,String currencyType,double margin,double cryptoAmount,double minTrade,String terms) async {
+  Future<void> submitSellOffer(String cryptoType, String currencyType,
+      double margin, double cryptoAmount, double minTrade, String terms) async {
     try {
       setBusy(true);
       supabaseService.createOffer(Offer(
         offerID: UuidHelper.generate(),
         ownerID: userService.user.profileId,
         cryptoType: cryptoType,
-        offerType: false,
+        isBuy: false,
         currencyType: currencyType,
         margin: margin,
         cryptoAmount: cryptoAmount,
@@ -50,6 +51,8 @@ class CreateOfferViewModel extends BaseViewModel {
       ));
       setBusy(false);
       navService.back();
-    }catch(e){print(e);}
+    } catch (e) {
+      print(e);
+    }
   }
 }

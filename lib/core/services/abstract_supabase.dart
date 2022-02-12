@@ -113,6 +113,20 @@ abstract class AbstractSupabase {
     return [];
   }
 
+  Stream<List<T>> subscribeForChanges<T>({
+    required AomlahTable table,
+    required T Function(Map<String, dynamic> json) fromJson,
+    required String primaryKey,
+  }) {
+    return supabase
+        .from(table.name)
+        .stream([primaryKey])
+        .execute()
+        .map<List<T>>((mapsList) {
+          return mapsList.map((map) => fromJson(map)).toList();
+        });
+  }
+
   List<T> _jsonListToObjectList<T>(
     List<dynamic>? jsonList,
     T Function(Map<String, dynamic> json) fromJson,
