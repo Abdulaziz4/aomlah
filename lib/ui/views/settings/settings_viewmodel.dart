@@ -4,10 +4,14 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../core/app/app.locator.dart';
 import '../../../core/app/app.router.dart';
 import '../../../core/services/auth_service.dart';
+import '../../../core/services/supabase_service.dart';
+import '../../../core/services/user_service.dart';
 
 class SettingsViewModel extends BaseViewModel{
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
+  final UserService userService = locator<UserService>();
+  final supabaseService = locator<SupabaseService>();
 
   void logout() {
     _authService.signOut();
@@ -15,6 +19,10 @@ class SettingsViewModel extends BaseViewModel{
   }
   void updateProfileNav(){
     _navService.navigateTo(Routes.updateProfile);
+  }
+  void updateUserName(String name){
+    supabaseService.updateUserProfile(userService.user.profileId, name);
+
   }
 
 }
