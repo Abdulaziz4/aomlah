@@ -1,10 +1,10 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/offers_discovery/components/offer_card.dart';
-import 'package:aomlah/ui/views/offers_discovery/offers_discovery_viewmodel.dart';
+import 'package:aomlah/ui/views/offers_discovery/viewmodels/offers_discovery_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +13,6 @@ class OffersDiscoveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<Bitcoin>(context).price);
     return ViewModelBuilder<OffersDiscoveryViewModel>.reactive(
         viewModelBuilder: () => OffersDiscoveryViewModel(),
         builder: (context, viewmodel, _) {
@@ -34,6 +33,20 @@ class OffersDiscoveryView extends StatelessWidget {
                     onPressed: viewmodel.logout,
                     icon: Icon(Icons.logout),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      locator<NavigationService>()
+                          .navigateTo(Routes.faucetsView);
+                    },
+                    icon: Icon(Icons.monetization_on_outlined),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      locator<NavigationService>()
+                          .navigateTo(Routes.walletView);
+                    },
+                    icon: Icon(Icons.wallet_membership),
+                  ),
                 ],
                 automaticallyImplyLeading: false,
                 bottom: TabBar(
@@ -45,41 +58,26 @@ class OffersDiscoveryView extends StatelessWidget {
                   ],
                 ),
               ),
-              body: TabBarView(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: const [
-                        OfferCard(),
-                        OfferCard(),
-                        OfferCard(),
-                        OfferCard(),
-                        OfferCard(),
-                      ],
+              body: BusyOverlay(
+                isBusy: viewmodel.isBusy,
+                child: TabBarView(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        children: viewmodel.buyOffers
+                            .map((offer) => OfferCard(offer: offer))
+                            .toList(),
+                      ),
                     ),
-                  ),
-                  SingleChildScrollView(
-                    child: Column(
-                      children: const [
-                        OfferCard(
-                          isBuy: false,
-                        ),
-                        OfferCard(
-                          isBuy: false,
-                        ),
-                        OfferCard(
-                          isBuy: false,
-                        ),
-                        OfferCard(
-                          isBuy: false,
-                        ),
-                        OfferCard(
-                          isBuy: false,
-                        ),
-                      ],
+                    SingleChildScrollView(
+                      child: Column(
+                        children: viewmodel.sellOffers
+                            .map((offer) => OfferCard(offer: offer))
+                            .toList(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
