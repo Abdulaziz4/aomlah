@@ -20,8 +20,23 @@ class SettingsViewModel extends BaseViewModel{
   void updateProfileNav(){
     _navService.navigateTo(Routes.updateProfile);
   }
-  void updateUserName(String name){
+  Future<void> updateUserName(String name)async {
     supabaseService.updateUserProfile(userService.user.profileId, name);
+    final updatedUser=await supabaseService.getUser(userService.user.profileId);
+    userService.updateUser(updatedUser);
+    _navService.back();
+
+
+  }
+  Future<void> updateStatus(bool status)async {
+    supabaseService.updateUserStatus(uuid: userService.user.profileId, status: status);
+    final updatedUser=await supabaseService.getUser(userService.user.profileId);
+    userService.updateUser(updatedUser);
+
+  }
+  bool getStatus(){
+    return userService.user.isOnline;
+    // return true;
 
   }
 

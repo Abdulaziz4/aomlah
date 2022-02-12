@@ -35,7 +35,7 @@ class SettingsHomeBody extends StatefulWidget {
 }
 
 class _SettingsHomeBodyState extends State<SettingsHomeBody> {
-  bool switchState=true;
+  bool? n;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,11 @@ class _SettingsHomeBodyState extends State<SettingsHomeBody> {
 
         ButtonTile(onPressed: (){print('fffff'); }, text: 'حالتك متوفر',
           widget: Switch.adaptive(
-              onChanged: (value)=> setState((){switchState=value;}),
-              value: switchState),
+              onChanged: (value)=> setState((){
+                viewmodel.updateStatus(value);
+                n=value;
+              }),
+              value:n ??= viewmodel.getStatus()),
         ),
         ButtonTile(onPressed: (){viewmodel.updateProfileNav();}, text: 'تحديث الملف الشخصي'),
         ButtonTile(onPressed: (){viewmodel.logout();}, text: 'تسجيل الخروج',color: Colors.red,),

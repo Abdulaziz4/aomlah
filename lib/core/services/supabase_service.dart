@@ -33,6 +33,11 @@ class SupabaseService extends AbstractSupabase {
     await update(AomlahTable.profiles, {"name": name},{"profile_id": uuid});
 
   }
+  Future<void> updateUserStatus({required String uuid,required bool status}) async {
+    await update(AomlahTable.profiles, {"is_online": status},{"profile_id": uuid});
+
+
+  }
 
   Future<AomlahUser> getUser(String uuid) async {
     final res = await callFn<AomlahUser>("get_user", AomlahUser.fromJson,
