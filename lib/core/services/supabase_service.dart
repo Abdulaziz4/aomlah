@@ -41,13 +41,15 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Stream<List<Offer>> getAllOffersSubscription() {
-    return supabase
-        .from(AomlahTable.offers.name)
-        .stream(["offer_id"])
-        .execute()
-        .map<List<Offer>>((offersMap) {
-          return offersMap.map((offer) => Offer.fromJson(offer)).toList();
-        });
+    return subscribeForChanges<Offer>(
+      table: AomlahTable.offers,
+      fromJson: Offer.fromJson,
+      primaryKey: "offer_id",
+    );
+  }
+
+  Future<void> createOffer(Offer offer) async {
+    await insert(AomlahTable.offers, offer.toJson());
   }
 
   Future<void> createWallet(
@@ -55,7 +57,4 @@ class SupabaseService extends AbstractSupabase {
   ) async {
     await upsert(AomlahTable.wallets, wallet.toJson());
   }
-  // Future<bool> createOffer(Offer offer) async {
-  //   upsert(AomlahTable.offers, offer.toJson());
-  // }
 }
