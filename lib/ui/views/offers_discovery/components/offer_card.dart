@@ -1,8 +1,10 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
@@ -13,6 +15,9 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final price = Provider.of<Bitcoin>(context)
+        .priceFromMargin(offer.margin)
+        .toStringAsFixed(3);
     return Container(
       height: 200,
       padding: const EdgeInsets.all(10),
@@ -42,7 +47,7 @@ class OfferCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildInfoItem("السعر", "121,41241,124 ر.س"),
+                    buildInfoItem("السعر", "$price ر.س"),
                     Spacer(),
                     buildInfoItem("الكمية", offer.cryptoAmonutLabel()),
                   ],
