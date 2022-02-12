@@ -40,6 +40,16 @@ class SupabaseService extends AbstractSupabase {
     return get(AomlahTable.offers, Offer.fromJson);
   }
 
+  Stream<List<Offer>> getAllOffersSubscription() {
+    return supabase
+        .from(AomlahTable.offers.name)
+        .stream(["offer_id"])
+        .execute()
+        .map<List<Offer>>((offersMap) {
+          return offersMap.map((offer) => Offer.fromJson(offer)).toList();
+        });
+  }
+
   Future<void> createWallet(
     Wallet wallet,
   ) async {
