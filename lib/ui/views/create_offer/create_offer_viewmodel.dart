@@ -52,4 +52,5 @@ class CreateOfferViewModel extends BaseViewModel {
       navService.back();
     }catch(e){print(e);}
   }
+
 }
