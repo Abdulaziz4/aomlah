@@ -26,8 +26,8 @@ class _BuyingDetailsState extends State<BuyingDetails> {
             width: 350,
             child:
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Text('رقم العرض', style: TextStyle(color: Colors.white, fontSize: 19),
               ),
@@ -54,41 +54,37 @@ class _BuyingDetailsState extends State<BuyingDetails> {
             width: 350,
             child:
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('ر.س', style: TextStyle(color: Colors.white, fontSize: 19),),
-                    Text('مقابل', style: TextStyle(color: Colors.white, fontSize: 19),),
-                    Text('BTC', style: TextStyle(color: Colors.white, fontSize: 19,),),
-                    Text('شراء', style: TextStyle(color: Constants.primaryColor, fontSize: 19),),
-
-
+                    Text('شراء ', style: TextStyle(color: Constants.primaryColor, fontSize: 19),),
+                    Text(' BTC ', style: TextStyle(color: Colors.white, fontSize: 19,),),
+                    Text('مقابل ر.س', style: TextStyle(color: Colors.white, fontSize: 19),),
 
                   ],
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('ر.س ', style: TextStyle(color: Colors.white, fontSize: 19),),
-                    Text('144,442,345 ', style: TextStyle(color: Colors.white, fontSize: 19),),
-                    Spacer(),
                     Text('السعر', style: TextStyle(color: Colors.white, fontSize: 19),),
+                    Spacer(),
+                    Text('144,442,345 ر.س', style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
                   ],
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('%102', style: TextStyle(color: Colors.white, fontSize: 19),
-                    ),
-                    Spacer(),
                     Text('هامش السعر', style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
+                    Spacer(),
+                    Text('%102', style: TextStyle(color: Colors.white, fontSize: 19),
+                    ),
                   ],
                 ),
               ],
@@ -116,25 +112,27 @@ class _BuyingDetailsState extends State<BuyingDetails> {
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('0.213 BTC', style: TextStyle(color: Colors.white, fontSize: 19),
-                    ),
-                    Spacer(),
                     Text('الكمية', style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
+                    Spacer(),
+                    Text(' BTC ', style: TextStyle(color: Colors.white, fontSize: 19),),
+                    Text('0.213', style: TextStyle(color: Colors.white, fontSize: 19),
+                    ),
+
+
                   ],
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('ر.س', style: TextStyle(color: Colors.white, fontSize: 19),),
-                    Text('2000', style: TextStyle(color: Colors.white, fontSize: 19),),
 
-                    Spacer(),
                     Text('الحد الأدنى', style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
+                    Spacer(),
+                    Text('2000 ر.س', style: TextStyle(color: Colors.white, fontSize: 19),),
                   ],
                 ),
               ],
@@ -157,13 +155,14 @@ class _BuyingDetailsState extends State<BuyingDetails> {
             width: 350,
             child:
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('الشروط والأحكام',style: TextStyle(color: Colors.white, fontSize: 19),),
+                //Text('الشروط والأحكام',style: TextStyle(color: Colors.white, fontSize: 19),),
                 RoundedInputField(
                   hintText: "ما أقبل اس تي سي باي",
                   label: 'الشروط والأحكام',
+
                 ),
               ],
             ),

@@ -23,12 +23,22 @@ class OffersCard extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           Row(
             children: [
+              isBuy
+                  ?Text(" شراء ", style: TextStyle(color: Constants.primaryColor),)
+                  :Text(" بيع  ", style: TextStyle(color: Constants.redColor),),
+
+              Text(" BTC ",style: TextStyle(color: Colors.white),),
+              Text("مقابل ر.س",style: TextStyle(color: Colors.white),),
+
+
+
+
+              Spacer(),
               IconButton(
 
                 onPressed: (){
@@ -36,31 +46,28 @@ class OffersCard extends StatelessWidget {
                   // locator<NavigationService>()
                   //     .navigateTo(Routes.createOfferView);
                 },
-                icon: Icon(Icons.arrow_back_ios,
+                icon: Icon(Icons.arrow_forward_ios,
                   size: 13,
                   color: Colors.white,
                 ),
               ),
-              Spacer(),
-              Text("مقابل ر.س",style: TextStyle(color: Colors.white),),
-              Text(" BTC",style: TextStyle(color: Colors.white),),
-
-              isBuy
-                  ?Text(" شراء ", style: TextStyle(color: Constants.primaryColor),)
-                  :Text(" بيع  ", style: TextStyle(color: Constants.redColor),),
 
             ],
           ),
 
-          Text(" ر.س 144,579,836 ",style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),),
+          Text("144,579,836 ر.س",style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("0,4567899 BTC",style: TextStyle(color: Colors.white),),
-                Spacer(),
                 Text("الكمية الإجمالية",style: TextStyle(color: Colors.white),),
+                Spacer(),
+                Text(" BTC ",style: TextStyle(color: Colors.white),),
+                Text("0,4567899",style: TextStyle(color: Colors.white),),
+
+
+
               ],
             ),
           ),
@@ -69,10 +76,12 @@ class OffersCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(" ر.س ",style: TextStyle(color: Colors.white),),
-                Text(" 2000",style: TextStyle(color: Colors.white),),
-                Spacer(),
+
                 Text("الحد الأدنى",style: TextStyle(color: Colors.white),),
+                Spacer(),
+                Text("2000 ر.س",style: TextStyle(color: Colors.white),),
+
+
               ],
             ),
           ),

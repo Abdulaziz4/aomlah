@@ -30,21 +30,21 @@ class SellingOfferDetails extends StatelessWidget {
           //     color: Colors.white,
           //   ),
           // ),
-          actions: [
-            IconButton(
-              alignment: Alignment.topRight,
-              onPressed: (){
-                Navigator.pop(context);
-
-                // locator<NavigationService>()
-                //     .navigateTo(Routes.createOfferView);
-              },
-              icon: Icon(Icons.arrow_forward_ios,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     alignment: Alignment.topRight,
+          //     onPressed: (){
+          //       Navigator.pop(context);
+          //
+          //       // locator<NavigationService>()
+          //       //     .navigateTo(Routes.createOfferView);
+          //     },
+          //     icon: Icon(Icons.arrow_forward_ios,
+          //       size: 30,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ],
 
 
           title: Text(
@@ -57,8 +57,9 @@ class SellingOfferDetails extends StatelessWidget {
           bottom: TabBar(
 
             tabs: [
+              Tab(text: 'التفاصيل',),
               Tab(text: 'عمليات التداول',),
-              Tab(text: 'التفاصيل',)
+
             ],
           ),
 
@@ -74,9 +75,11 @@ class SellingOfferDetails extends StatelessWidget {
               color : Color.fromRGBO(15, 30, 44, 0.8299999833106995),
             ),
             child: Row(children: <Widget>[
-              CustomButton(onPressed: (){}, text: 'إغلاق',color: Color(0xFFCF5050),height: 37,width: 170,),
-              SizedBox(width: 7,),
               CustomButton(onPressed: (){}, text: 'تعديل', color: Color(0xFF7BB9FA), height: 37,width: 170,),
+              SizedBox(width: 7,),
+              CustomButton(onPressed: (){}, text: 'إغلاق',color: Color(0xFFCF5050),height: 37,width: 170,),
+
+
 
 
             ],
@@ -97,9 +100,10 @@ class SellingOfferDetailsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(children: [
       //SellView
+      SellingDetails(),
       SellingTrades(),
       // //BuyView
-      SellingDetails(),
+
 
 
     ],

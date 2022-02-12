@@ -26,32 +26,30 @@ class UserOfferCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
         children: [
           Row(
             children: [
+              isBuy
+                  ?Text(" شراء ", style: TextStyle(color: Constants.primaryColor),)
+                  :Text(" بيع  ", style: TextStyle(color: Constants.redColor),),
+
+              Text(" BTC",style: TextStyle(color: Colors.white),),
+              Spacer(),
+              Text(stat, style: TextStyle(color: Constants.darkBlue, fontSize:14 ),),
+
               IconButton(
                 onPressed: (){
                   Navigator.pop(context);
                   // locator<NavigationService>()
                   //     .navigateTo(Routes.createOfferView);
                 },
-                icon: Icon(Icons.arrow_back_ios,
+                icon: Icon(Icons.arrow_forward_ios,
                   size: 13,
                   color: Colors.white,
                 ),
               ),
-              Text(stat, style: TextStyle(color: Constants.darkBlue, fontSize:14 ),),
-              Spacer(),
-
-
-              Text(" BTC",style: TextStyle(color: Colors.white),),
-
-              isBuy
-                  ?Text(" شراء ", style: TextStyle(color: Constants.primaryColor),)
-                  :Text(" بيع  ", style: TextStyle(color: Constants.redColor),),
-
             ],
           ),
 
@@ -61,13 +59,12 @@ class UserOfferCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("المبلغ",style: TextStyle(color: Colors.white),),
-                Spacer(),
-                Text("ر.س",style: TextStyle(color: Color(0xFFC6C6C6)),),
-                Text("  0.21358765 ",style: TextStyle(color: Color(0xFFC6C6C6)),),
-                SizedBox(width: 10,),
                 Text("السعر",style: TextStyle(color: Color(0xFFC6C6C6)),),
-
+                SizedBox(width: 10,),
+                Text("0.21358765 ر.س",style: TextStyle(color: Color(0xFFC6C6C6)),),
+                Spacer(),
+                Text("المبلغ     ",style: TextStyle(color: Colors.white),),
+                Spacer(),
               ],
             ),
           ),
@@ -76,24 +73,27 @@ class UserOfferCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("ر.س",style: TextStyle(color: Colors.white),),
-                Text("2500 ",style: TextStyle(color: Colors.white),),
-                Spacer(),
-                Text("0.21358765 BTC",style: TextStyle(color: Color(0xFFC6C6C6)),),
-                SizedBox(width: 10,),
                 Text("الكمية",style: TextStyle(color: Color(0xFFC6C6C6)),),
+                SizedBox(width: 9,),
+                Text("BTC ",style: TextStyle(color: Color(0xFFC6C6C6)),),
+                Text("0.21347658",style: TextStyle(color: Color(0xFFC6C6C6)),),
+
+                Spacer(),
+                Text("2500 ر.س",style: TextStyle(color: Colors.white),),
+                Spacer(),
               ],
             ),
           ),
           SizedBox(height: 5,),
           Expanded(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("2021/5/1- 14:30pm",style: TextStyle(color: Color(0xFFC6C6C6), fontSize:14 ) ,),
-                Spacer(),
-                Text("عبدالعزيز",style: TextStyle(color: Colors.white),),
                 SvgPicture.asset("assets/icons/profile-icon.svg"),
-
+                Text("عبدالعزيز",style: TextStyle(color: Colors.white, ),),
+                Spacer(),
+                Text("2021/5/1-14:30pm",style: TextStyle(color: Color(0xFFC6C6C6), fontSize:14 ) ,),
               ],
             ),
           ),
