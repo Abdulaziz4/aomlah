@@ -4,10 +4,14 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../core/app/app.locator.dart';
 import '../../../core/app/app.router.dart';
 
-class ProfileViewModel extends BaseViewModel{
+class ProfileViewModel extends BaseViewModel {
   final navService = locator<NavigationService>();
 
-  navigateToSettings(){
+  navigateToSettings() {
     navService.navigateTo(Routes.settingsHome);
+  }
+
+  navigateToWalletInfo() {
+    navService.navigateTo(Routes.walletInfo);
   }
 }

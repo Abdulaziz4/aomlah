@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
@@ -64,7 +65,7 @@ class WalletManagmentService {
     await http.post(url, body: data);
   }
 
-  Future<Map<String, dynamic>> getWalletInfo(String address) async {
+  Future<RealTimeWallet> getWalletInfo(String address) async {
     _logger.i("getWalletInfo | args: address=$address");
 
     final response = await sendRequest(
@@ -72,7 +73,8 @@ class WalletManagmentService {
       includeToken: false,
       req: HttpVreb.get,
     );
+    final wallet = RealTimeWallet.fromJson(response);
 
-    return response;
+    return wallet;
   }
 }

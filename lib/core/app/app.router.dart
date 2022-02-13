@@ -8,6 +8,7 @@
 
 import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_view.dart';
+import 'package:aomlah/ui/views/wallet/wallet_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -33,6 +34,7 @@ class Routes {
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
   static const String updateProfile = '/settings-update-profile';
+  static const String walletInfo = '/wallet-info-view';
 
   static const all = <String>{
     startupView,
@@ -45,6 +47,7 @@ class Routes {
     faucetsView,
     settingsHome,
     updateProfile,
+    walletInfo,
   };
 }
 
@@ -63,8 +66,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfile, page: UpdateProfileView),
-
-
+    RouteDef(Routes.walletInfo, page: WalletInfoView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -116,19 +118,24 @@ class StackedRouter extends RouterBase {
         builder: (context) => const FaucetsView(),
         settings: data,
       );
-
     },
-    SettingsHome: (data){
+    SettingsHome: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const SettingsHome(),
         settings: data,
       );
     },
-    UpdateProfileView: (data){
+    UpdateProfileView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const UpdateProfileView(),
         settings: data,
       );
-    }
+    },
+    WalletInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WalletInfoView(),
+        settings: data,
+      );
+    },
   };
 }
