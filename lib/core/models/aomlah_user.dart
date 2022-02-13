@@ -9,12 +9,14 @@ class AomlahUser {
   final bool isVerified;
   final Wallet? wallet;
   final List<BankAccount> bankAccounts;
+  final bool isOnline;
   AomlahUser({
     required this.profileId,
     required this.name,
     required this.isVerified,
     required this.bankAccounts,
     required this.wallet,
+    required this.isOnline,
   });
 
   factory AomlahUser.anonymous() {
@@ -24,6 +26,7 @@ class AomlahUser {
       isVerified: false,
       bankAccounts: [],
       wallet: Wallet(address: "", privateKey: "", publicKey: ""),
+      isOnline: false,
     );
   }
 
@@ -32,6 +35,7 @@ class AomlahUser {
       'profile_id': profileId,
       'name': name,
       'is_verified': isVerified,
+      'is_online': isOnline,
     };
   }
 
@@ -48,6 +52,7 @@ class AomlahUser {
       isVerified: map['is_verified'] ?? false,
       wallet: map["wallet"] == null ? null : Wallet.fromJson(map['wallet']),
       bankAccounts: accounts,
+      isOnline: map['is_online'] ?? false,
     );
   }
 }

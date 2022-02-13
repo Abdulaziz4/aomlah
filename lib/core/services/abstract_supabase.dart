@@ -17,6 +17,18 @@ abstract class AbstractSupabase {
         .execute();
   }
 
+  Future<PostgrestResponse> update(
+    AomlahTable table,
+    Map<String, dynamic> payload,
+    Map<String, dynamic> match,
+  ) async {
+    return supabase
+        .from(table.name)
+        .update(payload, returning: ReturningOption.minimal)
+        .match(match)
+        .execute();
+  }
+
   Future<PostgrestResponse> insert(
     AomlahTable table,
     Map<String, dynamic> payload,

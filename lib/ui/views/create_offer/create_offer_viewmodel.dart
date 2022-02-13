@@ -55,4 +55,7 @@ class CreateOfferViewModel extends BaseViewModel {
       print(e);
     }
   }
+
 }
+
+
