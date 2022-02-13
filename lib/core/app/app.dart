@@ -11,6 +11,8 @@ import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/faucets/faucets_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
+import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
+import 'package:aomlah/ui/views/settings/settings_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
 import 'package:aomlah/ui/views/trading/trader/buy_coin_overview_view.dart';
 import 'package:aomlah/ui/views/trading/trader/trader_buy_coin_view.dart';
@@ -31,6 +33,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: TraderBuyCoinView),
     MaterialRoute(page: WalletView),
     MaterialRoute(page: FaucetsView),
+    MaterialRoute(page: SettingsHome),
+    MaterialRoute(page: UpdateProfileView),
   ],
   dependencies: [
     // Register all services and deps.

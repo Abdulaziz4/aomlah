@@ -1,15 +1,15 @@
-import 'package:aomlah/core/models/bitcoin.dart';
-import 'package:aomlah/ui/shared/busy_overlay.dart';
-import 'package:aomlah/ui/views/trading/trader/viewmodels/buy_coin_overview_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
 import 'package:aomlah/ui/views/trading/components/spanned_text_item.dart';
-import 'package:provider/provider.dart';
-import 'package:stacked/stacked.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
+import 'package:aomlah/ui/views/trading/trader/viewmodels/buy_coin_overview_viewmodel.dart';
 
 class BuyCoinOverviewView extends StatefulWidget {
   const BuyCoinOverviewView({Key? key}) : super(key: key);

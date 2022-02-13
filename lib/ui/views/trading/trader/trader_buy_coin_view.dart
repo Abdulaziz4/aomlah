@@ -1,9 +1,10 @@
-import 'package:aomlah/core/app/utils/colors_helper.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/ui/shared/button_tile.dart';
-import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/shared/expandable_card.dart';
+import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
 import 'package:aomlah/ui/views/trading/components/receipt_info.dart';
+import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
 import 'package:flutter/material.dart';
 
 class TraderBuyCoinView extends StatefulWidget {
@@ -14,6 +15,42 @@ class TraderBuyCoinView extends StatefulWidget {
 }
 
 class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
+  final Map<TradeState, HeaderStyle> headerStates = {
+    TradeState.awaiting_payment: HeaderStyle(
+      "تم إنشاء الطلب",
+      Text("يرجى الدفع للبائع خلال 30:00"),
+      Constants.black2dp,
+    ),
+    TradeState.payment_sent: HeaderStyle(
+      "في إنتظار تاكيد البائع",
+      Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
+      Constants.lighBlue,
+    ),
+    TradeState.completed: HeaderStyle(
+      "تم إكمال الطلب",
+      Text("لقد قمت بعملية الشراء بنجاح"),
+      Constants.primaryColor,
+    ),
+    TradeState.canceled: HeaderStyle(
+      "تم إلغاء الطلب ",
+      SizedBox(),
+      Constants.redColor,
+    ),
+    TradeState.disputed: HeaderStyle(
+      "متنازع عليه",
+      SizedBox(),
+      Color.fromARGB(255, 213, 200, 86),
+    ),
+    //TODO:Add other states
+  };
+  TradeState currentState = TradeState.awaiting_payment;
+
+  List<TradeState> states = [
+    TradeState.awaiting_payment,
+    TradeState.payment_sent,
+    TradeState.completed,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,36 +82,24 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
               ),
             ),
           ),
-          Container(
-            height: 100,
-            padding: const EdgeInsets.only(
-              left: 15,
-              bottom: 15,
-              right: 15,
-            ),
-            color: darken(Constants.black2dp, 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: CustomButton(
-                    onPressed: () {},
-                    text: "تم التحويل، أخبر البائع",
-                    height: 45,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: CustomButton(
-                    onPressed: () {},
-                    text: "الغاء",
-                    color: Constants.redColor,
-                    height: 45,
-                  ),
-                ),
-              ],
-            ),
+          BottomActions(
+            onCancel: () {
+              changeState(TradeState.canceled);
+            },
+            onPaymentSent: () {
+              changeState(TradeState.payment_sent);
+            },
+            onPaymentReceived: () {
+              changeState(TradeState.completed);
+            },
+            onOpenDispute: () {
+              changeState(TradeState.disputed);
+            },
+            showCancelButton: currentState == TradeState.awaiting_payment,
+            showPaymentSent: currentState == TradeState.awaiting_payment,
+            showOpenDispute: currentState == TradeState.payment_sent ||
+                currentState == TradeState.completed,
+            showCompleteTrade: currentState == TradeState.payment_sent,
           )
         ],
       ),
@@ -123,53 +148,17 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     );
   }
 
-  Container buildHeader() {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: Constants.shadow,
-        color: Constants.black2dp,
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.close_rounded, size: 30),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15.0,
-                horizontal: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "تم إنشاء الطلب",
-                    style: Constants.robotoFont.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
-                  ),
-                  Text(
-                    "يرجى الدفع للبائع خلال 30:00",
-                    style: Constants.robotoFont.copyWith(
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+  Widget buildHeader() {
+    return TradeStateHeader(
+      title: headerStates[currentState]!.title,
+      color: headerStates[currentState]!.color,
+      subWidget: headerStates[currentState]!.subTitle,
     );
+  }
+
+  void changeState(TradeState state) {
+    setState(() {
+      currentState = state;
+    });
   }
 }

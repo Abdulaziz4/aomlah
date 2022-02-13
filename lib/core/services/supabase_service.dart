@@ -56,6 +56,7 @@ class SupabaseService extends AbstractSupabase {
       primaryKey: "offer_id",
     );
   }
+  
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());

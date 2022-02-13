@@ -16,6 +16,8 @@ import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
+import '../../ui/views/settings/settings_update_profile_view.dart';
+import '../../ui/views/settings/settings_view.dart';
 import '../../ui/views/startup/startup_view.dart';
 import '../../ui/views/trading/trader/buy_coin_overview_view.dart';
 import '../../ui/views/trading/trader/trader_buy_coin_view.dart';
@@ -33,6 +35,8 @@ class Routes {
   static const String traderBuyCoinView = '/trader-buy-coin-view';
   static const String walletView = '/wallet-view';
   static const String faucetsView = '/faucets-view';
+  static const String settingsHome = '/settings-home';
+  static const String updateProfileView = '/update-profile-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -44,6 +48,8 @@ class Routes {
     traderBuyCoinView,
     walletView,
     faucetsView,
+    settingsHome,
+    updateProfileView,
   };
 }
 
@@ -62,6 +68,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.traderBuyCoinView, page: TraderBuyCoinView),
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
+    RouteDef(Routes.settingsHome, page: SettingsHome),
+    RouteDef(Routes.updateProfileView, page: UpdateProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -123,6 +131,18 @@ class StackedRouter extends RouterBase {
     FaucetsView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const FaucetsView(),
+        settings: data,
+      );
+    },
+    SettingsHome: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SettingsHome(),
+        settings: data,
+      );
+    },
+    UpdateProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const UpdateProfileView(),
         settings: data,
       );
     },
