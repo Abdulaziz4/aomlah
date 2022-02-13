@@ -22,8 +22,17 @@ class OfferCard extends StatelessWidget {
         .priceFromMargin(offer.margin)
         .toStringAsFixed(3);
     return GestureDetector(
-      onTap: () =>
-          {locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView)},
+      onTap: () => {
+        if (offer.isBuy)
+          {
+            locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView),
+          }
+        else
+          {
+            locator<NavigationService>()
+                .navigateTo(Routes.sellCoinOverviewView),
+          }
+      },
       child: Container(
         height: 200,
         padding: const EdgeInsets.all(10),

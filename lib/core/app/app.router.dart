@@ -19,8 +19,10 @@ import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/settings/settings_update_profile_view.dart';
 import '../../ui/views/settings/settings_view.dart';
 import '../../ui/views/startup/startup_view.dart';
-import '../../ui/views/trading/trader/buy_coin_overview_view.dart';
-import '../../ui/views/trading/trader/trader_buy_coin_view.dart';
+import '../../ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
+import '../../ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
+import '../../ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
+import '../../ui/views/trading/trader/sell_coin/trader_sell_coin_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
 
 class Routes {
@@ -33,6 +35,8 @@ class Routes {
   static const String welcomeView = '/welcome-view';
   static const String buyCoinOverviewView = '/buy-coin-overview-view';
   static const String traderBuyCoinView = '/trader-buy-coin-view';
+  static const String sellCoinOverviewView = '/sell-coin-overview-view';
+  static const String traderSellCoinView = '/trader-sell-coin-view';
   static const String walletView = '/wallet-view';
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
@@ -46,6 +50,8 @@ class Routes {
     welcomeView,
     buyCoinOverviewView,
     traderBuyCoinView,
+    sellCoinOverviewView,
+    traderSellCoinView,
     walletView,
     faucetsView,
     settingsHome,
@@ -66,6 +72,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.buyCoinOverviewView, page: BuyCoinOverviewView),
     RouteDef(Routes.traderBuyCoinView, page: TraderBuyCoinView),
+    RouteDef(Routes.sellCoinOverviewView, page: SellCoinOverviewView),
+    RouteDef(Routes.traderSellCoinView, page: TraderSellCoinView),
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
@@ -119,6 +127,18 @@ class StackedRouter extends RouterBase {
     TraderBuyCoinView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const TraderBuyCoinView(),
+        settings: data,
+      );
+    },
+    SellCoinOverviewView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SellCoinOverviewView(),
+        settings: data,
+      );
+    },
+    TraderSellCoinView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const TraderSellCoinView(),
         settings: data,
       );
     },

@@ -14,8 +14,10 @@ import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
-import 'package:aomlah/ui/views/trading/trader/buy_coin_overview_view.dart';
-import 'package:aomlah/ui/views/trading/trader/trader_buy_coin_view.dart';
+import 'package:aomlah/ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
+import 'package:aomlah/ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
+import 'package:aomlah/ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
+import 'package:aomlah/ui/views/trading/trader/sell_coin/trader_sell_coin_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -31,6 +33,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: WelcomeView),
     MaterialRoute(page: BuyCoinOverviewView),
     MaterialRoute(page: TraderBuyCoinView),
+    MaterialRoute(page: SellCoinOverviewView),
+    MaterialRoute(page: TraderSellCoinView),
     MaterialRoute(page: WalletView),
     MaterialRoute(page: FaucetsView),
     MaterialRoute(page: SettingsHome),
