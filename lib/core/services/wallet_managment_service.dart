@@ -72,7 +72,6 @@ class WalletManagmentService {
       includeToken: false,
       req: HttpVreb.get,
     );
-    print(response);
 
     return response;
   }
