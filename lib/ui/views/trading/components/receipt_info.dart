@@ -1,10 +1,10 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class RecipteInfo extends StatelessWidget {
+class RecipteInfoItem extends StatelessWidget {
   final String rightText;
   final String leftText;
-  const RecipteInfo({
+  const RecipteInfoItem({
     Key? key,
     required this.leftText,
     required this.rightText,

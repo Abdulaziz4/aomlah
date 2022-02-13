@@ -1,9 +1,8 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
-import 'package:aomlah/ui/shared/button_tile.dart';
-import 'package:aomlah/ui/shared/expandable_card.dart';
 import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
-import 'package:aomlah/ui/views/trading/components/receipt_info.dart';
+import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
+import 'package:aomlah/ui/views/trading/components/trade_receipt.dart';
 import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     TradeState.payment_sent: HeaderStyle(
       "في إنتظار تاكيد البائع",
       Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
-      Constants.lighBlue,
+      Constants.darkBlue,
     ),
     TradeState.completed: HeaderStyle(
       "تم إكمال الطلب",
@@ -62,19 +61,9 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 verticalDirection: VerticalDirection.up,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ExpandableCard(
-                    title: "الشروط والاحكام",
-                    expandedSection: Text("ماقبل اس تي سي باي"),
-                    color: Constants.black2dp,
-                  ),
-                  ExpandableCard(
-                    title: "الحسابات البنكية",
-                    expandedSection: Text("اثممخ"),
-                    color: Constants.black2dp,
-                  ),
-                  ButtonTile(
-                    onPressed: () {},
-                    text: "المحادثة",
+                  TradeExtraInfo(
+                    terms: "نتسير",
+                    bankAccounts: [],
                   ),
                   buildRecipte(),
                   buildHeader(),
@@ -106,45 +95,12 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     );
   }
 
-  Container buildRecipte() {
-    return Container(
-      color: Constants.black2dp,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 20,
-      ),
-      child: Column(
-        children: [
-          Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "شراء",
-                    style: Constants.largeText.copyWith(
-                      color: Constants.primaryColor,
-                    ),
-                  ),
-                  SizedBox(width: 5),
-                  Text("BTC", style: Constants.largeText),
-                ],
-              ),
-              RecipteInfo(
-                rightText: "المبلغ الاجمالي",
-                leftText: "3000 ر.س",
-              ),
-              RecipteInfo(
-                rightText: "السعر",
-                leftText: "144,644,244 ر.س",
-              ),
-              RecipteInfo(
-                rightText: "كمية العملة الرقمية",
-                leftText: "0.533443 BTC",
-              ),
-            ],
-          ),
-        ],
-      ),
+  Widget buildRecipte() {
+    return TradeReceipt(
+      isBuy: true,
+      quantity: "3020",
+      price: "144,644,244",
+      cryptoAmount: "0.52234",
     );
   }
 

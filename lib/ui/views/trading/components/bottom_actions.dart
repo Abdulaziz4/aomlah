@@ -49,21 +49,12 @@ class BottomActions extends StatelessWidget {
                       height: 45,
                     ),
                   ),
-                SizedBox(width: 10),
+                if (showPaymentSent) SizedBox(width: 10),
                 if (showCancelButton)
                   Expanded(
                     child: CustomButton(
                       onPressed: onCancel,
                       text: "الغاء",
-                      color: Constants.redColor,
-                      height: 45,
-                    ),
-                  ),
-                if (showOpenDispute)
-                  Expanded(
-                    child: CustomButton(
-                      onPressed: onOpenDispute,
-                      text: "رفع طلب نزاع",
                       color: Constants.redColor,
                       height: 45,
                     ),
@@ -74,6 +65,16 @@ class BottomActions extends StatelessWidget {
                       onPressed: onPaymentReceived,
                       text: "تأكيد",
                       color: Constants.primaryColor,
+                      height: 45,
+                    ),
+                  ),
+                if (showCompleteTrade) SizedBox(width: 10),
+                if (showOpenDispute)
+                  Expanded(
+                    child: CustomButton(
+                      onPressed: onOpenDispute,
+                      text: "رفع طلب نزاع",
+                      color: Constants.redColor,
                       height: 45,
                     ),
                   ),

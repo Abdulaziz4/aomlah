@@ -9,13 +9,14 @@ class ButtonTile extends StatelessWidget {
   final Color? color;
   final Widget? trailing;
   final void Function() onPressed;
-
+  final double verticalMargin;
   const ButtonTile({
     Key? key,
     required this.onPressed,
     required this.text,
     this.color = Colors.white,
     this.trailing,
+    this.verticalMargin = 0,
   }) : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class ButtonTile extends StatelessWidget {
       child: Container(
         height: 70,
         color: Constants.black2dp,
-        margin: const EdgeInsets.symmetric(vertical: 0),
+        margin: EdgeInsets.symmetric(vertical: verticalMargin),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
