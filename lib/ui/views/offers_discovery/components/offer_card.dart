@@ -1,20 +1,26 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:provider/provider.dart';
 
 class OfferCard extends StatelessWidget {
-  final bool isBuy;
+  final Offer offer;
   const OfferCard({
     Key? key,
-    this.isBuy = true,
+    required this.offer,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final price = Provider.of<Bitcoin>(context)
+        .priceFromMargin(offer.margin)
+        .toStringAsFixed(3);
     return GestureDetector(
       onTap: () =>
           {locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView)},
@@ -47,18 +53,18 @@ class OfferCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildInfoItem("السعر", "121,41241,124 ر.س"),
+                      buildInfoItem("السعر", "$price ر.س"),
                       Spacer(),
-                      buildInfoItem("الكمية", "0.1245 BTC"),
+                      buildInfoItem("الكمية", offer.cryptoAmonutLabel()),
                     ],
                   ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        buildInfoItem("الحد الادنى", "2000 ر.س"),
+                        buildInfoItem("الحد الادنى", "${offer.minTrade} ر.س"),
                         Spacer(),
-                        isBuy
+                        offer.isBuy
                             ? CustomButton(
                                 onPressed: () {},
                                 text: "شراء",

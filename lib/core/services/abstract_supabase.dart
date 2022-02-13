@@ -17,6 +17,18 @@ abstract class AbstractSupabase {
         .execute();
   }
 
+  Future<PostgrestResponse> update(
+    AomlahTable table,
+    Map<String, dynamic> payload,
+    Map<String, dynamic> match,
+  ) async {
+    return supabase
+        .from(table.name)
+        .update(payload, returning: ReturningOption.minimal)
+        .match(match)
+        .execute();
+  }
+
   Future<PostgrestResponse> insert(
     AomlahTable table,
     Map<String, dynamic> payload,
@@ -111,6 +123,20 @@ abstract class AbstractSupabase {
           .e("An error occur while getting $functionName with message $error");
     }
     return [];
+  }
+
+  Stream<List<T>> subscribeForChanges<T>({
+    required AomlahTable table,
+    required T Function(Map<String, dynamic> json) fromJson,
+    required String primaryKey,
+  }) {
+    return supabase
+        .from(table.name)
+        .stream([primaryKey])
+        .execute()
+        .map<List<T>>((mapsList) {
+          return mapsList.map((map) => fromJson(map)).toList();
+        });
   }
 
   List<T> _jsonListToObjectList<T>(

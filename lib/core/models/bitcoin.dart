@@ -28,4 +28,8 @@ class Bitcoin {
   double amountToBtc(double fiatAmount) {
     return (fiatAmount / 3.75) / price;
   }
+
+  double priceFromMargin(double margin) {
+    return price * (margin / 100) * 3.75;
+  }
 }

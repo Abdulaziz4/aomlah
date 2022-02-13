@@ -15,6 +15,7 @@ class PriceService {
   BehaviorSubject<Bitcoin> priceContrller = BehaviorSubject<Bitcoin>();
 
   void connect() {
+    _logger.i("Bitcoin Price Socket Connected");
     try {
       final url = "$baseUrl?api_key=$apiKey";
       final channel = WebSocketChannel.connect(

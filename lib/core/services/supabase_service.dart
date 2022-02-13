@@ -29,6 +29,15 @@ class SupabaseService extends AbstractSupabase {
   }) async {
     await insert(AomlahTable.profiles, {"profile_id": uuid, "name": name});
   }
+  Future<void> updateUserProfile(String uuid,String name,) async {
+    await update(AomlahTable.profiles, {"name": name},{"profile_id": uuid});
+
+  }
+  Future<void> updateUserStatus({required String uuid,required bool status}) async {
+    await update(AomlahTable.profiles, {"is_online": status},{"profile_id": uuid});
+
+
+  }
 
   Future<AomlahUser> getUser(String uuid) async {
     final res = await callFn<AomlahUser>("get_user", AomlahUser.fromJson,
@@ -40,12 +49,21 @@ class SupabaseService extends AbstractSupabase {
     return get(AomlahTable.offers, Offer.fromJson);
   }
 
+  Stream<List<Offer>> getAllOffersSubscription() {
+    return subscribeForChanges<Offer>(
+      table: AomlahTable.offers,
+      fromJson: Offer.fromJson,
+      primaryKey: "offer_id",
+    );
+  }
+
+  Future<void> createOffer(Offer offer) async {
+    await insert(AomlahTable.offers, offer.toJson());
+  }
+
   Future<void> createWallet(
     Wallet wallet,
   ) async {
     await upsert(AomlahTable.wallets, wallet.toJson());
   }
-  // Future<bool> createOffer(Offer offer) async {
-  //   upsert(AomlahTable.offers, offer.toJson());
-  // }
 }
