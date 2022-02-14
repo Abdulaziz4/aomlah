@@ -10,12 +10,15 @@ class PaymentWindow extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final void Function(String) onAmountSaved;
   final void Function() onSubmit;
+  final void Function()? onSelectBankAccount;
+
   const PaymentWindow({
     Key? key,
     required this.isBuy,
     required this.formKey,
     required this.onAmountSaved,
     required this.onSubmit,
+    this.onSelectBankAccount,
   }) : super(key: key);
 
   @override
@@ -78,6 +81,45 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 ],
               ),
             ),
+            if (!widget.isBuy)
+              GestureDetector(
+                onTap: widget.onSelectBankAccount,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "الحساب البنكي",
+                        style: Constants.smallText,
+                      ),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Constants.black4dp,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "اختر حساب بنكي",
+                              style: Constants.smallText.copyWith(
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 22,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
