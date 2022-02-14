@@ -18,7 +18,8 @@ class SellCoinOverviewView extends StatelessWidget {
               title: Text("بيع BTC"),
             ),
             body: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
