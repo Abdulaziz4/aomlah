@@ -25,4 +25,8 @@ class Transaction {
       confirmedDate: DateTime.parse(json['confirmed']),
     );
   }
+  String satsToBTC(int sats) {
+    double n = (sats / 100000000.0);
+    return '$n';
+  }
 }

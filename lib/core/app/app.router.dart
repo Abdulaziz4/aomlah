@@ -9,17 +9,25 @@
 import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
+import '../../ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
+import '../../ui/views/settings/settings_update_profile_view.dart';
+import '../../ui/views/settings/settings_view.dart';
 import '../../ui/views/startup/startup_view.dart';
+import '../../ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
+import '../../ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
+import '../../ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
+import '../../ui/views/trading/trader/sell_coin/trader_sell_coin_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
 
 class Routes {
@@ -30,11 +38,19 @@ class Routes {
   static const String verifyAccountPromotionView =
       '/verify-account-promotion-view';
   static const String welcomeView = '/welcome-view';
+  static const String buyCoinOverviewView = '/buy-coin-overview-view';
+  static const String traderBuyCoinView = '/trader-buy-coin-view';
+  static const String sellCoinOverviewView = '/sell-coin-overview-view';
+  static const String traderSellCoinView = '/trader-sell-coin-view';
   static const String walletView = '/wallet-view';
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
+
   static const String updateProfile = '/settings-update-profile';
   static const String walletInfo = '/wallet-info-view';
+
+  static const String updateProfileView = '/update-profile-view';
+  static const String bankAccountSelectionView = '/bank-account-selection-view';
 
   static const all = <String>{
     startupView,
@@ -43,11 +59,17 @@ class Routes {
     createOfferView,
     verifyAccountPromotionView,
     welcomeView,
+    buyCoinOverviewView,
+    traderBuyCoinView,
+    sellCoinOverviewView,
+    traderSellCoinView,
     walletView,
     faucetsView,
     settingsHome,
     updateProfile,
     walletInfo,
+    updateProfileView,
+    bankAccountSelectionView,
   };
 }
 
@@ -62,11 +84,17 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.verifyAccountPromotionView,
         page: VerifyAccountPromotionView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
+    RouteDef(Routes.buyCoinOverviewView, page: BuyCoinOverviewView),
+    RouteDef(Routes.traderBuyCoinView, page: TraderBuyCoinView),
+    RouteDef(Routes.sellCoinOverviewView, page: SellCoinOverviewView),
+    RouteDef(Routes.traderSellCoinView, page: TraderSellCoinView),
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfile, page: UpdateProfileView),
     RouteDef(Routes.walletInfo, page: WalletInfoView),
+    RouteDef(Routes.updateProfileView, page: UpdateProfileView),
+    RouteDef(Routes.bankAccountSelectionView, page: BankAccountSelectionView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -107,6 +135,30 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    BuyCoinOverviewView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const BuyCoinOverviewView(),
+        settings: data,
+      );
+    },
+    TraderBuyCoinView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const TraderBuyCoinView(),
+        settings: data,
+      );
+    },
+    SellCoinOverviewView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SellCoinOverviewView(),
+        settings: data,
+      );
+    },
+    TraderSellCoinView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const TraderSellCoinView(),
+        settings: data,
+      );
+    },
     WalletView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WalletView(),
@@ -134,7 +186,11 @@ class StackedRouter extends RouterBase {
     WalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WalletInfoView(),
-        settings: data,
+
+        // BankAccountSelectionView: (data) {
+        //   return MaterialPageRoute<dynamic>(
+        //     builder: (context) => const BankAccountSelectionView(),
+        //     settings: data,
       );
     },
   };

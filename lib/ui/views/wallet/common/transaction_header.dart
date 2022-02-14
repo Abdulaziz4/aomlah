@@ -41,7 +41,7 @@ class TransactionHead extends StatelessWidget {
                 style: TextStyle(color: Constants.darkBlue),
               ),
               Text(
-                convertToBTC(),
+                transaction.satsToBTC(transaction.total) + ' BTC ',
                 textAlign: TextAlign.left,
               )
             ],
@@ -67,10 +67,5 @@ class TransactionHead extends StatelessWidget {
         style: TextStyle(color: Constants.primaryColor),
       );
     }
-  }
-
-  String convertToBTC() {
-    double amountBTC = (transaction.total / 100000000);
-    return ' $amountBTC ';
   }
 }

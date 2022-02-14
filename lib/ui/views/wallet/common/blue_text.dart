@@ -16,7 +16,7 @@ class BlueText extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign,
-      style: TextStyle(color: Constants.darkBlue),
+      style: Constants.robotoFont.copyWith(color: Constants.darkBlue),
     );
   }
 }

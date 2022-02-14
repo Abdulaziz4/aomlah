@@ -63,82 +63,76 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
         builder: (context, viewmodel, _) {
           return Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: WalletContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'القيمة الكلية',
-                            style: TextStyle(color: Constants.darkBlue),
-                          ),
-                          // Text('PLACEHOLDER'),
-                          Row(
-                            children: [
-                              Text(
-                                'BTC ',
-                                style: TextStyle(
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                walletBalance.toString(),
-                                style: TextStyle(
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                ' ≈ ',
-                                style: TextStyle(
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                walletBalanceSAR.toString(),
-                                style: TextStyle(
-                                    // fontWeight: FontWeight.,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                ' ر.س',
-                                style: TextStyle(
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'عنوان المحفظة',
-                            style: TextStyle(color: Constants.darkBlue),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(wallet.address),
-                              TextButton(
-                                  onPressed: () {
-                                    FlutterClipboard.copy(wallet.address)
-                                        .then((value) => print('copied'));
-                                  },
-                                  child: Icon(Icons.copy)),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ConversionButton(text: 'تحويل', press: () {}),
-                            ],
-                          ),
-                        ],
-                      ),
+              WalletContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'القيمة الكلية',
+                      style: TextStyle(color: Constants.darkBlue),
                     ),
-                  ),
-                ],
+                    // Text('PLACEHOLDER'),
+                    Row(
+                      children: [
+                        Text(
+                          'BTC ',
+                          style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        Text(
+                          walletBalance.toString(),
+                          style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        Text(
+                          ' ≈ ',
+                          style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        Text(
+                          walletBalanceSAR.toString(),
+                          style: TextStyle(
+                              // fontWeight: FontWeight.,
+                              fontSize: 18),
+                        ),
+                        Text(
+                          ' ر.س',
+                          style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'عنوان المحفظة',
+                      style: TextStyle(color: Constants.darkBlue),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(wallet.address),
+                        TextButton(
+                            onPressed: () {
+                              FlutterClipboard.copy(wallet.address)
+                                  .then((value) => print('copied'));
+                            },
+                            child: Icon(Icons.copy)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ConversionButton(text: 'تحويل', press: () {}),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: const [
@@ -167,6 +161,9 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset('assets/icons/no-record.svg'),
+            SizedBox(
+              height: 5,
+            ),
             Text(
               'لا يوجد معاملات',
               style: TextStyle(fontSize: 20),

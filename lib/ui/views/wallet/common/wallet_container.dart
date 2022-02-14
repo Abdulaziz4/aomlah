@@ -9,14 +9,13 @@ class WalletContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 225,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
       decoration: BoxDecoration(
         color: Constants.black2dp,
         boxShadow: Constants.shadow,
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: child,
     );
   }

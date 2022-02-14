@@ -6,7 +6,7 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wallet = Provider.of<Map<String, dynamic>>(context);
+    final wallet = Provider.of<Map<String,dynamic>>(context);
 
     return Scaffold(
       appBar: AppBar(),

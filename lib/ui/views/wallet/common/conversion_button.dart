@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/app/utils/constants.dart';
+
 class ConversionButton extends StatelessWidget {
   static const kPrimaryColor = Color(0xFF169c94);
 
@@ -47,7 +49,7 @@ class ConversionButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: 40,
           ),
-          textStyle: TextStyle(
+          textStyle: Constants.robotoFont.copyWith(
               color: textColor, fontSize: 17, fontWeight: FontWeight.bold)),
     );
   }

@@ -15,7 +15,8 @@ class TransactionBody extends StatelessWidget {
   Widget build(BuildContext context) {
     String from = transaction.from;
     String to = transaction.to;
-    String fees = convertToBTC();
+    String fees = transaction.satsToBTC(transaction.fees) + ' BTC ';
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -70,10 +71,5 @@ class TransactionBody extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String convertToBTC() {
-    double amountBTC = (transaction.fees / 100000000);
-    return '$amountBTC BTC';
   }
 }
