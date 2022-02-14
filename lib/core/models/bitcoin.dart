@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:aomlah/core/app/utils/double_extension.dart';
+
 class Bitcoin {
   final double price;
 
@@ -21,6 +23,11 @@ class Bitcoin {
 
   factory Bitcoin.fromJson(String source) =>
       Bitcoin.fromMap(json.decode(source));
+
+  // Calculates the amount you will get in BTC
+  double amountToBtc(double fiatAmount) {
+    return (fiatAmount / 3.75) / price;
+  }
 
   double priceFromMargin(double margin) {
     return price * (margin / 100) * 3.75;

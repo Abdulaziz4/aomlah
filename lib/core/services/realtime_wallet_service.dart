@@ -42,6 +42,7 @@ class RealtimeWalletService {
       if (decodedEvent["event"] != "pong") {
         // On new transaction update the wallet balance
         final updatedWallet = await _walletManager.getWalletInfo(address);
+
         walletController.sink.add(updatedWallet);
       }
     });

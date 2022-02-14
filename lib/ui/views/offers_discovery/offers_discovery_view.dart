@@ -1,6 +1,5 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
-import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/offers_discovery/components/offer_card.dart';
 import 'package:aomlah/ui/views/offers_discovery/viewmodels/offers_discovery_viewmodel.dart';

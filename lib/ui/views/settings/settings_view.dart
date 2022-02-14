@@ -20,15 +20,16 @@ class _SettingsHomeState extends State<SettingsHome> {
         backgroundColor: Constants.black3dp,
         title: Text('الإعدادات',
             style: TextStyle(
-            color: Constants.darkBlue, fontWeight: FontWeight.bold)),
+                color: Constants.darkBlue, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: SettingsHomeBody(),
     );
   }
 }
+
 class SettingsHomeBody extends StatefulWidget {
-   SettingsHomeBody({Key? key}) : super(key: key);
+  SettingsHomeBody({Key? key}) : super(key: key);
 
   @override
   State<SettingsHomeBody> createState() => _SettingsHomeBodyState();
@@ -41,26 +42,36 @@ class _SettingsHomeBodyState extends State<SettingsHomeBody> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
         viewModelBuilder: () => SettingsViewModel(),
-    builder: (context, viewmodel, _) {
-    return Column(
-      children: [
-
-        ButtonTile(onPressed: (){print('fffff'); }, text: 'حالتك متوفر',
-          widget: Switch.adaptive(
-              onChanged: (value)=> setState((){
-                viewmodel.updateStatus(value);
-                n=value;
-              }),
-              value:n ??= viewmodel.getStatus()),
-        ),
-        ButtonTile(onPressed: (){viewmodel.updateProfileNav();}, text: 'تحديث الملف الشخصي'),
-        ButtonTile(onPressed: (){viewmodel.logout();}, text: 'تسجيل الخروج',color: Colors.red,),
-
-      ],
-
-    );
-  });
+        builder: (context, viewmodel, _) {
+          return Column(
+            children: [
+              ButtonTile(
+                onPressed: () {
+                  print('fffff');
+                },
+                text: 'حالتك متوفر',
+                trailing: Switch.adaptive(
+                  onChanged: (value) => setState(() {
+                    viewmodel.updateStatus(value);
+                    n = value;
+                  }),
+                  value: n ??= viewmodel.getStatus(),
+                ),
+              ),
+              ButtonTile(
+                  onPressed: () {
+                    viewmodel.updateProfileNav();
+                  },
+                  text: 'تحديث الملف الشخصي'),
+              ButtonTile(
+                onPressed: () {
+                  viewmodel.logout();
+                },
+                text: 'تسجيل الخروج',
+                color: Colors.red,
+              ),
+            ],
+          );
+        });
   }
 }
-
-
