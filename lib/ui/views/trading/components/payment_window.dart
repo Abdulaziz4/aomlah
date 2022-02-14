@@ -29,6 +29,14 @@ class _PaymentWindowState extends State<PaymentWindow> {
   TextEditingController amountController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    amountController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
     super.dispose();
     amountController.dispose();

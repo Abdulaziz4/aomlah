@@ -1,5 +1,4 @@
 import 'package:aomlah/core/app/utils/constants.dart';
-import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:aomlah/ui/views/trading/components/payment_window.dart';
 import 'package:aomlah/ui/views/trading/components/trade_overview_header.dart';
 import 'package:aomlah/ui/views/trading/trader/sell_coin/viewmodels/sell_coin_overview_viewmodel.dart';
@@ -34,6 +33,7 @@ class SellCoinOverviewView extends StatelessWidget {
                       formKey: viewmodel.formKey,
                       onAmountSaved: viewmodel.setAmount,
                       onSubmit: viewmodel.submit,
+                      onSelectBankAccount: viewmodel.selectBankAccount,
                     ),
                     Row(
                       children: [
@@ -85,19 +85,6 @@ class SellCoinOverviewView extends StatelessWidget {
           style: Constants.mediumText,
         ),
       ],
-    );
-  }
-
-  Widget buildPurchaseWindow({
-    required GlobalKey<FormState> key,
-    required void Function(String) onSave,
-    required void Function() submit,
-  }) {
-    return PaymentWindow(
-      isBuy: true,
-      formKey: key,
-      onAmountSaved: onSave,
-      onSubmit: submit,
     );
   }
 }

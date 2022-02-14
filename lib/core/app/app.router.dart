@@ -12,6 +12,7 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
+import '../../ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
   static const String updateProfileView = '/update-profile-view';
+  static const String bankAccountSelectionView = '/bank-account-selection-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -56,6 +58,7 @@ class Routes {
     faucetsView,
     settingsHome,
     updateProfileView,
+    bankAccountSelectionView,
   };
 }
 
@@ -78,6 +81,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
+    RouteDef(Routes.bankAccountSelectionView, page: BankAccountSelectionView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -163,6 +167,12 @@ class StackedRouter extends RouterBase {
     UpdateProfileView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const UpdateProfileView(),
+        settings: data,
+      );
+    },
+    BankAccountSelectionView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const BankAccountSelectionView(),
         settings: data,
       );
     },
