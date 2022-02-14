@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -19,8 +20,8 @@ class RealtimeWalletService {
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
   static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
-  BehaviorSubject<Map<String, dynamic>> walletController =
-      BehaviorSubject<Map<String, dynamic>>();
+  BehaviorSubject<RealTimeWallet> walletController =
+      BehaviorSubject<RealTimeWallet>();
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectWallet | args: uuid= $uuid , address=$address");

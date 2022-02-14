@@ -3,6 +3,7 @@ import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/custom_theme.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
@@ -32,10 +33,10 @@ class MyApp extends StatelessWidget {
           create: (_) => locator<PriceService>().priceContrller.stream,
           initialData: Bitcoin(0.0),
         ),
-        StreamProvider<Map<String, dynamic>>(
+        StreamProvider<RealTimeWallet>(
           create: (_) =>
               locator<RealtimeWalletService>().walletController.stream,
-          initialData: const {},
+          initialData: RealTimeWallet.dummy(),
         ),
       ],
       child: StreamProvider<AomlahUser>(

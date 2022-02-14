@@ -6,6 +6,10 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
+import 'package:aomlah/ui/views/settings/settings_view.dart';
+import 'package:aomlah/ui/views/wallet/wallet_info_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -41,8 +45,13 @@ class Routes {
   static const String walletView = '/wallet-view';
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
+
+  static const String updateProfile = '/settings-update-profile';
+  static const String walletInfo = '/wallet-info-view';
+
   static const String updateProfileView = '/update-profile-view';
   static const String bankAccountSelectionView = '/bank-account-selection-view';
+
   static const all = <String>{
     startupView,
     navigationView,
@@ -57,6 +66,8 @@ class Routes {
     walletView,
     faucetsView,
     settingsHome,
+    updateProfile,
+    walletInfo,
     updateProfileView,
     bankAccountSelectionView,
   };
@@ -80,6 +91,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
+    RouteDef(Routes.updateProfile, page: UpdateProfileView),
+    RouteDef(Routes.walletInfo, page: WalletInfoView),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
     RouteDef(Routes.bankAccountSelectionView, page: BankAccountSelectionView),
   ];
@@ -170,10 +183,14 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    BankAccountSelectionView: (data) {
+    WalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const BankAccountSelectionView(),
-        settings: data,
+        builder: (context) => const WalletInfoView(),
+
+        // BankAccountSelectionView: (data) {
+        //   return MaterialPageRoute<dynamic>(
+        //     builder: (context) => const BankAccountSelectionView(),
+        //     settings: data,
       );
     },
   };
