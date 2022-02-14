@@ -1,3 +1,4 @@
+import 'package:aomlah/ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import 'package:aomlah/ui/views/profile/profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -147,7 +148,15 @@ class ProfileView extends StatelessWidget {
                           ),
                         )),
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BankAccountSelectionView()));
+                              }
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.all(25.0),
                               minimumSize: const Size.fromHeight(50),
