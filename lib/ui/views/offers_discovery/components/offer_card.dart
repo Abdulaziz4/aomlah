@@ -75,11 +75,17 @@ class OfferCard extends StatelessWidget {
                         Spacer(),
                         offer.isBuy
                             ? CustomButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  locator<NavigationService>()
+                                      .navigateTo(Routes.buyCoinOverviewView);
+                                },
                                 text: "شراء",
                               )
                             : CustomButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  locator<NavigationService>()
+                                      .navigateTo(Routes.sellCoinOverviewView);
+                                },
                                 text: "بيع",
                                 color: Constants.redColor,
                               ),
