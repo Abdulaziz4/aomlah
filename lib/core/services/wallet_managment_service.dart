@@ -69,7 +69,7 @@ class WalletManagmentService {
     _logger.i("getWalletInfo | args: address=$address");
 
     final response = await sendRequest(
-      path: "addrs/$address",
+      path: "addrs/$address/full",
       includeToken: false,
       req: HttpVreb.get,
     );

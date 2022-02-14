@@ -18,6 +18,7 @@ class RealTimeWallet {
   }
   factory RealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
+    print(json['txs']);
     transaction =
         (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
 

@@ -16,9 +16,13 @@ class Transaction {
     return Transaction(
       from: (json['addresses'] as List)[0],
       to: (json['addresses'] as List)[1],
+      // from: '',
+      // to: '',
       total: json['total'],
       fees: json['fees'],
-      confirmedDate: DateTime.parse(json['confirmedDate']),
+      // total: 0,
+      // fees: 0,
+      confirmedDate: DateTime.parse(json['confirmed']),
     );
   }
 }
