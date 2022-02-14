@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/app/utils/constants.dart';
 
-
 class BuyingDetails extends StatefulWidget {
   const BuyingDetails({Key? key}) : super(key: key);
 
@@ -35,14 +34,12 @@ class _BuyingDetailsState extends State<BuyingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,
@@ -108,14 +105,12 @@ class _BuyingDetailsState extends State<BuyingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,
@@ -160,14 +155,12 @@ class _BuyingDetailsState extends State<BuyingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,

@@ -34,14 +34,12 @@ class _SellingDetailsState extends State<SellingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,
@@ -106,14 +104,12 @@ class _SellingDetailsState extends State<SellingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,
@@ -158,14 +154,12 @@ class _SellingDetailsState extends State<SellingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,
@@ -180,14 +174,12 @@ class _SellingDetailsState extends State<SellingDetails> {
               ],
             ),
           ),
-
           Container(
               width: 358,
               height: 1,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(22, 167, 158, 1),
               )),
-
           Container(
             height: 110,
             width: 350,

@@ -11,56 +11,26 @@ class UserSellingTrades extends StatefulWidget {
 class _UserSellingTradesState extends State<UserSellingTrades> {
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      children: [
-        SingleChildScrollView(
-          child: Column(
-            children: const [
-              UserTradingCard(
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                stat: 'بانتظار الدفع',
-              ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          UserTradingCard(
+            stat: 'بانتظار الدفع',
           ),
-        ),
-        SingleChildScrollView(
-          child: Column(
-            children: const [
-              UserTradingCard(
-                isBuy: true,
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                isBuy: false,
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                isBuy: true,
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                isBuy: false,
-                stat: 'بانتظار الدفع',
-              ),
-              UserTradingCard(
-                isBuy: false,
-                stat: 'بانتظار الدفع',
-              ),
-            ],
+          UserTradingCard(
+            stat: 'بانتظار الدفع',
           ),
-        ),
-      ],
+          UserTradingCard(
+            stat: 'بانتظار الدفع',
+          ),
+          UserTradingCard(
+            stat: 'بانتظار الدفع',
+          ),
+          UserTradingCard(
+            stat: 'بانتظار الدفع',
+          ),
+        ],
+      ),
     );
   }
 }

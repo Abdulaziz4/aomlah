@@ -10,62 +10,70 @@ class UserOffersView extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Constants.black3dp,
-            title: Text(
-              'عروضي',
-              style: Constants.largeText.copyWith(
-                  color: Constants.darkBlue,
-                  fontWeight: FontWeight.bold),
+            appBar: AppBar(
+              backgroundColor: Constants.black3dp,
+              title: Text(
+                'عروضي',
+                style: Constants.largeText.copyWith(
+                    color: Constants.darkBlue, fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
+              bottom: TabBar(
+                tabs: [
+                  Tab(
+                    child: Text('شراء', style: Constants.smallText),
+                  ),
+                  Tab(
+                    child: Text('بيع', style: Constants.smallText),
+                  ),
+                ],
+              ),
             ),
-            centerTitle: true,
-          ),
-          body: TabBarView(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    UserOffersCard(
-                      isBuy: true,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                    UserOffersCard(
-                      isBuy: true,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                  ],
+            body: TabBarView(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: const [
+                      UserOffersCard(
+                        isBuy: true,
+                      ),
+                      UserOffersCard(
+                        isBuy: true,
+                      ),
+                      UserOffersCard(
+                        isBuy: true,
+                      ),
+                      UserOffersCard(
+                        isBuy: true,
+                      ),
+                      UserOffersCard(
+                        isBuy: true,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    UserOffersCard(
-                      isBuy: true,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                    UserOffersCard(
-                      isBuy: true,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                    UserOffersCard(
-                      isBuy: false,
-                    ),
-                  ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: const [
+                      UserOffersCard(
+                        isBuy: false,
+                      ),
+                      UserOffersCard(
+                        isBuy: false,
+                      ),
+                      UserOffersCard(
+                        isBuy: false,
+                      ),
+                      UserOffersCard(
+                        isBuy: false,
+                      ),
+                      UserOffersCard(
+                        isBuy: false,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ));
+              ],
+            )));
   }
 }

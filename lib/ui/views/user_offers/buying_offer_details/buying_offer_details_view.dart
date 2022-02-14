@@ -14,21 +14,19 @@ class BuyingOfferDetails extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.black3dp,
-
           title: Text(
             'تفاصيل العرض',
             style: Constants.largeText.copyWith(
-                color: Constants.darkBlue,
-                fontWeight: FontWeight.bold),
+                color: Constants.darkBlue, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           bottom: TabBar(
             tabs: [
               Tab(
-                child: Text('التفاصيل', style: Constants.mediumText),
+                child: Text('التفاصيل', style: Constants.smallText),
               ),
               Tab(
-                child: Text('عمليات التداول', style: Constants.mediumText),
+                child: Text('عمليات التداول', style: Constants.smallText),
               ),
             ],
           ),
