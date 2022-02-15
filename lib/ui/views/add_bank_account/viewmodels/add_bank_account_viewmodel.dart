@@ -28,7 +28,6 @@ class AddBankAccountViewmodel extends BaseViewModel {
   ];
 
   void submit() async {
-    print("Submit");
     bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
