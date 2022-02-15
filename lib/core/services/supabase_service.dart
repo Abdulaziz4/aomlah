@@ -44,8 +44,12 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Future<AomlahUser> getUser(String uuid) async {
-    final res = await callFn<AomlahUser>("get_user", AomlahUser.fromJson,
-        params: {"user_id": uuid});
+    final res = await get<AomlahUser>(
+      AomlahTable.view_profiles,
+      AomlahUser.fromJson,
+      query: {"profile_id": uuid},
+    );
+
     return res.first;
   }
 
