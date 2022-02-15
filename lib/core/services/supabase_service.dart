@@ -29,14 +29,18 @@ class SupabaseService extends AbstractSupabase {
   }) async {
     await insert(AomlahTable.profiles, {"profile_id": uuid, "name": name});
   }
-  Future<void> updateUserProfile(String uuid,String name,) async {
-    await update(AomlahTable.profiles, {"name": name},{"profile_id": uuid});
 
+  Future<void> updateUserProfile(
+    String uuid,
+    String name,
+  ) async {
+    await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
-  Future<void> updateUserStatus({required String uuid,required bool status}) async {
-    await update(AomlahTable.profiles, {"is_online": status},{"profile_id": uuid});
 
-
+  Future<void> updateUserStatus(
+      {required String uuid, required bool status}) async {
+    await update(
+        AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
   }
 
   Future<AomlahUser> getUser(String uuid) async {
@@ -56,7 +60,6 @@ class SupabaseService extends AbstractSupabase {
       primaryKey: "offer_id",
     );
   }
-  
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
