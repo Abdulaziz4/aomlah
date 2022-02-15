@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class BankAccountItem extends StatelessWidget {
   final String bankName;
+  final TextStyle? textStyle;
   const BankAccountItem({
     Key? key,
     required this.bankName,
+    this.textStyle,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class BankAccountItem extends StatelessWidget {
         SizedBox(width: 5),
         Text(
           bankName,
-          style: Constants.smallText,
+          style: textStyle ?? Constants.smallText,
         ),
       ],
     );

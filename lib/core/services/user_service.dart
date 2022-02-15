@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -30,5 +31,12 @@ class UserService {
 
     this.user = user;
     userController.add(user);
+  }
+
+  Future<void> fetchAndUpdateUser() async {
+    _logger.i("fetchAndUpdateUser");
+
+    final newUser = await _supabaseService.getUser(user.profileId);
+    updateUser(newUser);
   }
 }

@@ -4,28 +4,32 @@ class BankAccount {
   final String iban;
   final String ownerName;
   final String bankName;
+  final String profileId;
 
-  BankAccount(
-      {required this.iban, required this.ownerName, required this.bankName});
+  BankAccount({
+    required this.iban,
+    required this.ownerName,
+    required this.bankName,
+    required this.profileId,
+  });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'iban': iban,
       'owner_name': ownerName,
       'bank_name': bankName,
+      "profile_id": profileId,
     };
   }
 
-  factory BankAccount.fromMap(Map<String, dynamic> map) {
+  factory BankAccount.fromJson(Map<String, dynamic> map) {
     return BankAccount(
       iban: map['iban'] ?? '',
       ownerName: map['owner_name'] ?? '',
       bankName: map['bank_name'] ?? '',
+      profileId: map['profile_id'] ?? '',
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory BankAccount.fromJson(String source) =>
-      BankAccount.fromMap(json.decode(source));
+  String ibanLabel() => "SA " + iban;
 }

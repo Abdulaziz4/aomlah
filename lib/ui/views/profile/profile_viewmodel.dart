@@ -22,4 +22,8 @@ class ProfileViewModel extends BaseViewModel {
   navigateToUserOffers() {
     navService.navigateTo(Routes.userOffersView);
   }
+
+  navigateToBankAccounts() {
+    navService.navigateTo(Routes.userBankAccountsView);
+  }
 }

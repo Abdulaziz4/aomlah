@@ -24,6 +24,7 @@ import '../../ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
 import '../../ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
 import '../../ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
 import '../../ui/views/trading/trader/sell_coin/trader_sell_coin_view.dart';
+import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/wallet/wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
@@ -47,6 +48,7 @@ class Routes {
   static const String bankAccountSelectionView = '/bank-account-selection-view';
   static const String userOffersView = '/user-offers-view';
   static const String walletInfoView = '/wallet-info-view';
+  static const String userBankAccountsView = '/user-bank-accounts-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -65,6 +67,7 @@ class Routes {
     bankAccountSelectionView,
     userOffersView,
     walletInfoView,
+    userBankAccountsView,
   };
 }
 
@@ -90,6 +93,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.bankAccountSelectionView, page: BankAccountSelectionView),
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.walletInfoView, page: WalletInfoView),
+    RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -193,6 +197,12 @@ class StackedRouter extends RouterBase {
     WalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WalletInfoView(),
+        settings: data,
+      );
+    },
+    UserBankAccountsView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const UserBankAccountsView(),
         settings: data,
       );
     },
