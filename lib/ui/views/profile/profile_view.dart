@@ -166,13 +166,7 @@ class ProfileView extends StatelessWidget {
                     )),
                     child: ElevatedButton(
                       onPressed: () {
-                        {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BankAccountSelectionView()));
-                        }
+                        viewmodel.navigateToBankAccounts();
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),

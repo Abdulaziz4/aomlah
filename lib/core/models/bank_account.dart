@@ -5,8 +5,11 @@ class BankAccount {
   final String ownerName;
   final String bankName;
 
-  BankAccount(
-      {required this.iban, required this.ownerName, required this.bankName});
+  BankAccount({
+    required this.iban,
+    required this.ownerName,
+    required this.bankName,
+  });
 
   Map<String, dynamic> toMap() {
     return {
