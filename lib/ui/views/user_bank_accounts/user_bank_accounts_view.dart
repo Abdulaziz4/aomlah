@@ -2,10 +2,13 @@ import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/ui/shared/bank_account_card.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/add_bank_account/add_bank_account_view.dart';
+import 'package:aomlah/ui/views/user_bank_accounts/viewmodels/user_bank_accounts_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 
 class UserBankAccountsView extends StatelessWidget {
   const UserBankAccountsView({Key? key}) : super(key: key);
@@ -13,34 +16,48 @@ class UserBankAccountsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AomlahUser>(context);
-    return Scaffold(
-      appBar: AppBar(title: Text("الحسابات البنكية"), actions: [
-        IconButton(
-            onPressed: () {
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddBankAccountView(),
-                  ),
-                );
-              }
-            },
-            icon: SvgPicture.asset("assets/icons/addIcon.svg")),
-      ]),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: SingleChildScrollView(
-          child: user.bankAccounts.isEmpty
-              ? buildNoResult()
-              : Column(
-                  children: user.bankAccounts
-                      .map((account) => buildBankAccountWrapper(account))
-                      .toList(),
+    return ViewModelBuilder<UserBankAccountsViewmodel>.reactive(
+        viewModelBuilder: () => UserBankAccountsViewmodel(),
+        builder: (context, viewmodel, _) {
+          return BusyOverlay(
+            isBusy: viewmodel.isBusy,
+            child: Scaffold(
+              appBar: AppBar(title: Text("الحسابات البنكية"), actions: [
+                IconButton(
+                    onPressed: () {
+                      {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddBankAccountView(),
+                          ),
+                        );
+                      }
+                    },
+                    icon: SvgPicture.asset("assets/icons/addIcon.svg")),
+              ]),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: SingleChildScrollView(
+                  child: user.bankAccounts.isEmpty
+                      ? buildNoResult()
+                      : Column(
+                          children: user.bankAccounts
+                              .map(
+                                (account) => buildBankAccountWrapper(
+                                  account,
+                                  () {
+                                    viewmodel.deleteBank(account);
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        ),
                 ),
-        ),
-      ),
-    );
+              ),
+            ),
+          );
+        });
   }
 
   Widget buildNoResult() {
@@ -63,7 +80,7 @@ class UserBankAccountsView extends StatelessWidget {
     );
   }
 
-  Widget buildBankAccountWrapper(BankAccount account) {
+  Widget buildBankAccountWrapper(BankAccount account, void Function() delete) {
     return Container(
       decoration: BoxDecoration(
         color: Constants.black2dp,
@@ -74,7 +91,7 @@ class UserBankAccountsView extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
       child: BankAccountCard(
         bank: account,
-        onDelete: () {},
+        onDelete: delete,
       ),
     );
   }

@@ -79,4 +79,15 @@ class SupabaseService extends AbstractSupabase {
   ) async {
     await upsert(AomlahTable.wallets, wallet.toJson());
   }
+
+  Future<void> deleteBankAccount(
+    BankAccount wallet,
+  ) async {
+    await delete(
+      AomlahTable.bank_accounts,
+      {
+        "iban": wallet.iban,
+      },
+    );
+  }
 }
