@@ -44,9 +44,9 @@ class AomlahUser {
   factory AomlahUser.fromJson(Map<String, dynamic> map) {
     List<BankAccount> accounts = [];
     if ((map["bank_accounts"] as List).first != null) {
-      accounts = (map["bank_accounts"] as List)
-          .map((e) => BankAccount.fromJson(e))
-          .toList();
+      accounts = (map["bank_accounts"] as List).map((e) {
+        return BankAccount.fromJson(e);
+      }).toList();
     }
     return AomlahUser(
       profileId: map['profile_id'] ?? '',

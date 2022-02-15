@@ -1,5 +1,6 @@
 import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
@@ -67,6 +68,10 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
+  }
+
+  Future<void> createBank(BankAccount account) async {
+    await insert(AomlahTable.bank_accounts, account.toJson());
   }
 
   Future<void> createWallet(

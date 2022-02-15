@@ -1,4 +1,4 @@
-import 'package:aomlah/ui/add_bank_account/add_bank_acc_view.dart';
+import 'package:aomlah/ui/views/add_bank_account/add_bank_account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -12,8 +12,10 @@ class BankAccountSelectionView extends StatelessWidget {
         IconButton(
             onPressed: () {
               {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddBankAccView()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddBankAccountView()));
               }
             },
             icon: SvgPicture.asset("assets/icons/addIcon.svg")),

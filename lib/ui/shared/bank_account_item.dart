@@ -26,7 +26,7 @@ class BankAccountItem extends StatelessWidget {
         ),
         SizedBox(width: 5),
         Text(
-          "بنك " + bankName,
+          bankName,
           style: textStyle ?? Constants.smallText,
         ),
       ],

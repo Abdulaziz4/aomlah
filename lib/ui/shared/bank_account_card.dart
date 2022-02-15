@@ -34,7 +34,7 @@ class BankAccountCard extends StatelessWidget {
               ),
             ),
             Text(
-              bank.iban,
+              bank.ibanLabel(),
               style: Constants.smallText,
             ),
           ],

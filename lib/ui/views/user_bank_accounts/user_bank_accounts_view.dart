@@ -1,8 +1,8 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
-import 'package:aomlah/ui/add_bank_account/add_bank_acc_view.dart';
 import 'package:aomlah/ui/shared/bank_account_card.dart';
+import 'package:aomlah/ui/views/add_bank_account/add_bank_account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +18,12 @@ class UserBankAccountsView extends StatelessWidget {
         IconButton(
             onPressed: () {
               {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddBankAccView()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddBankAccountView(),
+                  ),
+                );
               }
             },
             icon: SvgPicture.asset("assets/icons/addIcon.svg")),
@@ -69,11 +73,7 @@ class UserBankAccountsView extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
       child: BankAccountCard(
-        bank: BankAccount(
-          bankName: "الرياض",
-          iban: "3897138173813",
-          ownerName: "علي سعيد الشمري",
-        ),
+        bank: account,
         onDelete: () {},
       ),
     );
