@@ -1,3 +1,4 @@
+import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/ui/add_bank_account/add_bank_acc_view.dart';
@@ -23,17 +24,57 @@ class UserBankAccountsView extends StatelessWidget {
             },
             icon: SvgPicture.asset("assets/icons/addIcon.svg")),
       ]),
-      body: Column(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: SingleChildScrollView(
+          child: user.bankAccounts.isEmpty
+              ? buildNoResult()
+              : Column(
+                  children: user.bankAccounts
+                      .map((account) => buildBankAccountWrapper(account))
+                      .toList(),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildNoResult() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 200.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          BankAccountCard(
-            bank: BankAccount(
-              bankName: "الرياض",
-              iban: "3897138173813",
-              ownerName: "علي سعيد الشمري",
-            ),
-            onDelete: () {},
+          SizedBox(width: double.infinity),
+          SvgPicture.asset("assets/icons/no-record.svg"),
+          SizedBox(
+            height: 10,
           ),
+          Text(
+            "لاتوجد حسابات بنكية",
+            style: Constants.mediumText,
+          )
         ],
+      ),
+    );
+  }
+
+  Widget buildBankAccountWrapper(BankAccount account) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Constants.black2dp,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: Constants.shadow,
+      ),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+      child: BankAccountCard(
+        bank: BankAccount(
+          bankName: "الرياض",
+          iban: "3897138173813",
+          ownerName: "علي سعيد الشمري",
+        ),
+        onDelete: () {},
       ),
     );
   }

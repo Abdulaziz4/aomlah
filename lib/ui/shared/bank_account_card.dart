@@ -45,6 +45,7 @@ class BankAccountCard extends StatelessWidget {
             icon: Icon(
               Icons.delete,
               color: Constants.redColor,
+              size: 27,
             ),
           ),
       ],
