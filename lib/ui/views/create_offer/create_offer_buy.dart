@@ -24,7 +24,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   final currencyList = ['ر.س'];
   String? cListVal, currListVal;
   double margin = 100;
-  double? cryptoAmount,minTrade;
+  double? cryptoAmount, minTrade;
 
   final TextEditingController _cryptoAmountController = TextEditingController();
   final TextEditingController _minTradeController = TextEditingController();
@@ -32,15 +32,17 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     double realTimePrice;
-    if(currListVal=='ر.س') {
-      realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100)*3.75;}
-    else {realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100);}
+    if (currListVal == 'ر.س') {
+      realTimePrice =
+          Provider.of<Bitcoin>(context).price * (margin / 100) * 3.75;
+    } else {
+      realTimePrice = Provider.of<Bitcoin>(context).price * (margin / 100);
+    }
 
-    realTimePrice=double.parse(realTimePrice.toStringAsFixed(3));
+    realTimePrice = double.parse(realTimePrice.toStringAsFixed(3));
 
     cListVal ??= cryptoList.first;
     currListVal ??= currencyList.first;
@@ -57,6 +59,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SizedBox(
+                  height: 15,
+                ),
+
                 ///Crypto and Currency type
                 Row(
                   children: const <Widget>[
@@ -81,10 +87,13 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
                 ///Price Margin value
                 Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   color: Constants.black3dp,
                   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: ListTile(
-                    // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     leading: TextButton(
                         onPressed: () {
                           if (margin < 200) {
@@ -94,8 +103,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           }
                           ;
                         },
-                        child: Text('+')),
-
+                        child: Text(
+                          '+',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                     title: Center(child: Text(margin.toString() + "%")),
                     trailing: TextButton(
                         onPressed: () {
@@ -106,22 +117,31 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           }
                           ;
                         },
-                        child: Text('-')),
+                        child: Text(
+                          '-',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                   ),
                 ),
 
                 ///CryptoPrice Info
                 Row(
                   children: [
-                    SizedBox(width: 20,),
-
-                    Text('سعرك هو $realTimePrice $currListVal',style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ), ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'سعرك هو $realTimePrice $currListVal',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 ///Amount of Crypto
                 CusCardTitle(title: 'الكمية الاجمالية'),
@@ -139,8 +159,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     ],
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
-                    else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
+                    if (value == null || value.isEmpty)
+                      return 'الرجاء إدخال الكمية الاجمالية';
+                    else if (double.parse(value) <= 0)
+                      return 'الرجاء ادخال كميه صحيحه';
                   },
                   controller: _cryptoAmountController,
                   keyboardType: TextInputType.number,
@@ -148,7 +170,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     cryptoAmount = double.parse(value!);
                   },
                 ),
-
 
                 ///min trade amount
                 CusCardTitle(title: 'الحد الادنى للتبادل'),
@@ -163,20 +184,19 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                         textAlign: TextAlign.center,
                       ),
                     ],
-                ),
+                  ),
                   hintText: 'ادخل الحد الادنى',
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
-                    else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
+                    if (value == null || value.isEmpty)
+                      return 'الرجاء إدخال الكمية الاجمالية';
+                    else if (double.parse(value) <= 0)
+                      return 'الرجاء ادخال كميه صحيحه';
                   },
                   onSaved: (value) {
-                    minTrade= double.parse(value!);
+                    minTrade = double.parse(value!);
                   },
-
                 ),
-
-
 
                 ///Trade Terms and Conditions
 
@@ -206,14 +226,15 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ),
 
                 ///Submit Form
-                Container(
-                  color: Constants.primaryColor,
-                  child: Row(
-                    children: [
-                      Expanded(
+                Row(
+                  // crossAxisAlignment: CrossAxisAlignment.,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Constants.primaryColor,
+                        margin: EdgeInsets.all(20),
                         child: TextButton(
                           onPressed: () {
-
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
@@ -235,8 +256,8 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -268,5 +289,4 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
         ),
       );
-
 }
