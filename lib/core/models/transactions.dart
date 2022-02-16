@@ -18,7 +18,7 @@ class Transaction {
       to: (json['addresses'] as List)[1],
       // from: '',
       // to: '',
-      total: json['total'],
+      total: ((json['outputs'] as List)[0])['value'],
       fees: json['fees'],
       // total: 0,
       // fees: 0,
