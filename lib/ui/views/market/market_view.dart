@@ -1,84 +1,82 @@
 import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
+import 'package:aomlah/ui/views/market/viewmodels/market_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stacked/stacked.dart';
 
 class MarketView extends StatelessWidget {
   const MarketView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("سوق العملات"),
-        ),
-        body: Column(
-          children: <Widget>[
-            Container(height: 10),
-            Container(
-              padding: EdgeInsets.all(5),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Color(0xff0F1E2C),
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1,
-                      color: Color(0xff3D4955),
-                    ),
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    "اسم العملة",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text(
-                    "إجمالي التداول",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text(
-                    "السعر",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
+    return ViewModelBuilder<MarketViewmodel>.reactive(
+        viewModelBuilder: () => MarketViewmodel(),
+        onModelReady: (model) => model.connectSocket(),
+        builder: (context, viewmodel, _) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text("سوق العملات"),
               ),
-            ),
-            crypto_info(
-              imagePath: "assets/icons/Group 6.svg",
-              shortName: "BTC",
-              fullName: "Bitcoin",
-              totalTrade: "\$212.24B",
-              price: "\$212,333.24",
-              precentage: "% 4.59 +",
-            ),
-            crypto_info(
-              imagePath: "assets/icons/Group 4.svg",
-              shortName: "ETH",
-              fullName: "Ethereum",
-              totalTrade: "\$138.03B",
-              price: "\$13,438.03",
-              precentage: "% 1.07 +",
-            ),
-            crypto_info(
-              imagePath: "assets/icons/Group 8.svg",
-              shortName: "BNB",
-              fullName: "biance Coin",
-              totalTrade: "\$38.88B",
-              price: "\$2,838.88",
-              precentage: "% 0.97 +",
-            ),
-          ],
-        ));
+              body: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Color(0xff0F1E2C),
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: Color(0xff3D4955),
+                            ),
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            "اسم العملة",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            "إجمالي التداول",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            "السعر",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ...viewmodel.coins
+                        .map(
+                          (coin) => CryptoInfo(
+                            imagePath:
+                                "https://images.cryptocompare.com/sparkchart/${coin.name}/USD/latest.png?ts=1645038000",
+                            shortName: coin.name,
+                            fullName: coin.fullName,
+                            totalTrade: coin.volume24hr,
+                            price: coin.price,
+                            precentage: "% " + coin.change24hr,
+                          ),
+                        )
+                        .toList(),
+                  ],
+                ),
+              ));
+        });
   }
 }
 
-class crypto_info extends StatelessWidget {
+class CryptoInfo extends StatelessWidget {
   final String imagePath;
   final String shortName;
   final String fullName;
@@ -86,7 +84,7 @@ class crypto_info extends StatelessWidget {
   final String price;
   final String precentage;
 
-  const crypto_info({
+  const CryptoInfo({
     Key? key,
     required this.imagePath,
     required this.shortName,
@@ -118,7 +116,7 @@ class crypto_info extends StatelessWidget {
             )),
         child: Row(
           children: <Widget>[
-            SvgPicture.asset(imagePath),
+            Image.network(imagePath),
             Container(width: 12),
             Column(
               children: [
