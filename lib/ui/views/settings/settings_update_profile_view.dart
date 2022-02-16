@@ -14,7 +14,6 @@ class UpdateProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.black3dp,
         title: Text('تحديث الملف الشخصي',
             style: TextStyle(
                 color: Constants.darkBlue, fontWeight: FontWeight.bold)),
@@ -33,35 +32,37 @@ class UpdateProfileViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
         viewModelBuilder: () => SettingsViewModel(),
-    builder: (context, viewmodel, _) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            CusCardTitle(title: 'الاسم'),
-            CustomInputField(
-              hintText: 'ادخل الاسم',
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'الرجاء إدخال الاسم';
-              },onSaved: (value){name=value!;},
-
+        builder: (context, viewmodel, _) {
+          return Padding(
+            padding: EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CusCardTitle(title: 'الاسم'),
+                  CustomInputField(
+                    hintText: 'ادخل الاسم',
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'الرجاء إدخال الاسم';
+                    },
+                    onSaved: (value) {
+                      name = value!;
+                    },
+                  ),
+                  RoundedButton(
+                      text: "تحديث",
+                      press: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState?.save();
+                        viewmodel.updateUserName(name!);
+                      })
+                ],
+              ),
             ),
-            RoundedButton(text: "تحديث", press: (){
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState?.save();
-              viewmodel.updateUserName(name!);
-
-            })
-          ],
-        ),
-      ),
-    );
-    });
+          );
+        });
   }
-  }
-
-
+}
