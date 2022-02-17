@@ -1,9 +1,14 @@
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/ui/shared/custom_row.dart';
 import 'package:aomlah/ui/shared/rounded_button.dart';
+import 'package:aomlah/ui/views/withdraw/withdraw_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../core/app/utils/constants.dart';
+import '../../../core/models/wallet.dart';
 import '../wallet/common/blue_text.dart';
 
 class ConfirmWithdrawView extends StatelessWidget {
@@ -33,82 +38,92 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final transaction =
         ModalRoute.of(context)!.settings.arguments as UnconfirmedTransaction;
-    return Column(
-      children: [
-        Container(
-          color: Constants.black3dp,
-          padding: EdgeInsets.all(16),
-          child: Column(
+    return ViewModelBuilder<WithdrawViewModel>.reactive(
+        viewModelBuilder: () => WithdrawViewModel(),
+        builder: (context, viewmodel, _) {
+          return Column(
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'تحويل ',
-                    style:
-                        TextStyle(fontSize: 20, color: Constants.primaryColor),
-                  ),
-                  Text(
-                    " BTC",
-                    style: TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-
-              ///from
-              Row(
-                children: [
-                  BlueText(textAlign: TextAlign.right, text: 'من'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      transaction.from,
-                      textAlign: TextAlign.left,
+              Container(
+                color: Constants.black3dp,
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: const [
+                        Text(
+                          'تحويل ',
+                          style: TextStyle(
+                              fontSize: 20, color: Constants.primaryColor),
+                        ),
+                        Text(
+                          " BTC",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
                     ),
-                  ),
-                ],
-              ),
 
-              ///to
-              Row(
-                children: [
-                  BlueText(textAlign: TextAlign.right, text: 'الى'),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      transaction.to,
-                      textAlign: TextAlign.left,
+                    ///from
+                    Row(
+                      children: [
+                        BlueText(textAlign: TextAlign.right, text: 'من'),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
 
-              ///total
-              CusRow(
-                  text1: 'كمية العملة الرقمية',
-                  text2: transaction.satsToBTC(transaction.total) + ' BTC '),
-              CusRow(
-                  text1: 'رسوم التحويل',
-                  text2: transaction.satsToBTC(transaction.fees) + ' BTC '),
-              CusRow(
-                  text1: 'الإجمالي',
-                  text2: transaction
-                          .satsToBTC(transaction.fees + transaction.total) +
-                      ' BTC '),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            transaction.from,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    ///to
+                    Row(
+                      children: [
+                        BlueText(textAlign: TextAlign.right, text: 'الى'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            transaction.to,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    ///total
+                    CusRow(
+                        text1: 'كمية العملة الرقمية',
+                        text2:
+                            transaction.satsToBTC(transaction.total) + ' BTC '),
+                    CusRow(
+                        text1: 'رسوم التحويل',
+                        text2:
+                            transaction.satsToBTC(transaction.fees) + ' BTC '),
+                    CusRow(
+                        text1: 'الإجمالي',
+                        text2: transaction.satsToBTC(
+                                transaction.total - transaction.fees) +
+                            ' BTC '),
+                  ],
+                ),
+              ),
+              RoundedButton(
+                  text: 'confirm',
+                  press: () {
+                    viewmodel.signSendTransaction(transaction);
+                  })
             ],
-          ),
-        ),
-        RoundedButton(text: 'confirm', press: () {})
-      ],
-    );
+          );
+        });
   }
 }

@@ -105,8 +105,8 @@ class WalletManagmentService {
     var m = await http.post(url, body: jsonEncode(data));
     UnconfirmedTransaction trs =
         UnconfirmedTransaction.fromJson(jsonDecode(m.body));
-    // print(jsonDecode(m.body));
-    // print(m.body);
+    print(jsonDecode(m.body));
+    print(m.body);
     // print(jsonDecode(m.body)['tx']['total']);
     return trs;
   }
@@ -122,5 +122,15 @@ class WalletManagmentService {
     final wallet = RealTimeWallet.fromJson(response);
 
     return wallet;
+  }
+
+  Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
+    var encodedJson = jsonEncode(signedJson);
+    Uri url = Uri.parse("$baseUrl/txs/send");
+
+    var m = await http.post(url, body: encodedJson);
+    var decoded = jsonDecode(m.body);
+    print(decoded['tosign'][0] + '0000000000000033');
+    print(m.body);
   }
 }

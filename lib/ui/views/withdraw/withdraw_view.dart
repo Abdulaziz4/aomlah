@@ -47,7 +47,7 @@ class _WithdrawViewBodyState extends State<WithdrawViewBody> {
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
-    final wallet = Provider.of<RealTimeWallet>(context);
+    // final wallet = Provider.of<RealTimeWallet>(context);
 
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
@@ -125,8 +125,7 @@ class _WithdrawViewBodyState extends State<WithdrawViewBody> {
                             }
                             _formKey.currentState?.save();
                             int amount = (cryptoAmount! * 100000000).round();
-                            var m = viewmodel.sendTran(
-                                wallet.address, walletAddress!, amount);
+                            var m = viewmodel.sendTran(walletAddress!, amount);
                             // RealTimeWallet rtWallet =
                             //     RealTimeWallet.fromJson(m);
                             // print(rtWallet.transactions);
