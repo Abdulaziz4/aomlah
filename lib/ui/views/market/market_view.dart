@@ -1,7 +1,8 @@
-import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
+import 'package:aomlah/core/models/coin.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
 import 'package:aomlah/ui/views/market/viewmodels/market_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:stacked/stacked.dart';
 
 class MarketView extends StatelessWidget {
@@ -14,144 +15,58 @@ class MarketView extends StatelessWidget {
         onModelReady: (model) => model.connectSocket(),
         builder: (context, viewmodel, _) {
           return Scaffold(
-              appBar: AppBar(
-                title: Text("سوق العملات"),
-              ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(height: 10),
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Color(0xff0F1E2C),
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 1,
-                              color: Color(0xff3D4955),
-                            ),
-                          )),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(
-                            "اسم العملة",
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            "إجمالي التداول",
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            "السعر",
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ...viewmodel.coins
-                        .map(
-                          (coin) => CryptoInfo(
-                            imagePath:
-                                "https://images.cryptocompare.com/sparkchart/${coin.name}/USD/latest.png?ts=1645038000",
-                            shortName: coin.name,
-                            fullName: coin.fullName,
-                            totalTrade: coin.volume24hr,
-                            price: coin.price,
-                            precentage: "% " + coin.change24hr,
-                          ),
-                        )
-                        .toList(),
-                  ],
-                ),
-              ));
+            appBar: AppBar(
+              title: Text("سوق العملات"),
+            ),
+
+            // body: SfDataGrid(
+            //   // source: ,
+            //   columns: [
+            //     GridColumn(
+            //         columnName: 'Name',
+            //         label: Container(
+            //             padding: EdgeInsets.symmetric(horizontal: 16.0),
+            //             alignment: Alignment.centerRight,
+            //             child: Text(
+            //               'ID',
+            //               overflow: TextOverflow.ellipsis,
+            //             ))),
+            //     GridColumn(
+            //         columnName: 'Full Name',
+            //         label: Container(
+            //             padding: EdgeInsets.symmetric(horizontal: 16.0),
+            //             alignment: Alignment.centerLeft,
+            //             child: Text(
+            //               'Name',
+            //               overflow: TextOverflow.ellipsis,
+            //             ))),
+            //   ],
+            // ),
+          );
         });
   }
 }
 
-class CryptoInfo extends StatelessWidget {
-  final String imagePath;
-  final String shortName;
-  final String fullName;
-  final String totalTrade;
-  final String price;
-  final String precentage;
+class CoinDataSource extends DataGridSource {
+  CoinDataSource(List<Coin> coins) {
+    dataGridRows = coins
+        .map<DataGridRow>(
+          (coin) => DataGridRow(
+            cells: [
+              DataGridCell<String>(columnName: 'Name', value: coin.name),
+              DataGridCell<String>(
+                  columnName: 'Full Name', value: coin.fullName),
+            ],
+          ),
+        )
+        .toList();
+  }
 
-  const CryptoInfo({
-    Key? key,
-    required this.imagePath,
-    required this.shortName,
-    required this.fullName,
-    required this.totalTrade,
-    required this.price,
-    required this.precentage,
-  }) : super(key: key);
+  List<DataGridRow> dataGridRows = [];
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CryptoInfoView()));
-        }
-      },
-      child: Container(
-        padding: EdgeInsets.all(10),
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Color(0xff0F1E2C),
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff3D4955),
-              ),
-            )),
-        child: Row(
-          children: <Widget>[
-            Image.network(imagePath),
-            Container(width: 12),
-            Column(
-              children: [
-                Text(
-                  shortName,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  fullName,
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            Spacer(flex: 2),
-            Text(totalTrade),
-            Spacer(flex: 2),
-            Column(
-              children: <Widget>[
-                Text(price),
-                Text(
-                  precentage,
-                  style: TextStyle(
-                    color: Color(0xff16A79E),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    // TODO: implement buildRow
+    throw UnimplementedError();
   }
 }
