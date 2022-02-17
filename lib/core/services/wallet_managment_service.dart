@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/models/real_time_wallet.dart';
+import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
@@ -57,12 +58,57 @@ class WalletManagmentService {
     return wallet;
   }
 
+  // Future<dynamic> confirmTransaction(String from, String to, int value) async {
+  //   _logger.i("transaction | to=$to");
+  //   Uri url = Uri.parse("$baseUrl/txs/new");
+  //   final data = jsonEncode({
+  //     "inputs": [
+  //       {
+  //         "addresses": [from]
+  //       }
+  //     ],
+  //     "outputs": [
+  //       {
+  //         "addresses": [to],
+  //         "value": value
+  //       }
+  //     ]
+  //   });
+  //   return http.post(url, body: data);
+  // }
+
   Future<void> fundMe(String address) async {
     _logger.i("fundMe | args: address=$address");
 
     Uri url = Uri.parse("$baseUrl/faucet?token=$token");
-    final data = jsonEncode({"address": address, "amount": 1000000});
+    final data = jsonEncode({"address": address, "amount": 500000});
     await http.post(url, body: data);
+  }
+
+  Future<UnconfirmedTransaction> sendTransaction(
+      String from, String to, amount) async {
+    _logger.i("transaction | to=$to");
+    Uri url = Uri.parse("$baseUrl/txs/new");
+    final data = {
+      "inputs": [
+        {
+          "addresses": [from]
+        }
+      ],
+      "outputs": [
+        {
+          "addresses": [to],
+          "value": amount
+        }
+      ]
+    };
+    var m = await http.post(url, body: jsonEncode(data));
+    UnconfirmedTransaction trs =
+        UnconfirmedTransaction.fromJson(jsonDecode(m.body));
+    // print(jsonDecode(m.body));
+    // print(m.body);
+    // print(jsonDecode(m.body)['tx']['total']);
+    return trs;
   }
 
   Future<RealTimeWallet> getWalletInfo(String address) async {

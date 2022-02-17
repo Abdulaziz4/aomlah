@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/app/utils/constants.dart';
-import '../create_offer/common/custom_card_title.dart';
-import '../create_offer/common/custom_input_field.dart';
+import '../../shared/custom_card_title.dart';
+import '../../shared/custom_input_field.dart';
 
 class UpdateProfileView extends StatelessWidget {
   const UpdateProfileView({Key? key}) : super(key: key);
@@ -33,35 +33,37 @@ class UpdateProfileViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
         viewModelBuilder: () => SettingsViewModel(),
-    builder: (context, viewmodel, _) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            CusCardTitle(title: 'الاسم'),
-            CustomInputField(
-              hintText: 'ادخل الاسم',
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'الرجاء إدخال الاسم';
-              },onSaved: (value){name=value!;},
-
+        builder: (context, viewmodel, _) {
+          return Padding(
+            padding: EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CusCardTitle(title: 'الاسم'),
+                  CustomInputField(
+                    hintText: 'ادخل الاسم',
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'الرجاء إدخال الاسم';
+                    },
+                    onSaved: (value) {
+                      name = value!;
+                    },
+                  ),
+                  RoundedButton(
+                      text: "تحديث",
+                      press: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState?.save();
+                        viewmodel.updateUserName(name!);
+                      })
+                ],
+              ),
             ),
-            RoundedButton(text: "تحديث", press: (){
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState?.save();
-              viewmodel.updateUserName(name!);
-
-            })
-          ],
-        ),
-      ),
-    );
-    });
+          );
+        });
   }
-  }
-
-
+}

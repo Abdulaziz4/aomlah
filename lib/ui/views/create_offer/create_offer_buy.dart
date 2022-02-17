@@ -1,16 +1,16 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
+import 'package:aomlah/ui/shared/custom_card_title.dart';
+import 'package:aomlah/ui/shared/custom_menu.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/custom_input_field.dart';
 import '../../shared/rounded_input_field.dart';
-import 'common/custom_container.dart';
-import 'common/custom_input_field.dart';
+import '../../shared/custom_container.dart';
 
 class CreateOfferBuy extends StatefulWidget {
   const CreateOfferBuy({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   final currencyList = ['ر.س'];
   String? cListVal, currListVal;
   double margin = 100;
-  double? cryptoAmount,minTrade;
+  double? cryptoAmount, minTrade;
 
   final TextEditingController _cryptoAmountController = TextEditingController();
   final TextEditingController _minTradeController = TextEditingController();
@@ -32,15 +32,17 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     double realTimePrice;
-    if(currListVal=='ر.س') {
-      realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100)*3.75;}
-    else {realTimePrice=Provider.of<Bitcoin>(context).price * (margin/100);}
+    if (currListVal == 'ر.س') {
+      realTimePrice =
+          Provider.of<Bitcoin>(context).price * (margin / 100) * 3.75;
+    } else {
+      realTimePrice = Provider.of<Bitcoin>(context).price * (margin / 100);
+    }
 
-    realTimePrice=double.parse(realTimePrice.toStringAsFixed(3));
+    realTimePrice = double.parse(realTimePrice.toStringAsFixed(3));
 
     cListVal ??= cryptoList.first;
     currListVal ??= currencyList.first;
@@ -113,15 +115,21 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ///CryptoPrice Info
                 Row(
                   children: [
-                    SizedBox(width: 20,),
-
-                    Text('سعرك هو $realTimePrice $currListVal',style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ), ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'سعرك هو $realTimePrice $currListVal',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 ///Amount of Crypto
                 CusCardTitle(title: 'الكمية الاجمالية'),
@@ -139,8 +147,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     ],
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
-                    else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
+                    if (value == null || value.isEmpty)
+                      return 'الرجاء إدخال الكمية الاجمالية';
+                    else if (double.parse(value) <= 0)
+                      return 'الرجاء ادخال كميه صحيحه';
                   },
                   controller: _cryptoAmountController,
                   keyboardType: TextInputType.number,
@@ -148,7 +158,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     cryptoAmount = double.parse(value!);
                   },
                 ),
-
 
                 ///min trade amount
                 CusCardTitle(title: 'الحد الادنى للتبادل'),
@@ -163,20 +172,19 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                         textAlign: TextAlign.center,
                       ),
                     ],
-                ),
+                  ),
                   hintText: 'ادخل الحد الادنى',
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'الرجاء إدخال الكمية الاجمالية';
-                    else if(double.parse(value) <=0) return'الرجاء ادخال كميه صحيحه';
+                    if (value == null || value.isEmpty)
+                      return 'الرجاء إدخال الكمية الاجمالية';
+                    else if (double.parse(value) <= 0)
+                      return 'الرجاء ادخال كميه صحيحه';
                   },
                   onSaved: (value) {
-                    minTrade= double.parse(value!);
+                    minTrade = double.parse(value!);
                   },
-
                 ),
-
-
 
                 ///Trade Terms and Conditions
 
@@ -213,7 +221,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
@@ -246,17 +253,17 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
     });
   }
 
-  DropdownButton menuCryptoButton() => DropdownButton(
-        items: cryptoList.map(buildCryptoItems).toList(),
-        onChanged: (value) => setState(() => this.cListVal = value as String?),
-        value: cListVal,
-      );
-
   DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
         onChanged: (value) =>
             setState(() => this.currListVal = value as String?),
         value: currListVal,
+      );
+
+  DropdownButton menuCryptoButton() => DropdownButton(
+        items: cryptoList.map(buildCryptoItems).toList(),
+        onChanged: (value) => setState(() => this.cListVal = value as String?),
+        value: cListVal,
       );
 
   DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(
@@ -268,5 +275,4 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
           ),
         ),
       );
-
 }
