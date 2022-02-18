@@ -16,9 +16,14 @@ class CryptoInfoService {
 
   BehaviorSubject<List<Coin>> cryptoStream = BehaviorSubject<List<Coin>>();
 
-  void connectSocket() {
+  void connectSocket() async {
     _logger.i("Connect Socket");
 
+    // Request initial data
+    final coins = await requestCryptoInfo();
+    cryptoStream.sink.add(coins);
+
+    // Start timer for updating the data
     Timer.periodic(Duration(seconds: 10), (timer) async {
       final coins = await requestCryptoInfo();
       cryptoStream.sink.add(coins);
@@ -29,7 +34,6 @@ class CryptoInfoService {
     final res = await http.get(Uri.parse(baseUrl));
 
     final decodeRes = jsonDecode(res.body) as Map<String, dynamic>;
-    print(decodeRes);
     List<Coin> coins = [];
     if (decodeRes["Message"] == "Success") {
       final coinsList = decodeRes["Data"] as List;
