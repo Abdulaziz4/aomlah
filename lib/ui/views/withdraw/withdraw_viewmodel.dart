@@ -16,26 +16,29 @@ class WithdrawViewModel extends BaseViewModel {
   final userService = locator<UserService>();
 
   sendTran(String to, int amount) async {
+    setBusy(true);
     UnconfirmedTransaction transaction = await walletService.sendTransaction(
         userService.user.wallet!.address, to, amount);
 
-    // print(n['tx']);
-    // return n;
     print('from: ' + transaction.from);
     print('to: ' + transaction.to);
     print('total: ' + transaction.total.toString());
     print('fees: ' + transaction.fees.toString());
     print('toSign: ' + transaction.toSign);
-    print(transaction.tJson);
-    // signSendTransaction(userService.user.wallet!, transaction);
-    // print('Crypto Type: $to');
-    // print('AmountL $amount');
-    navService.navigateTo(Routes.confirmWithdrawView, arguments: transaction);
+    setBusy(false);
+    navService.replaceWith(Routes.confirmWithdrawView, arguments: transaction);
+  }
+
+  returnToWallet() {
+    navService.back();
   }
 
   void signSendTransaction(UnconfirmedTransaction transaction) async {
+    setBusy(true);
     Map<String, dynamic> signedJson =
         transaction.signedTransaction(userService.user.wallet!);
     await walletService.sendSignedTransaction(signedJson);
+    setBusy(false);
+    navService.back();
   }
 }

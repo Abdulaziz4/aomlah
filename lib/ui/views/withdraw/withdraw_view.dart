@@ -1,3 +1,4 @@
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -47,99 +48,123 @@ class _WithdrawViewBodyState extends State<WithdrawViewBody> {
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
-    // final wallet = Provider.of<RealTimeWallet>(context);
+    final wallet = Provider.of<RealTimeWallet>(context);
 
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
         builder: (context, viewmodel, _) {
-          return Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
+          return BusyOverlay(
+            isBusy: viewmodel.isBusy,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
 
-                ///Address Input Form
-                CusCardTitle(title: 'عنوان المحفظة'),
-                CustomInputField(
-                  hintText: 'ادخل الكمية الاجمالية',
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'الرجاء إدخال العنوان';
-                    else if (value.length < 30)
-                      return 'الرجاء ادخال عنوان صحيح';
-                  },
-                  keyboardType: TextInputType.text,
-                  onSaved: (value) {
-                    walletAddress = value!;
-                  },
-                ),
+                  ///Address Input Form
+                  CusCardTitle(title: 'عنوان المحفظة'),
+                  CustomInputField(
+                    hintText: 'ادخل عنوان المحفظة',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'الرجاء إدخال العنوان';
+                      } else if (value.length < 30) {
+                        return 'الرجاء ادخال عنوان صحيح';
+                      }
+                    },
+                    keyboardType: TextInputType.text,
+                    onSaved: (value) {
+                      walletAddress = value!;
+                    },
+                  ),
 
-                /// Cryptocurrency Selection Meny
-                CusCardTitle(title: 'العملة'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CusMenu(
+                  /// Cryptocurrency Selection Meny
+                  CusCardTitle(title: 'العملة'),
+                  Row(
+                    children: [
+                      CusMenu(
                           dropdownButton: menuCryptoButton(),
                           menuMargin: EdgeInsets.fromLTRB(20, 0, 20, 10)),
-                    ),
-                  ],
-                ),
-
-                /// Crypto amount input form
-                CusCardTitle(title: 'الكمية'),
-                CustomInputField(
-                  hintText: 'ادخل الكمية الاجمالية',
-                  suffix: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '$cListVal',
-                        textAlign: TextAlign.center,
-                      ),
                     ],
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'الرجاء إدخال الكمية الاجمالية';
-                    else if (double.parse(value) <= 0)
-                      return 'الرجاء ادخال كميه صحيحه';
-                  },
-                  keyboardType: TextInputType.number,
-                  onSaved: (value) {
-                    cryptoAmount = double.parse(value!);
-                  },
-                ),
 
-                Container(
-                  color: Constants.primaryColor,
-                  child: Row(
+                  /// Crypto amount input form
+                  CusCardTitle(title: 'الكمية'),
+                  CustomInputField(
+                    hintText: 'ادخل الكمية الاجمالية',
+                    suffix: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$cListVal',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'الرجاء إدخال الكمية الاجمالية';
+                      } else if (double.parse(value) <= 0) {
+                        return 'الرجاء ادخال كميه صحيحه';
+                      } else if (double.parse(value) >
+                          (wallet.balance * 0.00000001)) {
+                        return 'أدخل المبلغ تحت رصيدك';
+                      }
+                    },
+                    keyboardType: TextInputType.number,
+                    onSaved: (value) {
+                      cryptoAmount = double.parse(value!);
+                    },
+                  ),
+                  Row(
                     children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            _formKey.currentState?.save();
-                            int amount = (cryptoAmount! * 100000000).round();
-                            var m = viewmodel.sendTran(walletAddress!, amount);
-                            // RealTimeWallet rtWallet =
-                            //     RealTimeWallet.fromJson(m);
-                            // print(rtWallet.transactions);
-                          },
-                          child: Text(
-                            'إنشاء',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'الكمية في محفظتك ' +
+                            (wallet.balance * 0.00000001).toString() +
+                            ' $cListVal',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
                   ),
-                )
-              ],
+                  Expanded(flex: 1, child: Container()),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          color: Constants.primaryColor,
+                          child: TextButton(
+                            onPressed: () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState?.save();
+                              int amount = (cryptoAmount! * 100000000).round();
+                              var m =
+                                  viewmodel.sendTran(walletAddress!, amount);
+                            },
+                            child: Text(
+                              'تحويل',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           );
         });

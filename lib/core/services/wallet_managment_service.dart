@@ -58,25 +58,6 @@ class WalletManagmentService {
     return wallet;
   }
 
-  // Future<dynamic> confirmTransaction(String from, String to, int value) async {
-  //   _logger.i("transaction | to=$to");
-  //   Uri url = Uri.parse("$baseUrl/txs/new");
-  //   final data = jsonEncode({
-  //     "inputs": [
-  //       {
-  //         "addresses": [from]
-  //       }
-  //     ],
-  //     "outputs": [
-  //       {
-  //         "addresses": [to],
-  //         "value": value
-  //       }
-  //     ]
-  //   });
-  //   return http.post(url, body: data);
-  // }
-
   Future<void> fundMe(String address) async {
     _logger.i("fundMe | args: address=$address");
 
@@ -105,9 +86,6 @@ class WalletManagmentService {
     var m = await http.post(url, body: jsonEncode(data));
     UnconfirmedTransaction trs =
         UnconfirmedTransaction.fromJson(jsonDecode(m.body));
-    print(jsonDecode(m.body));
-    print(m.body);
-    // print(jsonDecode(m.body)['tx']['total']);
     return trs;
   }
 
@@ -129,8 +107,6 @@ class WalletManagmentService {
     Uri url = Uri.parse("$baseUrl/txs/send");
 
     var m = await http.post(url, body: encodedJson);
-    var decoded = jsonDecode(m.body);
-    print(decoded['tosign'][0] + '0000000000000033');
-    print(m.body);
+    // var decoded = jsonDecode(m.body);
   }
 }
