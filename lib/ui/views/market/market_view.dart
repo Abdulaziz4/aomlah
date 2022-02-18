@@ -1,10 +1,12 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/coin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import 'package:aomlah/ui/views/market/viewmodels/market_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 class MarketView extends StatefulWidget {
   const MarketView({Key? key}) : super(key: key);
@@ -22,66 +24,81 @@ class _MarketViewState extends State<MarketView> {
         builder: (context, viewmodel, _) {
           return Directionality(
             textDirection: TextDirection.ltr,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text("سوق العملات"),
-                automaticallyImplyLeading: false,
-              ),
-              body: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: SfDataGrid(
-                  source: viewmodel.dataSource,
-                  onQueryRowHeight: (details) {
-                    return details.rowIndex == 0 ? 0 : 70;
-                  },
-                  columnWidthMode: ColumnWidthMode.fill,
-                  columns: [
-                    GridColumn(
-                      columnName: 'Logo',
-                      width: 60,
-                      label: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Coin',
-                          overflow: TextOverflow.ellipsis,
+            child: BusyOverlay(
+              isBusy: viewmodel.isBusy,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text("سوق العملات"),
+                  automaticallyImplyLeading: false,
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SfDataGridTheme(
+                    data:
+                        SfDataGridThemeData(selectionColor: Colors.transparent),
+                    child: SfDataGrid(
+                      source: viewmodel.dataSource,
+                      onQueryRowHeight: (details) {
+                        return details.rowIndex == 0 ? 0 : 70;
+                      },
+                      // Old items are the old selected list of row
+                      onSelectionChanged: (newItems, oldItems) {
+                        final index = viewmodel.dataSource.dataGridRows
+                            .indexOf(newItems.first);
+                        viewmodel.navigateToDetails(index);
+                      },
+
+                      selectionMode: SelectionMode.single,
+                      columnWidthMode: ColumnWidthMode.fill,
+                      columns: [
+                        GridColumn(
+                          columnName: 'Logo',
+                          width: 60,
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Coin',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    GridColumn(
-                      columnName: 'Name',
-                      label: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '',
-                          overflow: TextOverflow.ellipsis,
+                        GridColumn(
+                          columnName: 'Name',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    GridColumn(
-                      columnName: 'Spark Chart',
-                      label: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Spark Chart',
-                          overflow: TextOverflow.ellipsis,
+                        GridColumn(
+                          columnName: 'Spark Chart',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Spark Chart',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    GridColumn(
-                      columnName: 'Price',
-                      label: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Price',
-                          overflow: TextOverflow.ellipsis,
+                        GridColumn(
+                          columnName: 'Price',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Price',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),

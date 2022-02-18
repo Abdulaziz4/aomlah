@@ -1,9 +1,11 @@
+import 'package:aomlah/core/models/coin.dart';
 import 'package:aomlah/ui/views/market/market_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CryptoInfoView extends StatelessWidget {
-  const CryptoInfoView({Key? key}) : super(key: key);
+  final Coin coin;
+  const CryptoInfoView({Key? key, required this.coin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class CryptoInfoView extends StatelessWidget {
                       ),
                     ),
                     Container(width: 5),
-                    Text("\$212,333.24"),
+                    Text(coin.price),
                     Spacer(flex: 1),
                     Text("BTC (Bitcoin)"),
                     Container(width: 5),

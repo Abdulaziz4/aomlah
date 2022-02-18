@@ -30,9 +30,6 @@ class Coin {
   });
 
   factory Coin.fromJson(Map<String, dynamic> json) {
-    if (json["DISPLAY"] == null) {
-      print(json["CoinInfo"]);
-    }
     final nested = json["DISPLAY"]["USD"];
     final info = json["CoinInfo"];
     return Coin(

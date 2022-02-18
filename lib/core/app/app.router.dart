@@ -14,6 +14,7 @@ import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_vi
 import '../../ui/views/auth/welcome/welcome_view.dart';
 import '../../ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
+import '../../ui/views/crypto_info/crypto_info_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
@@ -28,6 +29,7 @@ import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/wallet/wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
+import '../models/coin.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -49,6 +51,7 @@ class Routes {
   static const String userOffersView = '/user-offers-view';
   static const String walletInfoView = '/wallet-info-view';
   static const String userBankAccountsView = '/user-bank-accounts-view';
+  static const String cryptoInfoView = '/crypto-info-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -68,6 +71,7 @@ class Routes {
     userOffersView,
     walletInfoView,
     userBankAccountsView,
+    cryptoInfoView,
   };
 }
 
@@ -94,6 +98,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.walletInfoView, page: WalletInfoView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
+    RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -206,5 +211,26 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    CryptoInfoView: (data) {
+      var args = data.getArgs<CryptoInfoViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CryptoInfoView(
+          key: args.key,
+          coin: args.coin,
+        ),
+        settings: data,
+      );
+    },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// CryptoInfoView arguments holder class
+class CryptoInfoViewArguments {
+  final Key? key;
+  final Coin coin;
+  CryptoInfoViewArguments({this.key, required this.coin});
 }
