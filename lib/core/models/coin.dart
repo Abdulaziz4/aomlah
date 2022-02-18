@@ -30,10 +30,9 @@ class Coin {
   });
 
   factory Coin.fromJson(Map<String, dynamic> json) {
-    print(json["CoinInfo"]);
-    print(json["CoinInfo"]["DISPLAY"]);
-    print(json["DISPLAY"]);
-
+    if (json["DISPLAY"] == null) {
+      print(json["CoinInfo"]);
+    }
     final nested = json["DISPLAY"]["USD"];
     final info = json["CoinInfo"];
     return Coin(
@@ -51,5 +50,13 @@ class Coin {
       maxSupply: nested["SUPPLY"],
       fullyDilutedMKCap: nested["CIRCULATINGSUPPLYMKTCAP"],
     );
+  }
+
+  String getFullLogoUrl() {
+    return "https://www.cryptocompare.com" + imageUrl;
+  }
+
+  String getPreviewChart() {
+    return "https://images.cryptocompare.com/sparkchart/$name/USD/latest.png?ts=1645135200";
   }
 }

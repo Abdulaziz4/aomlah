@@ -12,7 +12,7 @@ class CryptoInfoService {
 
   final apiKey = APIKeys.cryptoCompKey;
   final baseUrl =
-      "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD";
+      "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=99&tsym=USD";
 
   BehaviorSubject<List<Coin>> cryptoStream = BehaviorSubject<List<Coin>>();
 
@@ -33,7 +33,11 @@ class CryptoInfoService {
     List<Coin> coins = [];
     if (decodeRes["Message"] == "Success") {
       final coinsList = decodeRes["Data"] as List;
-      coins = coinsList.map((coin) => Coin.fromJson(coin)).toList();
+      coinsList.forEach((coin) {
+        if (coin["DISPLAY"] != null) {
+          coins.add(Coin.fromJson(coin));
+        }
+      });
     }
     return coins;
   }

@@ -1,3 +1,4 @@
+import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/coin.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -5,57 +6,122 @@ import 'package:aomlah/ui/views/market/viewmodels/market_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class MarketView extends StatelessWidget {
+class MarketView extends StatefulWidget {
   const MarketView({Key? key}) : super(key: key);
 
+  @override
+  State<MarketView> createState() => _MarketViewState();
+}
+
+class _MarketViewState extends State<MarketView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MarketViewmodel>.reactive(
         viewModelBuilder: () => MarketViewmodel(),
         onModelReady: (model) => model.connectSocket(),
         builder: (context, viewmodel, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("سوق العملات"),
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text("سوق العملات"),
+                automaticallyImplyLeading: false,
+              ),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: SfDataGrid(
+                  source: viewmodel.dataSource,
+                  onQueryRowHeight: (details) {
+                    return details.rowIndex == 0 ? 0 : 70;
+                  },
+                  columnWidthMode: ColumnWidthMode.fill,
+                  columns: [
+                    GridColumn(
+                      columnName: 'Logo',
+                      width: 60,
+                      label: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Coin',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    GridColumn(
+                      columnName: 'Name',
+                      label: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    GridColumn(
+                      columnName: 'Spark Chart',
+                      label: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Spark Chart',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    GridColumn(
+                      columnName: 'Price',
+                      label: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Price',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-
-            // body: SfDataGrid(
-            //   // source: ,
-            //   columns: [
-            //     GridColumn(
-            //         columnName: 'Name',
-            //         label: Container(
-            //             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            //             alignment: Alignment.centerRight,
-            //             child: Text(
-            //               'ID',
-            //               overflow: TextOverflow.ellipsis,
-            //             ))),
-            //     GridColumn(
-            //         columnName: 'Full Name',
-            //         label: Container(
-            //             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            //             alignment: Alignment.centerLeft,
-            //             child: Text(
-            //               'Name',
-            //               overflow: TextOverflow.ellipsis,
-            //             ))),
-            //   ],
-            // ),
           );
         });
   }
 }
 
 class CoinDataSource extends DataGridSource {
-  CoinDataSource(List<Coin> coins) {
+  CoinDataSource() {
+    builDataGrid([]);
+  }
+
+  void builDataGrid(List<Coin> coins) {
     dataGridRows = coins
         .map<DataGridRow>(
           (coin) => DataGridRow(
             cells: [
-              DataGridCell<String>(columnName: 'Name', value: coin.name),
               DataGridCell<String>(
-                  columnName: 'Full Name', value: coin.fullName),
+                columnName: 'Logo',
+                value: coin.getFullLogoUrl(),
+              ),
+              DataGridCell<Map<String, String>>(
+                columnName: 'Name',
+                value: {
+                  "name": coin.name,
+                  "fullName": coin.fullName,
+                },
+              ),
+              DataGridCell<String>(
+                columnName: 'Spark Chart',
+                value: coin.getPreviewChart(),
+              ),
+              DataGridCell<Map<String, String>>(
+                columnName: 'Price',
+                value: {
+                  "price": coin.price,
+                  "change": coin.change24hr,
+                },
+              ),
             ],
           ),
         )
@@ -64,9 +130,75 @@ class CoinDataSource extends DataGridSource {
 
   List<DataGridRow> dataGridRows = [];
 
+  void updateDataGridSource(List<Coin> coins) {
+    builDataGrid(coins);
+    notifyListeners();
+  }
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
-    // TODO: implement buildRow
-    throw UnimplementedError();
+    // How Each Cell in a Row Should be Displayed
+    final List<DataGridCell<dynamic>> cells = row.getCells();
+    return DataGridRowAdapter(
+      cells: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network(
+            cells[0].value.toString(),
+            height: 20,
+            width: 20,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              (cells[1].value as Map<String, String>)["fullName"].toString(),
+              style: Constants.smallText.copyWith(fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
+            ),
+            Text(
+              (cells[1].value as Map<String, String>)["name"].toString(),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Image.network(
+            cells[2].value,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              (cells[3].value as Map<String, String>)["price"].toString(),
+              style: Constants.smallText.copyWith(fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              (cells[3].value as Map<String, String>)["change"].toString() +
+                  "%",
+              style: Constants.smallText.copyWith(
+                fontWeight: FontWeight.w500,
+                color: (cells[3].value as Map<String, String>)["change"]
+                        .toString()
+                        .startsWith("+")
+                    ? Constants.primaryColor
+                    : Colors.red,
+              ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
