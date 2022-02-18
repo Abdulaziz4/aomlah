@@ -59,6 +59,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SizedBox(
+                  height: 15,
+                ),
+
                 ///Crypto and Currency type
                 Row(
                   children: const <Widget>[
@@ -83,10 +87,13 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
                 ///Price Margin value
                 Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   color: Constants.black3dp,
                   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: ListTile(
-                    // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     leading: TextButton(
                         onPressed: () {
                           if (margin < 200) {
@@ -96,8 +103,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           }
                           ;
                         },
-                        child: Text('+')),
-
+                        child: Text(
+                          '+',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                     title: Center(child: Text(margin.toString() + "%")),
                     trailing: TextButton(
                         onPressed: () {
@@ -108,7 +117,10 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           }
                           ;
                         },
-                        child: Text('-')),
+                        child: Text(
+                          '-',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                   ),
                 ),
 
@@ -214,11 +226,13 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                 ),
 
                 ///Submit Form
-                Container(
-                  color: Constants.primaryColor,
-                  child: Row(
-                    children: [
-                      Expanded(
+                Row(
+                  // crossAxisAlignment: CrossAxisAlignment.,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Constants.primaryColor,
+                        margin: EdgeInsets.all(20),
                         child: TextButton(
                           onPressed: () {
                             if (!_formKey.currentState!.validate()) {
@@ -242,8 +256,8 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),

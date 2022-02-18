@@ -17,7 +17,6 @@ class _SettingsHomeState extends State<SettingsHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.black3dp,
         title: Text('الإعدادات',
             style: TextStyle(
                 color: Constants.darkBlue, fontWeight: FontWeight.bold)),
@@ -49,7 +48,7 @@ class _SettingsHomeBodyState extends State<SettingsHomeBody> {
                 onPressed: () {
                   print('fffff');
                 },
-                text: 'حالتك متوفر',
+                text: 'حالة تواجدك',
                 trailing: Switch.adaptive(
                   onChanged: (value) => setState(() {
                     viewmodel.updateStatus(value);

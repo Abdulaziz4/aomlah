@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
 import 'package:aomlah/ui/shared/custom_menu.dart';
@@ -19,7 +20,8 @@ class CreateOfferSell extends StatefulWidget {
   State<CreateOfferSell> createState() => _CreateOfferSellState();
 }
 
-class _CreateOfferSellState extends State<CreateOfferSell> {
+class _CreateOfferSellState extends State<CreateOfferSell>
+    with AutomaticKeepAliveClientMixin<CreateOfferSell> {
   final cryptoList = ['BTC'];
   final currencyList = ['ر.س'];
   String? cListVal, currListVal;
@@ -33,6 +35,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double realTimePrice;
     if (currListVal == 'ر.س') {
       realTimePrice =
@@ -57,6 +60,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SizedBox(
+                  height: 15,
+                ),
+
                 ///Crypto and Currency type
                 Row(
                   children: const <Widget>[
@@ -85,6 +92,10 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: ListTile(
                     // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     leading: TextButton(
                         onPressed: () {
                           if (margin < 200) {
@@ -92,9 +103,11 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                               margin++;
                             });
                           }
-                          ;
                         },
-                        child: Text('+')),
+                        child: Text(
+                          '+',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
 
                     title: Center(child: Text(margin.toString() + "%")),
                     trailing: TextButton(
@@ -104,9 +117,11 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                               margin--;
                             });
                           }
-                          ;
                         },
-                        child: Text('-')),
+                        child: Text(
+                          '-',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                   ),
                 ),
 
@@ -202,7 +217,9 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                             margin: EdgeInsets.fromLTRB(10, 5, 0, 0),
                             child: CustomButton(
                               color: Constants.lighBlue,
-                              onPressed: () {},
+                              onPressed: () {
+                                viewmodel.navigateToBankAccounts();
+                              },
                               text: 'اضف',
                             ),
                           ))
@@ -227,9 +244,9 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                           SizedBox(
                             width: 15,
                           ),
-                          Expanded(child: Text('b1')),
-                          Expanded(child: Text('b2')),
-                          Expanded(child: Text('b3')),
+                          Expanded(child: BankAccountItem(bankName: "الراجحي")),
+                          Expanded(child: BankAccountItem(bankName: "البلاد")),
+                          Expanded(child: BankAccountItem(bankName: "الرياض")),
                         ],
                       ),
                     ],
@@ -265,6 +282,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
                 ///Submit Form
                 Container(
                   color: Constants.primaryColor,
+                  margin: EdgeInsets.all(20),
                   child: Row(
                     children: [
                       Expanded(
@@ -324,4 +342,7 @@ class _CreateOfferSellState extends State<CreateOfferSell> {
           ),
         ),
       );
+
+  @override
+  bool get wantKeepAlive => true;
 }

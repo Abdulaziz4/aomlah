@@ -254,7 +254,7 @@ class ProfileView extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       child: Text(
-        isOnline ? "متوفر" : "غير متوفر",
+        isOnline ? "متصل" : "غير متصل",
         style: Constants.verySmallText,
       ),
     );

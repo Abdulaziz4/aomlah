@@ -81,18 +81,22 @@ class UserBankAccountsView extends StatelessWidget {
   }
 
   Widget buildBankAccountWrapper(BankAccount account, void Function() delete) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Constants.black2dp,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: Constants.shadow,
-      ),
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
-      child: BankAccountCard(
-        bank: account,
-        onDelete: delete,
-      ),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Constants.black2dp,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: Constants.shadow,
+          ),
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+          child: BankAccountCard(
+            bank: account,
+            onDelete: delete,
+          ),
+        ),
+      ],
     );
   }
 }

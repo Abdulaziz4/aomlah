@@ -14,7 +14,6 @@ class UpdateProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.black3dp,
         title: Text('تحديث الملف الشخصي',
             style: TextStyle(
                 color: Constants.darkBlue, fontWeight: FontWeight.bold)),

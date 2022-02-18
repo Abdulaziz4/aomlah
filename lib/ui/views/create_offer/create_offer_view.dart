@@ -12,7 +12,7 @@ class CreateOfferView extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Constants.black3dp,
+            backgroundColor: Constants.black1dp,
             title: Text(
               'انشاء اعلان',
               style: TextStyle(
@@ -21,11 +21,14 @@ class CreateOfferView extends StatelessWidget {
             centerTitle: true,
             bottom: TabBar(
               tabs: [
-                Tab(text: 'بيع',),
-                Tab(text: 'شراء',)
+                Tab(
+                  text: 'بيع',
+                ),
+                Tab(
+                  text: 'شراء',
+                )
               ],
             ),
-
           ),
           body: CreateOfferBody()),
     );
@@ -41,7 +44,6 @@ class CreateOfferBody extends StatelessWidget {
       CreateOfferSell(),
       //BuyView
       CreateOfferBuy()
-      
     ]);
   }
 }

@@ -113,7 +113,7 @@ class InfoRow extends StatelessWidget {
         children: <Widget>[
           Text(
             field,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.w500),
           ),
           Text(fieldValue),
         ],
