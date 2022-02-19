@@ -1,51 +1,33 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:aomlah/core/app/logger.dart';
-// import 'package:candlesticks/candlesticks.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:interactive_chart/interactive_chart.dart';
 
 class CandlesService {
   final _logger = getLogger("CandlesService");
 
-  final baseUrl = "wss://stream.binance.com:9443/ws";
+  Future<List<CandleData>> getCandles(String coinName, String interval) async {
+    _logger.i("getCandles | args: coinName=$coinName, interval=$interval");
 
-  BehaviorSubject<List<Map<String, dynamic>>> candlesStream =
-      BehaviorSubject<List<Map<String, dynamic>>>();
+    final uri = Uri.parse(
+        "https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1000");
 
-  late WebSocketChannel socketChannel;
+    final res = await http.get(uri);
+    final decodedRes = jsonDecode(res.body) as List;
 
-  void connectSocket() {
-    _logger.i("Connect Binance Socket for Charts");
-
-    socketChannel = WebSocketChannel.connect(
-      Uri.parse(baseUrl),
-    );
-    socketChannel.stream.listen((event) {
-      print(event);
-    });
+    return decodedRes.map((data) => candleFromJson(data as List)).toList();
   }
 
-  void subscribeToToken(String coinName) {
-    socketChannel.sink.add(
-      jsonEncode(_coinConnectionMessage(coinName, null)),
+  CandleData candleFromJson(List<dynamic> json) {
+    return CandleData(
+      timestamp: json[0] * 1000,
+      open: double.parse(json[1] as String),
+      high: double.parse(json[2] as String),
+      low: double.parse(json[3] as String),
+      close: double.parse(json[4] as String),
+      volume: double.parse(json[5] as String),
     );
-  }
-
-  // Future<List<Candle>> fetchInitialCandles(String coinName) async {
-  //   final uri = Uri.parse(
-  //     "https://api.binance.com/api/v3/klines?symbol=$coinNameUSDT&interval=1m&limit=1000",
-  //   );
-  // }
-
-  Map<String, dynamic> _coinConnectionMessage(
-    String coinName,
-    String? interval,
-  ) {
-    return {
-      "method": "SUBSCRIBE",
-      "params": ["btcusdt@kline_1d"],
-      "id": 1
-    };
   }
 }

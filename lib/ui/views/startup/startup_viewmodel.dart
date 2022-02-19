@@ -20,8 +20,6 @@ class StartupViewModel extends BaseViewModel {
 
     final _priceService = locator<PriceService>();
     _priceService.connect();
-    final _candlesService = locator<CandlesService>();
-    _candlesService.connectSocket();
 
     final _navService = locator<NavigationService>();
     final _authService = locator<AuthService>();

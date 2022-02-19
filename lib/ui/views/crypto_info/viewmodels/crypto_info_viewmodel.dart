@@ -1,15 +1,16 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/services/candles_service.dart';
+import 'package:interactive_chart/interactive_chart.dart';
 import 'package:stacked/stacked.dart';
 
-class CryptoInfoViewModel extends StreamViewModel<List<Map<String, dynamic>>> {
+class CryptoInfoViewModel extends BaseViewModel {
   final _candlesService = locator<CandlesService>();
 
-  void subscribeToToken(String coinName) {
-    // _candlesService.subscribeToToken(coinName);
-  }
+  List<CandleData> candles = [];
 
-  @override
-  Stream<List<Map<String, dynamic>>> get stream =>
-      _candlesService.candlesStream;
+  Future<void> fetchCandles(String coinName) async {
+    setBusy(true);
+    candles = await _candlesService.getCandles(coinName, "");
+    setBusy(false);
+  }
 }
