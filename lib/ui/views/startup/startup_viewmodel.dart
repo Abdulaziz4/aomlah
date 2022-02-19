@@ -1,4 +1,5 @@
 import 'package:aomlah/core/services/auth_service.dart';
+import 'package:aomlah/core/services/candles_service.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
@@ -19,6 +20,8 @@ class StartupViewModel extends BaseViewModel {
 
     final _priceService = locator<PriceService>();
     _priceService.connect();
+    final _candlesService = locator<CandlesService>();
+    _candlesService.connectSocket();
 
     final _navService = locator<NavigationService>();
     final _authService = locator<AuthService>();
