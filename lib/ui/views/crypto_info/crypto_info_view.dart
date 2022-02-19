@@ -105,18 +105,18 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                     ],
                   ),
                 ),
-                viewmodel.isFetchingInitial
-                    ? CircularProgressIndicator()
-                    : Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 17,
-                          horizontal: 5,
-                        ),
-                        color: darken(Constants.black2dp, 30),
-                        height: 500,
-                        child: BusyOverlay(
-                          isBusy: viewmodel.isBusy,
-                          child: InteractiveChart(
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 17,
+                    horizontal: 5,
+                  ),
+                  color: darken(Constants.black2dp, 30),
+                  height: 500,
+                  child: BusyOverlay(
+                    isBusy: viewmodel.isBusy,
+                    child: viewmodel.isFetchingInitial
+                        ? Center(child: CircularProgressIndicator())
+                        : InteractiveChart(
                             candles: viewmodel.candles,
                             style: ChartStyle(
                               overlayBackgroundColor: Constants.black5dp,
@@ -153,8 +153,8 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                               }
                             },
                           ),
-                        ),
-                      ),
+                  ),
+                ),
                 SizedBox(height: 12),
                 CoinInfoRow(
                   field: "حجم التداول/24 ساعة",
