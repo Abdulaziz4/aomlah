@@ -7,6 +7,7 @@ import 'package:aomlah/ui/views/crypto_info/viewmodels/crypto_info_viewmodel.dar
 import 'package:flutter/material.dart';
 import 'package:interactive_chart/interactive_chart.dart';
 import 'package:stacked/stacked.dart';
+import 'package:intl/intl.dart' as intl;
 
 class CryptoInfoView extends StatefulWidget {
   final Coin coin;
@@ -122,6 +123,21 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                               priceLossColor: Colors.red[400]!,
                               volumeColor: Constants.black5dp,
                             ),
+                            overlayInfo: (data) {
+                              final date = intl.DateFormat.yMMMd().format(
+                                DateTime.fromMicrosecondsSinceEpoch(
+                                  data.timestamp,
+                                ),
+                              );
+                              return {
+                                "Date": date,
+                                "Open": data.open?.toStringAsFixed(2) ?? "-",
+                                "High": data.high?.toStringAsFixed(2) ?? "-",
+                                "Low": data.low?.toStringAsFixed(2) ?? "-",
+                                "Close": data.close?.toStringAsFixed(2) ?? "-",
+                                "Volume": data.volume?.asAbbreviated() ?? "-",
+                              };
+                            },
                             timeLabel: (timestamp, visibleDataCount) {
                               final date = DateTime.fromMicrosecondsSinceEpoch(
                                 timestamp,
