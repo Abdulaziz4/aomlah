@@ -3,6 +3,7 @@ import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/coin.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/crypto_info/components/base_coin_info.dart';
+import 'package:aomlah/ui/views/crypto_info/components/coin_info_row.dart';
 import 'package:aomlah/ui/views/crypto_info/viewmodels/crypto_info_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_chart/interactive_chart.dart';
@@ -155,25 +156,25 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                         ),
                       ),
                 SizedBox(height: 12),
-                InfoRow(
-                  field: "مقدار العملة خلال ٢٤ ساعة",
+                CoinInfoRow(
+                  field: "حجم التداول/24 ساعة",
+                  fieldValue: widget.coin.volume24hr,
+                ),
+                CoinInfoRow(
+                  field: "التغير/24 ساعة",
                   fieldValue: "1234.9484",
                 ),
-                InfoRow(
-                  field: "تغير السعر خلال ٢٤ ساعة",
-                  fieldValue: "1234.9484",
+                CoinInfoRow(
+                  field: "القيمة السوقية",
+                  fieldValue: widget.coin.mktCap,
                 ),
-                InfoRow(
-                  field: "سقف السوق",
-                  fieldValue: "1234.9484",
+                CoinInfoRow(
+                  field: "العرض المتوفر",
+                  fieldValue: widget.coin.circulationSupplayUsd,
                 ),
-                InfoRow(
-                  field: "العرض المتداول",
-                  fieldValue: "1234.9484",
-                ),
-                InfoRow(
-                  field: "إجمالي العرض خلال ٢٤ ساعة",
-                  fieldValue: "1234.9484",
+                CoinInfoRow(
+                  field: "الحد الأقصى للعرض",
+                  fieldValue: widget.coin.maxSupply,
                 ),
               ],
             ),
