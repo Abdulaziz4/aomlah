@@ -12,7 +12,7 @@ class CandlesService {
     _logger.i("getCandles | args: coinName=$coinName, interval=$interval");
 
     final uri = Uri.parse(
-        "https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1000");
+        "https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=$interval&limit=1000");
 
     final res = await http.get(uri);
     final decodedRes = jsonDecode(res.body) as List;

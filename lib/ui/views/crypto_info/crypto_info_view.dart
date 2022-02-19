@@ -1,77 +1,113 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/coin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
+import 'package:aomlah/ui/views/crypto_info/components/base_coin_info.dart';
 import 'package:aomlah/ui/views/crypto_info/viewmodels/crypto_info_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_chart/interactive_chart.dart';
 import 'package:stacked/stacked.dart';
 
-class CryptoInfoView extends StatelessWidget {
+class CryptoInfoView extends StatefulWidget {
   final Coin coin;
   const CryptoInfoView({Key? key, required this.coin}) : super(key: key);
+
+  @override
+  State<CryptoInfoView> createState() => _CryptoInfoViewState();
+}
+
+class _CryptoInfoViewState extends State<CryptoInfoView>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
+  List<Map<String, dynamic>> tabs = [
+    {
+      "tab": Tab(
+        text: "١ يوم",
+      ),
+      "value": "1d",
+    },
+    {
+      "tab": Tab(
+        text: "٣ يوم",
+      ),
+      "value": "3d",
+    },
+    {
+      "tab": Tab(
+        text: "١ اسبوع",
+      ),
+      "value": "1w",
+    },
+    {
+      "tab": Tab(
+        text: "١ شهر",
+      ),
+      "value": "1m",
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CryptoInfoViewModel>.reactive(
       viewModelBuilder: () => CryptoInfoViewModel(),
-      onModelReady: (viewmodel) => viewmodel.fetchCandles(coin.name),
+      onModelReady: (viewmodel) {
+        _tabController.addListener(() {
+          viewmodel.fetchCandles(
+            widget.coin.name,
+            tabs[_tabController.index]["value"],
+          );
+        });
+        viewmodel.fetchCandles(
+          widget.coin.name,
+          tabs[_tabController.index]["value"],
+          isInitial: true,
+        );
+      },
       builder: (contect, viewmodel, _) => Scaffold(
           appBar: AppBar(
-            title: Text("معلومات عن ${coin.name} "),
+            title: Text("معلومات عن ${widget.coin.name} "),
           ),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.only(top: 10, right: 15, left: 15),
                   decoration: BoxDecoration(
                     color: Constants.black2dp,
                   ),
-                  child: Row(
-                    children: <Widget>[
-                      Column(
-                        children: [
-                          Container(width: 5),
-                          Text(
-                            coin.price,
-                            style: Constants.mediumText,
-                          ),
-                          Text(
-                            coin.change24hr + "%",
-                            style: TextStyle(
-                              color: coin.change24hr.startsWith("+")
-                                  ? Constants.primaryColor
-                                  : Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            coin.fullName,
-                            style: Constants.mediumText.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(coin.name),
-                        ],
-                      ),
-                      Container(width: 5),
-                      Image.network(
-                        coin.getFullLogoUrl(),
-                        height: 50,
-                        width: 50,
+                  child: Column(
+                    children: [
+                      BaseCoinInfo(coin: widget.coin),
+                      TabBar(
+                        controller: _tabController,
+                        tabs:
+                            tabs.map<Tab>((tab) => tab["tab"] as Tab).toList(),
                       ),
                     ],
                   ),
                 ),
-                viewmodel.isBusy
+                viewmodel.isFetchingInitial
                     ? CircularProgressIndicator()
                     : SizedBox(
                         height: 500,
-                        child: InteractiveChart(candles: viewmodel.candles),
+                        child: BusyOverlay(
+                          isBusy: viewmodel.isBusy,
+                          child: InteractiveChart(candles: viewmodel.candles),
+                        ),
                       ),
                 InfoRow(
                   field: "مقدار العملة خلال ٢٤ ساعة",
@@ -96,42 +132,6 @@ class CryptoInfoView extends StatelessWidget {
               ],
             ),
           )),
-    );
-  }
-}
-
-class InfoRow extends StatelessWidget {
-  final String field;
-  final String fieldValue;
-  const InfoRow({
-    Key? key,
-    required this.field,
-    required this.fieldValue,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          color: Color(0xff0F1E2C),
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff3D4955),
-            ),
-          )),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            field,
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          Text(fieldValue),
-        ],
-      ),
     );
   }
 }
