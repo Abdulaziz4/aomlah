@@ -1,5 +1,6 @@
 import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
@@ -29,19 +30,27 @@ class SupabaseService extends AbstractSupabase {
   }) async {
     await insert(AomlahTable.profiles, {"profile_id": uuid, "name": name});
   }
-  Future<void> updateUserProfile(String uuid,String name,) async {
-    await update(AomlahTable.profiles, {"name": name},{"profile_id": uuid});
 
+  Future<void> updateUserProfile(
+    String uuid,
+    String name,
+  ) async {
+    await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
-  Future<void> updateUserStatus({required String uuid,required bool status}) async {
-    await update(AomlahTable.profiles, {"is_online": status},{"profile_id": uuid});
 
-
+  Future<void> updateUserStatus(
+      {required String uuid, required bool status}) async {
+    await update(
+        AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
   }
 
   Future<AomlahUser> getUser(String uuid) async {
-    final res = await callFn<AomlahUser>("get_user", AomlahUser.fromJson,
-        params: {"user_id": uuid});
+    final res = await get<AomlahUser>(
+      AomlahTable.view_profiles,
+      AomlahUser.fromJson,
+      query: {"profile_id": uuid},
+    );
+
     return res.first;
   }
 
@@ -56,15 +65,29 @@ class SupabaseService extends AbstractSupabase {
       primaryKey: "offer_id",
     );
   }
-  
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
+  }
+
+  Future<void> createBank(BankAccount account) async {
+    await insert(AomlahTable.bank_accounts, account.toJson());
   }
 
   Future<void> createWallet(
     Wallet wallet,
   ) async {
     await upsert(AomlahTable.wallets, wallet.toJson());
+  }
+
+  Future<void> deleteBankAccount(
+    BankAccount wallet,
+  ) async {
+    await delete(
+      AomlahTable.bank_accounts,
+      {
+        "iban": wallet.iban,
+      },
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:aomlah/ui/add_bank_account/add_bank_acc_view.dart';
+import 'package:aomlah/ui/views/add_bank_account/add_bank_account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -8,49 +8,50 @@ class BankAccountSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("الحسابات البنكية"), actions: [
-          IconButton(
-              onPressed: () {
-                {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddBankAccView()));
-                }
-              },
-              icon: SvgPicture.asset("assets/icons/addIcon.svg")),
-        ]),
-        body: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: BorderSide(
-                  width: 1,
+      appBar: AppBar(title: Text("الحسابات البنكية"), actions: [
+        IconButton(
+            onPressed: () {
+              {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddBankAccountView()));
+              }
+            },
+            icon: SvgPicture.asset("assets/icons/addIcon.svg")),
+      ]),
+      body: Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Colors.white,
+              ),
+            )),
+            child: Row(
+              children: <Widget>[
+                Container(width: 100),
+                const VerticalDivider(
+                  width: 20,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 20,
                   color: Colors.white,
                 ),
-              )),
-              child: Row(
-                children: <Widget>[
-                  Container(width: 100),
-                  const VerticalDivider(
-                    width: 20,
-                    thickness: 1,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Colors.white,
-                  ),
-                  Text("علي سعد الشمري\n SA93 939 939 393 939 339"),
-                  Spacer(flex: 3),
-                  IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset("assets/icons/Delete.svg")),
-                ],
-              ),
-              height: 120,
-              width: MediaQuery.of(context).size.width,
+                Text("علي سعد الشمري\n SA93 939 939 393 939 339"),
+                Spacer(flex: 3),
+                IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset("assets/icons/Delete.svg")),
+              ],
             ),
-          ],
-        ));
+            height: 120,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -13,7 +13,6 @@ class BuyingOfferDetails extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Constants.black3dp,
           title: Text(
             'تفاصيل العرض',
             style: Constants.largeText.copyWith(

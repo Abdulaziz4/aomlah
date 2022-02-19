@@ -10,6 +10,7 @@ class AomlahUser {
   final Wallet? wallet;
   final List<BankAccount> bankAccounts;
   final bool isOnline;
+  final bool isAdmin;
   AomlahUser({
     required this.profileId,
     required this.name,
@@ -17,6 +18,7 @@ class AomlahUser {
     required this.bankAccounts,
     required this.wallet,
     required this.isOnline,
+    this.isAdmin = false,
   });
 
   factory AomlahUser.anonymous() {
@@ -42,9 +44,9 @@ class AomlahUser {
   factory AomlahUser.fromJson(Map<String, dynamic> map) {
     List<BankAccount> accounts = [];
     if ((map["bank_accounts"] as List).first != null) {
-      accounts = (map["bank_accounts"] as List)
-          .map((e) => BankAccount.fromJson(e))
-          .toList();
+      accounts = (map["bank_accounts"] as List).map((e) {
+        return BankAccount.fromJson(e);
+      }).toList();
     }
     return AomlahUser(
       profileId: map['profile_id'] ?? '',
@@ -53,6 +55,7 @@ class AomlahUser {
       wallet: map["wallet"] == null ? null : Wallet.fromJson(map['wallet']),
       bankAccounts: accounts,
       isOnline: map['is_online'] ?? false,
+      isAdmin: map["is_admin"] ?? false,
     );
   }
 }

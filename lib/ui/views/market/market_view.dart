@@ -1,3 +1,4 @@
+import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -97,53 +98,61 @@ class crypto_info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Color(0xff0F1E2C),
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff3D4955),
+    return InkWell(
+      onTap: () {
+        {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CryptoInfoView()));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Color(0xff0F1E2C),
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xff3D4955),
+              ),
+            )),
+        child: Row(
+          children: <Widget>[
+            SvgPicture.asset(imagePath),
+            Container(width: 12),
+            Column(
+              children: [
+                Text(
+                  shortName,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  fullName,
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
-          )),
-      child: Row(
-        children: <Widget>[
-          SvgPicture.asset(imagePath),
-          Container(width: 12),
-          Column(
-            children: [
-              Text(
-                shortName,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            Spacer(flex: 2),
+            Text(totalTrade),
+            Spacer(flex: 2),
+            Column(
+              children: <Widget>[
+                Text(price),
+                Text(
+                  precentage,
+                  style: TextStyle(
+                    color: Color(0xff16A79E),
+                  ),
                 ),
-              ),
-              Text(
-                fullName,
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Spacer(flex: 2),
-          Text(totalTrade),
-          Spacer(flex: 2),
-          Column(
-            children: <Widget>[
-              Text(price),
-              Text(
-                precentage,
-                style: TextStyle(
-                  color: Color(0xff16A79E),
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

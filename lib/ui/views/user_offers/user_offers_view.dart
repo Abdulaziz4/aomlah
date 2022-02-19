@@ -11,7 +11,6 @@ class UserOffersView extends StatelessWidget {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
-              backgroundColor: Constants.black3dp,
               title: Text(
                 'عروضي',
                 style: Constants.largeText.copyWith(
