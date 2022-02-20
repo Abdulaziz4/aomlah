@@ -1,4 +1,3 @@
-import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
@@ -7,7 +6,6 @@ import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import 'package:aomlah/ui/views/auth/welcome/welcome_view.dart';
-import 'package:aomlah/ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/faucets/faucets_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
@@ -43,7 +41,6 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: FaucetsView),
     MaterialRoute(page: SettingsHome),
     MaterialRoute(page: UpdateProfileView),
-    MaterialRoute(page: BankAccountSelectionView),
     MaterialRoute(page: UserOffersView),
     MaterialRoute(page: WalletInfoView),
     MaterialRoute(page: UserBankAccountsView),
