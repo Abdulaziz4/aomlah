@@ -48,12 +48,12 @@ class _CustomInputFieldState extends State<CustomInputField> {
         textInputAction: TextInputAction.next,
         style: Constants.mediumText,
         decoration: InputDecoration(
-          prefixIcon:  widget.suffix,
+          prefixIcon: widget.suffix,
           hintText: widget.hintText,
           hintTextDirection: TextDirection.rtl,
           hintStyle: Constants.smallText,
           contentPadding:
-          const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           filled: true,
           fillColor: Constants.black3dp,
           border: OutlineInputBorder(
@@ -83,5 +83,4 @@ class _CustomInputFieldState extends State<CustomInputField> {
       ),
     );
   }
-
 }

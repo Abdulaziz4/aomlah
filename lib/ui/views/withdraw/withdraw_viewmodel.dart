@@ -19,12 +19,6 @@ class WithdrawViewModel extends BaseViewModel {
     setBusy(true);
     UnconfirmedTransaction transaction = await walletService.sendTransaction(
         userService.user.wallet!.address, to, amount);
-
-    print('from: ' + transaction.from);
-    print('to: ' + transaction.to);
-    print('total: ' + transaction.total.toString());
-    print('fees: ' + transaction.fees.toString());
-    print('toSign: ' + transaction.toSign);
     setBusy(false);
     navService.replaceWith(Routes.confirmWithdrawView, arguments: transaction);
   }

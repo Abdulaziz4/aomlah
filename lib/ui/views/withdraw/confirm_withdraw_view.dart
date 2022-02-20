@@ -140,7 +140,7 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                           child: RoundedButton(
                               textStyle: Constants.robotoFont.copyWith(
                                   fontSize: 20, fontWeight: FontWeight.bold),
-                              color: Colors.red,
+                              color: Constants.redColor,
                               text: 'إلغاء',
                               press: () {
                                 viewmodel.returnToWallet();
