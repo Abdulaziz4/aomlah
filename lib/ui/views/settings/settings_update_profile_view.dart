@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/app/utils/constants.dart';
-import '../create_offer/common/custom_card_title.dart';
-import '../create_offer/common/custom_input_field.dart';
+import '../../shared/custom_card_title.dart';
+import '../../shared/custom_input_field.dart';
 
 class UpdateProfileView extends StatelessWidget {
   const UpdateProfileView({Key? key}) : super(key: key);

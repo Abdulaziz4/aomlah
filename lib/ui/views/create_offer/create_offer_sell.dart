@@ -1,8 +1,8 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
+import 'package:aomlah/ui/shared/custom_card_title.dart';
+import 'package:aomlah/ui/shared/custom_menu.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +10,8 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/models/bitcoin.dart';
 import '../../shared/custom_button.dart';
-import 'common/custom_container.dart';
-import 'common/custom_input_field.dart';
+import '../../shared/custom_container.dart';
+import '../../shared/custom_input_field.dart';
 
 class CreateOfferSell extends StatefulWidget {
   const CreateOfferSell({Key? key}) : super(key: key);
@@ -88,13 +88,14 @@ class _CreateOfferSellState extends State<CreateOfferSell>
 
                 ///Price Margin value
                 Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
                   color: Constants.black3dp,
                   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    // contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 2),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     leading: TextButton(
                         onPressed: () {
                           if (margin < 200) {
@@ -102,12 +103,12 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                               margin++;
                             });
                           }
-                          ;
                         },
                         child: Text(
                           '+',
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
+
                     title: Center(child: Text(margin.toString() + "%")),
                     trailing: TextButton(
                         onPressed: () {
@@ -116,7 +117,6 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                               margin--;
                             });
                           }
-                          ;
                         },
                         child: Text(
                           '-',
@@ -284,7 +284,6 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                   color: Constants.primaryColor,
                   margin: EdgeInsets.all(20),
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: TextButton(

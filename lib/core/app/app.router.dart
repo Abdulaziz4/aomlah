@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -28,6 +29,7 @@ import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/wallet/wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
+import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -49,6 +51,9 @@ class Routes {
   static const String userOffersView = '/user-offers-view';
   static const String walletInfoView = '/wallet-info-view';
   static const String userBankAccountsView = '/user-bank-accounts-view';
+  static const String withdrawView = '/withdraw-view';
+  static const String confirmWithdrawView = '/confirm-withdraw-view';
+
   static const all = <String>{
     startupView,
     navigationView,
@@ -68,6 +73,8 @@ class Routes {
     userOffersView,
     walletInfoView,
     userBankAccountsView,
+    withdrawView,
+    confirmWithdrawView
   };
 }
 
@@ -94,6 +101,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.walletInfoView, page: WalletInfoView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
+    RouteDef(Routes.withdrawView, page: WithdrawView),
+    RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -203,6 +212,18 @@ class StackedRouter extends RouterBase {
     UserBankAccountsView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const UserBankAccountsView(),
+        settings: data,
+      );
+    },
+    WithdrawView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WithdrawView(),
+        settings: data,
+      );
+    },
+    ConfirmWithdrawView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ConfirmWithdrawView(),
         settings: data,
       );
     },

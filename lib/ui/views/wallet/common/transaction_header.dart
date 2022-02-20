@@ -52,7 +52,7 @@ class TransactionHead extends StatelessWidget {
   }
 
   Text transactionType() {
-    if (transaction.from == address) {
+    if (transaction.from != address) {
       return Text(
         'من محفظتك',
         textAlign: TextAlign.right,
