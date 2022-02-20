@@ -11,7 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class UserBankAccountsView extends StatelessWidget {
-  const UserBankAccountsView({Key? key}) : super(key: key);
+  final bool allowSelection;
+  const UserBankAccountsView({
+    Key? key,
+    this.allowSelection = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +53,7 @@ class UserBankAccountsView extends StatelessWidget {
                                   () {
                                     viewmodel.deleteBank(account);
                                   },
+                                  context,
                                 ),
                               )
                               .toList(),
@@ -80,20 +85,31 @@ class UserBankAccountsView extends StatelessWidget {
     );
   }
 
-  Widget buildBankAccountWrapper(BankAccount account, void Function() delete) {
+  Widget buildBankAccountWrapper(
+    BankAccount account,
+    void Function() delete,
+    BuildContext context,
+  ) {
     return Column(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Constants.black2dp,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: Constants.shadow,
-          ),
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
-          child: BankAccountCard(
-            bank: account,
-            onDelete: delete,
+        GestureDetector(
+          onTap: allowSelection
+              ? () {
+                  Navigator.of(context).pop(account);
+                }
+              : null,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Constants.black2dp,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: Constants.shadow,
+            ),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+            child: BankAccountCard(
+              bank: account,
+              onDelete: allowSelection ? null : delete,
+            ),
           ),
         ),
       ],
