@@ -11,21 +11,29 @@ class CryptoInfoViewModel extends BaseViewModel {
 
   bool isFetchingInitial = false;
 
+  bool isNotSupported = false;
+
   Future<void> fetchCandles(
     String coinName,
     String interval, {
     bool isInitial = false,
   }) async {
-    if (isInitial) {
-      setFetchingInitial(true);
-    } else {
-      setBusy(true);
-    }
-    candles = await _candlesService.getCandles(coinName, interval);
-    if (isInitial) {
-      setFetchingInitial(false);
-    } else {
-      setBusy(false);
+    try {
+      if (isInitial) {
+        setFetchingInitial(true);
+      } else {
+        setBusy(true);
+      }
+      candles = await _candlesService.getCandles(coinName, interval);
+    } catch (exp) {
+      print(exp.toString());
+      isNotSupported = true;
+    } finally {
+      if (isInitial) {
+        setFetchingInitial(false);
+      } else {
+        setBusy(false);
+      }
     }
   }
 

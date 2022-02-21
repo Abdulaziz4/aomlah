@@ -15,9 +15,14 @@ class CandlesService {
         "https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=$interval&limit=1000");
 
     final res = await http.get(uri);
-    final decodedRes = jsonDecode(res.body) as List;
+    final decodedRes = jsonDecode(res.body);
+    if (decodedRes.runtimeType.toString() ==
+        "_InternalLinkedHashMap<String, dynamic>") {
+      throw Exception("not supported");
+    }
+    final data = decodedRes as List;
 
-    return decodedRes.map((data) => candleFromJson(data as List)).toList();
+    return data.map((data) => candleFromJson(data as List)).toList();
   }
 
   CandleData candleFromJson(List<dynamic> json) {

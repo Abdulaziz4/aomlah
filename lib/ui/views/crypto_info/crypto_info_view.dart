@@ -125,44 +125,51 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                     isBusy: viewmodel.isBusy,
                     child: viewmodel.isFetchingInitial
                         ? Center(child: CircularProgressIndicator())
-                        : InteractiveChart(
-                            candles: viewmodel.candles,
-                            style: ChartStyle(
-                              overlayBackgroundColor: Constants.black5dp,
-                              priceGainColor: Constants.primaryColor,
-                              priceLossColor: Colors.red[400]!,
-                              volumeColor: Constants.black5dp,
-                            ),
-                            overlayInfo: (data) {
-                              final date = intl.DateFormat.yMMMd().format(
-                                DateTime.fromMicrosecondsSinceEpoch(
-                                  data.timestamp,
+                        : viewmodel.isNotSupported
+                            ? buildNotSupported()
+                            : InteractiveChart(
+                                candles: viewmodel.candles,
+                                style: ChartStyle(
+                                  overlayBackgroundColor: Constants.black5dp,
+                                  priceGainColor: Constants.primaryColor,
+                                  priceLossColor: Colors.red[400]!,
+                                  volumeColor: Constants.black5dp,
                                 ),
-                              );
+                                overlayInfo: (data) {
+                                  final date = intl.DateFormat.yMMMd().format(
+                                    DateTime.fromMicrosecondsSinceEpoch(
+                                      data.timestamp,
+                                    ),
+                                  );
 
-                              return {
-                                "Date": date,
-                                "Open": data.open?.toStringAsFixed(2) ?? "-",
-                                "High": data.high?.toStringAsFixed(2) ?? "-",
-                                "Low": data.low?.toStringAsFixed(2) ?? "-",
-                                "Close": data.close?.toStringAsFixed(2) ?? "-",
-                                "Volume": data.volume?.asAbbreviated() ?? "-",
-                              };
-                            },
-                            timeLabel: (timestamp, visibleDataCount) {
-                              final date = DateTime.fromMicrosecondsSinceEpoch(
-                                timestamp,
-                              );
+                                  return {
+                                    "Date": date,
+                                    "Open":
+                                        data.open?.toStringAsFixed(2) ?? "-",
+                                    "High":
+                                        data.high?.toStringAsFixed(2) ?? "-",
+                                    "Low": data.low?.toStringAsFixed(2) ?? "-",
+                                    "Close":
+                                        data.close?.toStringAsFixed(2) ?? "-",
+                                    "Volume":
+                                        data.volume?.asAbbreviated() ?? "-",
+                                  };
+                                },
+                                timeLabel: (timestamp, visibleDataCount) {
+                                  final date =
+                                      DateTime.fromMicrosecondsSinceEpoch(
+                                    timestamp,
+                                  );
 
-                              if (visibleDataCount > 40) {
-                                // If more than 20 data points are visible, we should show year and month.
-                                return "${date.year}-${date.month}"; // yyyy-mm
-                              }
-                              {
-                                return "${date.month}-${date.day}";
-                              }
-                            },
-                          ),
+                                  if (visibleDataCount > 40) {
+                                    // If more than 20 data points are visible, we should show year and month.
+                                    return "${date.year}-${date.month}"; // yyyy-mm
+                                  }
+                                  {
+                                    return "${date.month}-${date.day}";
+                                  }
+                                },
+                              ),
                   ),
                 ),
                 SizedBox(height: 12),
@@ -189,6 +196,12 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
               ],
             ),
           )),
+    );
+  }
+
+  Widget buildNotSupported() {
+    return Center(
+      child: Text("الرسم البياني غير مدعوم لهذه العملة"),
     );
   }
 }
