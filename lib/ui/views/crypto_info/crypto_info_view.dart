@@ -74,6 +74,7 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
     return ViewModelBuilder<CryptoInfoViewModel>.reactive(
       viewModelBuilder: () => CryptoInfoViewModel(),
       onModelReady: (viewmodel) {
+        viewmodel.initCoin(widget.coin);
         _tabController.addListener(() {
           viewmodel.fetchCandles(
             widget.coin.name,
@@ -175,7 +176,7 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                 SizedBox(height: 12),
                 CoinInfoRow(
                   field: "حجم التداول/24 ساعة",
-                  fieldValue: widget.coin.volume24hr,
+                  fieldValue: viewmodel.coin.price,
                 ),
                 CoinInfoRow(
                   field: "التغير/24 ساعة",
