@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:aomlah/ui/views/wallet/wallet_selection_view.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -44,6 +45,8 @@ class Routes {
   static const String sellCoinOverviewView = '/sell-coin-overview-view';
   static const String traderSellCoinView = '/trader-sell-coin-view';
   static const String walletView = '/wallet-view';
+  static const String walletSelectionView = '/wallet-selection-view';
+
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
   static const String updateProfileView = '/update-profile-view';
@@ -66,6 +69,7 @@ class Routes {
     sellCoinOverviewView,
     traderSellCoinView,
     walletView,
+    walletSelectionView,
     faucetsView,
     settingsHome,
     updateProfileView,
@@ -74,7 +78,7 @@ class Routes {
     walletInfoView,
     userBankAccountsView,
     withdrawView,
-    confirmWithdrawView
+    confirmWithdrawView,
   };
 }
 
@@ -94,6 +98,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.sellCoinOverviewView, page: SellCoinOverviewView),
     RouteDef(Routes.traderSellCoinView, page: TraderSellCoinView),
     RouteDef(Routes.walletView, page: WalletView),
+    RouteDef(Routes.walletSelectionView, page: WalletSelectionView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
@@ -224,6 +229,12 @@ class StackedRouter extends RouterBase {
     ConfirmWithdrawView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const ConfirmWithdrawView(),
+        settings: data,
+      );
+    },
+    WalletSelectionView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WalletSelectionView(),
         settings: data,
       );
     },

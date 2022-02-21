@@ -1,1 +1,8 @@
-enum AomlahTable { profiles, offers, wallets, view_profiles, bank_accounts }
+enum AomlahTable {
+  profiles,
+  eth_wallets,
+  offers,
+  wallets,
+  view_profiles,
+  bank_accounts
+}

@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/services/auth_service.dart';
+import 'package:aomlah/core/services/realtime_eth_wallet_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,6 +15,7 @@ class UserService {
 
   final _supabaseService = locator<SupabaseService>();
   final _realtimeWalletService = locator<RealtimeWalletService>();
+  final _realtimeEthWalletService = locator<RealtimeEthWalletService>();
 
   BehaviorSubject<AomlahUser> userController = BehaviorSubject<AomlahUser>();
 
@@ -23,6 +25,10 @@ class UserService {
     await _realtimeWalletService.connectWallet(
       uuid,
       user.wallet?.address ?? "",
+    );
+    await _realtimeEthWalletService.connectWallet(
+      uuid,
+      user.walletETH?.address ?? "",
     );
   }
 

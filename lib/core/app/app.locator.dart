@@ -11,7 +11,9 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../services/auth_service.dart';
+import '../services/eth_wallet_managment_service.dart';
 import '../services/price_service.dart';
+import '../services/realtime_eth_wallet_service.dart';
 import '../services/realtime_wallet_service.dart';
 import '../services/supabase_service.dart';
 import '../services/user_service.dart';
@@ -28,10 +30,13 @@ Future setupLocator(
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => WalletManagmentService());
+  locator.registerLazySingleton(() => EthWalletManagmentService());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => PriceService());
   locator.registerLazySingleton(() => RealtimeWalletService());
+  locator.registerLazySingleton(() => RealtimeEthWalletService());
+
   final supabaseService = await SupabaseService.getInstance();
   locator.registerSingleton(supabaseService);
 }

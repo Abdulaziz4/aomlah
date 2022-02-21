@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import 'core/models/eth_real_time_wallet.dart';
+import 'core/services/realtime_eth_wallet_service.dart';
+
 void main() async {
   // await setupLocator();
   runApp(const MyApp());
@@ -37,6 +40,11 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               locator<RealtimeWalletService>().walletController.stream,
           initialData: RealTimeWallet.dummy(),
+        ),
+        StreamProvider<EthRealTimeWallet>(
+          create: (_) =>
+              locator<RealtimeEthWalletService>().walletController.stream,
+          initialData: EthRealTimeWallet.dummy(),
         ),
       ],
       child: StreamProvider<AomlahUser>(

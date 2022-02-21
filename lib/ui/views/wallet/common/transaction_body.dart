@@ -6,8 +6,10 @@ import '../../../../core/app/utils/constants.dart';
 
 class TransactionBody extends StatelessWidget {
   final Transaction transaction;
+  final String cryptoType;
   const TransactionBody({
     required this.transaction,
+    required this.cryptoType,
     Key? key,
   }) : super(key: key);
 
@@ -15,7 +17,9 @@ class TransactionBody extends StatelessWidget {
   Widget build(BuildContext context) {
     String from = transaction.from;
     String to = transaction.to;
-    String fees = transaction.satsToBTC(transaction.fees) + ' BTC ';
+
+    String fees;
+    fees = transaction.satsToBTC(transaction.fees) + ' BTC ';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

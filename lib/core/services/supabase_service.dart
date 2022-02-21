@@ -90,4 +90,8 @@ class SupabaseService extends AbstractSupabase {
       },
     );
   }
+
+  Future<void> createEthWallet(Wallet ethWallet) async {
+    await upsert(AomlahTable.eth_wallets, ethWallet.toJson());
+  }
 }

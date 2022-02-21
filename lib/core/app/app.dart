@@ -26,6 +26,8 @@ import 'package:aomlah/ui/views/wallet/wallet_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../services/realtime_eth_wallet_service.dart';
+
 @StackedApp(
   routes: [
     // Register all views
@@ -56,6 +58,8 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton<UserService>(classType: UserService),
     LazySingleton<PriceService>(classType: PriceService),
     LazySingleton<RealtimeWalletService>(classType: RealtimeWalletService),
+    LazySingleton<RealtimeEthWalletService>(
+        classType: RealtimeEthWalletService),
 
     Presolve(
       classType: SupabaseService,

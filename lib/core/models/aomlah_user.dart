@@ -8,6 +8,8 @@ class AomlahUser {
   final String name;
   final bool isVerified;
   final Wallet? wallet;
+  final Wallet? walletETH;
+
   final List<BankAccount> bankAccounts;
   final bool isOnline;
   final bool isAdmin;
@@ -17,6 +19,7 @@ class AomlahUser {
     required this.isVerified,
     required this.bankAccounts,
     required this.wallet,
+    required this.walletETH,
     required this.isOnline,
     this.isAdmin = false,
   });
@@ -28,6 +31,7 @@ class AomlahUser {
       isVerified: false,
       bankAccounts: [],
       wallet: Wallet(address: "", privateKey: "", publicKey: ""),
+      walletETH: Wallet(address: "", privateKey: "", publicKey: ""),
       isOnline: false,
     );
   }
@@ -53,6 +57,8 @@ class AomlahUser {
       name: map['name'] ?? '',
       isVerified: map['is_verified'] ?? false,
       wallet: map["wallet"] == null ? null : Wallet.fromJson(map['wallet']),
+      walletETH:
+          map["eth_wallet"] == null ? null : Wallet.fromJson(map['eth_wallet']),
       bankAccounts: accounts,
       isOnline: map['is_online'] ?? false,
       isAdmin: map["is_admin"] ?? false,

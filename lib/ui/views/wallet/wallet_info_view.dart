@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/app/utils/constants.dart';
 import '../../../core/models/bitcoin.dart';
+import '../../../core/models/eth_real_time_wallet.dart';
 import '../../../core/models/real_time_wallet.dart';
 import 'common/transaction_card.dart';
 import 'package:clipboard/clipboard.dart';
@@ -49,14 +50,34 @@ class WalletInfoViewBody extends StatefulWidget {
 class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
   @override
   Widget build(BuildContext context) {
-    final wallet = Provider.of<RealTimeWallet>(context);
-    double realTimePrice = Provider.of<Bitcoin>(context).price;
-    double convertToBTC(balance) => (balance / 100000000);
+    final wallet;
+    final String cryptoType =
+        ModalRoute.of(context)!.settings.arguments as String;
+    double walletBalance;
 
-    double walletBalance = convertToBTC(wallet.balance);
-    double walletBalanceSAR = double.parse(
-        (convertToBTC(wallet.balance * realTimePrice) * 3.75)
-            .toStringAsFixed(2));
+    double realTimePrice;
+    double convertToBTC(balance) => (balance / 100000000);
+    double convertWeitoETH(balance) => (balance / (10 ^ 18));
+    double walletBalanceSAR;
+
+    if (cryptoType == 'BTC') {
+      wallet = Provider.of<RealTimeWallet>(context);
+      walletBalance = convertToBTC(wallet.balance);
+      realTimePrice = Provider.of<Bitcoin>(context).price;
+      walletBalanceSAR = double.parse(
+          (convertToBTC(wallet.balance * realTimePrice) * 3.75)
+              .toStringAsFixed(2));
+    } else {
+      wallet = Provider.of<EthRealTimeWallet>(context);
+      walletBalance = convertWeitoETH(wallet.balance);
+
+      ///Change to ETH
+      realTimePrice = Provider.of<Bitcoin>(context).price;
+
+      walletBalanceSAR = double.parse(
+          (convertWeitoETH(wallet.balance * realTimePrice) * 3.75)
+              .toStringAsFixed(2));
+    }
 
     return ViewModelBuilder<WalletInfoViewModel>.reactive(
         viewModelBuilder: () => WalletInfoViewModel(),
@@ -75,7 +96,7 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                     Row(
                       children: [
                         Text(
-                          'BTC ',
+                          '$cryptoType ',
                           style: TextStyle(
                               // fontWeight: FontWeight.bold,
                               fontSize: 18),
@@ -116,7 +137,7 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(wallet.address),
+                        Flexible(child: Text(wallet.address)),
                         TextButton(
                             onPressed: () {
                               FlutterClipboard.copy(wallet.address)
@@ -152,13 +173,13 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                   ),
                 ],
               ),
-              Expanded(flex: 1, child: transactionsWidget(wallet)),
+              Expanded(flex: 1, child: transactionsWidget(wallet, cryptoType)),
             ],
           );
         });
   }
 
-  transactionsWidget(RealTimeWallet wallet) {
+  transactionsWidget(wallet, String cryptoType) {
     if (wallet.transactions!.isEmpty) {
       return Center(
         child: Column(
@@ -182,7 +203,10 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
               .map((e) => TransactionCard(
                     title: TransactionHead(
                         transaction: e, address: wallet.address),
-                    expandedSection: TransactionBody(transaction: e),
+                    expandedSection: TransactionBody(
+                      transaction: e,
+                      cryptoType: cryptoType,
+                    ),
                     color: Constants.black3dp,
                   ))
               .toList(),

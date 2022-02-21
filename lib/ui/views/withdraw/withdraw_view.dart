@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
+import '../../../core/models/eth_real_time_wallet.dart';
 import '../../../core/models/real_time_wallet.dart';
 import '../../shared/custom_input_field.dart';
 import '../../shared/custom_menu.dart';
@@ -18,14 +19,17 @@ class WithdrawView extends StatefulWidget {
 
 class _WithdrawViewState extends State<WithdrawView> {
   final _formKey = GlobalKey<FormState>();
-  final cryptoList = ['BTC'];
+  final cryptoList = ['BTC', 'ETH'];
   String? cListVal, walletAddress;
   double? cryptoAmount;
 
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
+
     final wallet = Provider.of<RealTimeWallet>(context);
+    // final wallet = Provider.of<EthRealTimeWallet>(context);
+
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
         builder: (context, viewmodel, _) {
