@@ -1,16 +1,16 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_card_title.dart';
-import 'package:aomlah/ui/views/create_offer/common/custom_menu.dart';
+import 'package:aomlah/ui/shared/custom_card_title.dart';
+import 'package:aomlah/ui/shared/custom_menu.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/custom_input_field.dart';
 import '../../shared/rounded_input_field.dart';
-import 'common/custom_container.dart';
-import 'common/custom_input_field.dart';
+import '../../shared/custom_container.dart';
 
 class CreateOfferBuy extends StatefulWidget {
   const CreateOfferBuy({Key? key}) : super(key: key);
@@ -267,17 +267,17 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
     });
   }
 
-  DropdownButton menuCryptoButton() => DropdownButton(
-        items: cryptoList.map(buildCryptoItems).toList(),
-        onChanged: (value) => setState(() => this.cListVal = value as String?),
-        value: cListVal,
-      );
-
   DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
         onChanged: (value) =>
             setState(() => this.currListVal = value as String?),
         value: currListVal,
+      );
+
+  DropdownButton menuCryptoButton() => DropdownButton(
+        items: cryptoList.map(buildCryptoItems).toList(),
+        onChanged: (value) => setState(() => this.cListVal = value as String?),
+        value: cListVal,
       );
 
   DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(

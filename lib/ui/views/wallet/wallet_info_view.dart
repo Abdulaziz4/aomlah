@@ -28,7 +28,7 @@ class _WalletInfoViewState extends State<WalletInfoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.black3dp,
+        backgroundColor: Constants.black1dp,
         title: Text('محفظتك',
             style: TextStyle(
                 color: Constants.darkBlue, fontWeight: FontWeight.bold)),
@@ -128,7 +128,11 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ConversionButton(text: 'تحويل', press: () {}),
+                        ConversionButton(
+                            text: 'تحويل',
+                            press: () {
+                              viewmodel.navigateToWithdrawView();
+                            }),
                       ],
                     ),
                   ],
