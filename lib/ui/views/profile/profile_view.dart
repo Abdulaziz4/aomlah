@@ -1,6 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
-import 'package:aomlah/ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import 'package:aomlah/ui/views/profile/profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
