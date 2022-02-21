@@ -97,13 +97,12 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
             child: Column(
               children: <Widget>[
                 Container(
-                  // padding: EdgeInsets.only(top: 10, right: 15, left: 15),
                   decoration: BoxDecoration(
                     color: brighten(Constants.black2dp, 1),
                   ),
                   child: Column(
                     children: [
-                      BaseCoinInfo(coin: widget.coin),
+                      BaseCoinInfo(coin: viewmodel.coin),
                       TabBar(
                         labelStyle: Constants.verySmallText,
                         unselectedLabelStyle: Constants.verySmallText,
@@ -176,23 +175,23 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                 SizedBox(height: 12),
                 CoinInfoRow(
                   field: "حجم التداول/24 ساعة",
-                  fieldValue: viewmodel.coin.price,
+                  fieldValue: viewmodel.coin.volume24hr,
                 ),
                 CoinInfoRow(
                   field: "التغير/24 ساعة",
-                  fieldValue: "1234.9484",
+                  fieldValue: viewmodel.coin.change24hr,
                 ),
                 CoinInfoRow(
                   field: "القيمة السوقية",
-                  fieldValue: widget.coin.mktCap,
+                  fieldValue: viewmodel.coin.mktCap,
                 ),
                 CoinInfoRow(
                   field: "العرض المتوفر",
-                  fieldValue: widget.coin.circulationSupplayUsd,
+                  fieldValue: viewmodel.coin.circulationSupplayUsd,
                 ),
                 CoinInfoRow(
                   field: "الحد الأقصى للعرض",
-                  fieldValue: widget.coin.maxSupply,
+                  fieldValue: viewmodel.coin.maxSupply,
                 ),
               ],
             ),
