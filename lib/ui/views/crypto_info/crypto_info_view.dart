@@ -25,7 +25,7 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 4,
+      length: 5,
       vsync: this,
     );
   }
@@ -39,15 +39,27 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
   List<Map<String, dynamic>> tabs = [
     {
       "tab": Tab(
-        text: "١ يوم",
+        text: "15 دقيقة",
       ),
-      "value": "1d",
+      "value": "15m",
     },
     {
       "tab": Tab(
-        text: "٣ يوم",
+        text: "1 ساعة",
       ),
-      "value": "3d",
+      "value": "1h",
+    },
+    {
+      "tab": Tab(
+        text: "4 ساعات",
+      ),
+      "value": "4h",
+    },
+    {
+      "tab": Tab(
+        text: "١ يوم",
+      ),
+      "value": "1d",
     },
     {
       "tab": Tab(
@@ -55,12 +67,6 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
       ),
       "value": "1w",
     },
-    {
-      "tab": Tab(
-        text: "١ شهر",
-      ),
-      "value": "1m",
-    }
   ];
 
   @override
@@ -90,7 +96,7 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+                  // padding: EdgeInsets.only(top: 10, right: 15, left: 15),
                   decoration: BoxDecoration(
                     color: brighten(Constants.black2dp, 1),
                   ),
@@ -98,6 +104,9 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                     children: [
                       BaseCoinInfo(coin: widget.coin),
                       TabBar(
+                        labelStyle: Constants.verySmallText,
+                        unselectedLabelStyle: Constants.verySmallText,
+                        labelPadding: EdgeInsets.zero,
                         controller: _tabController,
                         tabs:
                             tabs.map<Tab>((tab) => tab["tab"] as Tab).toList(),
@@ -130,6 +139,7 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
                                   data.timestamp,
                                 ),
                               );
+
                               return {
                                 "Date": date,
                                 "Open": data.open?.toStringAsFixed(2) ?? "-",

@@ -11,45 +11,52 @@ class BaseCoinInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Column(
-          children: [
+    print(coin.change24hr.startsWith("+"));
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          children: <Widget>[
+            Image.network(
+              coin.getFullLogoUrl(),
+              height: 50,
+              width: 50,
+            ),
             Container(width: 5),
-            Text(
-              coin.price,
-              style: Constants.mediumText,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  coin.fullName,
+                  style: Constants.mediumText.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(coin.name),
+              ],
             ),
-            Text(
-              coin.change24hr + "%",
-              style: TextStyle(
-                color: coin.change24hr.startsWith("+")
-                    ? Constants.primaryColor
-                    : Colors.red,
-              ),
+            Spacer(),
+            Column(
+              children: [
+                Container(width: 5),
+                Text(
+                  coin.price,
+                  style: Constants.mediumText,
+                ),
+                Text(
+                  coin.change24hr + "%",
+                  style: TextStyle(
+                    color: coin.change24hr.startsWith("-")
+                        ? Colors.red
+                        : Constants.primaryColor,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        Spacer(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              coin.fullName,
-              style: Constants.mediumText.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(coin.name),
-          ],
-        ),
-        Container(width: 5),
-        Image.network(
-          coin.getFullLogoUrl(),
-          height: 50,
-          width: 50,
-        ),
-      ],
+      ),
     );
   }
 }

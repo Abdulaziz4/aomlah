@@ -206,9 +206,9 @@ class CoinDataSource extends DataGridSource {
                 fontWeight: FontWeight.w500,
                 color: (cells[3].value as Map<String, String>)["change"]
                         .toString()
-                        .startsWith("+")
-                    ? Constants.primaryColor
-                    : Colors.red,
+                        .startsWith("-")
+                    ? Colors.red
+                    : Constants.primaryColor,
               ),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
