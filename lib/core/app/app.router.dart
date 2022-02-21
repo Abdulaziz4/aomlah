@@ -13,8 +13,8 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
-import '../../ui/views/bank_account_selection/bacnk_account_selection_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
+import '../../ui/views/crypto_info/crypto_info_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/profile/profile_view.dart';
@@ -29,6 +29,7 @@ import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/wallet/wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
+import '../models/coin.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 
 class Routes {
@@ -47,12 +48,15 @@ class Routes {
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
   static const String updateProfileView = '/update-profile-view';
-  static const String bankAccountSelectionView = '/bank-account-selection-view';
   static const String userOffersView = '/user-offers-view';
   static const String walletInfoView = '/wallet-info-view';
   static const String userBankAccountsView = '/user-bank-accounts-view';
+
+  static const String cryptoInfoView = '/crypto-info-view';
+
   static const String withdrawView = '/withdraw-view';
   static const String confirmWithdrawView = '/confirm-withdraw-view';
+
 
   static const all = <String>{
     startupView,
@@ -69,12 +73,13 @@ class Routes {
     faucetsView,
     settingsHome,
     updateProfileView,
-    bankAccountSelectionView,
     userOffersView,
     walletInfoView,
     userBankAccountsView,
+    cryptoInfoView,
     withdrawView,
     confirmWithdrawView
+
   };
 }
 
@@ -97,12 +102,15 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
-    RouteDef(Routes.bankAccountSelectionView, page: BankAccountSelectionView),
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.walletInfoView, page: WalletInfoView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
+
+    RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
+
     RouteDef(Routes.withdrawView, page: WithdrawView),
     RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
+
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -191,12 +199,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    BankAccountSelectionView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const BankAccountSelectionView(),
-        settings: data,
-      );
-    },
     UserOffersView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const UserOffersView(),
@@ -210,8 +212,24 @@ class StackedRouter extends RouterBase {
       );
     },
     UserBankAccountsView: (data) {
+      var args = data.getArgs<UserBankAccountsViewArguments>(
+        orElse: () => UserBankAccountsViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const UserBankAccountsView(),
+        builder: (context) => UserBankAccountsView(
+          key: args.key,
+          allowSelection: args.allowSelection,
+        ),
+        settings: data,
+      );
+    },
+    CryptoInfoView: (data) {
+      var args = data.getArgs<CryptoInfoViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CryptoInfoView(
+          key: args.key,
+          coin: args.coin,
+        ),
         settings: data,
       );
     },
@@ -228,4 +246,22 @@ class StackedRouter extends RouterBase {
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// CryptoInfoView arguments holder class
+class CryptoInfoViewArguments {
+  final Key? key;
+  final Coin coin;
+  CryptoInfoViewArguments({this.key, required this.coin});
+}
+
+/// UserBankAccountsView arguments holder class
+class UserBankAccountsViewArguments {
+  final Key? key;
+  final bool allowSelection;
+  UserBankAccountsViewArguments({this.key, this.allowSelection = false});
 }

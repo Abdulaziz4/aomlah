@@ -1,123 +1,207 @@
-import 'package:aomlah/ui/views/market/market_view.dart';
+import 'package:aomlah/core/app/utils/colors_helper.dart';
+import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/coin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
+import 'package:aomlah/ui/views/crypto_info/components/base_coin_info.dart';
+import 'package:aomlah/ui/views/crypto_info/components/coin_info_row.dart';
+import 'package:aomlah/ui/views/crypto_info/viewmodels/crypto_info_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:interactive_chart/interactive_chart.dart';
+import 'package:stacked/stacked.dart';
+import 'package:intl/intl.dart' as intl;
 
-class CryptoInfoView extends StatelessWidget {
-  const CryptoInfoView({Key? key}) : super(key: key);
+class CryptoInfoView extends StatefulWidget {
+  final Coin coin;
+  const CryptoInfoView({Key? key, required this.coin}) : super(key: key);
+
+  @override
+  State<CryptoInfoView> createState() => _CryptoInfoViewState();
+}
+
+class _CryptoInfoViewState extends State<CryptoInfoView>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 5,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
+  List<Map<String, dynamic>> tabs = [
+    {
+      "tab": Tab(
+        text: "15 دقيقة",
+      ),
+      "value": "15m",
+    },
+    {
+      "tab": Tab(
+        text: "1 ساعة",
+      ),
+      "value": "1h",
+    },
+    {
+      "tab": Tab(
+        text: "4 ساعات",
+      ),
+      "value": "4h",
+    },
+    {
+      "tab": Tab(
+        text: "١ يوم",
+      ),
+      "value": "1d",
+    },
+    {
+      "tab": Tab(
+        text: "١ اسبوع",
+      ),
+      "value": "1w",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
+    return ViewModelBuilder<CryptoInfoViewModel>.reactive(
+      viewModelBuilder: () => CryptoInfoViewModel(),
+      onModelReady: (viewmodel) {
+        viewmodel.initCoin(widget.coin);
+        _tabController.addListener(() {
+          viewmodel.fetchCandles(
+            widget.coin.name,
+            tabs[_tabController.index]["value"],
+          );
+        });
+        viewmodel.fetchCandles(
+          widget.coin.name,
+          tabs[_tabController.index]["value"],
+          isInitial: true,
+        );
+      },
+      builder: (contect, viewmodel, _) => Scaffold(
           appBar: AppBar(
-            title: Text("معلومات عن BTC "),
+            title: Text("معلومات عن ${widget.coin.name} "),
+            backgroundColor: brighten(Constants.black2dp, 1),
+            elevation: 0,
           ),
-          body: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Color(0xff0F1E2C),
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 1,
-                        color: Color(0xff3D4955),
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: brighten(Constants.black2dp, 1),
+                  ),
+                  child: Column(
+                    children: [
+                      BaseCoinInfo(coin: viewmodel.coin),
+                      TabBar(
+                        labelStyle: Constants.verySmallText,
+                        unselectedLabelStyle: Constants.verySmallText,
+                        labelPadding: EdgeInsets.zero,
+                        controller: _tabController,
+                        tabs:
+                            tabs.map<Tab>((tab) => tab["tab"] as Tab).toList(),
                       ),
-                    )),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "% 4.59 +",
-                      style: TextStyle(
-                        color: Color(0xff16A79E),
-                      ),
-                    ),
-                    Container(width: 5),
-                    Text("\$212,333.24"),
-                    Spacer(flex: 1),
-                    Text("BTC (Bitcoin)"),
-                    Container(width: 5),
-                    SvgPicture.asset("assets/icons/Group 6.svg"),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                child: AppBar(
-                  backgroundColor: Color(0xff0F1E2C),
-                  bottom: TabBar(
-                    isScrollable: true,
-                    tabs: [
-                      Tab(text: "١م"),
-                      Tab(text: "١أ"),
-                      Tab(text: "١ش"),
-                      Tab(text: "١س"),
-                      Tab(text: "منذ بدايته"),
                     ],
                   ),
                 ),
-              ),
-              SvgPicture.asset("assets/icons/Graph.svg"),
-              InfoRow(
-                field: "مقدار العملة خلال ٢٤ ساعة",
-                fieldValue: "1234.9484",
-              ),
-              InfoRow(
-                field: "تغير السعر خلال ٢٤ ساعة",
-                fieldValue: "1234.9484",
-              ),
-              InfoRow(
-                field: "سقف السوق",
-                fieldValue: "1234.9484",
-              ),
-              InfoRow(
-                field: "العرض المتداول",
-                fieldValue: "1234.9484",
-              ),
-              InfoRow(
-                field: "إجمالي العرض خلال ٢٤ ساعة",
-                fieldValue: "1234.9484",
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 17,
+                    horizontal: 5,
+                  ),
+                  color: darken(Constants.black2dp, 30),
+                  height: 500,
+                  child: BusyOverlay(
+                    isBusy: viewmodel.isBusy,
+                    child: viewmodel.isFetchingInitial
+                        ? Center(child: CircularProgressIndicator())
+                        : viewmodel.isNotSupported
+                            ? buildNotSupported()
+                            : InteractiveChart(
+                                candles: viewmodel.candles,
+                                style: ChartStyle(
+                                  overlayBackgroundColor: Constants.black5dp,
+                                  priceGainColor: Constants.primaryColor,
+                                  priceLossColor: Colors.red[400]!,
+                                  volumeColor: Constants.black5dp,
+                                ),
+                                overlayInfo: (data) {
+                                  final date = intl.DateFormat.yMMMd().format(
+                                    DateTime.fromMicrosecondsSinceEpoch(
+                                      data.timestamp,
+                                    ),
+                                  );
+
+                                  return {
+                                    "Date": date,
+                                    "Open":
+                                        data.open?.toStringAsFixed(2) ?? "-",
+                                    "High":
+                                        data.high?.toStringAsFixed(2) ?? "-",
+                                    "Low": data.low?.toStringAsFixed(2) ?? "-",
+                                    "Close":
+                                        data.close?.toStringAsFixed(2) ?? "-",
+                                    "Volume":
+                                        data.volume?.asAbbreviated() ?? "-",
+                                  };
+                                },
+                                timeLabel: (timestamp, visibleDataCount) {
+                                  final date =
+                                      DateTime.fromMicrosecondsSinceEpoch(
+                                    timestamp,
+                                  );
+
+                                  if (visibleDataCount > 40) {
+                                    // If more than 20 data points are visible, we should show year and month.
+                                    return "${date.year}-${date.month}"; // yyyy-mm
+                                  }
+                                  {
+                                    return "${date.month}-${date.day}";
+                                  }
+                                },
+                              ),
+                  ),
+                ),
+                SizedBox(height: 12),
+                CoinInfoRow(
+                  field: "حجم التداول/24 ساعة",
+                  fieldValue: viewmodel.coin.volume24hr,
+                ),
+                CoinInfoRow(
+                  field: "التغير/24 ساعة",
+                  fieldValue: viewmodel.coin.change24hr,
+                ),
+                CoinInfoRow(
+                  field: "القيمة السوقية",
+                  fieldValue: viewmodel.coin.mktCap,
+                ),
+                CoinInfoRow(
+                  field: "العرض المتوفر",
+                  fieldValue: viewmodel.coin.circulationSupplayUsd,
+                ),
+                CoinInfoRow(
+                  field: "الحد الأقصى للعرض",
+                  fieldValue: viewmodel.coin.maxSupply,
+                ),
+              ],
+            ),
           )),
     );
   }
-}
 
-class InfoRow extends StatelessWidget {
-  final String field;
-  final String fieldValue;
-  const InfoRow({
-    Key? key,
-    required this.field,
-    required this.fieldValue,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          color: Color(0xff0F1E2C),
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff3D4955),
-            ),
-          )),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            field,
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          Text(fieldValue),
-        ],
-      ),
+  Widget buildNotSupported() {
+    return Center(
+      child: Text("الرسم البياني غير مدعوم لهذه العملة"),
     );
   }
 }

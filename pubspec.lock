@@ -406,6 +406,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  interactive_chart:
+    dependency: "direct main"
+    description:
+      name: interactive_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
   intl:
     dependency: "direct main"
     description:
@@ -796,6 +803,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.12"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "19.4.52"
+  syncfusion_flutter_datagrid:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datagrid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "19.4.52"
   term_glyph:
     dependency: transitive
     description:

@@ -28,7 +28,12 @@ dependencies:
   flutter_spinkit: ^5.1.0
   http: ^0.13.4
   web_socket_channel: ^2.1.0
+
+  syncfusion_flutter_datagrid: ^19.4.52
+  interactive_chart: ^0.3.4
+
   confirm_dialog: ^1.0.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,7 +45,6 @@ dependencies:
   ecdsa: ^0.0.4
   elliptic: ^0.3.5
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -48,6 +52,9 @@ dev_dependencies:
   stacked_generator:
   dependencies:
   json_serializable: ^6.1.4
+
+
+
 
 
 
