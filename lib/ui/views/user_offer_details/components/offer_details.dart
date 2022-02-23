@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../core/app/utils/constants.dart';
+import 'package:intl/intl.dart' as intl;
 
 class OfferDetailsSection extends StatefulWidget {
   final Offer offer;
@@ -34,17 +35,28 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        'رقم العرض',
-                        style: TextStyle(color: Colors.white, fontSize: 19),
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            'رقم العرض',
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          Text(
+                            viewmodel.offer.offerID.substring(0, 13),
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                        ],
                       ),
                       Text(
-                        viewmodel.offer.offerID.substring(0, 13),
-                        style: TextStyle(color: Colors.white, fontSize: 19),
+                        intl.DateFormat.yMMMd()
+                            .add_jm()
+                            .format(viewmodel.offer.createAt!),
                       ),
                     ],
                   ),
