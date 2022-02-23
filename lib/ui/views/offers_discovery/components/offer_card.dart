@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart' as intl;
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
@@ -50,7 +51,13 @@ class OfferCard extends StatelessWidget {
                 SizedBox(width: 5),
                 Text(offer.ownerName ?? ""),
                 Spacer(),
-                Text("2021/5/1")
+                Text(
+                  intl.DateFormat.yMMMd().add_jm().format(
+                        offer.createAt!,
+                      ),
+                  textDirection: TextDirection.ltr,
+                  style: Constants.verySmallText.copyWith(color: Colors.grey),
+                )
               ],
             ),
             SizedBox(height: 5),
