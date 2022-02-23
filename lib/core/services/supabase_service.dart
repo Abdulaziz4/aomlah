@@ -54,16 +54,19 @@ class SupabaseService extends AbstractSupabase {
     return res.first;
   }
 
-  Future<List<Offer>> getAllOffer() async {
-    return get(AomlahTable.offers, Offer.fromJson);
+  Future<List<Offer>> _getAllOffers() {
+    return get<Offer>(AomlahTable.view_offers, Offer.fromJson);
   }
 
+  // Listen for changes on offers table and fetches from view_offers on every offers table change
   Stream<List<Offer>> getAllOffersSubscription() {
     return subscribeForChanges<Offer>(
       table: AomlahTable.offers,
       fromJson: Offer.fromJson,
       primaryKey: "offer_id",
-    );
+    ).asyncMap((event) {
+      return _getAllOffers();
+    });
   }
 
   Future<void> createOffer(Offer offer) async {

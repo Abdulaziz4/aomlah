@@ -48,7 +48,7 @@ class OfferCard extends StatelessWidget {
               children: [
                 SvgPicture.asset("assets/icons/profile-icon.svg"),
                 SizedBox(width: 5),
-                Text("عبدالعزيز"),
+                Text(offer.ownerName ?? ""),
                 Spacer(),
                 Text("2021/5/1")
               ],
