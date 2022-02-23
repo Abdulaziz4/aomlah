@@ -131,7 +131,16 @@ abstract class AbstractSupabase {
     required AomlahTable table,
     required T Function(Map<String, dynamic> json) fromJson,
     required String primaryKey,
+    Map<String, String>? query,
   }) {
+    //{table}:{col}=eq.{val} - where {col} is the column name, and {val} is
+    //the value which you want to match.
+    String match = table.name;
+    if (query != null) {
+      query.forEach((key, value) {
+        match += ":$key=$value";
+      });
+    }
     return supabase
         .from(table.name)
         .stream([primaryKey])

@@ -20,8 +20,9 @@ class UserOffersCard extends StatelessWidget {
             builder: (context) {
               if (isBuy) {
                 return BuyingOfferDetails();
-              } else
+              } else {
                 return SellingOfferDetails();
+              }
             },
           ),
         );
@@ -31,7 +32,7 @@ class UserOffersCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Constants.black2dp,
           boxShadow: Constants.shadow,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(9),
         ),
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
@@ -60,25 +61,10 @@ class UserOffersCard extends StatelessWidget {
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Spacer(),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          if (isBuy) {
-                            return BuyingOfferDetails();
-                          } else
-                            return SellingOfferDetails();
-                        },
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 13,
-                    color: Colors.white,
-                  ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                  color: Colors.white,
                 ),
               ],
             ),
