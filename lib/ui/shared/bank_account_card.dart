@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 class BankAccountCard extends StatelessWidget {
   final BankAccount bank;
   final void Function()? onDelete;
+  final double? fontSize;
   const BankAccountCard({
     Key? key,
     required this.bank,
     this.onDelete,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class BankAccountCard extends StatelessWidget {
               bankName: bank.bankName,
               textStyle: Constants.mediumText.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: fontSize,
               ),
             ),
             Padding(

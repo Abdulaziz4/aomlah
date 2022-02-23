@@ -2,11 +2,11 @@ import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class UserTradingCard extends StatelessWidget {
+class UserTradeCard extends StatelessWidget {
   final bool isBuy;
   final String stat;
 
-  const UserTradingCard({
+  const UserTradeCard({
     Key? key,
     this.isBuy = true,
     required this.stat,

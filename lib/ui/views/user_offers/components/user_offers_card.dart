@@ -1,10 +1,9 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
-import 'package:aomlah/ui/views/user_offers/buying_offer_details/buying_offer_details_view.dart';
+import 'package:aomlah/ui/views/user_offer_details/user_offer_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../selling_offer_details/selling_offer_details.dart';
 
 class UserOffersCard extends StatelessWidget {
   final Offer offer;
@@ -24,11 +23,7 @@ class UserOffersCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              if (offer.isBuy) {
-                return BuyingOfferDetails();
-              } else {
-                return SellingOfferDetails();
-              }
+              return UserOfferDetailsView(offer: offer);
             },
           ),
         );

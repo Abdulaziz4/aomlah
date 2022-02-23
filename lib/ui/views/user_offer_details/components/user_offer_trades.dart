@@ -1,32 +1,32 @@
+import 'package:aomlah/ui/views/user_offer_details/components/user_trade_card.dart';
 import 'package:flutter/material.dart';
-import '../components/user_trading_card.dart';
 
-class UserSellingTrades extends StatefulWidget {
-  const UserSellingTrades({Key? key}) : super(key: key);
+class UserOfferTrades extends StatefulWidget {
+  const UserOfferTrades({Key? key}) : super(key: key);
 
   @override
-  _UserSellingTradesState createState() => _UserSellingTradesState();
+  _UserOfferTradesState createState() => _UserOfferTradesState();
 }
 
-class _UserSellingTradesState extends State<UserSellingTrades> {
+class _UserOfferTradesState extends State<UserOfferTrades> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: const [
-          UserTradingCard(
+          UserTradeCard(
             stat: 'بانتظار الدفع',
           ),
-          UserTradingCard(
+          UserTradeCard(
             stat: 'بانتظار الدفع',
           ),
-          UserTradingCard(
+          UserTradeCard(
             stat: 'بانتظار الدفع',
           ),
-          UserTradingCard(
+          UserTradeCard(
             stat: 'بانتظار الدفع',
           ),
-          UserTradingCard(
+          UserTradeCard(
             stat: 'بانتظار الدفع',
           ),
         ],

@@ -1,25 +1,36 @@
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/offer.dart';
+import 'package:aomlah/ui/shared/bank_account_card.dart';
+import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/app/utils/constants.dart';
 
-class SellingDetails extends StatefulWidget {
-  const SellingDetails({Key? key}) : super(key: key);
+class OfferDetailsSection extends StatefulWidget {
+  final Offer offer;
+  const OfferDetailsSection({
+    Key? key,
+    required this.offer,
+  }) : super(key: key);
 
   @override
   _SellingDetailsState createState() => _SellingDetailsState();
 }
 
-class _SellingDetailsState extends State<SellingDetails> {
+class _SellingDetailsState extends State<OfferDetailsSection> {
   @override
   Widget build(BuildContext context) {
+    final price = Provider.of<Bitcoin>(context)
+        .priceFromMargin(widget.offer.margin)
+        .toStringAsFixed(3);
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 90,
-            width: 350,
-            child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -28,33 +39,29 @@ class _SellingDetailsState extends State<SellingDetails> {
                   style: TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
-                  '123456789',
+                  widget.offer.offerID.substring(0, 13),
                   style: TextStyle(color: Colors.white, fontSize: 19),
                 ),
               ],
             ),
-          ),
-          Container(
-              width: 358,
-              height: 1,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 167, 158, 1),
-              )),
-          Container(
-            height: 110,
-            width: 350,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
+            buildLine(),
+            buildSection(
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      'بيع ',
-                      style: TextStyle(color: Constants.redColor, fontSize: 19),
-                    ),
+                    widget.offer.isBuy
+                        ? Text(
+                            " شراء ",
+                            style: Constants.smallText
+                                .copyWith(color: Constants.primaryColor),
+                          )
+                        : Text(
+                            'بيع ',
+                            style: TextStyle(
+                                color: Constants.redColor, fontSize: 19),
+                          ),
                     Text(
                       ' BTC ',
                       style: TextStyle(
@@ -78,7 +85,7 @@ class _SellingDetailsState extends State<SellingDetails> {
                     ),
                     Spacer(),
                     Text(
-                      '144,442,345 ر.س',
+                      '$price ر.س',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 19,
@@ -96,26 +103,15 @@ class _SellingDetailsState extends State<SellingDetails> {
                     ),
                     Spacer(),
                     Text(
-                      '%102',
+                      '%${widget.offer.margin}',
                       style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                   ],
                 ),
               ],
             ),
-          ),
-          Container(
-              width: 358,
-              height: 1,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 167, 158, 1),
-              )),
-          Container(
-            height: 110,
-            width: 350,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+            buildLine(),
+            buildSection(
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -131,7 +127,7 @@ class _SellingDetailsState extends State<SellingDetails> {
                       style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                     Text(
-                      '0.213',
+                      widget.offer.cryptoAmount.toString(),
                       style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                   ],
@@ -146,59 +142,70 @@ class _SellingDetailsState extends State<SellingDetails> {
                     ),
                     Spacer(),
                     Text(
-                      '2000 ر.س',
+                      '${widget.offer.minTrade} ر.س',
                       style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                   ],
                 ),
               ],
             ),
-          ),
-          Container(
-              width: 358,
-              height: 1,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 167, 158, 1),
-              )),
-          Container(
-            height: 110,
-            width: 350,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'الحسابات البنكية',
-                  style: TextStyle(color: Colors.white, fontSize: 19),
-                ),
-              ],
-            ),
-          ),
-          Container(
-              width: 358,
-              height: 1,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 167, 158, 1),
-              )),
-          Container(
-            height: 110,
-            width: 350,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+            if (!widget.offer.isBuy)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildLine(),
+                  buildSection(
+                    children: <Widget>[
+                      Text(
+                        'الحسابات البنكية',
+                        style: TextStyle(color: Colors.white, fontSize: 19),
+                      ),
+                      ...widget.offer.bankAccounts!
+                          .map((account) => BankAccountCard(
+                                bank: account,
+                                fontSize: 16,
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                ],
+              ),
+            buildLine(),
+            buildSection(
               children: <Widget>[
                 Text(
                   'الشروط والأحكام',
                   style: TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
-                  "ما أقبل اس تي سي باي",
+                  widget.offer.terms,
                   style: TextStyle(color: Colors.grey, fontSize: 19),
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildLine() {
+    return Container(
+      width: double.infinity,
+      height: 0.6,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(22, 167, 158, 1),
+      ),
+    );
+  }
+
+  Widget buildSection({required List<Widget> children}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: children,
       ),
     );
   }
