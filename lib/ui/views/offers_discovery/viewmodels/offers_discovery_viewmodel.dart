@@ -36,6 +36,8 @@ class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
   void onData(List<Offer>? data) {
     super.onData(data);
     setBusy(false);
+    _logger.i("onData");
+
     if (data != null) {
       offers = data.toList();
     }
