@@ -70,6 +70,6 @@ class Offer {
   }
 
   String cryptoAmonutLabel() {
-    return "ㅤ" + cryptoAmount.toString() + " BTC";
+    return "" + cryptoAmount.toString() + " BTC";
   }
 }

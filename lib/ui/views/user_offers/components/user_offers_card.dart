@@ -1,24 +1,30 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/views/user_offers/buying_offer_details/buying_offer_details_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../selling_offer_details/selling_offer_details.dart';
 
 class UserOffersCard extends StatelessWidget {
-  final bool isBuy;
+  final Offer offer;
   const UserOffersCard({
     Key? key,
-    this.isBuy = true,
+    required this.offer,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final price = Provider.of<Bitcoin>(context)
+        .priceFromMargin(offer.margin)
+        .toStringAsFixed(3);
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
-              if (isBuy) {
+              if (offer.isBuy) {
                 return BuyingOfferDetails();
               } else {
                 return SellingOfferDetails();
@@ -41,7 +47,7 @@ class UserOffersCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                isBuy
+                offer.isBuy
                     ? Text(
                         " شراء ",
                         style: Constants.smallText
@@ -53,11 +59,11 @@ class UserOffersCard extends StatelessWidget {
                             .copyWith(color: Constants.redColor),
                       ),
                 Text(
-                  " BTC ",
+                  offer.cryptoType,
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Text(
-                  "مقابل ر.س",
+                  " مقابل " + offer.currencyType,
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Spacer(),
@@ -69,8 +75,8 @@ class UserOffersCard extends StatelessWidget {
               ],
             ),
             Text(
-              "144,579,836 ر.س",
-              style: Constants.smallText
+              "$price ر.س",
+              style: Constants.mediumText
                   .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             Row(
@@ -81,11 +87,11 @@ class UserOffersCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  " BTC ",
+                  "BTC ",
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Text(
-                  "0,4567899",
+                  offer.cryptoAmount.toString(),
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
               ],
@@ -98,7 +104,7 @@ class UserOffersCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "2000 ر.س",
+                  "${offer.minTrade} ر.س",
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
               ],
