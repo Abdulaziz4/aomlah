@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,9 +8,11 @@ import '../../../../core/models/transactions.dart';
 class TransactionHead extends StatelessWidget {
   final String address;
   final Transaction transaction;
-  TransactionHead({
+  final CryptoTypes cryptoType;
+  const TransactionHead({
     required this.transaction,
     required this.address,
+    required this.cryptoType,
   });
 
   @override
@@ -41,7 +44,8 @@ class TransactionHead extends StatelessWidget {
                 style: TextStyle(color: Constants.darkBlue),
               ),
               Text(
-                transaction.satsToBTC(transaction.total) + ' BTC ',
+                transaction.convert(transaction.total, cryptoType) +
+                    cryptoText(cryptoType),
                 textAlign: TextAlign.left,
               )
             ],
@@ -52,7 +56,7 @@ class TransactionHead extends StatelessWidget {
   }
 
   Text transactionType() {
-    if (transaction.from != address) {
+    if (transaction.from == address) {
       return Text(
         'من محفظتك',
         textAlign: TextAlign.right,
@@ -66,6 +70,14 @@ class TransactionHead extends StatelessWidget {
         textAlign: TextAlign.right,
         style: TextStyle(color: Constants.primaryColor),
       );
+    }
+  }
+
+  cryptoText(CryptoTypes cryptoType) {
+    if (cryptoType == CryptoTypes.eth) {
+      return ' ETH ';
+    } else if (cryptoType == CryptoTypes.btc) {
+      return ' BTC';
     }
   }
 }

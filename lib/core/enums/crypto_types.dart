@@ -1,0 +1,1 @@
+enum CryptoTypes { btc, eth }

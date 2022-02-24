@@ -67,15 +67,15 @@ class EthWalletManagmentService {
     _logger.i("fundMeEth | args: address=$address");
 
     Uri url = Uri.parse("$baseUrl/faucet?token=$token");
-    final data = jsonEncode({"address": address, "amount": 500000000000000});
+    final data = jsonEncode({"address": address, "amount": 10000000000000000});
     var m = await http.post(url, body: data);
-    print(m.body);
+    print(jsonDecode(m.body));
   }
 
   Future<UnconfirmedTransaction> sendTransaction(
       String from, String to, amount) async {
     _logger.i("transaction | to=$to");
-    Uri url = Uri.parse("$baseUrl/txs/new");
+    Uri url = Uri.parse("$baseUrl/txs/new?token=$token");
     final data = {
       "inputs": [
         {
@@ -109,10 +109,11 @@ class EthWalletManagmentService {
   }
 
   Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
+    print(signedJson);
     var encodedJson = jsonEncode(signedJson);
-    Uri url = Uri.parse("$baseUrl/txs/send");
+    Uri url = Uri.parse("$baseUrl/txs/send?token=$token");
 
     var m = await http.post(url, body: encodedJson);
-    // var decoded = jsonDecode(m.body);
+    print(m.body);
   }
 }

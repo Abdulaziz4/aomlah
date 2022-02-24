@@ -3,8 +3,12 @@ import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/realtime_eth_wallet_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
+
 import 'package:rxdart/rxdart.dart';
 
+import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/services/realtime_wallet_service.dart';
+import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 

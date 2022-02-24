@@ -33,7 +33,12 @@ class SellCoinOverviewViewModel extends BaseViewModel {
   }
 
   void selectBankAccount() async {
-    final bank = await _navService.navigateTo(Routes.bankAccountSelectionView);
+    final bank = await _navService.navigateTo(
+      Routes.userBankAccountsView,
+      arguments: UserBankAccountsViewArguments(allowSelection: true),
+    );
+    bankAccount = bank as BankAccount;
+    notifyListeners();
     //TODO: Validate BankAccount is not null and do form validation on the bank
   }
 }

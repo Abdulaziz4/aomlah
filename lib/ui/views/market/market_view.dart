@@ -1,159 +1,221 @@
-import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/coin.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class MarketView extends StatelessWidget {
+import 'package:aomlah/ui/views/market/viewmodels/market_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+
+class MarketView extends StatefulWidget {
   const MarketView({Key? key}) : super(key: key);
 
   @override
+  State<MarketView> createState() => _MarketViewState();
+}
+
+class _MarketViewState extends State<MarketView> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("سوق العملات"),
-        ),
-        body: Column(
-          children: <Widget>[
-            Container(height: 10),
-            Container(
-              padding: EdgeInsets.all(5),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Color(0xff0F1E2C),
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1,
-                      color: Color(0xff3D4955),
-                    ),
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    "اسم العملة",
-                    style: TextStyle(
-                      fontSize: 12,
+    return ViewModelBuilder<MarketViewmodel>.reactive(
+        viewModelBuilder: () => MarketViewmodel(),
+        onModelReady: (model) => model.connectSocket(),
+        builder: (context, viewmodel, _) {
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: BusyOverlay(
+              isBusy: viewmodel.isBusy,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text("سوق العملات"),
+                  automaticallyImplyLeading: false,
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SfDataGridTheme(
+                    data:
+                        SfDataGridThemeData(selectionColor: Colors.transparent),
+                    child: SfDataGrid(
+                      source: viewmodel.dataSource,
+                      onQueryRowHeight: (details) {
+                        return details.rowIndex == 0 ? 0 : 70;
+                      },
+                      // Old items are the old selected list of row
+                      onSelectionChanged: (newItems, oldItems) {
+                        final index = viewmodel.dataSource.dataGridRows
+                            .indexOf(newItems.first);
+                        viewmodel.navigateToDetails(index);
+                      },
+
+                      selectionMode: SelectionMode.single,
+                      columnWidthMode: ColumnWidthMode.fill,
+                      columns: [
+                        GridColumn(
+                          columnName: 'Logo',
+                          width: 60,
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Coin',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'Name',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'Spark Chart',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Spark Chart',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'Price',
+                          label: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Price',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    "إجمالي التداول",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text(
-                    "السعر",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-            crypto_info(
-              imagePath: "assets/icons/Group 6.svg",
-              shortName: "BTC",
-              fullName: "Bitcoin",
-              totalTrade: "\$212.24B",
-              price: "\$212,333.24",
-              precentage: "% 4.59 +",
-            ),
-            crypto_info(
-              imagePath: "assets/icons/Group 4.svg",
-              shortName: "ETH",
-              fullName: "Ethereum",
-              totalTrade: "\$138.03B",
-              price: "\$13,438.03",
-              precentage: "% 1.07 +",
-            ),
-            crypto_info(
-              imagePath: "assets/icons/Group 8.svg",
-              shortName: "BNB",
-              fullName: "biance Coin",
-              totalTrade: "\$38.88B",
-              price: "\$2,838.88",
-              precentage: "% 0.97 +",
-            ),
-          ],
-        ));
+          );
+        });
   }
 }
 
-class crypto_info extends StatelessWidget {
-  final String imagePath;
-  final String shortName;
-  final String fullName;
-  final String totalTrade;
-  final String price;
-  final String precentage;
+class CoinDataSource extends DataGridSource {
+  CoinDataSource() {
+    builDataGrid([]);
+  }
 
-  const crypto_info({
-    Key? key,
-    required this.imagePath,
-    required this.shortName,
-    required this.fullName,
-    required this.totalTrade,
-    required this.price,
-    required this.precentage,
-  }) : super(key: key);
+  void builDataGrid(List<Coin> coins) {
+    dataGridRows = coins
+        .map<DataGridRow>(
+          (coin) => DataGridRow(
+            cells: [
+              DataGridCell<String>(
+                columnName: 'Logo',
+                value: coin.getFullLogoUrl(),
+              ),
+              DataGridCell<Map<String, String>>(
+                columnName: 'Name',
+                value: {
+                  "name": coin.name,
+                  "fullName": coin.fullName,
+                },
+              ),
+              DataGridCell<String>(
+                columnName: 'Spark Chart',
+                value: coin.getPreviewChart(),
+              ),
+              DataGridCell<Map<String, String>>(
+                columnName: 'Price',
+                value: {
+                  "price": coin.price,
+                  "change": coin.change24hr,
+                },
+              ),
+            ],
+          ),
+        )
+        .toList();
+  }
+
+  List<DataGridRow> dataGridRows = [];
+
+  void updateDataGridSource(List<Coin> coins) {
+    builDataGrid(coins);
+    notifyListeners();
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CryptoInfoView()));
-        }
-      },
-      child: Container(
-        padding: EdgeInsets.all(10),
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Color(0xff0F1E2C),
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff3D4955),
-              ),
-            )),
-        child: Row(
-          children: <Widget>[
-            SvgPicture.asset(imagePath),
-            Container(width: 12),
-            Column(
-              children: [
-                Text(
-                  shortName,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  fullName,
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-              ],
+  List<DataGridRow> get rows => dataGridRows;
+
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    // How Each Cell in a Row Should be Displayed
+    final List<DataGridCell<dynamic>> cells = row.getCells();
+    return DataGridRowAdapter(
+      cells: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network(
+            cells[0].value.toString(),
+            height: 20,
+            width: 20,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              (cells[1].value as Map<String, String>)["fullName"].toString(),
+              style: Constants.smallText.copyWith(fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
             ),
-            Spacer(flex: 2),
-            Text(totalTrade),
-            Spacer(flex: 2),
-            Column(
-              children: <Widget>[
-                Text(price),
-                Text(
-                  precentage,
-                  style: TextStyle(
-                    color: Color(0xff16A79E),
-                  ),
-                ),
-              ],
+            Text(
+              (cells[1].value as Map<String, String>)["name"].toString(),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Image.network(
+            cells[2].value,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              (cells[3].value as Map<String, String>)["price"].toString(),
+              style: Constants.smallText.copyWith(fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              (cells[3].value as Map<String, String>)["change"].toString() +
+                  "%",
+              style: Constants.smallText.copyWith(
+                fontWeight: FontWeight.w500,
+                color: (cells[3].value as Map<String, String>)["change"]
+                        .toString()
+                        .startsWith("-")
+                    ? Colors.red
+                    : Constants.primaryColor,
+              ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

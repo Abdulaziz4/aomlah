@@ -1,3 +1,4 @@
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/transactions.dart';
 import 'package:aomlah/ui/shared/rounded_button.dart';
 import 'package:aomlah/ui/views/wallet/common/conversion_button.dart';
@@ -50,38 +51,41 @@ class WalletInfoViewBody extends StatefulWidget {
 class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
   @override
   Widget build(BuildContext context) {
-    final wallet;
-    final String cryptoType =
-        ModalRoute.of(context)!.settings.arguments as String;
-    double walletBalance;
-
-    double realTimePrice;
-    double convertToBTC(balance) => (balance / 100000000);
-    double convertWeitoETH(balance) => (balance / (10 ^ 18));
-    double walletBalanceSAR;
-
-    if (cryptoType == 'BTC') {
-      wallet = Provider.of<RealTimeWallet>(context);
-      walletBalance = convertToBTC(wallet.balance);
-      realTimePrice = Provider.of<Bitcoin>(context).price;
-      walletBalanceSAR = double.parse(
-          (convertToBTC(wallet.balance * realTimePrice) * 3.75)
-              .toStringAsFixed(2));
-    } else {
-      wallet = Provider.of<EthRealTimeWallet>(context);
-      walletBalance = convertWeitoETH(wallet.balance);
-
-      ///Change to ETH
-      realTimePrice = Provider.of<Bitcoin>(context).price;
-
-      walletBalanceSAR = double.parse(
-          (convertWeitoETH(wallet.balance * realTimePrice) * 3.75)
-              .toStringAsFixed(2));
-    }
-
     return ViewModelBuilder<WalletInfoViewModel>.reactive(
         viewModelBuilder: () => WalletInfoViewModel(),
         builder: (context, viewmodel, _) {
+          final wallet;
+          final String cryptoType =
+              ModalRoute.of(context)!.settings.arguments as String;
+          double walletBalance;
+          CryptoTypes types;
+          double realTimePrice;
+          double convertToBTC(balance) => (balance / 100000000);
+          double convertWeitoETH(balance) =>
+              (balance / (1000000000000000000.0));
+          double walletBalanceSAR;
+
+          if (cryptoType == 'BTC') {
+            types = CryptoTypes.btc;
+            wallet = Provider.of<RealTimeWallet>(context);
+            walletBalance = convertToBTC(wallet.balance);
+            realTimePrice = Provider.of<Bitcoin>(context).price;
+            walletBalanceSAR = double.parse(
+                (convertToBTC(wallet.balance * realTimePrice) * 3.75)
+                    .toStringAsFixed(2));
+          } else {
+            types = CryptoTypes.eth;
+
+            wallet = Provider.of<EthRealTimeWallet>(context);
+            walletBalance = convertWeitoETH(wallet.balance);
+
+            ///Change to ETH
+            realTimePrice = Provider.of<Bitcoin>(context).price;
+
+            walletBalanceSAR = double.parse(
+                (convertWeitoETH(wallet.balance * realTimePrice) * 3.75)
+                    .toStringAsFixed(2));
+          }
           return Column(
             children: [
               WalletContainer(
@@ -173,13 +177,23 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                   ),
                 ],
               ),
-              Expanded(flex: 1, child: transactionsWidget(wallet, cryptoType)),
+              // Expanded(flex: 1, child: transactionsWidget(wallet, cryptoType)),
+              Expanded(flex: 1, child: transactionType(wallet, types)),
             ],
           );
         });
   }
 
-  transactionsWidget(wallet, String cryptoType) {
+  transactionType(wallet, CryptoTypes types) {
+    if (types == CryptoTypes.btc) {
+      return transactionsWidget(wallet, types);
+    } else {
+      return transactionsWidgetEth(wallet, types);
+    }
+  }
+
+  transactionsWidget(RealTimeWallet wallet, CryptoTypes types) {
+    if (types != CryptoTypes.btc) return;
     if (wallet.transactions!.isEmpty) {
       return Center(
         child: Column(
@@ -202,10 +216,51 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
           children: wallet.transactions!
               .map((e) => TransactionCard(
                     title: TransactionHead(
-                        transaction: e, address: wallet.address),
+                        transaction: e,
+                        address: wallet.address,
+                        cryptoType: types),
                     expandedSection: TransactionBody(
                       transaction: e,
-                      cryptoType: cryptoType,
+                      cryptoType: types,
+                    ),
+                    color: Constants.black3dp,
+                  ))
+              .toList(),
+        ),
+      );
+    }
+  }
+
+  transactionsWidgetEth(EthRealTimeWallet wallet, CryptoTypes types) {
+    if (types != CryptoTypes.eth) return;
+    if (wallet.transactions!.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/icons/no-record.svg'),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              'لا يوجد معاملات',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: wallet.transactions!
+              .map((e) => TransactionCard(
+                    title: TransactionHead(
+                        cryptoType: types,
+                        transaction: e,
+                        address: wallet.address),
+                    expandedSection: TransactionBody(
+                      transaction: e,
+                      cryptoType: types,
                     ),
                     color: Constants.black3dp,
                   ))

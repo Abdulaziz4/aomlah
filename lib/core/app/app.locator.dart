@@ -9,9 +9,10 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../services/auth_service.dart';
 import '../services/eth_wallet_managment_service.dart';
+import '../services/candles_service.dart';
+import '../services/crypto_info_service.dart';
 import '../services/price_service.dart';
 import '../services/realtime_eth_wallet_service.dart';
 import '../services/realtime_wallet_service.dart';
@@ -34,8 +35,12 @@ Future setupLocator(
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => PriceService());
+  locator.registerLazySingleton(() => CryptoInfoService());
   locator.registerLazySingleton(() => RealtimeWalletService());
+
   locator.registerLazySingleton(() => RealtimeEthWalletService());
+
+  locator.registerLazySingleton(() => CandlesService());
 
   final supabaseService = await SupabaseService.getInstance();
   locator.registerSingleton(supabaseService);

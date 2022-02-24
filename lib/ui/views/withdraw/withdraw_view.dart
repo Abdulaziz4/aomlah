@@ -1,3 +1,4 @@
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_viewmodel.dart';
@@ -22,13 +23,15 @@ class _WithdrawViewState extends State<WithdrawView> {
   final cryptoList = ['BTC', 'ETH'];
   String? cListVal, walletAddress;
   double? cryptoAmount;
+  CryptoTypes? types;
 
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
+    types ??= CryptoTypes.btc;
 
-    final wallet = Provider.of<RealTimeWallet>(context);
-    // final wallet = Provider.of<EthRealTimeWallet>(context);
+    final walletBTC = Provider.of<RealTimeWallet>(context);
+    final walletEth = Provider.of<EthRealTimeWallet>(context);
 
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
@@ -55,8 +58,8 @@ class _WithdrawViewState extends State<WithdrawView> {
                         return;
                       }
                       _formKey.currentState?.save();
-                      int amount = (cryptoAmount! * 100000000).round();
-                      viewmodel.sendTran(walletAddress!, amount);
+                      int amount = (cryptoAmount!).round();
+                      viewmodel.sendTran(walletAddress!, amount, types!);
                     },
                     child: Text(
                       'تحويل',
@@ -117,13 +120,18 @@ class _WithdrawViewState extends State<WithdrawView> {
                         } else if (double.parse(value) <= 0) {
                           return 'الرجاء ادخال كميه صحيحه';
                         } else if (double.parse(value) >
-                            (wallet.balance * 0.00000001)) {
+                            (walletEth.balance / 1000000000000000000.0)) {
                           return 'أدخل المبلغ تحت رصيدك';
                         }
                       },
                       keyboardType: TextInputType.number,
                       onSaved: (value) {
-                        cryptoAmount = double.parse(value!);
+                        if (types == CryptoTypes.btc) {
+                          cryptoAmount = double.parse(value!) * 100000000;
+                        } else if (types == CryptoTypes.eth) {
+                          cryptoAmount =
+                              double.parse(value!) * 1000000000000000000.0;
+                        }
                       },
                     ),
                     Row(
@@ -131,15 +139,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          'الكمية في محفظتك ' +
-                              (wallet.balance * 0.00000001).toString() +
-                              ' $cListVal',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        walletBalanceText(walletBTC, walletEth),
                       ],
                     ),
                   ],
@@ -152,7 +152,16 @@ class _WithdrawViewState extends State<WithdrawView> {
 
   DropdownButton menuCryptoButton() => DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
-        onChanged: (value) => setState(() => cListVal = value as String?),
+        onChanged: (value) => {
+          setState(() {
+            cListVal = (value as String?);
+            if (value == cryptoList[0]) {
+              types = CryptoTypes.btc;
+            } else if (value == cryptoList[1]) {
+              types = CryptoTypes.eth;
+            }
+          })
+        },
         value: cListVal,
       );
 
@@ -165,4 +174,28 @@ class _WithdrawViewState extends State<WithdrawView> {
           ),
         ),
       );
+
+  walletBalanceText(RealTimeWallet walletBTC, EthRealTimeWallet walletEth) {
+    if (types == CryptoTypes.btc) {
+      return Text(
+        'الكمية في محفظتك ' +
+            (walletBTC.balance * 0.00000001).toString() +
+            ' $cListVal',
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.grey,
+        ),
+      );
+    } else if (types == CryptoTypes.eth) {
+      return Text(
+        'الكمية في محفظتك ' +
+            (walletEth.balance * 0.000000000000000001).toString() +
+            ' $cListVal',
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.grey,
+        ),
+      );
+    }
+  }
 }
