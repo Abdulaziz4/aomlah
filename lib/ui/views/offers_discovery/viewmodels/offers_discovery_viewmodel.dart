@@ -12,6 +12,7 @@ class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
   OffersDiscoveryViewModel() {
     _suabaseService.listentoAllOffers();
   }
+
   final _logger = getLogger("OffersDiscoveryViewModel");
 
   final _authService = locator<AuthService>();

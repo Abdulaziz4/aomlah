@@ -1,12 +1,14 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/offer.dart';
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PaymentWindow extends StatefulWidget {
-  final bool isBuy;
+  final Offer offer;
   final GlobalKey<FormState> formKey;
   final void Function(String) onAmountSaved;
   final void Function() onSubmit;
@@ -14,7 +16,7 @@ class PaymentWindow extends StatefulWidget {
 
   const PaymentWindow({
     Key? key,
-    required this.isBuy,
+    required this.offer,
     required this.formKey,
     required this.onAmountSaved,
     required this.onSubmit,
@@ -44,6 +46,8 @@ class _PaymentWindowState extends State<PaymentWindow> {
 
   @override
   Widget build(BuildContext context) {
+    final wallet = Provider.of<RealTimeWallet>(context);
+    final btc = Provider.of<Bitcoin>(context);
     return Form(
       key: widget.formKey,
       child: Container(
@@ -62,15 +66,24 @@ class _PaymentWindowState extends State<PaymentWindow> {
               hintText: "ادخل المبلغ",
               fillColor: Constants.black4dp,
               validator: (val) {
-                // TODO: Check min limit and balance for sell
-
                 if (val == null || val.isEmpty) {
                   return "الرجاء إدخال المبلغ";
                 }
-                final amount = double.parse(val) * 1.0;
-                if (amount <= 0) {
-                  return "الرحاء إدخال مبلغ صحيح";
+
+                final amount = double.tryParse(val);
+
+                if (amount == null || amount <= 0) {
+                  return "الرجاء إدخال مبلغ صحيح";
                 }
+                final amountSR = amount * btc.price;
+                if (amountSR < widget.offer.minTrade) {
+                  return "ادخل مبلغ اعلى من الحد الادنى";
+                }
+
+                if (!widget.offer.isBuyTrader && amount < wallet.balance) {
+                  return "ادخل مبلغ ضمن رصيد محفظتك";
+                }
+
                 return null;
               },
               onSave: (val) {
@@ -89,7 +102,7 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 ],
               ),
             ),
-            if (!widget.isBuy)
+            if (!widget.offer.isBuyTrader)
               GestureDetector(
                 onTap: widget.onSelectBankAccount,
                 child: Padding(
@@ -145,11 +158,12 @@ class _PaymentWindowState extends State<PaymentWindow> {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: CustomButton(
                 onPressed: widget.onSubmit,
-                text: widget.isBuy ? "شراء BTC" : "بيع BTC",
+                text: widget.offer.isBuyTrader ? "شراء BTC" : "بيع BTC",
                 width: double.infinity,
                 height: 43,
-                color:
-                    widget.isBuy ? Constants.primaryColor : Constants.redColor,
+                color: widget.offer.isBuyTrader
+                    ? Constants.primaryColor
+                    : Constants.redColor,
               ),
             )
           ],
@@ -159,7 +173,8 @@ class _PaymentWindowState extends State<PaymentWindow> {
   }
 
   double amountToBtc() {
-    return amountController.text.isEmpty
+    final amount = double.tryParse(amountController.text);
+    return amount == null
         ? 0
         : Provider.of<Bitcoin>(context).amountToBtc(
             double.parse(amountController.text),

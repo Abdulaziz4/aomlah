@@ -69,7 +69,11 @@ class Offer {
     };
   }
 
+  // Accomadte different POV for isBuy variable
+  bool get isBuyTrader => !isBuy;
+  bool get isBuyMarchent => isBuy;
+
   String cryptoAmonutLabel() {
-    return "" + cryptoAmount.toString() + " BTC";
+    return "⠀" + cryptoAmount.toString() + " BTC";
   }
 }

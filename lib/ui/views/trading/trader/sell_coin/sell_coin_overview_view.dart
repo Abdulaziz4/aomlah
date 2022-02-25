@@ -28,16 +28,16 @@ class SellCoinOverviewView extends StatelessWidget {
                   children: [
                     TradeOverviewHeader(
                       price: "144,1313,13",
-                      quantity: 0.422,
+                      quantity: "0.422",
                       minLimit: 1335,
                     ),
-                    PaymentWindow(
-                      isBuy: false,
-                      formKey: viewmodel.formKey,
-                      onAmountSaved: viewmodel.setAmount,
-                      onSubmit: viewmodel.submit,
-                      onSelectBankAccount: viewmodel.selectBankAccount,
-                    ),
+                    // PaymentWindow(
+                    //   offer: ,
+                    //   formKey: viewmodel.formKey,
+                    //   onAmountSaved: viewmodel.setAmount,
+                    //   onSubmit: viewmodel.submit,
+                    //   onSelectBankAccount: viewmodel.selectBankAccount,
+                    // ),
                     Row(
                       children: [
                         Text(

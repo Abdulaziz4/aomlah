@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:aomlah/core/app/utils/double_extension.dart';
-
 class Bitcoin {
   final double price;
 

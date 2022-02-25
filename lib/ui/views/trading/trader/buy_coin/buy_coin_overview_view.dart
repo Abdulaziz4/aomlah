@@ -1,3 +1,4 @@
+import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,11 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                         price: price
                             .priceFromMargin(viewmodel.offer.margin)
                             .toStringAsFixed(3),
-                        quantity: viewmodel.offer.cryptoAmount,
+                        quantity: viewmodel.offer.cryptoAmonutLabel(),
                         minLimit: viewmodel.offer.minTrade,
                       ),
                       buildPurchaseWindow(
+                        offer: viewmodel.offer,
                         key: viewmodel.formKey,
                         onSave: viewmodel.setAmount,
                         submit: viewmodel.submit,
@@ -63,11 +65,11 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                           ),
                         ],
                       ),
-                      buildSellerInfo(),
+                      buildSellerInfo(viewmodel.offer.ownerName ?? ""),
                       SizedBox(height: 10),
-                      buildBankAccounts(),
+                      buildBankAccounts(viewmodel.offer.bankAccounts ?? []),
                       SizedBox(height: 10),
-                      buildTermsAndConsitions(),
+                      buildTermsAndConsitions(viewmodel.offer.terms),
                     ],
                   ),
                 ),
@@ -77,7 +79,7 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
         });
   }
 
-  Column buildTermsAndConsitions() {
+  Column buildTermsAndConsitions(String terms) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,14 +88,14 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
           style: Constants.mediumText.copyWith(color: Colors.grey),
         ),
         Text(
-          "ما أقبل اس تي سي باي",
+          terms,
           style: Constants.mediumText,
         ),
       ],
     );
   }
 
-  Widget buildSellerInfo() {
+  Widget buildSellerInfo(String sellerName) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -102,14 +104,14 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
           style: Constants.mediumText.copyWith(color: Colors.grey),
         ),
         Text(
-          "عبدالعزيز القحطني",
+          sellerName,
           style: Constants.mediumText,
         ),
       ],
     );
   }
 
-  Widget buildBankAccounts() {
+  Widget buildBankAccounts(List<BankAccount> banks) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -121,22 +123,22 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
           direction: Axis.horizontal,
           runSpacing: 5.0,
           spacing: 20.0,
-          children: const [
-            BankAccountItem(bankName: "بنك الرياض"),
-            BankAccountItem(bankName: "بنك الراجحي"),
-          ],
+          children: banks
+              .map((bank) => BankAccountItem(bankName: bank.bankName))
+              .toList(),
         ),
       ],
     );
   }
 
   Widget buildPurchaseWindow({
+    required Offer offer,
     required GlobalKey<FormState> key,
     required void Function(String) onSave,
     required void Function() submit,
   }) {
     return PaymentWindow(
-      isBuy: true,
+      offer: offer,
       formKey: key,
       onAmountSaved: onSave,
       onSubmit: submit,
