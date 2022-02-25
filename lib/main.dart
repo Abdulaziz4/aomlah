@@ -39,14 +39,10 @@ class MyApp extends StatelessWidget {
           initialData: RealTimeWallet.dummy(),
         ),
       ],
-      child: StreamProvider<AomlahUser>(
-        initialData: AomlahUser.anonymous(),
-        create: (_) => locator<UserService>().userController.stream,
-        child: ArabicMaterialApp(
-          theme: CustomTheme.mainTheme,
-          navigatorKey: StackedService.navigatorKey,
-          onGenerateRoute: StackedRouter().onGenerateRoute,
-        ),
+      child: ArabicMaterialApp(
+        theme: CustomTheme.mainTheme,
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
       ),
     );
   }
