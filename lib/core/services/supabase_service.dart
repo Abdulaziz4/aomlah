@@ -63,21 +63,29 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  // All offers controller
+  BehaviorSubject<List<Offer>> offersController =
+      BehaviorSubject<List<Offer>>();
+
   // Listen for changes on offers table and fetches from view_offers on every offers table change
-  Stream<List<Offer>> getAllOffersSubscription() {
-    return subscribeForChanges<Offer>(
+  void listentoAllOffers() {
+    subscribeForChanges<Offer>(
       table: AomlahTable.offers,
       fromJson: Offer.fromJson,
       primaryKey: "offer_id",
     ).asyncMap((event) {
       return _getOffers();
+    }).listen((offers) {
+      offersController.sink.add(offers);
     });
+    ;
   }
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
   }
 
+  // User's own offers controller
   BehaviorSubject<List<Offer>> userOffersController =
       BehaviorSubject<List<Offer>>();
 

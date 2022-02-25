@@ -24,6 +24,8 @@ import 'package:aomlah/ui/views/user_bank_accounts/user_bank_accounts_view.dart'
 import 'package:aomlah/ui/views/user_offers/user_offers_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_view.dart';
+import 'package:aomlah/ui/views/withdraw/confirm_withdraw_view.dart';
+import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -47,6 +49,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: UserOffersView),
     MaterialRoute(page: WalletInfoView),
     MaterialRoute(page: UserBankAccountsView),
+    MaterialRoute(page: ConfirmWithdrawView),
+    MaterialRoute(page: WithdrawView),
     MaterialRoute(page: CryptoInfoView),
   ],
   dependencies: [

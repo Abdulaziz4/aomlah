@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/views/trading/components/payment_window.dart';
 import 'package:aomlah/ui/views/trading/components/trade_overview_header.dart';
 import 'package:aomlah/ui/views/trading/trader/sell_coin/viewmodels/sell_coin_overview_viewmodel.dart';
@@ -6,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class SellCoinOverviewView extends StatelessWidget {
-  const SellCoinOverviewView({Key? key}) : super(key: key);
+  final Offer offer;
+  const SellCoinOverviewView({Key? key, required this.offer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,6 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -29,8 +28,10 @@ import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/wallet/wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
-import '../models/coin.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
+import '../../ui/views/withdraw/withdraw_view.dart';
+import '../models/coin.dart';
+import '../models/offer.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -51,13 +52,9 @@ class Routes {
   static const String userOffersView = '/user-offers-view';
   static const String walletInfoView = '/wallet-info-view';
   static const String userBankAccountsView = '/user-bank-accounts-view';
-
-  static const String cryptoInfoView = '/crypto-info-view';
-
-  static const String withdrawView = '/withdraw-view';
   static const String confirmWithdrawView = '/confirm-withdraw-view';
-
-
+  static const String withdrawView = '/withdraw-view';
+  static const String cryptoInfoView = '/crypto-info-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -76,10 +73,9 @@ class Routes {
     userOffersView,
     walletInfoView,
     userBankAccountsView,
-    cryptoInfoView,
+    confirmWithdrawView,
     withdrawView,
-    confirmWithdrawView
-
+    cryptoInfoView,
   };
 }
 
@@ -105,12 +101,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.walletInfoView, page: WalletInfoView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
-
-    RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
-
-    RouteDef(Routes.withdrawView, page: WithdrawView),
     RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
-
+    RouteDef(Routes.withdrawView, page: WithdrawView),
+    RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -152,8 +145,12 @@ class StackedRouter extends RouterBase {
       );
     },
     BuyCoinOverviewView: (data) {
+      var args = data.getArgs<BuyCoinOverviewViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const BuyCoinOverviewView(),
+        builder: (context) => BuyCoinOverviewView(
+          key: args.key,
+          offer: args.offer,
+        ),
         settings: data,
       );
     },
@@ -164,8 +161,12 @@ class StackedRouter extends RouterBase {
       );
     },
     SellCoinOverviewView: (data) {
+      var args = data.getArgs<SellCoinOverviewViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const SellCoinOverviewView(),
+        builder: (context) => SellCoinOverviewView(
+          key: args.key,
+          offer: args.offer,
+        ),
         settings: data,
       );
     },
@@ -223,6 +224,18 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ConfirmWithdrawView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ConfirmWithdrawView(),
+        settings: data,
+      );
+    },
+    WithdrawView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WithdrawView(),
+        settings: data,
+      );
+    },
     CryptoInfoView: (data) {
       var args = data.getArgs<CryptoInfoViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
@@ -233,18 +246,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    WithdrawView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const WithdrawView(),
-        settings: data,
-      );
-    },
-    ConfirmWithdrawView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const ConfirmWithdrawView(),
-        settings: data,
-      );
-    },
   };
 }
 
@@ -252,11 +253,18 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-/// CryptoInfoView arguments holder class
-class CryptoInfoViewArguments {
+/// BuyCoinOverviewView arguments holder class
+class BuyCoinOverviewViewArguments {
   final Key? key;
-  final Coin coin;
-  CryptoInfoViewArguments({this.key, required this.coin});
+  final Offer offer;
+  BuyCoinOverviewViewArguments({this.key, required this.offer});
+}
+
+/// SellCoinOverviewView arguments holder class
+class SellCoinOverviewViewArguments {
+  final Key? key;
+  final Offer offer;
+  SellCoinOverviewViewArguments({this.key, required this.offer});
 }
 
 /// UserBankAccountsView arguments holder class
@@ -264,4 +272,11 @@ class UserBankAccountsViewArguments {
   final Key? key;
   final bool allowSelection;
   UserBankAccountsViewArguments({this.key, this.allowSelection = false});
+}
+
+/// CryptoInfoView arguments holder class
+class CryptoInfoViewArguments {
+  final Key? key;
+  final Coin coin;
+  CryptoInfoViewArguments({this.key, required this.coin});
 }

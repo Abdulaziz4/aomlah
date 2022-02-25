@@ -1,4 +1,7 @@
+import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:aomlah/core/app/utils/constants.dart';
@@ -9,7 +12,8 @@ import 'package:aomlah/ui/views/trading/components/trade_overview_header.dart';
 import 'package:aomlah/ui/views/trading/trader/buy_coin/viewmodels/buy_coin_overview_viewmodel.dart';
 
 class BuyCoinOverviewView extends StatefulWidget {
-  const BuyCoinOverviewView({Key? key}) : super(key: key);
+  final Offer offer;
+  const BuyCoinOverviewView({Key? key, required this.offer}) : super(key: key);
 
   @override
   State<BuyCoinOverviewView> createState() => _BuyCoinOverviewViewState();
@@ -18,8 +22,11 @@ class BuyCoinOverviewView extends StatefulWidget {
 class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
   @override
   Widget build(BuildContext context) {
+    final price = Provider.of<Bitcoin>(context);
+
     return ViewModelBuilder<BuyCoinOverviewViewmodel>.reactive(
         viewModelBuilder: () => BuyCoinOverviewViewmodel(),
+        onModelReady: (viewmodel) => viewmodel.listentoOffers(widget.offer),
         builder: (context, viewmodel, _) {
           return BusyOverlay(
             isBusy: viewmodel.isBusy,
@@ -35,9 +42,11 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TradeOverviewHeader(
-                        price: "144,1313,13",
-                        quantity: 0.422,
-                        minLimit: 1335,
+                        price: price
+                            .priceFromMargin(viewmodel.offer.margin)
+                            .toStringAsFixed(3),
+                        quantity: viewmodel.offer.cryptoAmount,
+                        minLimit: viewmodel.offer.minTrade,
                       ),
                       buildPurchaseWindow(
                         key: viewmodel.formKey,

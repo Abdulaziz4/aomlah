@@ -9,6 +9,9 @@ import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 
 class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
+  OffersDiscoveryViewModel() {
+    _suabaseService.listentoAllOffers();
+  }
   final _logger = getLogger("OffersDiscoveryViewModel");
 
   final _authService = locator<AuthService>();
@@ -22,8 +25,8 @@ class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
     _navService.replaceWith(Routes.welcomeView);
   }
 
-  List<Offer> get buyOffers => offers.where((offer) => offer.isBuy).toList();
-  List<Offer> get sellOffers => offers.where((offer) => !offer.isBuy).toList();
+  List<Offer> get buyOffers => offers.where((offer) => !offer.isBuy).toList();
+  List<Offer> get sellOffers => offers.where((offer) => offer.isBuy).toList();
 
   @override
   void onSubscribed() {
@@ -51,5 +54,5 @@ class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
   }
 
   @override
-  Stream<List<Offer>> get stream => _suabaseService.getAllOffersSubscription();
+  Stream<List<Offer>> get stream => _suabaseService.offersController.stream;
 }
