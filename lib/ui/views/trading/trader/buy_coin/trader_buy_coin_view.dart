@@ -14,40 +14,40 @@ class TraderBuyCoinView extends StatefulWidget {
 }
 
 class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
-  final Map<TradeState, HeaderStyle> headerStates = {
-    TradeState.awaiting_payment: HeaderStyle(
+  final Map<TradeStatus, HeaderStyle> headerStates = {
+    TradeStatus.awaiting_payment: HeaderStyle(
       "تم إنشاء الطلب",
       Text("يرجى الدفع للبائع خلال 30:00"),
       Constants.black2dp,
     ),
-    TradeState.payment_sent: HeaderStyle(
+    TradeStatus.payment_sent: HeaderStyle(
       "في إنتظار تاكيد البائع",
       Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
       Constants.darkBlue,
     ),
-    TradeState.completed: HeaderStyle(
+    TradeStatus.completed: HeaderStyle(
       "تم إكمال الطلب",
       Text("لقد قمت بعملية الشراء بنجاح"),
       Constants.primaryColor,
     ),
-    TradeState.canceled: HeaderStyle(
+    TradeStatus.canceled: HeaderStyle(
       "تم إلغاء الطلب ",
       SizedBox(),
       Constants.redColor,
     ),
-    TradeState.disputed: HeaderStyle(
+    TradeStatus.disputed: HeaderStyle(
       "متنازع عليه",
       SizedBox(),
       Color.fromARGB(255, 213, 200, 86),
     ),
     //TODO:Add other states
   };
-  TradeState currentState = TradeState.awaiting_payment;
+  TradeStatus currentState = TradeStatus.awaiting_payment;
 
-  List<TradeState> states = [
-    TradeState.awaiting_payment,
-    TradeState.payment_sent,
-    TradeState.completed,
+  List<TradeStatus> states = [
+    TradeStatus.awaiting_payment,
+    TradeStatus.payment_sent,
+    TradeStatus.completed,
   ];
 
   @override
@@ -73,22 +73,22 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
           ),
           BottomActions(
             onCancel: () {
-              changeState(TradeState.canceled);
+              changeState(TradeStatus.canceled);
             },
             onPaymentSent: () {
-              changeState(TradeState.payment_sent);
+              changeState(TradeStatus.payment_sent);
             },
             onPaymentReceived: () {
-              changeState(TradeState.completed);
+              changeState(TradeStatus.completed);
             },
             onOpenDispute: () {
-              changeState(TradeState.disputed);
+              changeState(TradeStatus.disputed);
             },
-            showCancelButton: currentState == TradeState.awaiting_payment,
-            showPaymentSent: currentState == TradeState.awaiting_payment,
-            showOpenDispute: currentState == TradeState.payment_sent ||
-                currentState == TradeState.completed,
-            showCompleteTrade: currentState == TradeState.payment_sent,
+            showCancelButton: currentState == TradeStatus.awaiting_payment,
+            showPaymentSent: currentState == TradeStatus.awaiting_payment,
+            showOpenDispute: currentState == TradeStatus.payment_sent ||
+                currentState == TradeStatus.completed,
+            showCompleteTrade: currentState == TradeStatus.payment_sent,
           )
         ],
       ),
@@ -112,7 +112,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     );
   }
 
-  void changeState(TradeState state) {
+  void changeState(TradeStatus state) {
     setState(() {
       currentState = state;
     });
