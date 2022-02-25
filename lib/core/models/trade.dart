@@ -34,9 +34,9 @@ class Trade {
     return {
       "trade_id": traderId,
       "amount": amount,
-      "offerId": offerId,
+      "offer_id": offerId,
       "status": status.name,
-      "traderId": traderId,
+      "trader_id": traderId,
       "bank_account": bankAccount == null ? null : bankAccount!.iban,
     };
   }

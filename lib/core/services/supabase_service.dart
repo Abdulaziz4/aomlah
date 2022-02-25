@@ -1,13 +1,17 @@
+import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
+import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService extends AbstractSupabase {
+  final _logger = getLogger("SupabaseService");
+
   // Returns an initilized SupabaseService instance to be used by locator
   static Future<SupabaseService> getInstance() async {
     final service = SupabaseService();
@@ -124,5 +128,13 @@ class SupabaseService extends AbstractSupabase {
         "iban": wallet.iban,
       },
     );
+  }
+
+  Future<void> createTrade(Trade trade) async {
+    final res = await upsert(AomlahTable.trades, trade.toJson());
+
+    if (res.error != null) {
+      throw Exception(res.error!.message);
+    }
   }
 }

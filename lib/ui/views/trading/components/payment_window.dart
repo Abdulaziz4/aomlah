@@ -75,12 +75,12 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 if (amount == null || amount <= 0) {
                   return "الرجاء إدخال مبلغ صحيح";
                 }
-                final amountSR = amount * btc.price;
-                if (amountSR < widget.offer.minTrade) {
+                if (amount < widget.offer.minTrade) {
                   return "ادخل مبلغ اعلى من الحد الادنى";
                 }
+                final btcAmount = btc.amountToBtc(amount);
 
-                if (!widget.offer.isBuyTrader && amount < wallet.balance) {
+                if (!widget.offer.isBuyTrader && btcAmount < wallet.balance) {
                   return "ادخل مبلغ ضمن رصيد محفظتك";
                 }
 
