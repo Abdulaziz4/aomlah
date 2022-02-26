@@ -50,13 +50,6 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     ),
     //TODO:Add other states
   };
-  TradeStatus currentState = TradeStatus.awaiting_payment;
-
-  List<TradeStatus> states = [
-    TradeStatus.awaiting_payment,
-    TradeStatus.payment_sent,
-    TradeStatus.completed,
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +91,15 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 onOpenDispute: () {
                   viewmodel.changeState(TradeStatus.disputed);
                 },
-                showCancelButton: currentState == TradeStatus.awaiting_payment,
-                showPaymentSent: currentState == TradeStatus.awaiting_payment,
-                showOpenDispute: currentState == TradeStatus.payment_sent ||
-                    currentState == TradeStatus.completed,
-                showCompleteTrade: currentState == TradeStatus.payment_sent,
+                showCancelButton:
+                    viewmodel.trade.status == TradeStatus.awaiting_payment,
+                showPaymentSent:
+                    viewmodel.trade.status == TradeStatus.awaiting_payment,
+                showOpenDispute:
+                    viewmodel.trade.status == TradeStatus.payment_sent ||
+                        viewmodel.trade.status == TradeStatus.completed,
+                showCompleteTrade:
+                    viewmodel.trade.status == TradeStatus.payment_sent,
               )
             ],
           ),
