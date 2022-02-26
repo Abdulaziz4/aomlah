@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
+import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
@@ -130,11 +131,40 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
-  Future<void> createTrade(Trade trade) async {
+  Future<Trade> createTrade(Trade trade) async {
     final res = await upsert(AomlahTable.trades, trade.toJson());
 
     if (res.error != null) {
       throw Exception(res.error!.message);
     }
+    return getTrade(trade.tradeId);
+  }
+
+  Stream<Trade> getTradeStream(String tradeId) {
+    return subscribeForChanges(
+        table: AomlahTable.trades,
+        fromJson: Trade.fromJson,
+        primaryKey: "trade_id",
+        query: {
+          "trade_id": tradeId,
+        }).map<Trade>(
+      (trades) => trades.first,
+    );
+  }
+
+  Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
+    final res = await upsert(
+      AomlahTable.trades,
+      {"trade_id": tradeId, "status": status.name},
+    );
+    print(res.error?.message);
+  }
+
+  Future<Trade> getTrade(String tradeId) async {
+    final res = await get<Trade>(
+      AomlahTable.view_trades,
+      Trade.fromJson,
+    );
+    return res.first;
   }
 }

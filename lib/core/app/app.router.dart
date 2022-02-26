@@ -32,6 +32,7 @@ import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 import '../../ui/views/withdraw/withdraw_view.dart';
 import '../models/coin.dart';
 import '../models/offer.dart';
+import '../models/trade.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -155,8 +156,12 @@ class StackedRouter extends RouterBase {
       );
     },
     TraderBuyCoinView: (data) {
+      var args = data.getArgs<TraderBuyCoinViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const TraderBuyCoinView(),
+        builder: (context) => TraderBuyCoinView(
+          key: args.key,
+          trade: args.trade,
+        ),
         settings: data,
       );
     },
@@ -258,6 +263,13 @@ class BuyCoinOverviewViewArguments {
   final Key? key;
   final Offer offer;
   BuyCoinOverviewViewArguments({this.key, required this.offer});
+}
+
+/// TraderBuyCoinView arguments holder class
+class TraderBuyCoinViewArguments {
+  final Key? key;
+  final Trade trade;
+  TraderBuyCoinViewArguments({this.key, required this.trade});
 }
 
 /// SellCoinOverviewView arguments holder class

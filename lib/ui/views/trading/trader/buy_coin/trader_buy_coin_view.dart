@@ -1,13 +1,21 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/models/trade.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
 import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
 import 'package:aomlah/ui/views/trading/components/trade_receipt.dart';
 import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
+import 'package:aomlah/ui/views/trading/trader/buy_coin/viewmodels/trader_buy_coin_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
 class TraderBuyCoinView extends StatefulWidget {
-  const TraderBuyCoinView({Key? key}) : super(key: key);
+  final Trade trade;
+  const TraderBuyCoinView({
+    Key? key,
+    required this.trade,
+  }) : super(key: key);
 
   @override
   State<TraderBuyCoinView> createState() => _TraderBuyCoinViewState();
@@ -52,69 +60,71 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                verticalDirection: VerticalDirection.up,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TradeExtraInfo(
-                    terms: "نتسير",
-                    bankAccounts: [],
+    return ViewModelBuilder<TraderBuyCoinViewModel>.reactive(
+      viewModelBuilder: () => TraderBuyCoinViewModel(widget.trade),
+      builder: (context, viewmodel, _) => BusyOverlay(
+        isBusy: viewmodel.isBusy,
+        child: Scaffold(
+          body: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    verticalDirection: VerticalDirection.up,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TradeExtraInfo(
+                        terms: "نتسير",
+                        bankAccounts: [],
+                      ),
+                      buildRecipte(viewmodel.trade),
+                      buildHeader(
+                        viewmodel.trade.status,
+                      ),
+                    ],
                   ),
-                  buildRecipte(),
-                  buildHeader(),
-                ],
+                ),
               ),
-            ),
+              BottomActions(
+                onCancel: () {
+                  viewmodel.changeState(TradeStatus.canceled);
+                },
+                onPaymentSent: () {
+                  viewmodel.changeState(TradeStatus.payment_sent);
+                },
+                onPaymentReceived: () {
+                  viewmodel.changeState(TradeStatus.completed);
+                },
+                onOpenDispute: () {
+                  viewmodel.changeState(TradeStatus.disputed);
+                },
+                showCancelButton: currentState == TradeStatus.awaiting_payment,
+                showPaymentSent: currentState == TradeStatus.awaiting_payment,
+                showOpenDispute: currentState == TradeStatus.payment_sent ||
+                    currentState == TradeStatus.completed,
+                showCompleteTrade: currentState == TradeStatus.payment_sent,
+              )
+            ],
           ),
-          BottomActions(
-            onCancel: () {
-              changeState(TradeStatus.canceled);
-            },
-            onPaymentSent: () {
-              changeState(TradeStatus.payment_sent);
-            },
-            onPaymentReceived: () {
-              changeState(TradeStatus.completed);
-            },
-            onOpenDispute: () {
-              changeState(TradeStatus.disputed);
-            },
-            showCancelButton: currentState == TradeStatus.awaiting_payment,
-            showPaymentSent: currentState == TradeStatus.awaiting_payment,
-            showOpenDispute: currentState == TradeStatus.payment_sent ||
-                currentState == TradeStatus.completed,
-            showCompleteTrade: currentState == TradeStatus.payment_sent,
-          )
-        ],
+        ),
       ),
     );
   }
 
-  Widget buildRecipte() {
+  Widget buildRecipte(Trade? trade) {
     return TradeReceipt(
       isBuy: true,
-      quantity: "3020",
+      quantity: trade?.amount.toString() ?? "",
       price: "144,644,244",
       cryptoAmount: "0.52234",
     );
   }
 
-  Widget buildHeader() {
+  Widget buildHeader(TradeStatus state) {
     return TradeStateHeader(
-      title: headerStates[currentState]!.title,
-      color: headerStates[currentState]!.color,
-      subWidget: headerStates[currentState]!.subTitle,
+      title: headerStates[state]!.title,
+      color: headerStates[state]!.color,
+      subWidget: headerStates[state]!.subTitle,
     );
-  }
-
-  void changeState(TradeStatus state) {
-    setState(() {
-      currentState = state;
-    });
   }
 }

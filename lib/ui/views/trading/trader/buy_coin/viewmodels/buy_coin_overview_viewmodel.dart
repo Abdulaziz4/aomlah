@@ -42,9 +42,10 @@ class BuyCoinOverviewViewmodel extends StreamViewModel<List<Offer>> {
         status: TradeStatus.awaiting_payment,
         traderId: _userService.user.profileId,
       );
-      await _supabaseService.createTrade(trade);
+      final addedTrade = await _supabaseService.createTrade(trade);
       setBusy(false);
-      _navService.replaceWith(Routes.traderBuyCoinView);
+      _navService.replaceWith(Routes.traderBuyCoinView,
+          arguments: TraderBuyCoinViewArguments(trade: addedTrade));
     } catch (err) {
       _logger.e("Error while creating trade $err");
     }
