@@ -108,10 +108,11 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     );
   }
 
-  Widget buildRecipte(Trade? trade) {
+  Widget buildRecipte(Trade trade) {
+    print(trade.status);
     return TradeReceipt(
       isBuy: true,
-      quantity: trade?.amount.toString() ?? "",
+      quantity: trade.amount.toString(),
       price: "144,644,244",
       cryptoAmount: "0.52234",
     );

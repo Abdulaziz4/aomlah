@@ -142,7 +142,7 @@ abstract class AbstractSupabase {
       });
     }
     return supabase
-        .from(table.name)
+        .from(match)
         .stream([primaryKey])
         .execute()
         .map<List<T>>((mapsList) {

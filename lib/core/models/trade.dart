@@ -52,6 +52,7 @@ class Trade {
   }
 
   static TradeStatus statusFromString(String status) {
+    print(status);
     for (TradeStatus element in TradeStatus.values) {
       if (element.name == status) {
         return element;
