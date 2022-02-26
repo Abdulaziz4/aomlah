@@ -141,29 +141,30 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Stream<Trade> getTradeStream(String tradeId) {
+    print(tradeId);
     return subscribeForChanges(
-        table: AomlahTable.trades,
-        fromJson: Trade.fromJson,
-        primaryKey: "trade_id",
-        query: {
-          "trade_id": tradeId,
-        }).map<Trade>(
-      (trades) => trades.first,
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+    ).asyncMap(
+      (event) => getTrade(tradeId),
     );
   }
 
   Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
-    final res = await upsert(
+    await upsert(
       AomlahTable.trades,
       {"trade_id": tradeId, "status": status.name},
     );
-    print(res.error?.message);
   }
 
   Future<Trade> getTrade(String tradeId) async {
     final res = await get<Trade>(
       AomlahTable.view_trades,
       Trade.fromJson,
+      query: {
+        "trade_id": tradeId,
+      },
     );
     return res.first;
   }

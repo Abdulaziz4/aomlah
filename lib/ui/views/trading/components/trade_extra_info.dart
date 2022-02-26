@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/ui/shared/bank_account_card.dart';
 import 'package:aomlah/ui/shared/button_tile.dart';
 import 'package:aomlah/ui/shared/expandable_card.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,16 @@ class TradeExtraInfo extends StatelessWidget {
         ),
         ExpandableCard(
           title: "الحسابات البنكية",
-          expandedSection: Text("اثممخ"),
+          expandedSection: Column(
+            children: bankAccounts
+                .map(
+                  (bank) => BankAccountCard(
+                    bank: bank,
+                    fontSize: 15,
+                  ),
+                )
+                .toList(),
+          ),
           color: Constants.black2dp,
         ),
         ButtonTile(

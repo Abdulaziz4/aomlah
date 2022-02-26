@@ -23,7 +23,7 @@ class BuyCoinOverviewView extends StatefulWidget {
 class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
   @override
   Widget build(BuildContext context) {
-    final price = Provider.of<Bitcoin>(context);
+    final btc = Provider.of<Bitcoin>(context);
 
     return ViewModelBuilder<BuyCoinOverviewViewmodel>.reactive(
         viewModelBuilder: () => BuyCoinOverviewViewmodel(),
@@ -43,7 +43,7 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TradeOverviewHeader(
-                        price: price
+                        price: btc
                             .priceFromMargin(viewmodel.offer.margin)
                             .toStringAsFixed(3),
                         quantity: viewmodel.offer.cryptoAmonutLabel(),
@@ -53,7 +53,9 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                         offer: viewmodel.offer,
                         key: viewmodel.formKey,
                         onSave: viewmodel.setAmount,
-                        submit: viewmodel.submit,
+                        submit: () {
+                          viewmodel.submit(btc.price);
+                        },
                       ),
                       Row(
                         children: [

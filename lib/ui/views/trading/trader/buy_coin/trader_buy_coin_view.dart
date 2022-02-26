@@ -67,8 +67,8 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TradeExtraInfo(
-                        terms: "نتسير",
-                        bankAccounts: [],
+                        terms: viewmodel.trade.offer?.terms ?? "",
+                        bankAccounts: viewmodel.trade.offer?.bankAccounts ?? [],
                       ),
                       buildRecipte(viewmodel.trade),
                       buildHeader(
@@ -109,12 +109,12 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
   }
 
   Widget buildRecipte(Trade trade) {
-    print(trade.status);
+    final fiatQuantity = (trade.amount * trade.price * 3.75);
     return TradeReceipt(
-      isBuy: true,
-      quantity: trade.amount.toString(),
-      price: "144,644,244",
-      cryptoAmount: "0.52234",
+      isBuy: trade.offer!.isBuyTrader,
+      quantity: fiatQuantity.toStringAsFixed(2),
+      price: "${trade.price * 3.75}",
+      cryptoAmount: trade.amount.toString(),
     );
   }
 

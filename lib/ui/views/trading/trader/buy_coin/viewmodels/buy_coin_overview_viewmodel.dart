@@ -27,7 +27,7 @@ class BuyCoinOverviewViewmodel extends StreamViewModel<List<Offer>> {
     this.offer = offer;
   }
 
-  Future<void> submit() async {
+  Future<void> submit(double price) async {
     bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -35,12 +35,16 @@ class BuyCoinOverviewViewmodel extends StreamViewModel<List<Offer>> {
     formKey.currentState!.save();
     setBusy(true);
     try {
+      print(amount);
+      print(price);
+      print((amount / 3.75) / price);
       final trade = Trade(
         tradeId: UuidHelper.generate(),
-        amount: amount,
+        amount: (amount / 3.75) / price,
         offerId: offer.offerID,
         status: TradeStatus.awaiting_payment,
         traderId: _userService.user.profileId,
+        price: price,
       );
       final addedTrade = await _supabaseService.createTrade(trade);
       setBusy(false);

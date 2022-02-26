@@ -5,6 +5,7 @@ import 'package:aomlah/core/models/offer.dart';
 class Trade {
   final String tradeId;
   final double amount;
+  final double price;
   final TradeStatus status;
   final String traderId;
   final String offerId;
@@ -19,6 +20,7 @@ class Trade {
     required this.status,
     required this.traderId,
     required this.offerId,
+    required this.price,
     this.bankAccount,
     this.bankIban,
     this.offer,
@@ -37,6 +39,7 @@ class Trade {
       bankIban: json["bank_iban"],
       offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
       traderName: json["name"],
+      price: json["price"] * 1.0,
     );
   }
 
@@ -48,11 +51,11 @@ class Trade {
       "status": status.name,
       "trader_id": traderId,
       "bank_iban": bankAccount == null ? null : bankAccount!.iban,
+      "price": price,
     };
   }
 
   static TradeStatus statusFromString(String status) {
-    print(status);
     for (TradeStatus element in TradeStatus.values) {
       if (element.name == status) {
         return element;
