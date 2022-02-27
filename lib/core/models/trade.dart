@@ -14,6 +14,7 @@ class Trade {
   final Offer? offer;
   final BankAccount? bankAccount;
   final String? traderName;
+  final DateTime? createdAt;
   Trade({
     required this.tradeId,
     required this.amount,
@@ -25,6 +26,7 @@ class Trade {
     this.bankIban,
     this.offer,
     this.traderName,
+    this.createdAt,
   });
   factory Trade.fromJson(Map<String, dynamic> json) {
     return Trade(
@@ -40,6 +42,7 @@ class Trade {
       offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
       traderName: json["name"],
       price: json["price"] * 1.0,
+      createdAt: DateTime.tryParse(json["created_at"]),
     );
   }
 

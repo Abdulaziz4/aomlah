@@ -13,15 +13,16 @@ class TraderBuyCoinViewModel extends StreamViewModel<Trade> {
   final _supabaseService = locator<SupabaseService>();
 
   Future<void> changeState(TradeStatus state) async {
+    // Setting false inside onData
     setBusy(true);
     await _supabaseService.changeTradeStatus(trade.tradeId, state);
-    setBusy(false);
   }
 
   @override
   void onData(Trade? data) {
     super.onData(data);
     _logger.i("onData");
+    setBusy(false);
     if (data != null) {
       trade = data;
     }

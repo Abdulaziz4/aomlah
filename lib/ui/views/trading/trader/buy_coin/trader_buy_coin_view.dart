@@ -1,3 +1,5 @@
+import 'dart:async' show Timer;
+
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
@@ -22,6 +24,13 @@ class TraderBuyCoinView extends StatefulWidget {
 }
 
 class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final Map<TradeStatus, HeaderStyle> headerStates = {
     TradeStatus.awaiting_payment: HeaderStyle(
       "تم إنشاء الطلب",
@@ -58,6 +67,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
       builder: (context, viewmodel, _) => BusyOverlay(
         isBusy: viewmodel.isBusy,
         child: Scaffold(
+          key: UniqueKey(),
           body: Column(
             children: [
               Expanded(
