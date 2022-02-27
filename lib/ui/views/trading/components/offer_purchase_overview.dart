@@ -4,57 +4,64 @@ import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/shared/bank_account_item.dart';
 import 'package:aomlah/ui/views/trading/components/trade_overview_header.dart';
+import 'package:aomlah/ui/views/trading/trader/viewmodels/offer_overview_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 
 class OfferPurchaseOverview extends StatelessWidget {
   final Offer offer;
-  final Widget paymentWindow;
+  final Widget Function(Offer) paymentWindowBuilder;
   const OfferPurchaseOverview({
     Key? key,
     required this.offer,
-    required this.paymentWindow,
+    required this.paymentWindowBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final btc = Provider.of<Bitcoin>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: offer.isBuyTrader ? Text("شراء BTC") : Text("بيع BTC"),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TradeOverviewHeader(
-                price: btc.priceFromMargin(offer.margin).toStringAsFixed(3),
-                quantity: offer.cryptoAmonutLabel(),
-                minLimit: offer.minTrade,
-              ),
-              Row(
-                children: [
-                  Text(
-                    "تفاصيل التداول",
-                    style: Constants.largeText.copyWith(
-                      color: Constants.darkBlue,
-                    ),
-                  ),
-                ],
-              ),
-              buildSellerInfo(offer.ownerName ?? ""),
-              if (offer.isBuyTrader)
-                Column(
+    return ViewModelBuilder<OfferPurchaseOverviewViewmodel>.reactive(
+      viewModelBuilder: () => OfferPurchaseOverviewViewmodel(),
+      onModelReady: (viewmodel) => viewmodel.listentoOffers(offer),
+      builder: (context, viewmodel, _) => Scaffold(
+        appBar: AppBar(
+          title: offer.isBuyTrader ? Text("شراء BTC") : Text("بيع BTC"),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TradeOverviewHeader(
+                  price: btc.priceFromMargin(offer.margin).toStringAsFixed(3),
+                  quantity: offer.cryptoAmonutLabel(),
+                  minLimit: offer.minTrade,
+                ),
+                paymentWindowBuilder(viewmodel.offer),
+                Row(
                   children: [
-                    SizedBox(height: 10),
-                    buildBankAccounts(offer.bankAccounts ?? []),
+                    Text(
+                      "تفاصيل التداول",
+                      style: Constants.largeText.copyWith(
+                        color: Constants.darkBlue,
+                      ),
+                    ),
                   ],
                 ),
-              SizedBox(height: 10),
-              buildTermsAndConsitions(offer.terms),
-            ],
+                buildSellerInfo(offer.ownerName ?? ""),
+                if (offer.isBuyTrader)
+                  Column(
+                    children: [
+                      SizedBox(height: 10),
+                      buildBankAccounts(offer.bankAccounts ?? []),
+                    ],
+                  ),
+                SizedBox(height: 10),
+                buildTermsAndConsitions(offer.terms),
+              ],
+            ),
           ),
         ),
       ),
