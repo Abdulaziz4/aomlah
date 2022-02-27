@@ -24,6 +24,8 @@ class SellCoinOverviewView extends StatelessWidget {
                 onAmountSaved: viewmodel.setAmount,
                 onSubmit: viewmodel.submit,
                 onSelectBankAccount: viewmodel.selectBankAccount,
+                selectedBank: viewmodel.bankAccount,
+                errorMessage: viewmodel.errorMessage,
               );
             },
           );

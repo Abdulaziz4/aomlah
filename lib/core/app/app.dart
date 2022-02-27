@@ -4,6 +4,7 @@ import 'package:aomlah/core/services/crypto_info_service.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
+import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
@@ -63,6 +64,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton<CryptoInfoService>(classType: CryptoInfoService),
     LazySingleton<RealtimeWalletService>(classType: RealtimeWalletService),
     LazySingleton<CandlesService>(classType: CandlesService),
+    LazySingleton<TradingService>(classType: TradingService),
 
     Presolve(
       classType: SupabaseService,

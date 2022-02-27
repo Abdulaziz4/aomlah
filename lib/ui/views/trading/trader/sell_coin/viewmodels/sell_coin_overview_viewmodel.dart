@@ -33,7 +33,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
 
     formKey.currentState!.save();
     setBusy(true);
-    //TODO: Create Trade
+
     setBusy(false);
     _navService.navigateTo(Routes.traderSellCoinView);
   }

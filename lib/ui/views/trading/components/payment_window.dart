@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/real_time_wallet.dart';
@@ -13,6 +14,7 @@ class PaymentWindow extends StatefulWidget {
   final void Function(String) onAmountSaved;
   final void Function() onSubmit;
   final void Function()? onSelectBankAccount;
+  final BankAccount? selectedBank;
   final String? errorMessage;
   const PaymentWindow({
     Key? key,
@@ -22,6 +24,7 @@ class PaymentWindow extends StatefulWidget {
     required this.onSubmit,
     this.onSelectBankAccount,
     this.errorMessage,
+    this.selectedBank,
   }) : super(key: key);
 
   @override
@@ -81,7 +84,8 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 }
                 final btcAmount = btc.amountToBtc(amount);
 
-                if (!widget.offer.isBuyTrader && btcAmount < wallet.balance) {
+                if (!widget.offer.isBuyTrader &&
+                    btcAmount > wallet.balanceBTC) {
                   return "ادخل مبلغ ضمن رصيد محفظتك";
                 }
 
@@ -126,9 +130,13 @@ class _PaymentWindowState extends State<PaymentWindow> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "اختر حساب بنكي",
+                              widget.selectedBank != null
+                                  ? widget.selectedBank!.bankName
+                                  : "اختر حساب بنكي",
                               style: Constants.smallText.copyWith(
-                                color: Colors.grey[400],
+                                color: widget.selectedBank != null
+                                    ? Colors.white
+                                    : Colors.grey[400],
                               ),
                             ),
                             Icon(
@@ -158,7 +166,8 @@ class _PaymentWindowState extends State<PaymentWindow> {
             if (widget.errorMessage != null)
               Text(
                 widget.errorMessage!,
-                style: Constants.smallText.copyWith(color: Colors.red),
+                style:
+                    Constants.verySmallText.copyWith(color: Constants.redColor),
               ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
