@@ -9,6 +9,7 @@ import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
 import 'package:aomlah/ui/views/trading/components/trade_receipt.dart';
 import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
 import 'package:aomlah/ui/views/trading/trader/buy_coin/viewmodels/trader_buy_coin_viewmodel.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -24,44 +25,68 @@ class TraderBuyCoinView extends StatefulWidget {
 }
 
 class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
-  Timer? _timer;
+  Duration remainingTime = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-  }
+    if (widget.trade.status == TradeStatus.awaiting_payment) {
+      final timeout = widget.trade.createdAt!.add(
+        Duration(
+          minutes: 31,
+        ),
+      );
+      remainingTime = timeout.difference(DateTime.now());
+    }
 
-  final Map<TradeStatus, HeaderStyle> headerStates = {
-    TradeStatus.awaiting_payment: HeaderStyle(
-      "تم إنشاء الطلب",
-      Text("يرجى الدفع للبائع خلال 30:00"),
-      Constants.black2dp,
-    ),
-    TradeStatus.payment_sent: HeaderStyle(
-      "في إنتظار تاكيد البائع",
-      Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
-      Constants.darkBlue,
-    ),
-    TradeStatus.completed: HeaderStyle(
-      "تم إكمال الطلب",
-      Text("لقد قمت بعملية الشراء بنجاح"),
-      Constants.primaryColor,
-    ),
-    TradeStatus.canceled: HeaderStyle(
-      "تم إلغاء الطلب ",
-      SizedBox(),
-      Constants.redColor,
-    ),
-    TradeStatus.disputed: HeaderStyle(
-      "متنازع عليه",
-      SizedBox(),
-      Color.fromARGB(255, 213, 200, 86),
-    ),
-    //TODO:Add other states
-  };
+    // if (widget.trade.status == TradeStatus.awaiting_payment) {
+    //   // Duration remaining = DateTime.now();
+    //   // _timer = Timer(remainingMinutes, () {});
+    // final timeout = widget.trade.createdAt!.add(
+    //   Duration(
+    //     minutes: 31,
+    //   ),
+    // );
+    //   final remainingTime = timeout.difference(DateTime.now());
+    //   _timer = Timer.periodic(remainingTime, (timer) {});
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final Map<TradeStatus, HeaderStyle> headerStates = {
+      TradeStatus.awaiting_payment: HeaderStyle(
+        "تم إنشاء الطلب",
+        Row(
+          children: [
+            Text("يرجى الدفع للبائع خلال "),
+            buildTimer(),
+          ],
+        ),
+        Constants.black2dp,
+      ),
+      TradeStatus.payment_sent: HeaderStyle(
+        "في إنتظار تاكيد البائع",
+        Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
+        Constants.darkBlue,
+      ),
+      TradeStatus.completed: HeaderStyle(
+        "تم إكمال الطلب",
+        Text("لقد قمت بعملية الشراء بنجاح"),
+        Constants.primaryColor,
+      ),
+      TradeStatus.canceled: HeaderStyle(
+        "تم إلغاء الطلب ",
+        SizedBox(),
+        Constants.redColor,
+      ),
+      TradeStatus.disputed: HeaderStyle(
+        "متنازع عليه",
+        SizedBox(),
+        Color.fromARGB(255, 213, 200, 86),
+      ),
+      //TODO:Add other states
+    };
     return ViewModelBuilder<TraderBuyCoinViewModel>.reactive(
       viewModelBuilder: () => TraderBuyCoinViewModel(widget.trade),
       builder: (context, viewmodel, _) => BusyOverlay(
@@ -83,6 +108,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                       buildRecipte(viewmodel.trade),
                       buildHeader(
                         viewmodel.trade.status,
+                        headerStates,
                       ),
                     ],
                   ),
@@ -128,11 +154,46 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
     );
   }
 
-  Widget buildHeader(TradeStatus state) {
+  Widget buildHeader(
+    TradeStatus state,
+    Map<TradeStatus, HeaderStyle> headerStates,
+  ) {
     return TradeStateHeader(
       title: headerStates[state]!.title,
       color: headerStates[state]!.color,
       subWidget: headerStates[state]!.subTitle,
+    );
+  }
+
+  Widget buildTimer() {
+    print(remainingTime);
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 10.0,
+      ),
+      child: CircularCountDownTimer(
+        duration: remainingTime.inSeconds,
+        initialDuration: 0,
+        width: 44,
+        height: 44,
+        controller: CountDownController(),
+        ringColor: Colors.grey[300]!,
+        fillColor: Constants.darkBlue,
+        fillGradient: null,
+        backgroundGradient: null,
+        strokeWidth: 5.0,
+        strokeCap: StrokeCap.round,
+        textStyle: TextStyle(
+          fontSize: 13.0,
+          color: Constants.darkBlue,
+          fontWeight: FontWeight.bold,
+        ),
+        textFormat: CountdownTextFormat.MM_SS,
+        isReverse: true,
+        isReverseAnimation: false,
+        isTimerTextShown: true,
+        autoStart: true,
+      ),
     );
   }
 }
