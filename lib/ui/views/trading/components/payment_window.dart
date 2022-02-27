@@ -13,7 +13,7 @@ class PaymentWindow extends StatefulWidget {
   final void Function(String) onAmountSaved;
   final void Function() onSubmit;
   final void Function()? onSelectBankAccount;
-
+  final String? errorMessage;
   const PaymentWindow({
     Key? key,
     required this.offer,
@@ -21,6 +21,7 @@ class PaymentWindow extends StatefulWidget {
     required this.onAmountSaved,
     required this.onSubmit,
     this.onSelectBankAccount,
+    this.errorMessage,
   }) : super(key: key);
 
   @override
@@ -154,6 +155,11 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 ),
               ],
             ),
+            if (widget.errorMessage != null)
+              Text(
+                widget.errorMessage!,
+                style: Constants.smallText.copyWith(color: Colors.red),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: CustomButton(

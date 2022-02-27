@@ -16,11 +16,21 @@ class SellCoinOverviewViewModel extends BaseViewModel {
 
   BankAccount? bankAccount;
 
+  String? errorMessage;
+
   void submit() {
+    resetBankError();
+
     bool isValid = formKey.currentState!.validate();
+
     if (!isValid) {
       return;
     }
+    if (bankAccount == null) {
+      setBankError();
+      return;
+    }
+
     formKey.currentState!.save();
     setBusy(true);
     //TODO: Create Trade
@@ -37,8 +47,19 @@ class SellCoinOverviewViewModel extends BaseViewModel {
       Routes.userBankAccountsView,
       arguments: UserBankAccountsViewArguments(allowSelection: true),
     );
+
     bankAccount = bank as BankAccount;
     notifyListeners();
     //TODO: Validate BankAccount is not null and do form validation on the bank
+  }
+
+  void resetBankError() {
+    errorMessage = null;
+    notifyListeners();
+  }
+
+  void setBankError() {
+    errorMessage = "الرجاء اختيار حساب بنكي";
+    notifyListeners();
   }
 }

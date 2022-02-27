@@ -1,39 +1,51 @@
 import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
+import 'package:aomlah/core/services/user_service.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-class TraderSellCoinViewModel extends StreamViewModel<Trade> {
-  final _logger = getLogger("TraderBuyCoinViewModel");
+class SellCoinOverviewViewmodel extends BaseViewModel {
+  final _logger = getLogger("BuyCoinOverviewViewmodel");
 
-  late Trade trade;
-  TraderSellCoinViewModel(this.trade);
+  final _navService = locator<NavigationService>();
   final _supabaseService = locator<SupabaseService>();
+  final _userService = locator<UserService>();
+  final formKey = GlobalKey<FormState>();
 
-  Future<void> changeState(TradeStatus state) async {
-    // Setting false inside onData
+  double amount = 0;
+
+  Future<void> submit(double price, String offerId) async {
+    bool isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
     setBusy(true);
-    await _supabaseService.changeTradeStatus(trade.tradeId, state);
-  }
-
-  @override
-  void onData(Trade? data) {
-    super.onData(data);
-    _logger.i("onData");
-    setBusy(false);
-    if (data != null) {
-      trade = data;
+    try {
+      final trade = Trade(
+        tradeId: UuidHelper.generate(),
+        amount: (amount / 3.75) / price,
+        offerId: offerId,
+        status: TradeStatus.awaiting_payment,
+        traderId: _userService.user.profileId,
+        price: price,
+      );
+      final addedTrade = await _supabaseService.createTrade(trade);
+      setBusy(false);
+      _navService.replaceWith(Routes.traderBuyCoinView,
+          arguments: TraderBuyCoinViewArguments(trade: addedTrade));
+    } catch (err) {
+      _logger.e("Error while creating trade $err");
     }
   }
 
-  @override
-  void onError(error) {
-    super.onError(error);
-    _logger.i("An error occured with message $error");
+  void setAmount(String reqAmount) {
+    amount = double.parse(reqAmount);
   }
-
-  @override
-  Stream<Trade> get stream => _supabaseService.getTradeStream(trade.tradeId);
 }

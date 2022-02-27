@@ -51,12 +51,7 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
   Widget build(BuildContext context) {
     final wallet = Provider.of<RealTimeWallet>(context);
     double realTimePrice = Provider.of<Bitcoin>(context).price;
-    double convertToBTC(balance) => (balance / 100000000);
-
-    double walletBalance = convertToBTC(wallet.balance);
-    double walletBalanceSAR = double.parse(
-        (convertToBTC(wallet.balance * realTimePrice) * 3.75)
-            .toStringAsFixed(2));
+    final walletBalanceSR = wallet.balanceSR(realTimePrice);
 
     return ViewModelBuilder<WalletInfoViewModel>.reactive(
         viewModelBuilder: () => WalletInfoViewModel(),
@@ -81,7 +76,7 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                               fontSize: 18),
                         ),
                         Text(
-                          walletBalance.toString(),
+                          wallet.balanceBTC.toString(),
                           style: TextStyle(
                               // fontWeight: FontWeight.bold,
                               fontSize: 18),
@@ -93,7 +88,7 @@ class _WalletInfoViewBodyState extends State<WalletInfoViewBody> {
                               fontSize: 18),
                         ),
                         Text(
-                          walletBalanceSAR.toString(),
+                          walletBalanceSR.toString(),
                           style: TextStyle(
                               // fontWeight: FontWeight.,
                               fontSize: 18),

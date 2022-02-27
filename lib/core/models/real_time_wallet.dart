@@ -27,4 +27,10 @@ class RealTimeWallet {
       transactions: transaction,
     );
   }
+
+  double balanceSR(double price) {
+    return double.parse((balanceBTC * price * 3.75).toStringAsFixed(3));
+  }
+
+  double get balanceBTC => (balance / 100000000);
 }
