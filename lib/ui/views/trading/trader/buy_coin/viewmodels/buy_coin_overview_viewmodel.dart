@@ -5,6 +5,7 @@ import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
+import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -14,8 +15,9 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
   final _logger = getLogger("BuyCoinOverviewViewmodel");
 
   final _navService = locator<NavigationService>();
-  final _supabaseService = locator<SupabaseService>();
   final _userService = locator<UserService>();
+  final _tradingService = locator<TradingService>();
+
   final formKey = GlobalKey<FormState>();
 
   double amount = 0;
@@ -36,7 +38,7 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
         traderId: _userService.user.profileId,
         price: price,
       );
-      final addedTrade = await _supabaseService.createTrade(trade);
+      final addedTrade = await _tradingService.createTrade(trade);
       setBusy(false);
       _navService.replaceWith(
         Routes.traderBuyCoinView,
