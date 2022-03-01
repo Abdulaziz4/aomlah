@@ -4,7 +4,6 @@ import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/trade.dart';
-import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +64,6 @@ class SellCoinOverviewViewModel extends BaseViewModel {
 
     bankAccount = bank as BankAccount;
     notifyListeners();
-    //TODO: Validate BankAccount is not null and do form validation on the bank
   }
 
   void resetBankError() {

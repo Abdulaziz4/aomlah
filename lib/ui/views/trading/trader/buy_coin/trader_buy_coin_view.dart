@@ -5,6 +5,7 @@ import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
+import 'package:aomlah/ui/views/trading/components/circular_timer.dart';
 import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
 import 'package:aomlah/ui/views/trading/components/trade_receipt.dart';
 import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
@@ -38,18 +39,6 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
       );
       remainingTime = timeout.difference(DateTime.now());
     }
-
-    // if (widget.trade.status == TradeStatus.awaiting_payment) {
-    //   // Duration remaining = DateTime.now();
-    //   // _timer = Timer(remainingMinutes, () {});
-    // final timeout = widget.trade.createdAt!.add(
-    //   Duration(
-    //     minutes: 31,
-    //   ),
-    // );
-    //   final remainingTime = timeout.difference(DateTime.now());
-    //   _timer = Timer.periodic(remainingTime, (timer) {});
-    // }
   }
 
   @override
@@ -166,34 +155,6 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
   }
 
   Widget buildTimer() {
-    print(remainingTime);
-    return Padding(
-      padding: const EdgeInsets.only(
-        right: 10.0,
-      ),
-      child: CircularCountDownTimer(
-        duration: remainingTime.inSeconds,
-        initialDuration: 0,
-        width: 44,
-        height: 44,
-        controller: CountDownController(),
-        ringColor: Colors.grey[300]!,
-        fillColor: Constants.darkBlue,
-        fillGradient: null,
-        backgroundGradient: null,
-        strokeWidth: 5.0,
-        strokeCap: StrokeCap.round,
-        textStyle: TextStyle(
-          fontSize: 13.0,
-          color: Constants.darkBlue,
-          fontWeight: FontWeight.bold,
-        ),
-        textFormat: CountdownTextFormat.MM_SS,
-        isReverse: true,
-        isReverseAnimation: false,
-        isTimerTextShown: true,
-        autoStart: true,
-      ),
-    );
+    return CircularTimer(endTime: remainingTime);
   }
 }

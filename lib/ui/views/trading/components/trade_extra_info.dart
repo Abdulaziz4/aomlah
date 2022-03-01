@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 
 class TradeExtraInfo extends StatelessWidget {
   final String terms;
-  final List<BankAccount> bankAccounts;
+  final List<BankAccount>? bankAccounts;
 
   const TradeExtraInfo({
     Key? key,
     required this.terms,
-    required this.bankAccounts,
+    this.bankAccounts,
   }) : super(key: key);
 
   @override
@@ -25,20 +25,21 @@ class TradeExtraInfo extends StatelessWidget {
           expandedSection: Text(terms),
           color: Constants.black2dp,
         ),
-        ExpandableCard(
-          title: "الحسابات البنكية",
-          expandedSection: Column(
-            children: bankAccounts
-                .map(
-                  (bank) => BankAccountCard(
-                    bank: bank,
-                    fontSize: 15,
-                  ),
-                )
-                .toList(),
+        if (bankAccounts != null)
+          ExpandableCard(
+            title: "الحسابات البنكية",
+            expandedSection: Column(
+              children: bankAccounts!
+                  .map(
+                    (bank) => BankAccountCard(
+                      bank: bank,
+                      fontSize: 15,
+                    ),
+                  )
+                  .toList(),
+            ),
+            color: Constants.black2dp,
           ),
-          color: Constants.black2dp,
-        ),
         ButtonTile(
           onPressed: () {},
           text: "المحادثة",

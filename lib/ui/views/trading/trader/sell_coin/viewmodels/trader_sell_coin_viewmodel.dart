@@ -1,51 +1,41 @@
 import 'package:aomlah/core/app/app.locator.dart';
-import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/logger.dart';
-import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
-import 'package:aomlah/core/services/user_service.dart';
-import 'package:flutter/material.dart';
+import 'package:aomlah/core/services/trading_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-class SellCoinOverviewViewmodel extends BaseViewModel {
-  final _logger = getLogger("BuyCoinOverviewViewmodel");
+class TraderSellCoinViewModel extends StreamViewModel<Trade> {
+  final _logger = getLogger("TraderBuyCoinViewModel");
 
-  final _navService = locator<NavigationService>();
+  late Trade trade;
+  TraderSellCoinViewModel(this.trade);
   final _supabaseService = locator<SupabaseService>();
-  final _userService = locator<UserService>();
-  final formKey = GlobalKey<FormState>();
+  final _tradingService = locator<TradingService>();
 
-  double amount = 0;
-
-  Future<void> submit(double price, String offerId) async {
-    bool isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    formKey.currentState!.save();
+  Future<void> changeState(TradeStatus state) async {
+    // Setting false inside onData
     setBusy(true);
-    try {
-      final trade = Trade(
-        tradeId: UuidHelper.generate(),
-        amount: (amount / 3.75) / price,
-        offerId: offerId,
-        status: TradeStatus.awaiting_payment,
-        traderId: _userService.user.profileId,
-        price: price,
-      );
-      final addedTrade = await _supabaseService.createTrade(trade);
-      setBusy(false);
-      _navService.replaceWith(Routes.traderBuyCoinView,
-          arguments: TraderBuyCoinViewArguments(trade: addedTrade));
-    } catch (err) {
-      _logger.e("Error while creating trade $err");
+    await _tradingService.updateTradeStatus(trade: trade, newStatus: state);
+  }
+
+  @override
+  void onData(Trade? data) {
+    super.onData(data);
+    _logger.i("onData");
+    setBusy(false);
+    if (data != null) {
+      trade = data;
     }
   }
 
-  void setAmount(String reqAmount) {
-    amount = double.parse(reqAmount);
+  @override
+  void onError(error) {
+    super.onError(error);
+    _logger.i("An error occured with message $error");
   }
+
+  @override
+  Stream<Trade> get stream => _supabaseService.getTradeStream(trade.tradeId);
 }
