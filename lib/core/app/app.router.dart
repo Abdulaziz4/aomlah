@@ -176,8 +176,12 @@ class StackedRouter extends RouterBase {
       );
     },
     TraderSellCoinView: (data) {
+      var args = data.getArgs<TraderSellCoinViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const TraderSellCoinView(),
+        builder: (context) => TraderSellCoinView(
+          key: args.key,
+          trade: args.trade,
+        ),
         settings: data,
       );
     },
@@ -277,6 +281,13 @@ class SellCoinOverviewViewArguments {
   final Key? key;
   final Offer offer;
   SellCoinOverviewViewArguments({this.key, required this.offer});
+}
+
+/// TraderSellCoinView arguments holder class
+class TraderSellCoinViewArguments {
+  final Key? key;
+  final Trade trade;
+  TraderSellCoinViewArguments({this.key, required this.trade});
 }
 
 /// UserBankAccountsView arguments holder class

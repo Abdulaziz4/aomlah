@@ -3,6 +3,7 @@ import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
@@ -23,7 +24,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
 
   String? errorMessage;
 
-  void submit(double price, String offerId) {
+  void submit({required double price, required Offer offer}) async {
     resetBankError();
 
     bool isValid = formKey.currentState!.validate();
@@ -41,15 +42,19 @@ class SellCoinOverviewViewModel extends BaseViewModel {
     final trade = Trade(
       tradeId: UuidHelper.generate(),
       amount: (amount / 3.75) / price,
-      offerId: offerId,
+      offerId: offer.offerID,
+      offer: offer,
       status: TradeStatus.awaiting_payment,
       traderId: _userService.user.profileId,
       price: price,
       bankIban: bankAccount!.iban,
     );
-    _tradingService.createTrade(trade);
+    final addedTrade = await _tradingService.createTrade(trade);
     setBusy(false);
-    _navService.navigateTo(Routes.traderSellCoinView);
+    _navService.navigateTo(
+      Routes.traderSellCoinView,
+      arguments: TraderSellCoinViewArguments(trade: addedTrade),
+    );
   }
 
   void setAmount(String reqAmount) {
@@ -62,7 +67,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
       arguments: UserBankAccountsViewArguments(allowSelection: true),
     );
 
-    bankAccount = bank as BankAccount;
+    bankAccount = bank as BankAccount?;
     notifyListeners();
   }
 

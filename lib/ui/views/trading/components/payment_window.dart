@@ -150,19 +150,49 @@ class _PaymentWindowState extends State<PaymentWindow> {
                   ),
                 ),
               ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "ستحصل على",
-                  style: Constants.smallText.copyWith(color: Colors.grey),
-                ),
-                Text(
-                  amountToBtc().toStringAsFixed(8) + " BTC",
-                  style: Constants.smallText,
-                ),
-              ],
-            ),
+            if (!widget.offer.isBuyTrader)
+              Row(
+                children: [
+                  Text(
+                    "رصيد محفظتك " + wallet.balanceBTC.toString() + " BTC",
+                    style: Constants.verySmallText.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    ' ≈ ',
+                    style: Constants.verySmallText.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    wallet.balanceSR(btc.price).toString(),
+                    style: Constants.verySmallText.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    ' ر.س',
+                    style: Constants.verySmallText.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            if (widget.offer.isBuyTrader)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "ستحصل على",
+                    style: Constants.smallText.copyWith(color: Colors.grey),
+                  ),
+                  Text(
+                    amountToBtc().toStringAsFixed(8) + " BTC",
+                    style: Constants.smallText,
+                  ),
+                ],
+              ),
             if (widget.errorMessage != null)
               Text(
                 widget.errorMessage!,
