@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/wallet.dart';
 
@@ -8,6 +6,7 @@ class AomlahUser {
   final String name;
   final bool isVerified;
   final Wallet? wallet;
+  final double debt;
   final List<BankAccount> bankAccounts;
   final bool isOnline;
   final bool isAdmin;
@@ -18,6 +17,7 @@ class AomlahUser {
     required this.bankAccounts,
     required this.wallet,
     required this.isOnline,
+    required this.debt,
     this.isAdmin = false,
   });
 
@@ -29,6 +29,7 @@ class AomlahUser {
       bankAccounts: [],
       wallet: Wallet(address: "", privateKey: "", publicKey: ""),
       isOnline: false,
+      debt: 0,
     );
   }
 
@@ -56,6 +57,7 @@ class AomlahUser {
       bankAccounts: accounts,
       isOnline: map['is_online'] ?? false,
       isAdmin: map["is_admin"] ?? false,
+      debt: map["debt"] * 1.0,
     );
   }
 }
