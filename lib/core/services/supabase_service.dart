@@ -44,6 +44,13 @@ class SupabaseService extends AbstractSupabase {
     await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
 
+  Future<void> updateUserDebt(
+    String uuid,
+    double debt,
+  ) async {
+    await update(AomlahTable.profiles, {"debt": debt}, {"profile_id": uuid});
+  }
+
   Future<void> updateUserStatus(
       {required String uuid, required bool status}) async {
     await update(

@@ -38,8 +38,12 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
       );
       final addedTrade = await _supabaseService.createTrade(trade);
       setBusy(false);
-      _navService.replaceWith(Routes.traderBuyCoinView,
-          arguments: TraderBuyCoinViewArguments(trade: addedTrade));
+      _navService.replaceWith(
+        Routes.traderBuyCoinView,
+        arguments: TraderBuyCoinViewArguments(
+          trade: addedTrade,
+        ),
+      );
     } catch (err) {
       _logger.e("Error while creating trade $err");
     }
