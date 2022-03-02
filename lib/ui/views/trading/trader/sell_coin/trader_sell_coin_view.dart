@@ -1,6 +1,7 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
 import 'package:aomlah/ui/views/trading/components/circular_timer.dart';
 import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
@@ -51,7 +52,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
         Constants.black2dp,
       ),
       TradeStatus.payment_sent: HeaderStyle(
-        "تم تأكيد الحالولة من المشتري",
+        "تم تأكيد الحوالة من المشتري",
         Text(
             "الرجاء التأكد من وصول المبلغ المطلوب لحسابك البنكي ثم النقر على زر التأكيد"),
         Constants.darkBlue,
@@ -76,47 +77,50 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
     return ViewModelBuilder<TraderSellCoinViewModel>.reactive(
         viewModelBuilder: () => TraderSellCoinViewModel(widget.trade),
         builder: (context, viewmodel, _) {
-          return Scaffold(
-            body: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      verticalDirection: VerticalDirection.up,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TradeExtraInfo(
-                          terms: viewmodel.trade.offer!.terms,
-                        ),
-                        buildRecipte(viewmodel.trade),
-                        buildHeader(viewmodel.trade.status, headerStates),
-                      ],
+          return BusyOverlay(
+            isBusy: viewmodel.isBusy,
+            child: Scaffold(
+              body: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        verticalDirection: VerticalDirection.up,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TradeExtraInfo(
+                            terms: viewmodel.trade.offer!.terms,
+                          ),
+                          buildRecipte(viewmodel.trade),
+                          buildHeader(viewmodel.trade.status, headerStates),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                BottomActions(
-                  onCancel: () {
-                    viewmodel.changeState(TradeStatus.canceled);
-                  },
-                  onPaymentSent: () {
-                    viewmodel.changeState(TradeStatus.payment_sent);
-                  },
-                  onPaymentReceived: () {
-                    viewmodel.changeState(TradeStatus.completed);
-                  },
-                  onOpenDispute: () {
-                    viewmodel.changeState(TradeStatus.disputed);
-                  },
-                  showCancelButton:
-                      viewmodel.trade.status == TradeStatus.awaiting_payment,
-                  showPaymentSent:
-                      viewmodel.trade.status == TradeStatus.awaiting_payment,
-                  showOpenDispute:
-                      viewmodel.trade.status == TradeStatus.payment_sent,
-                  showCompleteTrade:
-                      viewmodel.trade.status == TradeStatus.payment_sent,
-                )
-              ],
+                  BottomActions(
+                    onCancel: () {
+                      viewmodel.changeState(TradeStatus.canceled);
+                    },
+                    onPaymentSent: () {
+                      viewmodel.changeState(TradeStatus.payment_sent);
+                    },
+                    onPaymentReceived: () {
+                      viewmodel.changeState(TradeStatus.completed);
+                    },
+                    onOpenDispute: () {
+                      viewmodel.changeState(TradeStatus.disputed);
+                    },
+                    showCancelButton:
+                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showPaymentSent:
+                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showOpenDispute:
+                        viewmodel.trade.status == TradeStatus.payment_sent,
+                    showCompleteTrade:
+                        viewmodel.trade.status == TradeStatus.payment_sent,
+                  )
+                ],
+              ),
             ),
           );
         });

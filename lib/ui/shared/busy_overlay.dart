@@ -15,20 +15,21 @@ class BusyOverlay extends StatefulWidget {
 class _BusyOverlayState extends State<BusyOverlay> {
   @override
   Widget build(BuildContext context) {
-    if (!widget.isBusy) return widget.child;
     return Stack(
       children: [
         widget.child,
-        Opacity(
-          child: ModalBarrier(dismissible: false, color: Colors.black45),
-          opacity: 0.5,
-        ),
-        Center(
-          child: SpinKitWave(
-            color: Constants.primaryColor,
-            type: SpinKitWaveType.start,
+        if (widget.isBusy)
+          Opacity(
+            child: ModalBarrier(dismissible: false, color: Colors.black45),
+            opacity: 0.5,
           ),
-        ),
+        if (widget.isBusy)
+          Center(
+            child: SpinKitWave(
+              color: Constants.primaryColor,
+              type: SpinKitWaveType.start,
+            ),
+          ),
       ],
     );
   }
