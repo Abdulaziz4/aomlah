@@ -67,7 +67,10 @@ class WalletManagmentService {
   }
 
   Future<UnconfirmedTransaction> sendTransaction(
-      String from, String to, amount) async {
+    String from,
+    String to,
+    int satAmount,
+  ) async {
     _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrl/txs/new");
     final data = {
@@ -79,7 +82,7 @@ class WalletManagmentService {
       "outputs": [
         {
           "addresses": [to],
-          "value": amount
+          "value": satAmount
         }
       ]
     };

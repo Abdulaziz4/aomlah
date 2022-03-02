@@ -59,7 +59,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
       ),
       TradeStatus.completed: HeaderStyle(
         "تم إكمال الطلب",
-        Text("لقد قمت بعملية الشراء بنجاح"),
+        Text("لقد قمت بعملية البيع بنجاح"),
         Constants.primaryColor,
       ),
       TradeStatus.canceled: HeaderStyle(

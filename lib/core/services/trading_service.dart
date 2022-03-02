@@ -4,12 +4,14 @@ import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
+import 'package:aomlah/core/services/wallet_managment_service.dart';
 
 class TradingService {
   final _logger = getLogger("TradingService");
 
   final _supabaseService = locator<SupabaseService>();
   final _userService = locator<UserService>();
+  final _walletManService = locator<WalletManagmentService>();
 
   Future<Trade> createTrade(Trade trade) async {
     _logger.i("createTrade");
@@ -28,7 +30,8 @@ class TradingService {
 
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
-    }
+    } else if (!trade.offer!.isBuyTrader &&
+        newStatus == TradeStatus.completed) {}
 
     return _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
   }
