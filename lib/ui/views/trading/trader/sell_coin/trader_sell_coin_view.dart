@@ -123,7 +123,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
   }
 
   Widget buildRecipte(Trade trade) {
-    final fiatQuantity = (trade.amount * trade.price * 3.75);
+    final fiatQuantity = (trade.amount * (trade.price * 3.75));
     return TradeReceipt(
       isBuy: trade.offer!.isBuyTrader,
       quantity: fiatQuantity.toStringAsFixed(2),

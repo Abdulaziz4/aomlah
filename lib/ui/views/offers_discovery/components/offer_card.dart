@@ -91,8 +91,12 @@ class OfferCard extends StatelessWidget {
                               )
                             : CustomButton(
                                 onPressed: () {
-                                  locator<NavigationService>()
-                                      .navigateTo(Routes.sellCoinOverviewView);
+                                  locator<NavigationService>().navigateTo(
+                                    Routes.sellCoinOverviewView,
+                                    arguments: SellCoinOverviewViewArguments(
+                                      offer: offer,
+                                    ),
+                                  );
                                 },
                                 text: "بيع",
                                 color: Constants.redColor,

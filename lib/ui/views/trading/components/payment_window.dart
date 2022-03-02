@@ -179,20 +179,21 @@ class _PaymentWindowState extends State<PaymentWindow> {
                   ),
                 ],
               ),
-            if (widget.offer.isBuyTrader)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "ستحصل على",
-                    style: Constants.smallText.copyWith(color: Colors.grey),
-                  ),
-                  Text(
-                    amountToBtc().toStringAsFixed(8) + " BTC",
-                    style: Constants.smallText,
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.offer.isBuyTrader
+                      ? "ستحصل على"
+                      : "كمية العملة الرقمية",
+                  style: Constants.smallText.copyWith(color: Colors.grey),
+                ),
+                Text(
+                  amountToBtc().toStringAsFixed(8) + " BTC",
+                  style: Constants.smallText,
+                ),
+              ],
+            ),
             if (widget.errorMessage != null)
               Text(
                 widget.errorMessage!,
