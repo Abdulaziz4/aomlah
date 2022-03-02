@@ -138,7 +138,7 @@ abstract class AbstractSupabase {
     String match = table.name;
     if (query != null) {
       query.forEach((key, value) {
-        match += ":$key=$value";
+        match += ":$key=eq.$value";
       });
     }
     return supabase

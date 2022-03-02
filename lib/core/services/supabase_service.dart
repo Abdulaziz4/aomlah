@@ -57,6 +57,20 @@ class SupabaseService extends AbstractSupabase {
         AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
   }
 
+  Stream<AomlahUser> getUserStream(String uuid) {
+    return subscribeForChanges<AomlahUser>(
+        table: AomlahTable.profiles,
+        fromJson: (_) {
+          return AomlahUser.anonymous();
+        },
+        primaryKey: "profile_id",
+        query: {
+          "profile_id": uuid,
+        }).asyncMap<AomlahUser>((event) {
+      return getUser(uuid);
+    });
+  }
+
   Future<AomlahUser> getUser(String uuid) async {
     final res = await get<AomlahUser>(
       AomlahTable.view_profiles,
