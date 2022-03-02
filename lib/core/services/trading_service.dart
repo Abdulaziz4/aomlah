@@ -38,7 +38,7 @@ class TradingService {
 
     // If the trade is a trader selling a coin revert the debte
     if (!trade.offer!.isBuyTrader) {
-      updateDebt(trade.amount * -1);
+      updateDebt(-1 * trade.amount);
     }
 
     _supabaseService.changeTradeStatus(trade.tradeId, TradeStatus.canceled);
@@ -47,6 +47,7 @@ class TradingService {
   // Increases/decreases user deb +value for adding -value for subtracting
   Future<void> updateDebt(double debt) async {
     _logger.i("updateDebt | args: debt = $debt");
+
     final finalDebt = _userService.user.debt + debt;
     _supabaseService.updateUserDebt(_userService.user.profileId, finalDebt);
   }

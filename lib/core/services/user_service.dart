@@ -19,7 +19,10 @@ class UserService {
   Future<void> initUser(String uuid) async {
     userController.addStream(_supabaseService.getUserStream(uuid));
     user = await userController.first;
-    // updateUser(user);
+
+    userController.stream.listen((newUser) {
+      user = newUser;
+    });
     await _realtimeWalletService.connectWallet(
       uuid,
       user.wallet?.address ?? "",
