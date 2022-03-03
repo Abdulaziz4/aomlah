@@ -1,6 +1,7 @@
 import 'dart:async' show Timer;
 
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
@@ -134,7 +135,10 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
   }
 
   Widget buildRecipte(Trade trade) {
-    final fiatQuantity = (trade.amount * trade.price * 3.75);
+    final fiatQuantity = CurrencyHelper.btcToFiat(
+      btcAmount: trade.amount,
+      price: trade.price,
+    );
     return TradeReceipt(
       isBuy: trade.offer!.isBuyTrader,
       quantity: fiatQuantity.toStringAsFixed(2),
