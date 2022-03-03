@@ -51,7 +51,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
     );
     final addedTrade = await _tradingService.createTrade(trade);
     setBusy(false);
-    _navService.navigateTo(
+    _navService.replaceWith(
       Routes.traderSellCoinView,
       arguments: TraderSellCoinViewArguments(trade: addedTrade),
     );
