@@ -55,7 +55,9 @@ class Offer {
       bankAccounts: accounts,
       ownerName: json["name"],
       createAt: DateTime.parse(json["created_at"]),
-      ownerWallet: Wallet.fromJson(json["owner_wallet"]),
+      ownerWallet: json["owner_wallet"] != null
+          ? Wallet.fromJson(json["owner_wallet"])
+          : null,
     );
   }
 

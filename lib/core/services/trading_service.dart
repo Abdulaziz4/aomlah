@@ -28,18 +28,19 @@ class TradingService {
     required Trade trade,
     required TradeStatus newStatus,
   }) async {
-    _logger.i("cancelTrade | newStatus=$newStatus");
+    _logger.i("updateTradeStatus | newStatus=$newStatus");
 
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
     } else if (!trade.offer!.isBuyTrader &&
         newStatus == TradeStatus.completed) {
       String to = trade.offer!.ownerWallet!.address;
-      return sendTransaction(
+      await sendTransaction(
         from: trade.traderWallet!,
         to: to,
         btcAmount: trade.amount,
       );
+      await updateDebt(trade.amount * -1);
     }
 
     return _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
@@ -50,6 +51,9 @@ class TradingService {
     required String to,
     required double btcAmount,
   }) async {
+    _logger.i(
+        "updateTradeStatus | args: from=${from.address} , to=$to, btcAmount=$btcAmount");
+
     await _walletManService.sendAndSignTransaction(
       from: from,
       to: to,

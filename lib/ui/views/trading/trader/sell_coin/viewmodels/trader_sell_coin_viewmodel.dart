@@ -7,7 +7,7 @@ import 'package:aomlah/core/services/trading_service.dart';
 import 'package:stacked/stacked.dart';
 
 class TraderSellCoinViewModel extends StreamViewModel<Trade> {
-  final _logger = getLogger("TraderBuyCoinViewModel");
+  final _logger = getLogger("TraderSellCoinViewModel");
 
   late Trade trade;
   TraderSellCoinViewModel(this.trade);

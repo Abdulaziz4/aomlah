@@ -47,7 +47,9 @@ class Trade {
       traderName: json["name"],
       price: json["price"] * 1.0,
       createdAt: DateTime.tryParse(json["created_at"]),
-      traderWallet: Wallet.fromJson(json["trader_wallet"]),
+      traderWallet: json["trader_wallet"] == null
+          ? null
+          : Wallet.fromJson(json["trader_wallet"]),
     );
   }
 

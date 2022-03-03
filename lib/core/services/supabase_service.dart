@@ -175,7 +175,10 @@ class SupabaseService extends AbstractSupabase {
   Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
     await upsert(
       AomlahTable.trades,
-      {"trade_id": tradeId, "status": status.name},
+      {
+        "trade_id": tradeId,
+        "status": status.name,
+      },
     );
   }
 
