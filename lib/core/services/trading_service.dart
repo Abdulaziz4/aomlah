@@ -32,11 +32,19 @@ class TradingService {
 
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
-    } else if (!trade.offer!.isBuyTrader &&
-        newStatus == TradeStatus.completed) {
-      String to = trade.offer!.ownerWallet!.address;
+    } else if (newStatus == TradeStatus.completed) {
+      late String to;
+      late Wallet from;
+
+      if (isUserMerchant(trade.traderId)) {
+        from = trade.offer!.ownerWallet!;
+        to = trade.traderWallet!.address;
+      } else {
+        to = trade.offer!.ownerWallet!.address;
+        from = trade.traderWallet!;
+      }
       await sendTransaction(
-        from: trade.traderWallet!,
+        from: from,
         to: to,
         btcAmount: trade.amount,
       );
@@ -79,4 +87,7 @@ class TradingService {
     final finalDebt = _userService.user.debt + debt;
     _supabaseService.updateUserDebt(_userService.user.profileId, finalDebt);
   }
+
+  bool isUserMerchant(String traderId) =>
+      _userService.user.profileId != traderId;
 }

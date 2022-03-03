@@ -12,18 +12,18 @@ import 'package:aomlah/ui/views/trading/viewmodels/trading_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class MerchantSellCoinView extends StatefulWidget {
+class MerchantBuyCoinView extends StatefulWidget {
   final Trade trade;
-  const MerchantSellCoinView({
+  const MerchantBuyCoinView({
     Key? key,
     required this.trade,
   }) : super(key: key);
 
   @override
-  State<MerchantSellCoinView> createState() => _MerchantSellCoinViewState();
+  State<MerchantBuyCoinView> createState() => _MerchantBuyCoinViewState();
 }
 
-class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
+class _MerchantBuyCoinViewState extends State<MerchantBuyCoinView> {
   Duration remainingTime = Duration.zero;
 
   @override
@@ -43,24 +43,23 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
   Widget build(BuildContext context) {
     final Map<TradeStatus, HeaderStyle> headerStates = {
       TradeStatus.awaiting_payment: HeaderStyle(
-        "في إنتظار دفع المشتري",
+        "طلب جديد",
         Row(
           children: [
-            Text("ستصلك الحوالة خلال "),
+            Text("يرجى الدفع للبائع خلال "),
             buildTimer(),
           ],
         ),
         Constants.black2dp,
       ),
       TradeStatus.payment_sent: HeaderStyle(
-        "تم تأكيد الحوالة من المشتري",
-        Text(
-            "الرجاء التأكد من وصول المبلغ المطلوب لحسابك البنكي ثم النقر على زر التأكيد"),
+        "في إنتظار تاكيد البائع",
+        Text("سيتم تحويل الكمية لمحفظتك تلقائيا بعد تأكيد البائع"),
         Constants.darkBlue,
       ),
       TradeStatus.completed: HeaderStyle(
         "تم إكمال الطلب",
-        Text("لقد قمت بعملية البيع بنجاح"),
+        Text("لقد قمت بعملية الشراء بنجاح"),
         Constants.primaryColor,
       ),
       TradeStatus.canceled: HeaderStyle(
@@ -76,55 +75,59 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
       //TODO:Add other states
     };
     return ViewModelBuilder<TradingViewmodel>.reactive(
-        viewModelBuilder: () => TradingViewmodel(widget.trade),
-        builder: (context, viewmodel, _) {
-          return BusyOverlay(
-            isBusy: viewmodel.isBusy,
-            child: Scaffold(
-              body: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        verticalDirection: VerticalDirection.up,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TradeExtraInfo(
-                            terms: viewmodel.trade.offer!.terms,
-                          ),
-                          buildRecipte(viewmodel.trade),
-                          buildHeader(viewmodel.trade.status, headerStates),
-                        ],
+      viewModelBuilder: () => TradingViewmodel(widget.trade),
+      builder: (context, viewmodel, _) => BusyOverlay(
+        isBusy: viewmodel.isBusy,
+        child: Scaffold(
+          key: UniqueKey(),
+          body: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    verticalDirection: VerticalDirection.up,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TradeExtraInfo(
+                        bankAccounts: [viewmodel.trade.bankAccount!],
                       ),
-                    ),
+                      buildRecipte(viewmodel.trade),
+                      buildHeader(
+                        viewmodel.trade.status,
+                        headerStates,
+                      ),
+                    ],
                   ),
-                  BottomActions(
-                    onCancel: () {
-                      viewmodel.changeState(TradeStatus.canceled);
-                    },
-                    onPaymentSent: () {
-                      viewmodel.changeState(TradeStatus.payment_sent);
-                    },
-                    onPaymentReceived: () {
-                      viewmodel.changeState(TradeStatus.completed);
-                    },
-                    onOpenDispute: () {
-                      viewmodel.changeState(TradeStatus.disputed);
-                    },
-                    showCancelButton:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showPaymentSent:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showOpenDispute:
-                        viewmodel.trade.status == TradeStatus.payment_sent,
-                    showCompleteTrade:
-                        viewmodel.trade.status == TradeStatus.payment_sent,
-                  )
-                ],
+                ),
               ),
-            ),
-          );
-        });
+              BottomActions(
+                onCancel: () {
+                  viewmodel.changeState(TradeStatus.canceled);
+                },
+                onPaymentSent: () {
+                  viewmodel.changeState(TradeStatus.payment_sent);
+                },
+                onPaymentReceived: () {
+                  viewmodel.changeState(TradeStatus.completed);
+                },
+                onOpenDispute: () {
+                  viewmodel.changeState(TradeStatus.disputed);
+                },
+                showCancelButton:
+                    viewmodel.trade.status == TradeStatus.awaiting_payment,
+                showPaymentSent:
+                    viewmodel.trade.status == TradeStatus.awaiting_payment,
+                showOpenDispute:
+                    viewmodel.trade.status == TradeStatus.payment_sent ||
+                        viewmodel.trade.status == TradeStatus.completed,
+                showCompleteTrade:
+                    viewmodel.trade.status == TradeStatus.payment_sent,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildRecipte(Trade trade) {

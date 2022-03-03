@@ -20,6 +20,7 @@ import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/settings/settings_update_profile_view.dart';
 import '../../ui/views/settings/settings_view.dart';
 import '../../ui/views/startup/startup_view.dart';
+import '../../ui/views/trading/merchant/buy_coin/merchant_buy_coin_view.dart';
 import '../../ui/views/trading/merchant/sell_coin/merchant_sell_coin_view.dart';
 import '../../ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
 import '../../ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
@@ -57,6 +58,7 @@ class Routes {
   static const String confirmWithdrawView = '/confirm-withdraw-view';
   static const String withdrawView = '/withdraw-view';
   static const String cryptoInfoView = '/crypto-info-view';
+  static const String merchantBuyCoinView = '/merchant-buy-coin-view';
   static const String merchantSellCoinView = '/merchant-sell-coin-view';
   static const all = <String>{
     startupView,
@@ -79,6 +81,7 @@ class Routes {
     confirmWithdrawView,
     withdrawView,
     cryptoInfoView,
+    merchantBuyCoinView,
     merchantSellCoinView,
   };
 }
@@ -108,6 +111,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
     RouteDef(Routes.withdrawView, page: WithdrawView),
     RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
+    RouteDef(Routes.merchantBuyCoinView, page: MerchantBuyCoinView),
     RouteDef(Routes.merchantSellCoinView, page: MerchantSellCoinView),
   ];
   @override
@@ -259,6 +263,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    MerchantBuyCoinView: (data) {
+      var args = data.getArgs<MerchantBuyCoinViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MerchantBuyCoinView(
+          key: args.key,
+          trade: args.trade,
+        ),
+        settings: data,
+      );
+    },
     MerchantSellCoinView: (data) {
       var args = data.getArgs<MerchantSellCoinViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
@@ -316,6 +330,13 @@ class CryptoInfoViewArguments {
   final Key? key;
   final Coin coin;
   CryptoInfoViewArguments({this.key, required this.coin});
+}
+
+/// MerchantBuyCoinView arguments holder class
+class MerchantBuyCoinViewArguments {
+  final Key? key;
+  final Trade trade;
+  MerchantBuyCoinViewArguments({this.key, required this.trade});
 }
 
 /// MerchantSellCoinView arguments holder class
