@@ -16,6 +16,14 @@ abstract class CurrencyHelper {
     return (fiatAmount / 3.75) / price;
   }
 
+  static double usdToSR(double usd) {
+    return usd * 3.75;
+  }
+
+  static double srToUsd(double sr) {
+    return sr / 3.75;
+  }
+
   // Calculates the amount you will get in BTC
   static double btcToFiat({
     required double btcAmount,

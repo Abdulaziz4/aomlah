@@ -1,16 +1,14 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/app/utils/currency_helper.dart';
+import 'package:aomlah/core/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart' as intl;
 
 class UserTradeCard extends StatelessWidget {
-  final bool isBuy;
-  final String stat;
+  final Trade trade;
 
-  const UserTradeCard({
-    Key? key,
-    this.isBuy = true,
-    required this.stat,
-  }) : super(key: key);
+  const UserTradeCard({Key? key, required this.trade}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class UserTradeCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                isBuy
+                !trade.offer!.isBuyMarchent
                     ? Text(
                         " شراء ",
                         style: Constants.smallText
@@ -49,68 +47,83 @@ class UserTradeCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  stat,
+                  trade.status.name,
                   style: Constants.smallText
                       .copyWith(color: Constants.darkBlue, fontSize: 14),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // locator<NavigationService>()
-                    //     .navigateTo(Routes.createOfferView);
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 13,
-                    color: Colors.white,
-                  ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 15,
+                  color: Colors.white,
                 ),
               ],
             ),
             Row(
               children: [
-                Text(
-                  "السعر",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "السعر",
+                          style: Constants.smallText.copyWith(
+                            color: Color(0xFFC6C6C6),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          CurrencyHelper.usdToSR(trade.price)
+                                  .toStringAsFixed(4) +
+                              " ر.س",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "الكمية",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                        SizedBox(
+                          width: 9,
+                        ),
+                        Text(
+                          "BTC ",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                        Text(
+                          trade.amount.toString(),
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "المبلغ",
+                      style: Constants.smallText.copyWith(color: Colors.white),
+                    ),
+                    Text(
+                      "2500 ر.س",
+                      style: Constants.mediumText.copyWith(color: Colors.white),
+                    ),
+                  ],
                 ),
-                Text(
-                  "0.21358765 ر.س",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Spacer(),
-                Text(
-                  "المبلغ     ",
-                  style: Constants.smallText.copyWith(color: Colors.white),
-                ),
-                Spacer(),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "الكمية",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                SizedBox(
-                  width: 9,
-                ),
-                Text(
-                  "BTC ",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Text(
-                  "0.21347658",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Spacer(),
-                Text(
-                  "2500 ر.س",
-                  style: Constants.smallText.copyWith(color: Colors.white),
-                ),
-                Spacer(),
               ],
             ),
             SizedBox(
@@ -123,14 +136,16 @@ class UserTradeCard extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  "عبدالعزيز",
+                  trade.traderName ?? "",
                   style: Constants.smallText.copyWith(
                     color: Colors.white,
                   ),
                 ),
                 Spacer(),
                 Text(
-                  "2021/5/1-14:30pm",
+                  intl.DateFormat.yMMMd().add_jm().format(
+                        trade.createdAt!,
+                      ),
                   style: Constants.smallText
                       .copyWith(color: Color(0xFFC6C6C6), fontSize: 14),
                 ),
