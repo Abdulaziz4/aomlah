@@ -60,7 +60,7 @@ class Trade {
       "offer_id": offerId,
       "status": status.name,
       "trader_id": traderId,
-      "bank_iban": bankAccount == null ? null : bankAccount!.iban,
+      "bank_iban": bankIban,
       "price": price,
     };
   }

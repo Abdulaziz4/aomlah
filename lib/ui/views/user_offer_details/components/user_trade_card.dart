@@ -1,9 +1,12 @@
+import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:stacked_services/stacked_services.dart';
 
 class UserTradeCard extends StatelessWidget {
   final Trade trade;
@@ -14,9 +17,10 @@ class UserTradeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
-        // locator<NavigationService>()
-        //     .navigateTo(Routes.createOfferView);
+        locator<NavigationService>().navigateTo(
+          Routes.merchantSellCoinView,
+          arguments: MerchantSellCoinViewArguments(trade: trade),
+        );
       },
       child: Container(
         padding: const EdgeInsets.all(10),

@@ -39,6 +39,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
 
     formKey.currentState!.save();
     setBusy(true);
+    print(bankAccount?.iban);
     final trade = Trade(
       tradeId: UuidHelper.generate(),
       amount: (amount / 3.75) / price,

@@ -43,7 +43,7 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
   Widget build(BuildContext context) {
     final Map<TradeStatus, HeaderStyle> headerStates = {
       TradeStatus.awaiting_payment: HeaderStyle(
-        "تم إنشاء الطلب",
+        "طلب جديد",
         Row(
           children: [
             Text("يرجى الدفع للبائع خلال "),
@@ -89,7 +89,6 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TradeExtraInfo(
-                        terms: viewmodel.trade.offer?.terms ?? "",
                         bankAccounts: [viewmodel.trade.bankAccount!],
                       ),
                       buildRecipte(viewmodel.trade),

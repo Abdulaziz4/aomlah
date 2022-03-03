@@ -6,12 +6,12 @@ import 'package:aomlah/ui/shared/expandable_card.dart';
 import 'package:flutter/material.dart';
 
 class TradeExtraInfo extends StatelessWidget {
-  final String terms;
+  final String? terms;
   final List<BankAccount>? bankAccounts;
 
   const TradeExtraInfo({
     Key? key,
-    required this.terms,
+    this.terms,
     this.bankAccounts,
   }) : super(key: key);
 
@@ -20,11 +20,12 @@ class TradeExtraInfo extends StatelessWidget {
     return Column(
       verticalDirection: VerticalDirection.up,
       children: [
-        ExpandableCard(
-          title: "الشروط والاحكام",
-          expandedSection: Text(terms),
-          color: Constants.black2dp,
-        ),
+        if (terms != null)
+          ExpandableCard(
+            title: "الشروط والاحكام",
+            expandedSection: Text(terms ?? ""),
+            color: Constants.black2dp,
+          ),
         if (bankAccounts != null)
           ExpandableCard(
             title: "الحسابات البنكية",
