@@ -109,7 +109,16 @@ class WalletManagmentService {
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/txs/send");
 
-    var m = await http.post(url, body: encodedJson);
-    // var decoded = jsonDecode(m.body);
+    await http.post(url, body: encodedJson);
+  }
+
+  Future<void> sendAndSignTransaction({
+    required Wallet from,
+    required String to,
+    required int satAmount,
+  }) async {
+    final unsignedTrans = await sendTransaction(from.address, to, satAmount);
+    final signedData = unsignedTrans.signedTransaction(from);
+    await sendSignedTransaction(signedData);
   }
 }

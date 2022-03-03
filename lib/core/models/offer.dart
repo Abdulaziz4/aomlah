@@ -1,4 +1,5 @@
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/wallet.dart';
 
 class Offer {
   final String offerID;
@@ -15,6 +16,7 @@ class Offer {
   final List<BankAccount>? bankAccounts;
   final String? ownerName;
   final DateTime? createAt;
+  final Wallet? ownerWallet;
 
   Offer({
     required this.offerID,
@@ -29,6 +31,7 @@ class Offer {
     this.bankAccounts,
     this.createAt,
     this.ownerName,
+    this.ownerWallet,
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) {
@@ -52,6 +55,7 @@ class Offer {
       bankAccounts: accounts,
       ownerName: json["name"],
       createAt: DateTime.parse(json["created_at"]),
+      ownerWallet: Wallet.fromJson(json["owner_wallet"]),
     );
   }
 

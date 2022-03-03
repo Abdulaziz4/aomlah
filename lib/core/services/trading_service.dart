@@ -1,7 +1,9 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
+import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
@@ -31,9 +33,28 @@ class TradingService {
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
     } else if (!trade.offer!.isBuyTrader &&
-        newStatus == TradeStatus.completed) {}
+        newStatus == TradeStatus.completed) {
+      String to = trade.offer!.ownerWallet!.address;
+      return sendTransaction(
+        from: trade.traderWallet!,
+        to: to,
+        btcAmount: trade.amount,
+      );
+    }
 
     return _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
+  }
+
+  Future<void> sendTransaction({
+    required Wallet from,
+    required String to,
+    required double btcAmount,
+  }) async {
+    await _walletManService.sendAndSignTransaction(
+      from: from,
+      to: to,
+      satAmount: CurrencyHelper.btcToSat(btcAmount),
+    );
   }
 
   Future<void> cancelTrade(Trade trade) async {
