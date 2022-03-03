@@ -8,7 +8,7 @@ import 'package:aomlah/ui/views/trading/components/circular_timer.dart';
 import 'package:aomlah/ui/views/trading/components/trade_extra_info.dart';
 import 'package:aomlah/ui/views/trading/components/trade_receipt.dart';
 import 'package:aomlah/ui/views/trading/components/trade_state_header.dart';
-import 'package:aomlah/ui/views/trading/trader/sell_coin/viewmodels/trader_sell_coin_viewmodel.dart';
+import 'package:aomlah/ui/views/trading/viewmodels/trading_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -75,8 +75,8 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
       ),
       //TODO:Add other states
     };
-    return ViewModelBuilder<TraderSellCoinViewModel>.reactive(
-        viewModelBuilder: () => TraderSellCoinViewModel(widget.trade),
+    return ViewModelBuilder<TradingViewmodel>.reactive(
+        viewModelBuilder: () => TradingViewmodel(widget.trade),
         builder: (context, viewmodel, _) {
           return BusyOverlay(
             isBusy: viewmodel.isBusy,

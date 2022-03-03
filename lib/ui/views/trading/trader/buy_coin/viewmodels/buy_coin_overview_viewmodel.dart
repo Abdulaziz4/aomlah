@@ -4,7 +4,6 @@ import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
-import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:flutter/material.dart';

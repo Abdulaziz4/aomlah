@@ -34,7 +34,7 @@ class UserTradeCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                !trade.offer!.isBuyMarchent
+                trade.offer!.isBuyMarchent
                     ? Text(
                         " شراء ",
                         style: Constants.smallText

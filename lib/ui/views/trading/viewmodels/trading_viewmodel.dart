@@ -6,11 +6,11 @@ import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:stacked/stacked.dart';
 
-class MerchantSellCoinViewModel extends StreamViewModel<Trade> {
+class TradingViewmodel extends StreamViewModel<Trade> {
   final _logger = getLogger("MerchantSellCoinViewModel");
 
   late Trade trade;
-  MerchantSellCoinViewModel(this.trade);
+  TradingViewmodel(this.trade);
   final _supabaseService = locator<SupabaseService>();
   final _tradingService = locator<TradingService>();
 
