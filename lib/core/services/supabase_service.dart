@@ -104,7 +104,6 @@ class SupabaseService extends AbstractSupabase {
     }).listen((offers) {
       offersController.sink.add(offers);
     });
-    ;
   }
 
   Future<void> createOffer(Offer offer) async {
@@ -129,6 +128,34 @@ class SupabaseService extends AbstractSupabase {
     }).listen((offers) {
       userOffersController.sink.add(offers);
     });
+  }
+
+  // User's own offers controller
+  BehaviorSubject<List<Trade>> offerTradesController =
+      BehaviorSubject<List<Trade>>();
+
+  // Listen for changes on trades table and fetches from view_trades
+  // and sink it to [offerTradesController].
+  void listenToOfferTrades(String offerId) {
+    final query = {"offer_id": offerId};
+    subscribeForChanges<Trade>(
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+      query: query,
+    ).asyncMap((_) {
+      return _getOfferTrades(query: query);
+    }).listen((trades) {
+      offerTradesController.sink.add(trades);
+    });
+  }
+
+  Future<List<Trade>> _getOfferTrades({required Map<String, String> query}) {
+    return get<Trade>(
+      AomlahTable.view_trades,
+      Trade.fromJson,
+      query: query,
+    );
   }
 
   Future<void> createBank(BankAccount account) async {
