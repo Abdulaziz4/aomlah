@@ -17,6 +17,7 @@ import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_view.dart';
 import 'package:aomlah/ui/views/startup/startup_view.dart';
+import 'package:aomlah/ui/views/trading/merchant/sell_coin/merchant_sell_coin_view.dart';
 import 'package:aomlah/ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
 import 'package:aomlah/ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
 import 'package:aomlah/ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
@@ -53,6 +54,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: ConfirmWithdrawView),
     MaterialRoute(page: WithdrawView),
     MaterialRoute(page: CryptoInfoView),
+    MaterialRoute(page: MerchantSellCoinView),
   ],
   dependencies: [
     // Register all services and deps.

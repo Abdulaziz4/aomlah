@@ -12,18 +12,18 @@ import 'package:aomlah/ui/views/trading/trader/buy_coin/viewmodels/trader_buy_co
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class TraderBuyCoinView extends StatefulWidget {
+class MerchantSellCoinView extends StatefulWidget {
   final Trade trade;
-  const TraderBuyCoinView({
+  const MerchantSellCoinView({
     Key? key,
     required this.trade,
   }) : super(key: key);
 
   @override
-  State<TraderBuyCoinView> createState() => _TraderBuyCoinViewState();
+  State<MerchantSellCoinView> createState() => _MerchantSellCoinViewState();
 }
 
-class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
+class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
   Duration remainingTime = Duration.zero;
 
   @override
@@ -90,7 +90,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                     children: [
                       TradeExtraInfo(
                         terms: viewmodel.trade.offer?.terms ?? "",
-                        bankAccounts: viewmodel.trade.offer?.bankAccounts ?? [],
+                        bankAccounts: [viewmodel.trade.bankAccount!],
                       ),
                       buildRecipte(viewmodel.trade),
                       buildHeader(

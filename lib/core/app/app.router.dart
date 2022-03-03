@@ -20,6 +20,7 @@ import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/settings/settings_update_profile_view.dart';
 import '../../ui/views/settings/settings_view.dart';
 import '../../ui/views/startup/startup_view.dart';
+import '../../ui/views/trading/merchant/sell_coin/merchant_sell_coin_view.dart';
 import '../../ui/views/trading/trader/buy_coin/buy_coin_overview_view.dart';
 import '../../ui/views/trading/trader/buy_coin/trader_buy_coin_view.dart';
 import '../../ui/views/trading/trader/sell_coin/sell_coin_overview_view.dart';
@@ -56,6 +57,7 @@ class Routes {
   static const String confirmWithdrawView = '/confirm-withdraw-view';
   static const String withdrawView = '/withdraw-view';
   static const String cryptoInfoView = '/crypto-info-view';
+  static const String merchantSellCoinView = '/merchant-sell-coin-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -77,6 +79,7 @@ class Routes {
     confirmWithdrawView,
     withdrawView,
     cryptoInfoView,
+    merchantSellCoinView,
   };
 }
 
@@ -105,6 +108,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
     RouteDef(Routes.withdrawView, page: WithdrawView),
     RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
+    RouteDef(Routes.merchantSellCoinView, page: MerchantSellCoinView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -255,6 +259,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    MerchantSellCoinView: (data) {
+      var args = data.getArgs<MerchantSellCoinViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MerchantSellCoinView(
+          key: args.key,
+          trade: args.trade,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -302,4 +316,11 @@ class CryptoInfoViewArguments {
   final Key? key;
   final Coin coin;
   CryptoInfoViewArguments({this.key, required this.coin});
+}
+
+/// MerchantSellCoinView arguments holder class
+class MerchantSellCoinViewArguments {
+  final Key? key;
+  final Trade trade;
+  MerchantSellCoinViewArguments({this.key, required this.trade});
 }
