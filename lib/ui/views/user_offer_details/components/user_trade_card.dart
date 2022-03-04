@@ -17,10 +17,17 @@ class UserTradeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        locator<NavigationService>().navigateTo(
-          Routes.merchantSellCoinView,
-          arguments: MerchantSellCoinViewArguments(trade: trade),
-        );
+        if (trade.offer!.isBuyMarchent) {
+          locator<NavigationService>().navigateTo(
+            Routes.merchantBuyCoinView,
+            arguments: MerchantBuyCoinViewArguments(trade: trade),
+          );
+        } else {
+          locator<NavigationService>().navigateTo(
+            Routes.merchantSellCoinView,
+            arguments: MerchantSellCoinViewArguments(trade: trade),
+          );
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(10),

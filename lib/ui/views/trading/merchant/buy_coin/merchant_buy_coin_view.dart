@@ -120,8 +120,7 @@ class _MerchantBuyCoinViewState extends State<MerchantBuyCoinView> {
                 showOpenDispute:
                     viewmodel.trade.status == TradeStatus.payment_sent ||
                         viewmodel.trade.status == TradeStatus.completed,
-                showCompleteTrade:
-                    viewmodel.trade.status == TradeStatus.payment_sent,
+                showCompleteTrade: false,
               )
             ],
           ),
@@ -136,7 +135,7 @@ class _MerchantBuyCoinViewState extends State<MerchantBuyCoinView> {
       price: trade.price,
     );
     return TradeReceipt(
-      isBuy: trade.offer!.isBuyTrader,
+      isBuy: trade.offer!.isBuyMarchent,
       quantity: fiatQuantity.toStringAsFixed(2),
       price: "${trade.price * 3.75}",
       cryptoAmount: trade.amount.toString(),

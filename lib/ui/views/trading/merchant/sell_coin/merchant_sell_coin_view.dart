@@ -133,7 +133,7 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
       price: trade.price,
     );
     return TradeReceipt(
-      isBuy: trade.offer!.isBuyTrader,
+      isBuy: !trade.offer!.isBuyMarchent,
       quantity: fiatQuantity.toStringAsFixed(2),
       price: "${trade.price * 3.75}",
       cryptoAmount: trade.amount.toString(),
