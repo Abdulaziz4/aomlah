@@ -37,5 +37,6 @@ class TradingViewmodel extends StreamViewModel<Trade> {
   }
 
   @override
-  Stream<Trade> get stream => _supabaseService.getTradeStream(trade.tradeId);
+  Stream<Trade> get stream =>
+      _supabaseService.getSingleTradeStream(trade.tradeId);
 }
