@@ -189,8 +189,7 @@ class SupabaseService extends AbstractSupabase {
     return getTrade(trade.tradeId);
   }
 
-  Stream<Trade> getTradeStream(String tradeId) {
-    print(tradeId);
+  Stream<Trade> getSingleTradeStream(String tradeId) {
     return subscribeForChanges(
       table: AomlahTable.trades,
       fromJson: Trade.fromJson,
@@ -198,6 +197,20 @@ class SupabaseService extends AbstractSupabase {
     ).asyncMap(
       (event) => getTrade(tradeId),
     );
+  }
+
+  // Listen for changes on trades table and fetches from view_trades
+  // and sink it to [offerTradesController].
+  Stream<List<Trade>> getUserTradesStream(String uuid) {
+    final query = {"trader_id": uuid};
+    return subscribeForChanges<Trade>(
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+      query: query,
+    ).asyncMap((_) {
+      return _getOfferTrades(query: query);
+    });
   }
 
   Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
