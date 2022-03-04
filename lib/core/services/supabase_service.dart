@@ -131,12 +131,13 @@ class SupabaseService extends AbstractSupabase {
   }
 
   // User's own offers controller
-  BehaviorSubject<List<Trade>> offerTradesController =
-      BehaviorSubject<List<Trade>>();
+  late BehaviorSubject<List<Trade>> offerTradesController;
 
   // Listen for changes on trades table and fetches from view_trades
   // and sink it to [offerTradesController].
   void listenToOfferTrades(String offerId) {
+    offerTradesController = BehaviorSubject<List<Trade>>();
+
     final query = {"offer_id": offerId};
     subscribeForChanges<Trade>(
       table: AomlahTable.trades,

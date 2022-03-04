@@ -90,7 +90,7 @@ class UserTradeCard extends StatelessWidget {
                         ),
                         Text(
                           CurrencyHelper.usdToSR(trade.price)
-                                  .toStringAsFixed(4) +
+                                  .toStringAsFixed(2) +
                               " ر.س",
                           style: Constants.smallText
                               .copyWith(color: Color(0xFFC6C6C6)),
@@ -113,7 +113,7 @@ class UserTradeCard extends StatelessWidget {
                               .copyWith(color: Color(0xFFC6C6C6)),
                         ),
                         Text(
-                          trade.amount.toString(),
+                          trade.amount.toStringAsFixed(7),
                           style: Constants.smallText
                               .copyWith(color: Color(0xFFC6C6C6)),
                         ),
@@ -130,7 +130,10 @@ class UserTradeCard extends StatelessWidget {
                       style: Constants.smallText.copyWith(color: Colors.white),
                     ),
                     Text(
-                      "2500 ر.س",
+                      CurrencyHelper.btcToFiat(
+                                  btcAmount: trade.amount, price: trade.price)
+                              .toStringAsFixed(2) +
+                          " ر.س",
                       style: Constants.mediumText.copyWith(color: Colors.white),
                     ),
                   ],
