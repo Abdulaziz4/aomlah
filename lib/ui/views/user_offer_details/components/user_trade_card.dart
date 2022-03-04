@@ -11,32 +11,25 @@ import 'package:stacked_services/stacked_services.dart';
 
 class UserTradeCard extends StatelessWidget {
   final Trade trade;
+  final bool isForMerchant;
 
-  UserTradeCard({Key? key, required this.trade}) : super(key: key);
+  const UserTradeCard({
+    Key? key,
+    required this.trade,
+    this.isForMerchant = true,
+  }) : super(key: key);
 
-  final stateLabel = {
-    TradeStatus.awaiting_payment: "في الانتظار",
-    TradeStatus.payment_sent: "في إنتظار التاكيد",
-    TradeStatus.canceled: "ملغي",
-    TradeStatus.disputed: "متنازع عليه",
-    TradeStatus.completed: "مكتمل",
-  };
   @override
   Widget build(BuildContext context) {
+    final stateLabel = {
+      TradeStatus.awaiting_payment: "في الانتظار",
+      TradeStatus.payment_sent: "في إنتظار التاكيد",
+      TradeStatus.canceled: "ملغي",
+      TradeStatus.disputed: "متنازع عليه",
+      TradeStatus.completed: "مكتمل",
+    };
     return GestureDetector(
-      onTap: () {
-        if (trade.offer!.isBuyMarchent) {
-          locator<NavigationService>().navigateTo(
-            Routes.merchantBuyCoinView,
-            arguments: MerchantBuyCoinViewArguments(trade: trade),
-          );
-        } else {
-          locator<NavigationService>().navigateTo(
-            Routes.merchantSellCoinView,
-            arguments: MerchantSellCoinViewArguments(trade: trade),
-          );
-        }
-      },
+      onTap: navigateToDetails,
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -49,17 +42,7 @@ class UserTradeCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                trade.offer!.isBuyMarchent
-                    ? Text(
-                        " شراء ",
-                        style: Constants.smallText
-                            .copyWith(color: Constants.primaryColor),
-                      )
-                    : Text(
-                        " بيع  ",
-                        style: Constants.smallText
-                            .copyWith(color: Constants.redColor),
-                      ),
+                buildTypeLabel(),
                 Text(
                   " BTC",
                   style: Constants.smallText.copyWith(color: Colors.white),
@@ -177,5 +160,63 @@ class UserTradeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildTypeLabel() {
+    if (isForMerchant) {
+      if (trade.offer!.isBuyMarchent) {
+        return buyLabel();
+      } else {
+        return sellLabel();
+      }
+    } else {
+      if (trade.offer!.isBuyTrader) {
+        return buyLabel();
+      } else {
+        return sellLabel();
+      }
+    }
+  }
+
+  Widget buyLabel() {
+    return Text(
+      " شراء ",
+      style: Constants.smallText.copyWith(color: Constants.primaryColor),
+    );
+  }
+
+  Widget sellLabel() {
+    return Text(
+      " بيع  ",
+      style: Constants.smallText.copyWith(color: Constants.redColor),
+    );
+  }
+
+  void navigateToDetails() {
+    if (isForMerchant) {
+      if (trade.offer!.isBuyMarchent) {
+        locator<NavigationService>().navigateTo(
+          Routes.merchantBuyCoinView,
+          arguments: MerchantBuyCoinViewArguments(trade: trade),
+        );
+      } else {
+        locator<NavigationService>().navigateTo(
+          Routes.merchantSellCoinView,
+          arguments: MerchantSellCoinViewArguments(trade: trade),
+        );
+      }
+    } else {
+      if (trade.offer!.isBuyTrader) {
+        locator<NavigationService>().navigateTo(
+          Routes.traderBuyCoinView,
+          arguments: TraderBuyCoinViewArguments(trade: trade),
+        );
+      } else {
+        locator<NavigationService>().navigateTo(
+          Routes.traderSellCoinView,
+          arguments: TraderSellCoinViewArguments(trade: trade),
+        );
+      }
+    }
   }
 }

@@ -18,7 +18,7 @@ class UserTradesView extends StatelessWidget {
           child: Scaffold(
               appBar: AppBar(
                 title: Text(
-                  'عروضي',
+                  'تداولاتي',
                   style: Constants.largeText.copyWith(
                       color: Constants.darkBlue, fontWeight: FontWeight.bold),
                 ),
@@ -48,6 +48,7 @@ class UserTradesView extends StatelessWidget {
                                       .map(
                                         (trade) => UserTradeCard(
                                           trade: trade,
+                                          isForMerchant: false,
                                         ),
                                       )
                                       .toList(),
@@ -65,6 +66,7 @@ class UserTradesView extends StatelessWidget {
                                       .map(
                                         (trade) => UserTradeCard(
                                           trade: trade,
+                                          isForMerchant: false,
                                         ),
                                       )
                                       .toList(),
