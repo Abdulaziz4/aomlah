@@ -35,7 +35,7 @@ class _BuyCoinOverviewViewState extends State<BuyCoinOverviewView> {
                   formKey: viewmodel.formKey,
                   onAmountSaved: viewmodel.setAmount,
                   onSubmit: () {
-                    viewmodel.submit(btc.price, offer.offerID);
+                    viewmodel.submit(btc.price, offer);
                   },
                 );
               },

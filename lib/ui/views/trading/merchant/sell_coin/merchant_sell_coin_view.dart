@@ -113,8 +113,7 @@ class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
                     },
                     showCancelButton:
                         viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showPaymentSent:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showPaymentSent: false,
                     showOpenDispute:
                         viewmodel.trade.status == TradeStatus.payment_sent,
                     showCompleteTrade:

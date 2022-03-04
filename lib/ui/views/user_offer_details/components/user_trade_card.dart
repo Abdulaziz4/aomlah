@@ -2,6 +2,7 @@ import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
+import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,8 +12,15 @@ import 'package:stacked_services/stacked_services.dart';
 class UserTradeCard extends StatelessWidget {
   final Trade trade;
 
-  const UserTradeCard({Key? key, required this.trade}) : super(key: key);
+  UserTradeCard({Key? key, required this.trade}) : super(key: key);
 
+  final stateLabel = {
+    TradeStatus.awaiting_payment: "في الانتظار",
+    TradeStatus.payment_sent: "في إنتظار التاكيد",
+    TradeStatus.canceled: "ملغي",
+    TradeStatus.disputed: "متنازع عليه",
+    TradeStatus.completed: "مكتمل",
+  };
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -58,7 +66,7 @@ class UserTradeCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  trade.status.name,
+                  stateLabel[trade.status] ?? "",
                   style: Constants.smallText
                       .copyWith(color: Constants.darkBlue, fontSize: 14),
                 ),

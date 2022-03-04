@@ -3,6 +3,7 @@ import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
@@ -21,7 +22,7 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
 
   double amount = 0;
 
-  Future<void> submit(double price, String offerId) async {
+  Future<void> submit(double price, Offer offer) async {
     bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -32,10 +33,11 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
       final trade = Trade(
         tradeId: UuidHelper.generate(),
         amount: (amount / 3.75) / price,
-        offerId: offerId,
+        offerId: offer.offerID,
         status: TradeStatus.awaiting_payment,
         traderId: _userService.user.profileId,
         price: price,
+        offer: offer,
       );
       final addedTrade = await _tradingService.createTrade(trade);
       setBusy(false);
