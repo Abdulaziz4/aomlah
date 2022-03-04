@@ -17,8 +17,12 @@ class UserService {
   BehaviorSubject<AomlahUser> userController = BehaviorSubject<AomlahUser>();
 
   Future<void> initUser(String uuid) async {
-    final user = await _supabaseService.getUser(uuid);
-    updateUser(user);
+    userController.addStream(_supabaseService.getUserStream(uuid));
+    user = await userController.first;
+
+    userController.stream.listen((newUser) {
+      user = newUser;
+    });
     await _realtimeWalletService.connectWallet(
       uuid,
       user.wallet?.address ?? "",

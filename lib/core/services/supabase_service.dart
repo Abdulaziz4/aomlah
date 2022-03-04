@@ -1,13 +1,18 @@
+import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
+import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
+import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService extends AbstractSupabase {
+  final _logger = getLogger("SupabaseService");
+
   // Returns an initilized SupabaseService instance to be used by locator
   static Future<SupabaseService> getInstance() async {
     final service = SupabaseService();
@@ -39,10 +44,31 @@ class SupabaseService extends AbstractSupabase {
     await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
 
+  Future<void> updateUserDebt(
+    String uuid,
+    double debt,
+  ) async {
+    await update(AomlahTable.profiles, {"debt": debt}, {"profile_id": uuid});
+  }
+
   Future<void> updateUserStatus(
       {required String uuid, required bool status}) async {
     await update(
         AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
+  }
+
+  Stream<AomlahUser> getUserStream(String uuid) {
+    return subscribeForChanges<AomlahUser>(
+        table: AomlahTable.profiles,
+        fromJson: (_) {
+          return AomlahUser.anonymous();
+        },
+        primaryKey: "profile_id",
+        query: {
+          "profile_id": uuid,
+        }).asyncMap<AomlahUser>((event) {
+      return getUser(uuid);
+    });
   }
 
   Future<AomlahUser> getUser(String uuid) async {
@@ -63,14 +89,20 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  // All offers controller
+  BehaviorSubject<List<Offer>> offersController =
+      BehaviorSubject<List<Offer>>();
+
   // Listen for changes on offers table and fetches from view_offers on every offers table change
-  Stream<List<Offer>> getAllOffersSubscription() {
-    return subscribeForChanges<Offer>(
+  void listentoAllOffers() {
+    subscribeForChanges<Offer>(
       table: AomlahTable.offers,
       fromJson: Offer.fromJson,
       primaryKey: "offer_id",
     ).asyncMap((event) {
       return _getOffers();
+    }).listen((offers) {
+      offersController.sink.add(offers);
     });
   }
 
@@ -78,6 +110,7 @@ class SupabaseService extends AbstractSupabase {
     await insert(AomlahTable.offers, offer.toJson());
   }
 
+  // User's own offers controller
   BehaviorSubject<List<Offer>> userOffersController =
       BehaviorSubject<List<Offer>>();
 
@@ -95,6 +128,35 @@ class SupabaseService extends AbstractSupabase {
     }).listen((offers) {
       userOffersController.sink.add(offers);
     });
+  }
+
+  // User's own offers controller
+  late BehaviorSubject<List<Trade>> offerTradesController;
+
+  // Listen for changes on trades table and fetches from view_trades
+  // and sink it to [offerTradesController].
+  void listenToOfferTrades(String offerId) {
+    offerTradesController = BehaviorSubject<List<Trade>>();
+
+    final query = {"offer_id": offerId};
+    subscribeForChanges<Trade>(
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+      query: query,
+    ).asyncMap((_) {
+      return _getOfferTrades(query: query);
+    }).listen((trades) {
+      offerTradesController.sink.add(trades);
+    });
+  }
+
+  Future<List<Trade>> _getOfferTrades({required Map<String, String> query}) {
+    return get<Trade>(
+      AomlahTable.view_trades,
+      Trade.fromJson,
+      query: query,
+    );
   }
 
   Future<void> createBank(BankAccount account) async {
@@ -116,5 +178,46 @@ class SupabaseService extends AbstractSupabase {
         "iban": wallet.iban,
       },
     );
+  }
+
+  Future<Trade> createTrade(Trade trade) async {
+    final res = await upsert(AomlahTable.trades, trade.toJson());
+
+    if (res.error != null) {
+      throw Exception(res.error!.message);
+    }
+    return getTrade(trade.tradeId);
+  }
+
+  Stream<Trade> getTradeStream(String tradeId) {
+    print(tradeId);
+    return subscribeForChanges(
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+    ).asyncMap(
+      (event) => getTrade(tradeId),
+    );
+  }
+
+  Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
+    await upsert(
+      AomlahTable.trades,
+      {
+        "trade_id": tradeId,
+        "status": status.name,
+      },
+    );
+  }
+
+  Future<Trade> getTrade(String tradeId) async {
+    final res = await get<Trade>(
+      AomlahTable.view_trades,
+      Trade.fromJson,
+      query: {
+        "trade_id": tradeId,
+      },
+    );
+    return res.first;
   }
 }

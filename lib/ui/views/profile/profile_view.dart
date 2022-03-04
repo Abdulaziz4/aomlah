@@ -17,6 +17,7 @@ class ProfileView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text("الحساب الشخصي"),
+              automaticallyImplyLeading: false,
             ),
             body: SingleChildScrollView(
               child: Column(

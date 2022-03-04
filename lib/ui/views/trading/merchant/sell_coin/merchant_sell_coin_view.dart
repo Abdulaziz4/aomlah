@@ -12,18 +12,18 @@ import 'package:aomlah/ui/views/trading/viewmodels/trading_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class TraderSellCoinView extends StatefulWidget {
+class MerchantSellCoinView extends StatefulWidget {
   final Trade trade;
-  const TraderSellCoinView({
+  const MerchantSellCoinView({
     Key? key,
     required this.trade,
   }) : super(key: key);
 
   @override
-  State<TraderSellCoinView> createState() => _TraderSellCoinViewState();
+  State<MerchantSellCoinView> createState() => _MerchantSellCoinViewState();
 }
 
-class _TraderSellCoinViewState extends State<TraderSellCoinView> {
+class _MerchantSellCoinViewState extends State<MerchantSellCoinView> {
   Duration remainingTime = Duration.zero;
 
   @override
@@ -113,8 +113,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                     },
                     showCancelButton:
                         viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showPaymentSent:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showPaymentSent: false,
                     showOpenDispute:
                         viewmodel.trade.status == TradeStatus.payment_sent,
                     showCompleteTrade:
@@ -133,7 +132,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
       price: trade.price,
     );
     return TradeReceipt(
-      isBuy: trade.offer!.isBuyTrader,
+      isBuy: !trade.offer!.isBuyMarchent,
       quantity: fiatQuantity.toStringAsFixed(2),
       price: "${trade.price * 3.75}",
       cryptoAmount: trade.amount.toString(),

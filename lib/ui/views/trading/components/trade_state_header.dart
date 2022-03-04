@@ -14,7 +14,8 @@ class TradeStateHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 400),
       decoration: BoxDecoration(
         boxShadow: Constants.shadow,
         color: color,
