@@ -112,7 +112,8 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                   viewmodel.changeState(TradeStatus.completed);
                 },
                 onOpenDispute: () {
-                  viewmodel.changeState(TradeStatus.disputed);
+                  print("Open Dispute");
+                  viewmodel.tryOpenDispute();
                 },
                 showCancelButton:
                     viewmodel.trade.status == TradeStatus.awaiting_payment,
