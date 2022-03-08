@@ -25,11 +25,11 @@ class TradingViewmodel extends StreamViewModel<Trade> {
   }
 
   Future<void> tryOpenDispute() async {
-    await _navService.navigateTo(Routes.createDisputeView);
+    final reason = await _navService.navigateTo(Routes.createDisputeView);
 
-    // if (reason != null) {
-    //   changeState(TradeStatus.disputed);
-    // }
+    if (reason != null) {
+      changeState(TradeStatus.disputed);
+    }
   }
 
   @override

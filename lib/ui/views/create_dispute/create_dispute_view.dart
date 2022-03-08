@@ -27,6 +27,20 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
     "أخرى",
   ];
 
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +61,10 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
             children: <Widget>[
               Expanded(
                 child: CustomButton(
-                  onPressed: () async {
-                    if (await confirm(context)) {}
-                    print('pressedCancel');
-                  },
-                  text: 'إكمال طلب النزاع',
+                  onPressed: showConfirmationDialog,
+                  text: 'تأكيد النزاع',
                   color: Color(0xFFCF5050),
+                  height: 45,
                 ),
               ),
               SizedBox(
@@ -60,9 +72,12 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
               ),
               Expanded(
                 child: CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _navService.back();
+                  },
                   text: 'إلغاء',
                   color: Constants.black4dp,
+                  height: 45,
                 ),
               ),
             ],
@@ -85,13 +100,11 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
               return buildCheckbox(index);
             })),
             if (selectedIndex == options.length - 1)
-              Form(
-                key: formKey,
-                child: RoundedInputField(
-                  label: "",
-                  hintText: "ادخل السبب هنا",
-                  maxLines: 3,
-                ),
+              RoundedInputField(
+                label: "",
+                hintText: "ادخل السبب هنا",
+                maxLines: 3,
+                controller: _controller,
               ),
           ],
         ),
@@ -136,5 +149,34 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
     );
   }
 
-  void confirmDispute() {}
+  void confirmDispute() {
+    if (selectedIndex != options.length - 1) {
+      _navService.back(result: options[selectedIndex]);
+    } else {
+      if (_controller.text.isEmpty) {
+        _navService.back(result: options[selectedIndex]);
+      } else {
+        _navService.back(result: _controller.text);
+      }
+    }
+  }
+
+  Future<void> showConfirmationDialog() async {
+    bool result = await confirm(
+      context,
+      content: SizedBox(),
+      title: Text(
+        "هل أنت متاكد من إكمال العملية ؟",
+      ),
+      textOK: Text(
+        "نعم",
+      ),
+      textCancel: Text(
+        "لا",
+      ),
+    );
+    if (result) {
+      confirmDispute();
+    }
+  }
 }
