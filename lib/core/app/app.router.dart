@@ -12,6 +12,7 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
+import '../../ui/views/create_dispute/create_dispute_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/crypto_info/crypto_info_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
@@ -61,6 +62,7 @@ class Routes {
   static const String cryptoInfoView = '/crypto-info-view';
   static const String merchantBuyCoinView = '/merchant-buy-coin-view';
   static const String merchantSellCoinView = '/merchant-sell-coin-view';
+  static const String createDisputeView = '/create-dispute-view';
   static const String userTradesView = '/user-trades-view';
   static const all = <String>{
     startupView,
@@ -85,6 +87,7 @@ class Routes {
     cryptoInfoView,
     merchantBuyCoinView,
     merchantSellCoinView,
+    createDisputeView,
     userTradesView,
   };
 }
@@ -116,6 +119,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
     RouteDef(Routes.merchantBuyCoinView, page: MerchantBuyCoinView),
     RouteDef(Routes.merchantSellCoinView, page: MerchantSellCoinView),
+    RouteDef(Routes.createDisputeView, page: CreateDisputeView),
     RouteDef(Routes.userTradesView, page: UserTradesView),
   ];
   @override
@@ -284,6 +288,12 @@ class StackedRouter extends RouterBase {
           key: args.key,
           trade: args.trade,
         ),
+        settings: data,
+      );
+    },
+    CreateDisputeView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const CreateDisputeView(),
         settings: data,
       );
     },

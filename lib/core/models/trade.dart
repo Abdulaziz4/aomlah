@@ -1,5 +1,6 @@
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/wallet.dart';
 
@@ -16,6 +17,7 @@ class Trade {
   final BankAccount? bankAccount;
   final String? traderName;
   final Wallet? traderWallet;
+  final Dispute? dispute;
 
   final DateTime? createdAt;
   Trade({
@@ -31,6 +33,7 @@ class Trade {
     this.traderName,
     this.createdAt,
     this.traderWallet,
+    this.dispute,
   });
   factory Trade.fromJson(Map<String, dynamic> json) {
     return Trade(
@@ -50,6 +53,8 @@ class Trade {
       traderWallet: json["trader_wallet"] == null
           ? null
           : Wallet.fromJson(json["trader_wallet"]),
+      dispute:
+          json["dispute"] == null ? null : Dispute.fromJson(json["dispute"]),
     );
   }
 

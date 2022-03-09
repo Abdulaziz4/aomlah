@@ -9,6 +9,7 @@ import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import 'package:aomlah/ui/views/auth/welcome/welcome_view.dart';
+import 'package:aomlah/ui/views/create_dispute/create_dispute_view.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
 import 'package:aomlah/ui/views/faucets/faucets_view.dart';
@@ -58,6 +59,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: CryptoInfoView),
     MaterialRoute(page: MerchantBuyCoinView),
     MaterialRoute(page: MerchantSellCoinView),
+    MaterialRoute(page: CreateDisputeView),
     MaterialRoute(page: UserTradesView),
   ],
   dependencies: [

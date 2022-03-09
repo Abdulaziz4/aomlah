@@ -3,12 +3,15 @@ import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -189,12 +192,32 @@ class SupabaseService extends AbstractSupabase {
     return getTrade(trade.tradeId);
   }
 
-  Stream<Trade> getSingleTradeStream(String tradeId) {
-    return subscribeForChanges(
+  Future<Dispute> createDispute(Dispute dispute) async {
+    final res = await upsert(AomlahTable.disputes, dispute.toJson());
+
+    if (res.error != null) {
+      throw Exception(res.error!.message);
+    }
+    return getDispute(dispute.disputeId);
+  }
+
+  Stream<Trade> getTradeStream(String tradeId) {
+    final disputeStream = subscribeForChanges(
+        table: AomlahTable.disputes,
+        fromJson: (_) => Dispute.dummy(),
+        primaryKey: "dispute_id",
+        query: {
+          "trade_id": tradeId,
+        });
+    final tradeStream = subscribeForChanges(
       table: AomlahTable.trades,
       fromJson: Trade.fromJson,
       primaryKey: "trade_id",
-    ).asyncMap(
+    );
+
+    final mergedStream = CombineLatestStream.list([disputeStream, tradeStream]);
+
+    return mergedStream.asyncMap(
       (event) => getTrade(tradeId),
     );
   }
@@ -231,6 +254,18 @@ class SupabaseService extends AbstractSupabase {
         "trade_id": tradeId,
       },
     );
+    return res.first;
+  }
+
+  Future<Dispute> getDispute(String disputeId) async {
+    final res = await get<Dispute>(
+      AomlahTable.disputes,
+      Dispute.fromJson,
+      query: {
+        "dispute_id": disputeId,
+      },
+    );
+    print(res);
     return res.first;
   }
 }

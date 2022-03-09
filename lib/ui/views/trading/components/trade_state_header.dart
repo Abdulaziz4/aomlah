@@ -1,15 +1,20 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/enums/dispute_status.dart';
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 
 class TradeStateHeader extends StatelessWidget {
   final String title;
   final Widget? subWidget;
   final Color color;
+  final Dispute? dispute;
   const TradeStateHeader({
     Key? key,
     required this.title,
     required this.color,
     this.subWidget,
+    this.dispute,
   }) : super(key: key);
 
   @override
@@ -50,6 +55,7 @@ class TradeStateHeader extends StatelessWidget {
                     ),
                   ),
                   subWidget ?? SizedBox(),
+                  if (dispute != null) buildDispute(),
                 ],
               ),
             ),
@@ -57,6 +63,21 @@ class TradeStateHeader extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildDispute() {
+    String text = "";
+
+    if (dispute!.status == DisputeStatus.waiting) {
+      text = "حالة النزاع في الانتظار وتم اخر تحديث في";
+      final updatedAt = intl.DateFormat.yMd()
+          .add_jm()
+          .format(dispute!.updatedAt ?? DateTime.now());
+      text += " \n$updatedAt";
+    } else {
+      text = "تم حل النزاع";
+    }
+    return Text(text);
   }
 }
 

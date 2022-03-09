@@ -7,4 +7,5 @@ enum AomlahTable {
   view_offers,
   view_trades,
   trades,
+  disputes,
 }
