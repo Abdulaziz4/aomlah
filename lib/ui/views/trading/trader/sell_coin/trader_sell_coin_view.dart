@@ -1,6 +1,7 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/trading/components/bottom_actions.dart';
@@ -93,7 +94,11 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                             terms: viewmodel.trade.offer!.terms,
                           ),
                           buildRecipte(viewmodel.trade),
-                          buildHeader(viewmodel.trade.status, headerStates),
+                          buildHeader(
+                            state: viewmodel.trade.status,
+                            headerStates: headerStates,
+                            dispute: viewmodel.trade.dispute,
+                          ),
                         ],
                       ),
                     ),
@@ -140,14 +145,16 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
     );
   }
 
-  Widget buildHeader(
-    TradeStatus state,
-    Map<TradeStatus, HeaderStyle> headerStates,
-  ) {
+  Widget buildHeader({
+    required TradeStatus state,
+    required Map<TradeStatus, HeaderStyle> headerStates,
+    Dispute? dispute,
+  }) {
     return TradeStateHeader(
       title: headerStates[state]!.title,
       color: headerStates[state]!.color,
       subWidget: headerStates[state]!.subTitle,
+      dispute: dispute,
     );
   }
 

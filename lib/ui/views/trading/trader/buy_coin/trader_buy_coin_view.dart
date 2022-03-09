@@ -110,9 +110,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 onPaymentSent: () {
                   viewmodel.changeState(TradeStatus.payment_sent);
                 },
-                onPaymentReceived: () {
-                  viewmodel.changeState(TradeStatus.completed);
-                },
+                onPaymentReceived: () {},
                 onOpenDispute: () {
                   viewmodel.tryOpenDispute();
                 },
@@ -123,8 +121,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 showOpenDispute:
                     viewmodel.trade.status == TradeStatus.payment_sent ||
                         viewmodel.trade.status == TradeStatus.completed,
-                showCompleteTrade:
-                    viewmodel.trade.status == TradeStatus.payment_sent,
+                showCompleteTrade: false,
               )
             ],
           ),
