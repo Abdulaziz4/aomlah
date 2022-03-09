@@ -222,6 +222,20 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  // Listen for changes on trades table and fetches from view_trades
+  // and sink it to [offerTradesController].
+  Stream<List<Trade>> getUserTradesStream(String uuid) {
+    final query = {"trader_id": uuid};
+    return subscribeForChanges<Trade>(
+      table: AomlahTable.trades,
+      fromJson: Trade.fromJson,
+      primaryKey: "trade_id",
+      query: query,
+    ).asyncMap((_) {
+      return _getOfferTrades(query: query);
+    });
+  }
+
   Future<void> changeTradeStatus(String tradeId, TradeStatus status) async {
     await upsert(
       AomlahTable.trades,
