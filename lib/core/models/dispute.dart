@@ -47,8 +47,12 @@ class Dispute {
       ),
       tradeId: json['trade_id'] ?? '',
       openerId: json['opener_id'] ?? '',
-      createdAt: DateTime.tryParse(json['created_at']),
-      updatedAt: DateTime.tryParse(json['updated_at']),
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'])
+          : DateTime.now(),
+      updatedAt: json["updated_at"] != null
+          ? DateTime.tryParse(json['updated_at'])
+          : DateTime.now(),
     );
   }
   Dispute copyWith({

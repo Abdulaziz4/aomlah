@@ -97,7 +97,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                       buildHeader(
                         state: viewmodel.trade.status,
                         headerStates: headerStates,
-                        dispute: viewmodel.dispute,
+                        dispute: viewmodel.trade.dispute,
                       ),
                     ],
                   ),

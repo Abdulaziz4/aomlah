@@ -23,8 +23,6 @@ class TradingViewmodel extends StreamViewModel<Trade> {
   final _supabaseService = locator<SupabaseService>();
   final _tradingService = locator<TradingService>();
 
-  Dispute? dispute;
-
   Future<void> changeState(TradeStatus state) async {
     // Setting false inside onData
     setBusy(true);
@@ -33,18 +31,16 @@ class TradingViewmodel extends StreamViewModel<Trade> {
 
   Future<void> tryOpenDispute() async {
     final reason = await _navService.navigateTo(Routes.createDisputeView);
-    print(reason);
     if (reason != null) {
       await changeState(TradeStatus.disputed);
       final createdDispute = Dispute(
         disputeId: UuidHelper.generate(),
         cause: reason,
         status: DisputeStatus.waiting,
-        tradeId: _userService.user.profileId,
+        tradeId: trade.tradeId,
         openerId: _userService.user.profileId,
       );
-      dispute = await _supabaseService.createDispute(createdDispute);
-      notifyListeners();
+      await _supabaseService.createDispute(createdDispute);
     }
   }
 

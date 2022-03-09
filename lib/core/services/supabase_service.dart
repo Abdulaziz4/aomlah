@@ -8,8 +8,10 @@ import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -202,16 +204,20 @@ class SupabaseService extends AbstractSupabase {
   Stream<Trade> getTradeStream(String tradeId) {
     final disputeStream = subscribeForChanges(
         table: AomlahTable.disputes,
-        fromJson: Trade.fromJson,
+        fromJson: (_) => Dispute.dummy(),
         primaryKey: "dispute_id",
         query: {
           "trade_id": tradeId,
         });
-    return subscribeForChanges(
+    final tradeStream = subscribeForChanges(
       table: AomlahTable.trades,
       fromJson: Trade.fromJson,
       primaryKey: "trade_id",
-    ).asyncMap(
+    );
+
+    final mergedStream = CombineLatestStream.list([disputeStream, tradeStream]);
+
+    return mergedStream.asyncMap(
       (event) => getTrade(tradeId),
     );
   }
