@@ -7,7 +7,9 @@ class Offer {
   final String cryptoType;
   final String currencyType;
   final double margin;
-  final double cryptoAmount;
+  final double totalQuantity;
+  final double remainingQuantity;
+
   final double minTrade;
   final String terms;
 
@@ -24,10 +26,11 @@ class Offer {
     required this.cryptoType,
     required this.currencyType,
     required this.margin,
-    required this.cryptoAmount,
+    required this.totalQuantity,
     required this.minTrade,
     required this.terms,
     required this.isBuy,
+    required this.remainingQuantity,
     this.bankAccounts,
     this.createAt,
     this.ownerName,
@@ -48,7 +51,8 @@ class Offer {
       cryptoType: json['crypto_type'],
       currencyType: json['currency_type'],
       margin: json['margin'] * 1.0,
-      cryptoAmount: json['crypto_amount'] * 1.0,
+      totalQuantity: json['total_quantity'] * 1.0,
+      remainingQuantity: json['remaining_quantity'] * 1.0,
       minTrade: json['min_trade'] * 1.0,
       terms: json['terms'],
       isBuy: json['is_buy'],
@@ -68,7 +72,8 @@ class Offer {
       'crypto_type': cryptoType,
       'currency_type': currencyType,
       'margin': margin,
-      'crypto_amount': cryptoAmount,
+      'total_quantity': totalQuantity,
+      'remaining_quantity': remainingQuantity,
       'min_trade': minTrade,
       'terms': terms,
       'is_buy': isBuy,
@@ -80,6 +85,6 @@ class Offer {
   bool get isBuyMarchent => isBuy;
 
   String cryptoAmonutLabel() {
-    return "⠀" + cryptoAmount.toString() + " BTC";
+    return "⠀" + totalQuantity.toString() + " BTC";
   }
 }

@@ -88,6 +88,10 @@ class TradingService {
     _supabaseService.updateUserDebt(_userService.user.profileId, finalDebt);
   }
 
+  Future<void> updateOfferQuantity({
+    required String offerId,
+    required String quantity,
+  }) async {}
   bool isUserMerchant(String traderId) =>
       _userService.user.profileId != traderId;
 }

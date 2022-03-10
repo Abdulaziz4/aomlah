@@ -9,9 +9,7 @@ import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -111,6 +109,16 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
+  }
+
+  Future<void> updateOfferQuantity({
+    required String offerId,
+    required double quantity,
+  }) async {
+    await upsert(AomlahTable.offers, {
+      "offer_id": offerId,
+      "remaining_quantity": quantity,
+    });
   }
 
   // User's own offers controller
