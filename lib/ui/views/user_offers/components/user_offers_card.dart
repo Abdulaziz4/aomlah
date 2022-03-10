@@ -86,7 +86,7 @@ class UserOffersCard extends StatelessWidget {
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Text(
-                  offer.totalQuantity.toString(),
+                  offer.remainingQuantity.toString(),
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
               ],

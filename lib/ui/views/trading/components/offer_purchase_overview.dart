@@ -36,7 +36,7 @@ class OfferPurchaseOverview extends StatelessWidget {
               children: [
                 TradeOverviewHeader(
                   price: btc.priceFromMargin(offer.margin).toStringAsFixed(3),
-                  quantity: offer.cryptoAmonutLabel(),
+                  quantity: offer.remainingQuantityLabel(),
                   minLimit: offer.minTrade,
                 ),
                 paymentWindowBuilder(viewmodel.offer),

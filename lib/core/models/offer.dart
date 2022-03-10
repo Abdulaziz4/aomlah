@@ -38,6 +38,7 @@ class Offer {
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) {
+    print(json);
     List<BankAccount> accounts = [];
     if (json["bank_accounts"] != null &&
         (json["bank_accounts"] as List).first != null) {
@@ -84,7 +85,11 @@ class Offer {
   bool get isBuyTrader => !isBuy;
   bool get isBuyMarchent => isBuy;
 
-  String cryptoAmonutLabel() {
+  String totalQuantityLabel() {
+    return "⠀" + totalQuantity.toString() + " BTC";
+  }
+
+  String remainingQuantityLabel() {
     return "⠀" + totalQuantity.toString() + " BTC";
   }
 }

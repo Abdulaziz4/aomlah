@@ -92,6 +92,7 @@ class TradingService {
     required String offerId,
     required String quantity,
   }) async {}
+
   bool isUserMerchant(String traderId) =>
       _userService.user.profileId != traderId;
 }

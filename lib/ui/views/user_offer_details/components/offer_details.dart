@@ -143,7 +143,7 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                             style: TextStyle(color: Colors.white, fontSize: 19),
                           ),
                           Text(
-                            viewmodel.offer.cryptoAmount.toString(),
+                            viewmodel.offer.totalQuantity.toString(),
                             style: TextStyle(color: Colors.white, fontSize: 19),
                           ),
                         ],
