@@ -118,7 +118,8 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 showPaymentSent:
                     viewmodel.trade.status == TradeStatus.awaiting_payment,
                 showOpenDispute:
-                    viewmodel.trade.status == TradeStatus.payment_sent,
+                    viewmodel.trade.status == TradeStatus.payment_sent ||
+                        viewmodel.trade.status == TradeStatus.canceled,
                 showCompleteTrade: false,
               )
             ],

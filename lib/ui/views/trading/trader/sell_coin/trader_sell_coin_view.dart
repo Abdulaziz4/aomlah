@@ -107,9 +107,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                     onCancel: () {
                       viewmodel.changeState(TradeStatus.canceled);
                     },
-                    onPaymentSent: () {
-                      viewmodel.changeState(TradeStatus.payment_sent);
-                    },
+                    onPaymentSent: () {},
                     onPaymentReceived: () {
                       viewmodel.changeState(TradeStatus.completed);
                     },
@@ -118,10 +116,10 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                     },
                     showCancelButton:
                         viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showPaymentSent:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showPaymentSent: false,
                     showOpenDispute:
-                        viewmodel.trade.status == TradeStatus.payment_sent,
+                        viewmodel.trade.status == TradeStatus.payment_sent ||
+                            viewmodel.trade.status == TradeStatus.canceled,
                     showCompleteTrade:
                         viewmodel.trade.status == TradeStatus.payment_sent,
                   )
