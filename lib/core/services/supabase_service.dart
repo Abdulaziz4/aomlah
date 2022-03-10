@@ -111,13 +111,13 @@ class SupabaseService extends AbstractSupabase {
     await insert(AomlahTable.offers, offer.toJson());
   }
 
-  Future<void> updateOfferQuantity({
+  Future<void> updateOfferRemainingQuantity({
     required String offerId,
-    required double quantity,
+    required double remaining,
   }) async {
     await upsert(AomlahTable.offers, {
       "offer_id": offerId,
-      "remaining_quantity": quantity,
+      "remaining_quantity": remaining,
     });
   }
 
