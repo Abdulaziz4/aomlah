@@ -73,7 +73,6 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
         SizedBox(),
         Color.fromARGB(255, 199, 185, 57),
       ),
-      //TODO:Add other states
     };
     return ViewModelBuilder<TradingViewmodel>.reactive(
       viewModelBuilder: () => TradingViewmodel(widget.trade),
@@ -119,8 +118,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                 showPaymentSent:
                     viewmodel.trade.status == TradeStatus.awaiting_payment,
                 showOpenDispute:
-                    viewmodel.trade.status == TradeStatus.payment_sent ||
-                        viewmodel.trade.status == TradeStatus.completed,
+                    viewmodel.trade.status == TradeStatus.payment_sent,
                 showCompleteTrade: false,
               )
             ],
