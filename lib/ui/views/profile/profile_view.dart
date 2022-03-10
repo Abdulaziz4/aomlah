@@ -17,6 +17,7 @@ class ProfileView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text("الحساب الشخصي"),
+              automaticallyImplyLeading: false,
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -104,7 +105,7 @@ class ProfileView extends StatelessWidget {
                       ),
                     )),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: viewmodel.navigateToTrades,
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(25.0),
                         minimumSize: const Size.fromHeight(50),

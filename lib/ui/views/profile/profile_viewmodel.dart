@@ -26,4 +26,8 @@ class ProfileViewModel extends BaseViewModel {
   navigateToBankAccounts() {
     navService.navigateTo(Routes.userBankAccountsView);
   }
+
+  void navigateToTrades() {
+    navService.navigateTo(Routes.userTradesView);
+  }
 }

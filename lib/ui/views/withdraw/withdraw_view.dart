@@ -30,7 +30,7 @@ class _WithdrawViewState extends State<WithdrawView> {
     cListVal ??= cryptoList.first;
     types ??= CryptoTypes.btc;
 
-    final walletBTC = Provider.of<RealTimeWallet>(context);
+    final walletBTC = Provider.of<BtcRealTimeWallet>(context);
     final walletEth = Provider.of<EthRealTimeWallet>(context);
 
     return ViewModelBuilder<WithdrawViewModel>.reactive(
@@ -175,7 +175,7 @@ class _WithdrawViewState extends State<WithdrawView> {
         ),
       );
 
-  walletBalanceText(RealTimeWallet walletBTC, EthRealTimeWallet walletEth) {
+  walletBalanceText(BtcRealTimeWallet walletBTC, EthRealTimeWallet walletEth) {
     if (types == CryptoTypes.btc) {
       return Text(
         'الكمية في محفظتك ' +

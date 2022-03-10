@@ -72,7 +72,9 @@ class UserOfferDetailsView extends StatelessWidget {
               OfferDetailsSection(
                 offer: offer,
               ),
-              UserOfferTrades(),
+              UserOfferTrades(
+                offer: offer,
+              ),
             ],
           )),
     );

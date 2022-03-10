@@ -1,15 +1,14 @@
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/models/transactions.dart';
+import 'package:aomlah/core/services/realtime_wallet.dart';
 
-class EthRealTimeWallet {
-  final String address;
-  final int balance;
-  List<Transaction>? transactions;
-
+class EthRealTimeWallet extends RealTimeWallet {
   EthRealTimeWallet({
-    required this.address,
-    required this.balance,
-    this.transactions,
-  });
+    required String address,
+    required int balance,
+    List<Transaction>? transactions,
+  }) : super(address: address, balance: balance, transactions: transactions);
+
   factory EthRealTimeWallet.dummy() {
     return EthRealTimeWallet(
       address: "",

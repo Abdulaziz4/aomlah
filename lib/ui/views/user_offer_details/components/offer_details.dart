@@ -165,7 +165,7 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                       ),
                     ],
                   ),
-                  if (!widget.offer.isBuy)
+                  if (widget.offer.isBuy)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

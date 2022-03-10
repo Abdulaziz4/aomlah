@@ -32,7 +32,7 @@ class WalletSelectionViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final walletBTC = Provider.of<RealTimeWallet>(context);
+    final walletBTC = Provider.of<BtcRealTimeWallet>(context);
     final walletEth = Provider.of<EthRealTimeWallet>(context);
 
     return ViewModelBuilder<WalletInfoViewModel>.reactive(
@@ -44,7 +44,7 @@ class WalletSelectionViewBody extends StatelessWidget {
                 children: [
                   WalletButton(
                     onPressed: () {
-                      viewmodel.navigateToWallet('BTC');
+                      viewmodel.navigateToWalletBTC();
                     },
                     cryptoType: 'BTC',
                     balance: (walletBTC.balance / 100000000.0),
@@ -56,7 +56,7 @@ class WalletSelectionViewBody extends StatelessWidget {
                   ),
                   WalletButton(
                     onPressed: () {
-                      viewmodel.navigateToWallet('ETH');
+                      viewmodel.navigateToWalletEth();
                     },
                     cryptoType: 'ETH',
                     balance: (walletEth.balance / 1000000000000000000.0),

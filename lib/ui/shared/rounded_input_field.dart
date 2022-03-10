@@ -12,6 +12,7 @@ class RoundedInputField extends StatefulWidget {
   final bool obscure;
   final Color? fillColor;
   final Widget? suffix;
+  final int maxLines;
   const RoundedInputField({
     Key? key,
     this.onSave,
@@ -24,6 +25,7 @@ class RoundedInputField extends StatefulWidget {
     this.obscure = false,
     this.fillColor,
     this.suffix,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -49,6 +51,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
             textAlignVertical: TextAlignVertical.center,
             textInputAction: TextInputAction.next,
             style: Constants.mediumText,
+            maxLines: widget.maxLines,
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintTextDirection: TextDirection.rtl,

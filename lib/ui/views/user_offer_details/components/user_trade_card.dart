@@ -1,25 +1,35 @@
+import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/app/utils/currency_helper.dart';
+import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart' as intl;
+import 'package:stacked_services/stacked_services.dart';
 
 class UserTradeCard extends StatelessWidget {
-  final bool isBuy;
-  final String stat;
+  final Trade trade;
+  final bool isForMerchant;
 
   const UserTradeCard({
     Key? key,
-    this.isBuy = true,
-    required this.stat,
+    required this.trade,
+    this.isForMerchant = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final stateLabel = {
+      TradeStatus.awaiting_payment: "في الانتظار",
+      TradeStatus.payment_sent: "في إنتظار التاكيد",
+      TradeStatus.canceled: "ملغي",
+      TradeStatus.disputed: "متنازع عليه",
+      TradeStatus.completed: "مكتمل",
+    };
     return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-        // locator<NavigationService>()
-        //     .navigateTo(Routes.createOfferView);
-      },
+      onTap: navigateToDetails,
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -32,85 +42,93 @@ class UserTradeCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                isBuy
-                    ? Text(
-                        " شراء ",
-                        style: Constants.smallText
-                            .copyWith(color: Constants.primaryColor),
-                      )
-                    : Text(
-                        " بيع  ",
-                        style: Constants.smallText
-                            .copyWith(color: Constants.redColor),
-                      ),
+                buildTypeLabel(),
                 Text(
                   " BTC",
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Spacer(),
                 Text(
-                  stat,
+                  stateLabel[trade.status] ?? "",
                   style: Constants.smallText
                       .copyWith(color: Constants.darkBlue, fontSize: 14),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // locator<NavigationService>()
-                    //     .navigateTo(Routes.createOfferView);
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 13,
-                    color: Colors.white,
-                  ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 15,
+                  color: Colors.white,
                 ),
               ],
             ),
             Row(
               children: [
-                Text(
-                  "السعر",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "السعر",
+                          style: Constants.smallText.copyWith(
+                            color: Color(0xFFC6C6C6),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          CurrencyHelper.usdToSR(trade.price)
+                                  .toStringAsFixed(2) +
+                              " ر.س",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "الكمية",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                        SizedBox(
+                          width: 9,
+                        ),
+                        Text(
+                          "BTC ",
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                        Text(
+                          trade.amount.toStringAsFixed(7),
+                          style: Constants.smallText
+                              .copyWith(color: Color(0xFFC6C6C6)),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "المبلغ",
+                      style: Constants.smallText.copyWith(color: Colors.white),
+                    ),
+                    Text(
+                      CurrencyHelper.btcToFiat(
+                                  btcAmount: trade.amount, price: trade.price)
+                              .toStringAsFixed(2) +
+                          " ر.س",
+                      style: Constants.mediumText.copyWith(color: Colors.white),
+                    ),
+                  ],
                 ),
-                Text(
-                  "0.21358765 ر.س",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Spacer(),
-                Text(
-                  "المبلغ     ",
-                  style: Constants.smallText.copyWith(color: Colors.white),
-                ),
-                Spacer(),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "الكمية",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                SizedBox(
-                  width: 9,
-                ),
-                Text(
-                  "BTC ",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Text(
-                  "0.21347658",
-                  style: Constants.smallText.copyWith(color: Color(0xFFC6C6C6)),
-                ),
-                Spacer(),
-                Text(
-                  "2500 ر.س",
-                  style: Constants.smallText.copyWith(color: Colors.white),
-                ),
-                Spacer(),
               ],
             ),
             SizedBox(
@@ -123,14 +141,16 @@ class UserTradeCard extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  "عبدالعزيز",
+                  trade.traderName ?? "",
                   style: Constants.smallText.copyWith(
                     color: Colors.white,
                   ),
                 ),
                 Spacer(),
                 Text(
-                  "2021/5/1-14:30pm",
+                  intl.DateFormat.yMMMd().add_jm().format(
+                        trade.createdAt!,
+                      ),
                   style: Constants.smallText
                       .copyWith(color: Color(0xFFC6C6C6), fontSize: 14),
                 ),
@@ -140,5 +160,63 @@ class UserTradeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildTypeLabel() {
+    if (isForMerchant) {
+      if (trade.offer!.isBuyMarchent) {
+        return buyLabel();
+      } else {
+        return sellLabel();
+      }
+    } else {
+      if (trade.offer!.isBuyTrader) {
+        return buyLabel();
+      } else {
+        return sellLabel();
+      }
+    }
+  }
+
+  Widget buyLabel() {
+    return Text(
+      " شراء ",
+      style: Constants.smallText.copyWith(color: Constants.primaryColor),
+    );
+  }
+
+  Widget sellLabel() {
+    return Text(
+      " بيع  ",
+      style: Constants.smallText.copyWith(color: Constants.redColor),
+    );
+  }
+
+  void navigateToDetails() {
+    if (isForMerchant) {
+      if (trade.offer!.isBuyMarchent) {
+        locator<NavigationService>().navigateTo(
+          Routes.merchantBuyCoinView,
+          arguments: MerchantBuyCoinViewArguments(trade: trade),
+        );
+      } else {
+        locator<NavigationService>().navigateTo(
+          Routes.merchantSellCoinView,
+          arguments: MerchantSellCoinViewArguments(trade: trade),
+        );
+      }
+    } else {
+      if (trade.offer!.isBuyTrader) {
+        locator<NavigationService>().navigateTo(
+          Routes.traderBuyCoinView,
+          arguments: TraderBuyCoinViewArguments(trade: trade),
+        );
+      } else {
+        locator<NavigationService>().navigateTo(
+          Routes.traderSellCoinView,
+          arguments: TraderSellCoinViewArguments(trade: trade),
+        );
+      }
+    }
   }
 }

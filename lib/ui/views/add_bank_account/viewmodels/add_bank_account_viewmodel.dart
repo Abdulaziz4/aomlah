@@ -41,7 +41,6 @@ class AddBankAccountViewmodel extends BaseViewModel {
       profileId: _userService.user.profileId,
     );
     await _supabaseService.createBank(bank);
-    await _userService.fetchAndUpdateUser();
     setBusy(false);
     _navService.back();
   }
