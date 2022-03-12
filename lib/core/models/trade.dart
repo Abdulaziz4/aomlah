@@ -1,4 +1,4 @@
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/offer.dart';

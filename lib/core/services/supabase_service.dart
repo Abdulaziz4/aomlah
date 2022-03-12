@@ -1,7 +1,7 @@
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/dispute.dart';

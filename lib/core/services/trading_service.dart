@@ -1,7 +1,7 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
