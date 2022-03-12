@@ -19,11 +19,13 @@ class TradingService {
     _logger.i("createTrade");
 
     if (!trade.offer!.isBuyTrader) {
-      // await updateDebt(trade.amount);
+      final id = _userService.user.profileId;
+      await updateDebt(id, trade.amount);
     }
     return _supabaseService.createTrade(trade);
   }
 
+  // Checks the [newStatus] and perform the appropriate action accordingly
   Future<void> updateTradeStatus({
     required Trade trade,
     required TradeStatus newStatus,
@@ -33,34 +35,75 @@ class TradingService {
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
     } else if (newStatus == TradeStatus.completed) {
-      late String to;
-      late Wallet from;
-
-      if (isUserMerchant(trade.traderId)) {
-        from = trade.offer!.ownerWallet!;
-        to = trade.traderWallet!.address;
-      } else {
-        to = trade.offer!.ownerWallet!.address;
-        from = trade.traderWallet!;
-      }
-      await sendTransaction(
-        from: from,
-        to: to,
-        btcAmount: trade.amount,
-      );
-      // Deduct the debt from the user
-      // await updateDebt(trade.amount * -1);
-      // Deduct the traded quantity from the remaining quantity of the offer
-      final remining = trade.offer!.remainingQuantity - trade.amount;
-      await updateOfferQuantity(
-        offerId: trade.offer!.offerID,
-        quantity: remining,
-      );
-
-      await _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
+      return completeTrade(trade);
     }
 
     return _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
+  }
+
+  Future<void> completeTrade(Trade trade) async {
+    late String to;
+    late Wallet from;
+    bool isUserMarchent = isUserMerchant(trade.traderId);
+    if (isUserMarchent) {
+      from = trade.offer!.ownerWallet!;
+      to = trade.traderWallet!.address;
+    } else {
+      to = trade.offer!.ownerWallet!.address;
+      from = trade.traderWallet!;
+    }
+    await sendTransaction(
+      from: from,
+      to: to,
+      btcAmount: trade.amount,
+    );
+
+    if (isUserMarchent) {
+      // The current user is marchent deduct from the offer owner (the user)
+      await updateDebt(trade.offer!.ownerID, -1 * trade.amount);
+    } else {
+      // The current user is a trader deduct from the trader debt
+      await updateDebt(trade.traderId, -1 * trade.amount);
+    }
+
+    // Deduct the traded quantity from the remaining quantity of the offer
+    final remining = trade.offer!.remainingQuantity - trade.amount;
+    await updateOfferRemainingQuantity(
+      offerId: trade.offer!.offerID,
+      quantity: remining,
+    );
+
+    return _supabaseService.changeTradeStatus(
+      trade.tradeId,
+      TradeStatus.completed,
+    );
+  }
+
+  Future<void> cancelTrade(Trade trade) async {
+    _logger.i("cancelTrade");
+
+    // If the trade is a trader selling a coin revert the debte
+    if (!trade.offer!.isBuyTrader) {
+      updateDebt(trade.traderId, -1 * trade.amount);
+    }
+
+    _supabaseService.changeTradeStatus(trade.tradeId, TradeStatus.canceled);
+  }
+
+  // Increases/decreases user deb +value for adding -value for subtracting
+  Future<void> updateDebt(String userId, double debt) async {
+    _logger.i("updateDebt | args: debt = $debt");
+    _supabaseService.updateUserDebt(_userService.user.profileId, debt);
+  }
+
+  Future<void> updateOfferRemainingQuantity({
+    required String offerId,
+    required double quantity,
+  }) async {
+    await _supabaseService.updateOfferRemainingQuantity(
+      offerId: offerId,
+      remaining: quantity,
+    );
   }
 
   Future<void> sendTransaction({
@@ -75,35 +118,6 @@ class TradingService {
       from: from,
       to: to,
       satAmount: CurrencyHelper.btcToSat(btcAmount),
-    );
-  }
-
-  Future<void> cancelTrade(Trade trade) async {
-    _logger.i("cancelTrade");
-
-    // If the trade is a trader selling a coin revert the debte
-    if (!trade.offer!.isBuyTrader) {
-      // updateDebt(-1 * trade.amount);
-    }
-
-    _supabaseService.changeTradeStatus(trade.tradeId, TradeStatus.canceled);
-  }
-
-  // Increases/decreases user deb +value for adding -value for subtracting
-  Future<void> updateDebt(String userId, double debt) async {
-    _logger.i("updateDebt | args: debt = $debt");
-
-    final finalDebt = _userService.user.debt + debt;
-    _supabaseService.updateUserDebt(_userService.user.profileId, finalDebt);
-  }
-
-  Future<void> updateOfferQuantity({
-    required String offerId,
-    required double quantity,
-  }) async {
-    await _supabaseService.updateOfferRemainingQuantity(
-      offerId: offerId,
-      remaining: quantity,
     );
   }
 

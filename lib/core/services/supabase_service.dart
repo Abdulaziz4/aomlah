@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/enums/trade_state.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
@@ -45,11 +46,17 @@ class SupabaseService extends AbstractSupabase {
     await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
 
+  // update user debt with debt value
+  // +value to increase debt
+  // -value to decrease debt
   Future<void> updateUserDebt(
     String uuid,
     double debt,
   ) async {
-    await update(AomlahTable.profiles, {"debt": debt}, {"profile_id": uuid});
+    await callFn(AomlahFunction.deduct_debt.name, (json) => null, params: {
+      "user_id": uuid,
+      "amount": debt,
+    });
   }
 
   Future<void> updateUserStatus(
