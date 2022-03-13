@@ -19,9 +19,10 @@ class UserService {
   Future<void> initUser(String uuid) async {
     userController = BehaviorSubject<AomlahUser>();
     final userStream = _supabaseService.getUserStream(uuid);
-    user = await userStream.first;
 
-    userController.addStream(userStream);
+    userStream.listen(userController.sink.add);
+
+    user = await userController.stream.first;
 
     userController.stream.listen((newUser) {
       user = newUser;
