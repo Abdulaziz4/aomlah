@@ -3,7 +3,7 @@ import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/app/utils/uuid_helper.dart';
 import 'package:aomlah/core/enums/dispute_status.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/services/supabase_service.dart';

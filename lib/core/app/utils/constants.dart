@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Constants {
-  Constants._();
+  const Constants._();
 
   /// The main green color used for theming the app.
   static const Color primaryColor = Color(0xFF16A79E);

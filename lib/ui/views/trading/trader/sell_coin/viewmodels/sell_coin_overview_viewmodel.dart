@@ -1,7 +1,7 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/uuid_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';

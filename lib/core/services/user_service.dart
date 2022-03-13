@@ -14,12 +14,19 @@ class UserService {
   final _supabaseService = locator<SupabaseService>();
   final _realtimeWalletService = locator<RealtimeWalletService>();
 
-  BehaviorSubject<AomlahUser> userController = BehaviorSubject<AomlahUser>();
+  late BehaviorSubject<AomlahUser> userController;
 
   Future<void> initUser(String uuid) async {
-    userController.addStream(_supabaseService.getUserStream(uuid));
-    user = await userController.first;
+    userController = BehaviorSubject<AomlahUser>();
+    final userStream = _supabaseService.getUserStream(uuid);
 
+    // Pipe user stream to the controller stream
+    userStream.listen(userController.sink.add);
+
+    // Wait until first event arrived before ending
+    user = await userController.stream.first;
+
+    userController.sink.add(user);
     userController.stream.listen((newUser) {
       user = newUser;
     });

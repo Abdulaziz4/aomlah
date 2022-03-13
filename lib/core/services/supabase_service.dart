@@ -1,6 +1,7 @@
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/dispute.dart';
@@ -9,9 +10,7 @@ import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -47,11 +46,17 @@ class SupabaseService extends AbstractSupabase {
     await update(AomlahTable.profiles, {"name": name}, {"profile_id": uuid});
   }
 
+  // update user debt with debt value
+  // +value to increase debt
+  // -value to decrease debt
   Future<void> updateUserDebt(
     String uuid,
     double debt,
   ) async {
-    await update(AomlahTable.profiles, {"debt": debt}, {"profile_id": uuid});
+    await callFn(AomlahFunction.deduct_debt.name, (json) => null, params: {
+      "user_id": uuid,
+      "amount": debt,
+    });
   }
 
   Future<void> updateUserStatus(
@@ -111,6 +116,17 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> createOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
+  }
+
+  Future<void> updateOfferRemainingQuantity({
+    required String offerId,
+    required double remaining,
+  }) async {
+    await update(
+      AomlahTable.offers,
+      {"remaining_quantity": remaining},
+      {"offer_id": offerId},
+    );
   }
 
   // User's own offers controller

@@ -72,7 +72,7 @@ class OfferCard extends StatelessWidget {
                     children: [
                       buildInfoItem("السعر", "$price ر.س"),
                       Spacer(),
-                      buildInfoItem("الكمية", offer.cryptoAmonutLabel()),
+                      buildInfoItem("الكمية", offer.remainingQuantityLabel()),
                     ],
                   ),
                   Expanded(

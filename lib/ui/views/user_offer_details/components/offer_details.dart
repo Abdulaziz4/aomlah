@@ -134,7 +134,7 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'الكمية',
+                            'الكمية الاجمالية',
                             style: TextStyle(color: Colors.white, fontSize: 19),
                           ),
                           Spacer(),
@@ -143,7 +143,26 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                             style: TextStyle(color: Colors.white, fontSize: 19),
                           ),
                           Text(
-                            viewmodel.offer.cryptoAmount.toString(),
+                            viewmodel.offer.totalQuantity.toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'الكمية المتبقية',
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          Spacer(),
+                          Text(
+                            ' BTC ',
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          Text(
+                            viewmodel.offer.remainingQuantity.toString(),
                             style: TextStyle(color: Colors.white, fontSize: 19),
                           ),
                         ],
