@@ -40,7 +40,6 @@ class Offer {
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) {
-    print(json);
     List<BankAccount> accounts = [];
     if (json["bank_accounts"] != null &&
         (json["bank_accounts"] as List).first != null) {
@@ -65,7 +64,7 @@ class Offer {
       ownerWallet: json["owner_wallet"] != null
           ? Wallet.fromJson(json["owner_wallet"])
           : null,
-      ownerDebt: json["owner_debt"] ?? 0,
+      ownerDebt: json["owner_debt"] == null ? 0.0 : json["owner_debt"] * 1.0,
     );
   }
 
