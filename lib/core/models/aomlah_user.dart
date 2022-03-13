@@ -43,9 +43,6 @@ class AomlahUser {
   }
 
   factory AomlahUser.fromJson(Map<String, dynamic> map) {
-    print("object");
-    print(map);
-
     List<BankAccount> accounts = [];
     if ((map["bank_accounts"] as List).first != null) {
       accounts = (map["bank_accounts"] as List).map((e) {

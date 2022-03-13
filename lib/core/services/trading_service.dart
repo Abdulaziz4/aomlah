@@ -100,6 +100,8 @@ class TradingService {
     required String offerId,
     required double quantity,
   }) async {
+    _logger.i(
+        "updateOfferRemainingQuantity | args: offerId=$offerId, quantity=$quantity");
     await _supabaseService.updateOfferRemainingQuantity(
       offerId: offerId,
       remaining: quantity,

@@ -20,8 +20,10 @@ class UserService {
     userController = BehaviorSubject<AomlahUser>();
     final userStream = _supabaseService.getUserStream(uuid);
 
+    // Pipe user stream to the controller stream
     userStream.listen(userController.sink.add);
 
+    // Wait until first event arrived before ending
     user = await userController.stream.first;
 
     userController.stream.listen((newUser) {
