@@ -14,11 +14,14 @@ class UserService {
   final _supabaseService = locator<SupabaseService>();
   final _realtimeWalletService = locator<RealtimeWalletService>();
 
-  BehaviorSubject<AomlahUser> userController = BehaviorSubject<AomlahUser>();
+  late BehaviorSubject<AomlahUser> userController;
 
   Future<void> initUser(String uuid) async {
-    userController.addStream(_supabaseService.getUserStream(uuid));
-    user = await userController.first;
+    userController = BehaviorSubject<AomlahUser>();
+    final userStream = _supabaseService.getUserStream(uuid);
+    user = await userStream.first;
+
+    userController.addStream(userStream);
 
     userController.stream.listen((newUser) {
       user = newUser;

@@ -45,7 +45,7 @@ class TradingService {
     late String to;
     late Wallet from;
     bool isUserMarchent = isUserMerchant(trade.traderId);
-    if (isUserMarchent) {
+    if (isUserMarchent && !trade.offer!.isBuyMarchent) {
       from = trade.offer!.ownerWallet!;
       to = trade.traderWallet!.address;
     } else {
@@ -57,8 +57,8 @@ class TradingService {
       to: to,
       btcAmount: trade.amount,
     );
-
-    if (isUserMarchent) {
+// test5521@test.com
+    if (isUserMarchent && !trade.offer!.isBuyMarchent) {
       // The current user is marchent deduct from the offer owner (the user)
       await updateDebt(trade.offer!.ownerID, -1 * trade.amount);
     } else {
