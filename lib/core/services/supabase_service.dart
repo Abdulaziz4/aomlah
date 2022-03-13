@@ -122,10 +122,11 @@ class SupabaseService extends AbstractSupabase {
     required String offerId,
     required double remaining,
   }) async {
-    await upsert(AomlahTable.offers, {
-      "offer_id": offerId,
-      "remaining_quantity": remaining,
-    });
+    await update(
+      AomlahTable.offers,
+      {"remaining_quantity": remaining},
+      {"offer_id": offerId},
+    );
   }
 
   // User's own offers controller
