@@ -26,6 +26,7 @@ class UserService {
     // Wait until first event arrived before ending
     user = await userController.stream.first;
 
+    userController.sink.add(user);
     userController.stream.listen((newUser) {
       user = newUser;
     });

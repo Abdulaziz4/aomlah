@@ -15,7 +15,7 @@ class SettingsViewModel extends BaseViewModel {
 
   void logout() {
     _authService.signOut();
-    _navService.replaceWith(Routes.welcomeView);
+    _navService.clearStackAndShow(Routes.welcomeView);
   }
 
   void updateProfileNav() {
