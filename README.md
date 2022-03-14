@@ -1,16 +1,14 @@
-# aomlah
+# aomlah (عملة)
+Aomlah is a cryptocurrencies platform that provides a prediction of bitcoin price by analysing social media sentiment and predict the hourly close price accordingly, as well as allowing users to exchange cryptocurrencies using peer-to-peer mechanism. 
 
-A new Flutter project.
+## Features ⚡️
+- Predicting hourly close price of bitcoin by analyzing different social media platforms interaction (twitter, reddit, google trends) and use LSTM (long-short-term-memory) deep learning algorithm to analyze and predict the price.
+- Secure peer-to-peer trading of featuring fast blocjchain transactions, minimum gas fee, escrow, and much more.  
+- Aggregated cryptocurrency realtime market data inclding detailed informations about a coin, price, real time charts and much more.
+- Transfering from Aomlah wallet to any external wallet.
 
-## Getting Started
+### Aomlah is currently coocking and soon will be ready for production 💪🏻
 
-This project is a starting point for a Flutter application.
+## License
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+MIT
