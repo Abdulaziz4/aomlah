@@ -1,5 +1,5 @@
-# aomlah (عملة)
-Aomlah is a cryptocurrencies platform that provides a prediction of bitcoin price by analysing social media sentiment and predict the hourly close price accordingly, as well as allowing users to exchange cryptocurrencies using peer-to-peer mechanism. 
+# Aomlah (عملة)
+Cryptocurrencies platform that provides a prediction of bitcoin price by analysing social media sentiment and predict the hourly close price accordingly, as well as allowing users to exchange cryptocurrencies using peer-to-peer mechanism. 
 
 ## Features ⚡️
 - Predicting hourly close price of bitcoin by analyzing different social media platforms interaction (twitter, reddit, google trends) and use LSTM (long-short-term-memory) deep learning algorithm to analyze and predict the price.
