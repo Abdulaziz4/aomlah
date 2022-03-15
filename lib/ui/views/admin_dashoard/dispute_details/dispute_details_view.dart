@@ -17,32 +17,21 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("تفاصيل النزاع",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Constants.darkBlue,
-              )),
-          backgroundColor: Color(0xff263441),
+          title: Text("تفاصيل النزاع"),
         ),
         bottomNavigationBar: BottomAppBar(
           color: Constants.black2dp,
           child: Container(
-            width: 390,
             height: 84,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Constants.black2dp,
             ),
-            child: Row(
-              children: <Widget>[
-                CustomButton(
-                  onPressed: () {},
-                  text: 'إغلاق النزاع',
-                  color: Color(0xFF7BB9FA),
-                  width: 340,
-                ),
-              ],
+            child: CustomButton(
+              onPressed: () {},
+              text: 'إغلاق النزاع',
+              color: Color(0xFF7BB9FA),
+              height: 45,
             ),
           ),
         ),
