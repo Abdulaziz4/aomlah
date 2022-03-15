@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/app/utils/constants.dart';
-import '../../shared/custom_button.dart';
+import '../../../../core/app/utils/constants.dart';
+import '../../../shared/custom_button.dart';
 
-class DisputeDetailWidget extends StatefulWidget {
-  const DisputeDetailWidget({Key? key}) : super(key: key);
+class DisputeDetailsView extends StatefulWidget {
+  const DisputeDetailsView({Key? key}) : super(key: key);
 
   @override
-  _DisputeDetailWidgetState createState() => _DisputeDetailWidgetState();
+  _DisputeDetailsViewState createState() => _DisputeDetailsViewState();
 }
 
-class _DisputeDetailWidgetState extends State<DisputeDetailWidget> {
+class _DisputeDetailsViewState extends State<DisputeDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -107,32 +107,6 @@ class _DisputeDetailWidgetState extends State<DisputeDetailWidget> {
                 ],
               ),
             ),
-            // Container(
-            //   color: Color(0xff263441),
-            //   child: Center(
-            //     child: InkWell(
-            //       child: Container(
-            //         margin: EdgeInsets.symmetric(
-            //           horizontal: MediaQuery.of(context).size.width * 0.05,
-            //           vertical: MediaQuery.of(context).size.height * 0.02,
-            //         ),
-            //         decoration: BoxDecoration(
-            //           color: Color(0xFF7BB9FA),
-            //           borderRadius: BorderRadius.circular(10),
-            //         ),
-            //         child: Center(
-            //           child: Text(
-            //             "إغلاق النزاع",
-            //             style: TextStyle(
-            //                 color: Colors.white,
-            //                 fontSize: 20,
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),

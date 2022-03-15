@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import '../../ui/views/admin_dashoard/dispute_details/dispute_details_view.dart';
+import '../../ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
 import '../../ui/views/create_dispute/create_dispute_view.dart';
@@ -64,6 +66,8 @@ class Routes {
   static const String merchantSellCoinView = '/merchant-sell-coin-view';
   static const String createDisputeView = '/create-dispute-view';
   static const String userTradesView = '/user-trades-view';
+  static const String adminDisputesView = '/admin-disputes-view';
+  static const String disputeDetailsView = '/dispute-details-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -89,6 +93,8 @@ class Routes {
     merchantSellCoinView,
     createDisputeView,
     userTradesView,
+    adminDisputesView,
+    disputeDetailsView,
   };
 }
 
@@ -121,6 +127,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.merchantSellCoinView, page: MerchantSellCoinView),
     RouteDef(Routes.createDisputeView, page: CreateDisputeView),
     RouteDef(Routes.userTradesView, page: UserTradesView),
+    RouteDef(Routes.adminDisputesView, page: AdminDisputesView),
+    RouteDef(Routes.disputeDetailsView, page: DisputeDetailsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -300,6 +308,18 @@ class StackedRouter extends RouterBase {
     UserTradesView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const UserTradesView(),
+        settings: data,
+      );
+    },
+    AdminDisputesView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AdminDisputesView(),
+        settings: data,
+      );
+    },
+    DisputeDetailsView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const DisputeDetailsView(),
         settings: data,
       );
     },

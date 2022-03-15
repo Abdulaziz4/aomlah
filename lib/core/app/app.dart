@@ -7,6 +7,8 @@ import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
+import 'package:aomlah/ui/views/admin_dashoard/dispute_details/dispute_details_view.dart';
+import 'package:aomlah/ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import 'package:aomlah/ui/views/auth/welcome/welcome_view.dart';
 import 'package:aomlah/ui/views/create_dispute/create_dispute_view.dart';
@@ -61,6 +63,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: MerchantSellCoinView),
     MaterialRoute(page: CreateDisputeView),
     MaterialRoute(page: UserTradesView),
+    MaterialRoute(page: AdminDisputesView),
+    MaterialRoute(page: DisputeDetailsView),
   ],
   dependencies: [
     // Register all services and deps.

@@ -1,35 +1,16 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/ui/views/admin_dashoard/disputes/components/dispute_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AdminDisputesView extends StatefulWidget {
+  const AdminDisputesView({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _AdminDisputesViewState createState() => _AdminDisputesViewState();
 }
 
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ControlPanel(),
-    );
-  }
-}
-
-class ControlPanel extends StatefulWidget {
-  const ControlPanel({Key? key}) : super(key: key);
-
-  @override
-  _ControlPanelState createState() => _ControlPanelState();
-}
-
-class _ControlPanelState extends State<ControlPanel> {
+class _AdminDisputesViewState extends State<AdminDisputesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,10 +109,10 @@ class _ControlPanelState extends State<ControlPanel> {
               /// You have to change the column to listView.builder to get the data and put it in card from the database.
               /// Wrong: sorry my language is very bad .
               child: Column(
-                children: [
-                  itemCard(),
-                  itemCard(),
-                  itemCard(),
+                children: const [
+                  DisputeCard(),
+                  DisputeCard(),
+                  DisputeCard(),
                 ],
               ),
             ),
@@ -143,90 +124,3 @@ class _ControlPanelState extends State<ControlPanel> {
 }
 
 ///  هذه هي كرتة النزاعات، قم بتعديلها كيفما تشاء .
-
-class itemCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05, vertical: 5),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Constants.black2dp, borderRadius: BorderRadius.circular(10)),
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "رقم التداول",
-                          style: Constants.smallText.copyWith(
-                            color: Constants.primaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "1212   ",
-                          style: Constants.smallText.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Text(
-                      "في الانتظار",
-                      style: Constants.smallText
-                          .copyWith(color: Constants.darkBlue, fontSize: 14),
-                    ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: [
-                    Text(
-                      "السبب",
-                      style: Constants.smallText.copyWith(
-                        color: Constants.primaryColor,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 52,
-                    ),
-                    Text(
-                      "لا أريد إكمال العملية     ",
-                      style: Constants.smallText.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: [
-                    Spacer(),
-                    Text(
-                      "2022-04-01   4:30pm",
-                      style: Constants.smallText
-                          .copyWith(color: Color(0xFFC6C6C6), fontSize: 14),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
