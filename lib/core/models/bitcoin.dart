@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:aomlah/core/app/utils/double_extension.dart';
+import 'package:aomlah/core/app/utils/currency_helper.dart';
 
 class Bitcoin {
   final double price;
@@ -26,7 +26,10 @@ class Bitcoin {
 
   // Calculates the amount you will get in BTC
   double amountToBtc(double fiatAmount) {
-    return (fiatAmount / 3.75) / price;
+    return CurrencyHelper.fiatAmountToBtc(
+      fiatAmount: fiatAmount,
+      price: price,
+    );
   }
 
   double priceFromMargin(double margin) {

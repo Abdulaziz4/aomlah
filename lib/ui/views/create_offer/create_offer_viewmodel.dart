@@ -6,11 +6,16 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../core/app/app.locator.dart';
+import '../../../core/app/app.router.dart';
 
 class CreateOfferViewModel extends BaseViewModel {
   final UserService userService = locator<UserService>();
   final supabaseService = locator<SupabaseService>();
   final navService = locator<NavigationService>();
+
+  navigateToBankAccounts() {
+    navService.navigateTo(Routes.userBankAccountsView);
+  }
 
   Future<void> submitBuyOffer(String cryptoType, String currencyType,
       double margin, double cryptoAmount, double minTrade, String terms) async {
@@ -23,7 +28,8 @@ class CreateOfferViewModel extends BaseViewModel {
         isBuy: true,
         currencyType: currencyType,
         margin: margin,
-        cryptoAmount: cryptoAmount,
+        totalQuantity: cryptoAmount,
+        remainingQuantity: cryptoAmount,
         minTrade: minTrade,
         terms: terms,
       ));
@@ -44,8 +50,9 @@ class CreateOfferViewModel extends BaseViewModel {
         cryptoType: cryptoType,
         isBuy: false,
         currencyType: currencyType,
+        remainingQuantity: cryptoAmount,
         margin: margin,
-        cryptoAmount: cryptoAmount,
+        totalQuantity: cryptoAmount,
         minTrade: minTrade,
         terms: terms,
       ));
@@ -55,7 +62,4 @@ class CreateOfferViewModel extends BaseViewModel {
       print(e);
     }
   }
-
 }
-
-

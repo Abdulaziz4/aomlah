@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart' as intl;
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
@@ -23,14 +24,15 @@ class OfferCard extends StatelessWidget {
         .toStringAsFixed(3);
     return GestureDetector(
       onTap: () => {
-        if (offer.isBuy)
+        if (!offer.isBuy)
           {
-            locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView),
+            locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView,
+                arguments: BuyCoinOverviewViewArguments(offer: offer)),
           }
         else
           {
-            locator<NavigationService>()
-                .navigateTo(Routes.sellCoinOverviewView),
+            locator<NavigationService>().navigateTo(Routes.sellCoinOverviewView,
+                arguments: SellCoinOverviewViewArguments(offer: offer)),
           }
       },
       child: Container(
@@ -48,9 +50,15 @@ class OfferCard extends StatelessWidget {
               children: [
                 SvgPicture.asset("assets/icons/profile-icon.svg"),
                 SizedBox(width: 5),
-                Text("عبدالعزيز"),
+                Text(offer.ownerName ?? ""),
                 Spacer(),
-                Text("2021/5/1")
+                Text(
+                  intl.DateFormat.yMMMd().add_jm().format(
+                        offer.createAt!,
+                      ),
+                  textDirection: TextDirection.ltr,
+                  style: Constants.verySmallText.copyWith(color: Colors.grey),
+                )
               ],
             ),
             SizedBox(height: 5),
@@ -64,7 +72,7 @@ class OfferCard extends StatelessWidget {
                     children: [
                       buildInfoItem("السعر", "$price ر.س"),
                       Spacer(),
-                      buildInfoItem("الكمية", offer.cryptoAmonutLabel()),
+                      buildInfoItem("الكمية", offer.remainingQuantityLabel()),
                     ],
                   ),
                   Expanded(
@@ -73,7 +81,7 @@ class OfferCard extends StatelessWidget {
                       children: [
                         buildInfoItem("الحد الادنى", "${offer.minTrade} ر.س"),
                         Spacer(),
-                        offer.isBuy
+                        !offer.isBuy
                             ? CustomButton(
                                 onPressed: () {
                                   locator<NavigationService>()
@@ -83,8 +91,12 @@ class OfferCard extends StatelessWidget {
                               )
                             : CustomButton(
                                 onPressed: () {
-                                  locator<NavigationService>()
-                                      .navigateTo(Routes.sellCoinOverviewView);
+                                  locator<NavigationService>().navigateTo(
+                                    Routes.sellCoinOverviewView,
+                                    arguments: SellCoinOverviewViewArguments(
+                                      offer: offer,
+                                    ),
+                                  );
                                 },
                                 text: "بيع",
                                 color: Constants.redColor,

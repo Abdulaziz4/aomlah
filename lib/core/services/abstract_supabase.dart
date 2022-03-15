@@ -68,6 +68,8 @@ abstract class AbstractSupabase {
       select: select,
     ).execute();
 
+    print(response.data);
+
     if (response.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
     }
@@ -129,9 +131,18 @@ abstract class AbstractSupabase {
     required AomlahTable table,
     required T Function(Map<String, dynamic> json) fromJson,
     required String primaryKey,
+    Map<String, String>? query,
   }) {
+    //{table}:{col}=eq.{val} - where {col} is the column name, and {val} is
+    //the value which you want to match.
+    String match = table.name;
+    if (query != null) {
+      query.forEach((key, value) {
+        match += ":$key=eq.$value";
+      });
+    }
     return supabase
-        .from(table.name)
+        .from(match)
         .stream([primaryKey])
         .execute()
         .map<List<T>>((mapsList) {

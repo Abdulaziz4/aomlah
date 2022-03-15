@@ -18,7 +18,6 @@ class RealTimeWallet {
   }
   factory RealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
-    print(json['txs']);
     transaction =
         (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
 
@@ -28,4 +27,10 @@ class RealTimeWallet {
       transactions: transaction,
     );
   }
+
+  double balanceSR(double price) {
+    return double.parse((balanceBTC * price * 3.75).toStringAsFixed(3));
+  }
+
+  double get balanceBTC => (balance / 100000000);
 }

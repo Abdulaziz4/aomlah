@@ -1,6 +1,8 @@
 import 'package:aomlah/core/app/utils/colors_helper.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
 import 'package:flutter/material.dart';
 
 class BottomActions extends StatelessWidget {
@@ -31,6 +33,7 @@ class BottomActions extends StatelessWidget {
         ? SizedBox()
         : Container(
             height: 100,
+            width: double.infinity,
             padding: const EdgeInsets.only(
               left: 15,
               bottom: 15,
@@ -38,7 +41,6 @@ class BottomActions extends StatelessWidget {
             ),
             color: darken(Constants.black2dp, 20),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (showPaymentSent)
                   Expanded(

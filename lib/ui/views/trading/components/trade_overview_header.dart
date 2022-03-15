@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TradeOverviewHeader extends StatelessWidget {
   final String price;
-  final double quantity;
+  final String quantity;
   final double minLimit;
   const TradeOverviewHeader(
       {Key? key,
@@ -22,7 +22,7 @@ class TradeOverviewHeader extends StatelessWidget {
         ),
         SpannedTextItem(
           rightText: "الكمية",
-          leftText: "$quantity BTC",
+          leftText: quantity,
         ),
         SpannedTextItem(
           rightText: "الحد الادنى",

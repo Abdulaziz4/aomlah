@@ -7,7 +7,6 @@ import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
-import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,14 +38,10 @@ class MyApp extends StatelessWidget {
           initialData: RealTimeWallet.dummy(),
         ),
       ],
-      child: StreamProvider<AomlahUser>(
-        initialData: AomlahUser.anonymous(),
-        create: (_) => locator<UserService>().userController.stream,
-        child: ArabicMaterialApp(
-          theme: CustomTheme.mainTheme,
-          navigatorKey: StackedService.navigatorKey,
-          onGenerateRoute: StackedRouter().onGenerateRoute,
-        ),
+      child: ArabicMaterialApp(
+        theme: CustomTheme.mainTheme,
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
       ),
     );
   }

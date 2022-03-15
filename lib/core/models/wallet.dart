@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Wallet {
   final String privateKey;
   final String publicKey;
