@@ -1,3 +1,4 @@
+import 'package:aomlah/ui/views/admin_dashoard/dispute_details/components/dispute_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/app/utils/constants.dart';
@@ -19,84 +20,95 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
         appBar: AppBar(
           title: Text("تفاصيل النزاع"),
         ),
-        bottomNavigationBar: BottomAppBar(
-          color: Constants.black2dp,
-          child: Container(
-            height: 84,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Constants.black2dp,
-            ),
-            child: CustomButton(
-              onPressed: () {},
-              text: 'إغلاق النزاع',
-              color: Color(0xFF7BB9FA),
-              height: 45,
-            ),
-          ),
-        ),
+        bottomNavigationBar: buildBottomButtom(),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(width: double.infinity),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "رقم التداول",
-                          style: Constants.mediumText.copyWith(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text("0001",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 18)),
-                      ],
+                  DisputeSection(
+                    title: "رقم التداول",
+                    content: Text(
+                      "1289412874187",
+                      style: Constants.smallText,
                     ),
                   ),
-                  ItemCard(
-                    "اسم المنازع (البائع)",
-                    "زياد",
+                  DisputeSection(
+                    title: "اسم المنازع (البائع)",
+                    content: Text(
+                      "1289412874187",
+                      style: Constants.smallText,
+                    ),
                   ),
-                  ItemCard(
-                    "البريد لصحاب النزاع (البائع)",
-                    "z@gmail.com",
-                    copy: true,
+                  DisputeSection(
+                    title: "البريد لصاحب النزاع (البائع)",
+                    content: Text(
+                      "zawer@gmail.com",
+                      style: Constants.smallText,
+                    ),
                   ),
-                  ItemCard("تنازع ضد(المشتري)", "زياد"),
-                  ItemCard(
-                    "البريد للمتنازع ضده (المشتري)",
-                    "z@gmail.com",
-                    copy: true,
+                  DisputeSection(
+                    content: Text(
+                      "زياد",
+                      style: Constants.smallText,
+                    ),
+                    title: "تنازع ضد (المشتري)",
                   ),
-                  ItemCard("نوع التداول", "شراء BTC"),
-                  ItemCard("القيمة المتنازع عليها", "0.245 BTC"),
-                  Row(
-                    children: [
-                      Text(
-                        "المحادثات",
-                        style: Constants.mediumText.copyWith(
-                            color: Constants.primaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  DisputeSection(
+                    content: Text(
+                      "asddklna@gmail.com",
+                      style: Constants.smallText,
+                    ),
+                    title: "البريد للمتنازع ضده (المشتري)",
                   ),
-                  Row(
-                    children: [
-                      convCard("زياد", "أهلا وسهلا"),
-                    ],
-                  )
+                  DisputeSection(
+                    title: "نوع التداول",
+                    content: Text(
+                      "شراء BTC",
+                      style: Constants.smallText,
+                    ),
+                  ),
+                  DisputeSection(
+                    title: "الكمية المتنازع عليها",
+                    content: Text(
+                      "0.0232 BTC",
+                      style: Constants.smallText,
+                    ),
+                  ),
+                  DisputeSection(
+                    title: "المحادثات",
+                    content: Text(
+                      "0.0232 BTC",
+                      style: Constants.smallText,
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  BottomAppBar buildBottomButtom() {
+    return BottomAppBar(
+      color: Constants.black2dp,
+      child: Container(
+        height: 84,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Constants.black2dp,
+        ),
+        child: CustomButton(
+          onPressed: () {},
+          text: 'إغلاق النزاع',
+          color: Color(0xFF7BB9FA),
+          height: 45,
         ),
       ),
     );

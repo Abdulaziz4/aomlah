@@ -14,16 +14,18 @@ class DisputeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: Constants.largeText.copyWith(
             color: Constants.primaryColor,
             fontWeight: FontWeight.bold,
+            fontSize: 19,
           ),
         ),
         SizedBox(
-          height: 7,
+          height: 3,
         ),
         content,
       ],
