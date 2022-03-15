@@ -20,81 +20,70 @@ class ProfileView extends StatelessWidget {
             appBar: AppBar(
               title: Text("الحساب الشخصي"),
               automaticallyImplyLeading: false,
+              elevation: 0,
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Stack(
+            body: Column(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                    right: 15,
+                    bottom: 20,
+                  ),
+                  child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 150,
-                        color: Color(0xff0F1E2C),
+                      SvgPicture.asset("assets/icons/ProfilePic.svg"),
+                      SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name,
+                            style: Constants.smallText,
+                          ),
+                          Text(
+                            viewmodel.email,
+                            style: Constants.smallText,
+                          ),
+                          buildStateContainer(user.isOnline),
+                        ],
                       ),
-                      Positioned(
-                        child: SvgPicture.asset("assets/icons/ProfilePic.svg"),
-                        bottom: 25,
-                        right: 20,
-                      ),
-                      Positioned(
-                        child: Text(
-                          user.name,
-                          style: Constants.smallText,
-                        ),
-                        bottom: 75,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: Text(
-                          viewmodel.email,
-                          style: Constants.smallText,
-                        ),
-                        bottom: 50,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: buildStateContainer(user.isOnline),
-                        bottom: 12,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: SvgPicture.asset("assets/icons/verifyBadge.svg"),
-                        bottom: 100,
-                        left: 0,
-                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/verifyBadge.svg"),
                     ],
                   ),
-                  NavigationListTile(
-                    onPress: viewmodel.navigateToUserOffers,
-                    leadingIcon: "assets/icons/offers_profile.svg",
-                    title: "العروض",
-                  ),
-                  NavigationListTile(
-                    onPress: viewmodel.navigateToTrades,
-                    leadingIcon: "assets/icons/Transaction_profile.svg",
-                    title: "عمليات التداول",
-                  ),
-                  NavigationListTile(
-                    onPress: viewmodel.navigateToWalletInfo,
-                    leadingIcon: "assets/icons/Wallet_profile.svg",
-                    title: "المحفظة",
-                  ),
-                  NavigationListTile(
-                    onPress: viewmodel.navigateToBankAccounts,
-                    leadingIcon: "assets/icons/BankAcc_profile.svg",
-                    title: "الحسابات البنكية",
-                  ),
-                  NavigationListTile(
-                    onPress: () {},
-                    leadingIcon: "assets/icons/ControlPannel_profile.svg",
-                    title: "لوحة التحكم",
-                  ),
-                  NavigationListTile(
-                    onPress: viewmodel.navigateToSettings,
-                    leadingIcon: "assets/icons/Settings_profile.svg",
-                    title: "الإعدادات",
-                  ),
-                ],
-              ),
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToUserOffers,
+                  leadingIcon: "assets/icons/offers_profile.svg",
+                  title: "العروض",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToTrades,
+                  leadingIcon: "assets/icons/Transaction_profile.svg",
+                  title: "عمليات التداول",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToWalletInfo,
+                  leadingIcon: "assets/icons/Wallet_profile.svg",
+                  title: "المحفظة",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToBankAccounts,
+                  leadingIcon: "assets/icons/BankAcc_profile.svg",
+                  title: "الحسابات البنكية",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToDashboardInfo,
+                  leadingIcon: "assets/icons/ControlPannel_profile.svg",
+                  title: "لوحة التحكم",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToSettings,
+                  leadingIcon: "assets/icons/Settings_profile.svg",
+                  title: "الإعدادات",
+                ),
+              ],
             ),
           );
         });

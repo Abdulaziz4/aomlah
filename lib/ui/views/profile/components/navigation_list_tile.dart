@@ -16,16 +16,10 @@ class NavigationListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.zero,
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            width: 2,
-            color: Color(0xff3D4955),
-          ),
-          top: BorderSide(
-            width: 2,
-            color: Colors.black,
-          ),
+          bottom: BorderSide(),
         ),
       ),
       child: ElevatedButton(
