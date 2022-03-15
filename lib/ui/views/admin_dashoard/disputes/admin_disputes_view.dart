@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/views/admin_dashoard/disputes/components/dispute_card.dart';
+import 'package:aomlah/ui/views/admin_dashoard/disputes/components/summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -21,71 +22,35 @@ class _AdminDisputesViewState extends State<AdminDisputesView> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height * 0.02),
+              vertical: 20,
+            ),
             child: CarouselSlider(
               options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * .2),
-
-              /// change in item list and map to update values in slider .
-              items: [1, 2, 3].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Constants.black4dp,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.04),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("32,32,323",
-                                        style: Constants.largeText.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                                    Text("اجمالي قيمة التداولات",
-                                        style: Constants.smallText.copyWith(
-                                          color: Colors.white,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: MediaQuery.of(context).size.width * 0.2,
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.purple[200],
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.ac_unit,
-                                    color: Colors.purple,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ));
-                  },
-                );
-              }).toList(),
+                height: 150,
+                autoPlay: true,
+                viewportFraction: 0.8,
+              ),
+              items: const [
+                SummaryCard(
+                  amount: "33392",
+                  color: Constants.primaryColor,
+                  icon: Icons.swap_vert_outlined,
+                  label: "عدد التداولات",
+                ),
+                SummaryCard(
+                  amount: "33392",
+                  color: Color(0xFFF39C12),
+                  icon: Icons.list_alt_rounded,
+                  label: "عدد العروض",
+                ),
+                SummaryCard(
+                  amount: "346.232,235 \$",
+                  color: Color(0xFFBB6BD9),
+                  icon: Icons.currency_exchange,
+                  label: "قيمة التداولات",
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
           ),
           Container(
             width: MediaQuery.of(context).size.width,
