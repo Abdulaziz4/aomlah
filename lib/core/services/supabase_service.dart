@@ -65,6 +65,28 @@ class SupabaseService extends AbstractSupabase {
         AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
   }
 
+  Future<int> getNumOfDisputedTrades(String offerId) async {
+    final res = await supabase
+        .rpc(
+          AomlahFunction.num_of_disputed_trades.name,
+          params: {"id_offer": offerId},
+        )
+        .select()
+        .execute();
+    return res.data;
+  }
+
+  Future<int> getNumOfOpenTrades(String offerId) async {
+    final res = await supabase
+        .rpc(
+          AomlahFunction.num_of_open_trades.name,
+          params: {"id_offer": offerId},
+        )
+        .select()
+        .execute();
+    return res.data;
+  }
+
   Stream<AomlahUser> getUserStream(String uuid) {
     return subscribeForChanges<AomlahUser>(
         table: AomlahTable.profiles,
@@ -125,6 +147,16 @@ class SupabaseService extends AbstractSupabase {
     await update(
       AomlahTable.offers,
       {"remaining_quantity": remaining},
+      {"offer_id": offerId},
+    );
+  }
+
+  Future<void> closeOffer({
+    required String offerId,
+  }) async {
+    await update(
+      AomlahTable.offers,
+      {"is_closed": true},
       {"offer_id": offerId},
     );
   }

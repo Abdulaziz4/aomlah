@@ -15,6 +15,8 @@ class Offer {
 
   ///BUY OFFER= TRUE, SELL OFFER= False
   final bool isBuy;
+  final bool isClosed;
+
   final List<BankAccount>? bankAccounts;
   final String? ownerName;
   final DateTime? createAt;
@@ -32,6 +34,7 @@ class Offer {
     required this.terms,
     required this.isBuy,
     required this.remainingQuantity,
+    this.isClosed = false,
     this.bankAccounts,
     this.createAt,
     this.ownerName,
@@ -58,6 +61,7 @@ class Offer {
       minTrade: json['min_trade'] * 1.0,
       terms: json['terms'],
       isBuy: json['is_buy'],
+      isClosed: json["is_closed"],
       bankAccounts: accounts,
       ownerName: json["name"],
       createAt: DateTime.parse(json["created_at"]),
