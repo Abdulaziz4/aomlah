@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../services/auth_service.dart';
 import '../services/candles_service.dart';
 import '../services/crypto_info_service.dart';
+import '../services/offers_service.dart';
 import '../services/price_service.dart';
 import '../services/realtime_wallet_service.dart';
 import '../services/supabase_service.dart';
@@ -38,6 +39,8 @@ Future setupLocator(
   locator.registerLazySingleton(() => RealtimeWalletService());
   locator.registerLazySingleton(() => CandlesService());
   locator.registerLazySingleton(() => TradingService());
+  locator.registerLazySingleton(() => OffersService());
+  locator.registerLazySingleton(() => SnackbarService());
   final supabaseService = await SupabaseService.getInstance();
   locator.registerSingleton(supabaseService);
 }

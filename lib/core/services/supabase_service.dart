@@ -73,11 +73,10 @@ class SupabaseService extends AbstractSupabase {
         )
         .select()
         .execute();
-    print(res.data);
-    return 0;
+    return res.data;
   }
 
-  Future<int> getNumOfOpenrades(String offerId) async {
+  Future<int> getNumOfOpenTrades(String offerId) async {
     final res = await supabase
         .rpc(
           AomlahFunction.num_of_open_trades.name,
@@ -85,8 +84,7 @@ class SupabaseService extends AbstractSupabase {
         )
         .select()
         .execute();
-    print(res.data);
-    return 0;
+    return res.data;
   }
 
   Stream<AomlahUser> getUserStream(String uuid) {
