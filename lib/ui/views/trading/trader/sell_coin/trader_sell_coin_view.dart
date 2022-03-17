@@ -1,6 +1,6 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
@@ -74,7 +74,11 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
         SizedBox(),
         Color.fromARGB(255, 213, 200, 86),
       ),
-      //TODO:Add other states
+      TradeStatus.timeout: HeaderStyle(
+        "نفذ الوقت",
+        Text("انتهى الوقت المسموح لإتمام التدوال"),
+        Colors.orange[300]!,
+      ),
     };
     return ViewModelBuilder<TradingViewmodel>.reactive(
         viewModelBuilder: () => TradingViewmodel(widget.trade),
@@ -107,9 +111,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                     onCancel: () {
                       viewmodel.changeState(TradeStatus.canceled);
                     },
-                    onPaymentSent: () {
-                      viewmodel.changeState(TradeStatus.payment_sent);
-                    },
+                    onPaymentSent: () {},
                     onPaymentReceived: () {
                       viewmodel.changeState(TradeStatus.completed);
                     },
@@ -118,10 +120,10 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                     },
                     showCancelButton:
                         viewmodel.trade.status == TradeStatus.awaiting_payment,
-                    showPaymentSent:
-                        viewmodel.trade.status == TradeStatus.awaiting_payment,
+                    showPaymentSent: false,
                     showOpenDispute:
-                        viewmodel.trade.status == TradeStatus.payment_sent,
+                        viewmodel.trade.status == TradeStatus.payment_sent ||
+                            viewmodel.trade.status == TradeStatus.canceled,
                     showCompleteTrade:
                         viewmodel.trade.status == TradeStatus.payment_sent,
                   )

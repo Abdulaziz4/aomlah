@@ -1,6 +1,6 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
@@ -73,7 +73,11 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
         SizedBox(),
         Color.fromARGB(255, 199, 185, 57),
       ),
-      //TODO:Add other states
+      TradeStatus.timeout: HeaderStyle(
+        "نفذ الوقت",
+        Text("انتهى الوقت المسموح لإتمام التدوال"),
+        Colors.orange[300]!,
+      ),
     };
     return ViewModelBuilder<TradingViewmodel>.reactive(
       viewModelBuilder: () => TradingViewmodel(widget.trade),
@@ -120,7 +124,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                     viewmodel.trade.status == TradeStatus.awaiting_payment,
                 showOpenDispute:
                     viewmodel.trade.status == TradeStatus.payment_sent ||
-                        viewmodel.trade.status == TradeStatus.completed,
+                        viewmodel.trade.status == TradeStatus.canceled,
                 showCompleteTrade: false,
               )
             ],

@@ -2,11 +2,14 @@ import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/candles_service.dart';
 import 'package:aomlah/core/services/crypto_info_service.dart';
 import 'package:aomlah/core/services/eth_price_service.dart';
+import 'package:aomlah/core/services/offers_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
+import 'package:aomlah/ui/views/admin_dashoard/dispute_details/dispute_details_view.dart';
+import 'package:aomlah/ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import 'package:aomlah/ui/views/auth/welcome/welcome_view.dart';
 import 'package:aomlah/ui/views/create_dispute/create_dispute_view.dart';
@@ -66,6 +69,8 @@ import '../services/realtime_eth_wallet_service.dart';
     MaterialRoute(page: UserTradesView),
     MaterialRoute(page: BtcWalletInfoView),
     MaterialRoute(page: EthWalletInfoView),
+    MaterialRoute(page: AdminDisputesView),
+    MaterialRoute(page: DisputeDetailsView),
   ],
   dependencies: [
     // Register all services and deps.
@@ -82,6 +87,8 @@ import '../services/realtime_eth_wallet_service.dart';
         classType: RealtimeEthWalletService),
     LazySingleton<CandlesService>(classType: CandlesService),
     LazySingleton<TradingService>(classType: TradingService),
+    LazySingleton<OffersService>(classType: OffersService),
+    LazySingleton<SnackbarService>(classType: SnackbarService),
 
     Presolve(
       classType: SupabaseService,

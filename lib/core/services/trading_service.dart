@@ -1,7 +1,7 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
@@ -19,11 +19,13 @@ class TradingService {
     _logger.i("createTrade");
 
     if (!trade.offer!.isBuyTrader) {
-      await updateDebt(trade.amount);
+      final id = _userService.user.profileId;
+      await updateDebt(id, trade.amount);
     }
     return _supabaseService.createTrade(trade);
   }
 
+  // Checks the [newStatus] and perform the appropriate action accordingly
   Future<void> updateTradeStatus({
     required Trade trade,
     required TradeStatus newStatus,
@@ -33,25 +35,77 @@ class TradingService {
     if (newStatus == TradeStatus.canceled) {
       return cancelTrade(trade);
     } else if (newStatus == TradeStatus.completed) {
-      late String to;
-      late Wallet from;
-
-      if (isUserMerchant(trade.traderId)) {
-        from = trade.offer!.ownerWallet!;
-        to = trade.traderWallet!.address;
-      } else {
-        to = trade.offer!.ownerWallet!.address;
-        from = trade.traderWallet!;
-      }
-      await sendTransaction(
-        from: from,
-        to: to,
-        btcAmount: trade.amount,
-      );
-      await updateDebt(trade.amount * -1);
+      return completeTrade(trade);
     }
 
     return _supabaseService.changeTradeStatus(trade.tradeId, newStatus);
+  }
+
+  Future<void> completeTrade(Trade trade) async {
+    late String to;
+    late Wallet from;
+    bool isUserMarchent = isUserMerchant(trade.traderId);
+    if (isUserMarchent && !trade.offer!.isBuyMarchent) {
+      from = trade.offer!.ownerWallet!;
+      to = trade.traderWallet!.address;
+    } else {
+      to = trade.offer!.ownerWallet!.address;
+      from = trade.traderWallet!;
+    }
+    await sendTransaction(
+      from: from,
+      to: to,
+      btcAmount: trade.amount,
+    );
+// test5521@test.com
+    if (isUserMarchent && !trade.offer!.isBuyMarchent) {
+      // The current user is marchent deduct from the offer owner (the user)
+      await updateDebt(trade.offer!.ownerID, -1 * trade.amount);
+    } else {
+      // The current user is a trader deduct from the trader debt
+      await updateDebt(trade.traderId, -1 * trade.amount);
+    }
+
+    // Deduct the traded quantity from the remaining quantity of the offer
+    final remining = trade.offer!.remainingQuantity - trade.amount;
+    await updateOfferRemainingQuantity(
+      offerId: trade.offer!.offerID,
+      quantity: remining,
+    );
+
+    return _supabaseService.changeTradeStatus(
+      trade.tradeId,
+      TradeStatus.completed,
+    );
+  }
+
+  Future<void> cancelTrade(Trade trade) async {
+    _logger.i("cancelTrade");
+
+    // If the trade is a trader selling a coin revert the debte
+    if (!trade.offer!.isBuyTrader) {
+      updateDebt(trade.traderId, -1 * trade.amount);
+    }
+
+    _supabaseService.changeTradeStatus(trade.tradeId, TradeStatus.canceled);
+  }
+
+  // Increases/decreases user deb +value for adding -value for subtracting
+  Future<void> updateDebt(String userId, double debt) async {
+    _logger.i("updateDebt | args: debt = $debt");
+    _supabaseService.updateUserDebt(_userService.user.profileId, debt);
+  }
+
+  Future<void> updateOfferRemainingQuantity({
+    required String offerId,
+    required double quantity,
+  }) async {
+    _logger.i(
+        "updateOfferRemainingQuantity | args: offerId=$offerId, quantity=$quantity");
+    await _supabaseService.updateOfferRemainingQuantity(
+      offerId: offerId,
+      remaining: quantity,
+    );
   }
 
   Future<void> sendTransaction({
@@ -67,25 +121,6 @@ class TradingService {
       to: to,
       satAmount: CurrencyHelper.btcToSat(btcAmount),
     );
-  }
-
-  Future<void> cancelTrade(Trade trade) async {
-    _logger.i("cancelTrade");
-
-    // If the trade is a trader selling a coin revert the debte
-    if (!trade.offer!.isBuyTrader) {
-      updateDebt(-1 * trade.amount);
-    }
-
-    _supabaseService.changeTradeStatus(trade.tradeId, TradeStatus.canceled);
-  }
-
-  // Increases/decreases user deb +value for adding -value for subtracting
-  Future<void> updateDebt(double debt) async {
-    _logger.i("updateDebt | args: debt = $debt");
-
-    final finalDebt = _userService.user.debt + debt;
-    _supabaseService.updateUserDebt(_userService.user.profileId, finalDebt);
   }
 
   bool isUserMerchant(String traderId) =>

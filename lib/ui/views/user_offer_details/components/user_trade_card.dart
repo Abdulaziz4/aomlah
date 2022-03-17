@@ -2,7 +2,7 @@ import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/app/utils/currency_helper.dart';
-import 'package:aomlah/core/enums/trade_state.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,6 +27,7 @@ class UserTradeCard extends StatelessWidget {
       TradeStatus.canceled: "ملغي",
       TradeStatus.disputed: "متنازع عليه",
       TradeStatus.completed: "مكتمل",
+      TradeStatus.timeout: "نفذ الوقت",
     };
     return GestureDetector(
       onTap: navigateToDetails,

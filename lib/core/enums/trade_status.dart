@@ -4,4 +4,5 @@ enum TradeStatus {
   completed,
   canceled,
   disputed,
+  timeout,
 }

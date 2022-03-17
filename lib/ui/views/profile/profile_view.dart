@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
+import 'package:aomlah/ui/views/profile/components/navigation_list_tile.dart';
 import 'package:aomlah/ui/views/profile/profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +12,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AomlahUser>(context);
+
     return ViewModelBuilder<ProfileViewModel>.reactive(
         viewModelBuilder: () => ProfileViewModel(),
         builder: (context, viewmodel, _) {
@@ -18,229 +20,70 @@ class ProfileView extends StatelessWidget {
             appBar: AppBar(
               title: Text("الحساب الشخصي"),
               automaticallyImplyLeading: false,
+              elevation: 0,
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Stack(
+            body: Column(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                    right: 15,
+                    bottom: 20,
+                  ),
+                  child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 150,
-                        color: Color(0xff0F1E2C),
+                      SvgPicture.asset("assets/icons/ProfilePic.svg"),
+                      SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name,
+                            style: Constants.smallText,
+                          ),
+                          Text(
+                            viewmodel.email,
+                            style: Constants.smallText,
+                          ),
+                          buildStateContainer(user.isOnline),
+                        ],
                       ),
-                      Positioned(
-                        child: SvgPicture.asset("assets/icons/ProfilePic.svg"),
-                        bottom: 25,
-                        right: 20,
-                      ),
-                      Positioned(
-                        child: Text(
-                          user.name,
-                          style: Constants.smallText,
-                        ),
-                        bottom: 75,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: Text(
-                          viewmodel.email,
-                          style: Constants.smallText,
-                        ),
-                        bottom: 50,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: buildStateContainer(user.isOnline),
-                        bottom: 12,
-                        right: 120,
-                      ),
-                      Positioned(
-                        child: SvgPicture.asset("assets/icons/verifyBadge.svg"),
-                        bottom: 100,
-                        left: 0,
-                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/verifyBadge.svg"),
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                        top: BorderSide(
-                          width: 2,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        viewmodel.navigateToUserOffers();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset("assets/icons/offers_profile.svg"),
-                          Container(width: 10),
-                          Text("العروض"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        width: 2,
-                        color: Color(0xff3D4955),
-                      ),
-                    )),
-                    child: ElevatedButton(
-                      onPressed: viewmodel.navigateToTrades,
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                              "assets/icons/Transaction_profile.svg"),
-                          Container(width: 10),
-                          Text("عمليات التداول"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        viewmodel.navigateToWalletInfo();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset("assets/icons/Wallet_profile.svg"),
-                          Container(width: 10),
-                          Text("المحفظة"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        width: 2,
-                        color: Color(0xff3D4955),
-                      ),
-                    )),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        viewmodel.navigateToBankAccounts();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset("assets/icons/BankAcc_profile.svg"),
-                          Container(width: 10),
-                          Text("الحسابات البنكية"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xff3D4955),
-                        ),
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                              "assets/icons/ControlPannel_profile.svg"),
-                          Container(width: 10),
-                          Text("لوحة التحكم"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        viewmodel.navigateToSettings();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25.0),
-                        minimumSize: const Size.fromHeight(50),
-                        primary: Color(0xff0F1E2C),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset("assets/icons/Settings_profile.svg"),
-                          Container(width: 10),
-                          Text("الإعدادات"),
-                          Spacer(flex: 3),
-                          SvgPicture.asset(
-                              "assets/icons/LeftArrow_Profile.svg"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToUserOffers,
+                  leadingIcon: "assets/icons/offers_profile.svg",
+                  title: "العروض",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToTrades,
+                  leadingIcon: "assets/icons/Transaction_profile.svg",
+                  title: "عمليات التداول",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToWalletInfo,
+                  leadingIcon: "assets/icons/Wallet_profile.svg",
+                  title: "المحفظة",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToBankAccounts,
+                  leadingIcon: "assets/icons/BankAcc_profile.svg",
+                  title: "الحسابات البنكية",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToDashboardInfo,
+                  leadingIcon: "assets/icons/ControlPannel_profile.svg",
+                  title: "لوحة التحكم",
+                ),
+                NavigationListTile(
+                  onPress: viewmodel.navigateToSettings,
+                  leadingIcon: "assets/icons/Settings_profile.svg",
+                  title: "الإعدادات",
+                ),
+              ],
             ),
           );
         });

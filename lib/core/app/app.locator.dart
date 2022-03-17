@@ -16,6 +16,7 @@ import '../services/eth_wallet_managment_service.dart';
 import '../services/candles_service.dart';
 import '../services/crypto_info_service.dart';
 import '../services/realtime_eth_wallet_service.dart';
+import '../services/offers_service.dart';
 import '../services/realtime_wallet_service.dart';
 import '../services/supabase_service.dart';
 import '../services/trading_service.dart';
@@ -43,7 +44,8 @@ Future setupLocator(
   locator.registerLazySingleton(() => RealtimeEthWalletService());
   locator.registerLazySingleton(() => CandlesService());
   locator.registerLazySingleton(() => TradingService());
-
+  locator.registerLazySingleton(() => OffersService());
+  locator.registerLazySingleton(() => SnackbarService());
   final supabaseService = await SupabaseService.getInstance();
   locator.registerSingleton(supabaseService);
 }

@@ -19,6 +19,10 @@ class ProfileViewModel extends BaseViewModel {
     navService.navigateTo(Routes.walletSelectionView);
   }
 
+  navigateToDashboardInfo() {
+    navService.navigateTo(Routes.adminDisputesView);
+  }
+
   navigateToUserOffers() {
     navService.navigateTo(Routes.userOffersView);
   }
