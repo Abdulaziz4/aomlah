@@ -37,6 +37,10 @@ import '../../ui/views/wallet/eth_wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 import '../../ui/views/withdraw/withdraw_view.dart';
+import '../models/coin.dart';
+import '../models/offer.dart';
+import '../models/trade.dart';
+
 class Routes {
   static const String startupView = '/';
   static const String navigationView = '/navigation-view';
@@ -334,7 +338,8 @@ class StackedRouter extends RouterBase {
     },
     EthWalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const EthWalletInfoView(),
+          builder: (context) => const EthWalletInfoView(), settings: data);
+    },
     AdminDisputesView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const AdminDisputesView(),
