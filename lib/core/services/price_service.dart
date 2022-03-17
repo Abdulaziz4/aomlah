@@ -12,11 +12,9 @@ abstract class PriceService<T extends PriceTicker> {
   final _logger = getLogger("PriceService");
 
   final String apiKey = APIKeys.cryptoCompKey;
-  // final apiKeyEth = APIKeys.cryptoCompKeyEth;
   final baseUrl = "wss://streamer.cryptocompare.com/v2";
 
   BehaviorSubject<T> priceContrller = BehaviorSubject<T>();
-  // BehaviorSubject<Ethereum> priceControllerEth = BehaviorSubject<Ethereum>();
 
   void connect(CryptoTypes types) {
     _logger.i("$types Price Socket Connected");
@@ -30,8 +28,6 @@ abstract class PriceService<T extends PriceTicker> {
       channel.stream.listen((event) {
         final Map<String, dynamic> response = jsonDecode(event);
         if (response["TYPE"] == "2" && (response["PRICE"] != null)) {
-          // final coin = PriceTicker(response["PRICE"] * 1.0);
-          // priceContrller.sink.add(coin);
           sinkTicker(response["PRICE"] * 1.0);
         }
       });

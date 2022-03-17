@@ -2,6 +2,7 @@ import 'package:aomlah/core/models/wallet.dart';
 import 'package:ecdsa/ecdsa.dart';
 import 'package:elliptic/elliptic.dart';
 
+import '../app/utils/currency_helper.dart';
 import '../enums/crypto_types.dart';
 
 class UnconfirmedTransaction {
@@ -30,18 +31,14 @@ class UnconfirmedTransaction {
       toSign: json['tosign'][0],
     );
   }
-  String satsToBTC(int sats) {
-    double n = sats * 0.00000001;
-    return '$n';
-  }
 
-  convert(int total, CryptoTypes types) {
-    if (types == CryptoTypes.btc) {
-      double n = (total / 100000000.0);
-      return '$n';
-    } else if (types == CryptoTypes.eth) {
-      double n = (total / 1000000000000000000.0);
-      return '$n';
+  String convertToWholeCoin(int total, CryptoTypes types) {
+    if (types == CryptoTypes.bitcoin) {
+      return CurrencyHelper.satsToBtc(total).toString();
+    } else if (types == CryptoTypes.ethereum) {
+      return CurrencyHelper.weiToETH(total).toString();
+    } else {
+      return "Cant Convert";
     }
   }
 

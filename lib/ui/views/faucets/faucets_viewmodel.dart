@@ -12,10 +12,10 @@ class FacucetsViewmodel extends BaseViewModel {
   final _userService = locator<UserService>();
 
   void fund() {
-    _walletService.fundMe(_userService.user.wallet!.address);
+    _walletService.fundMe(_userService.user.btcWallet!.address);
   }
 
   void fundEth() {
-    _ethWalletService.fundMe(_userService.user.walletETH!.address);
+    _ethWalletService.fundMe(_userService.user.ethWallet!.address);
   }
 }

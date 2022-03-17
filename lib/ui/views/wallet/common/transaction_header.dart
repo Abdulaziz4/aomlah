@@ -44,7 +44,7 @@ class TransactionHead extends StatelessWidget {
                 style: TextStyle(color: Constants.darkBlue),
               ),
               Text(
-                transaction.convert(transaction.total, cryptoType) +
+                transaction.convertToWholeCoin(transaction.total, cryptoType) +
                     cryptoText(cryptoType),
                 textAlign: TextAlign.left,
               )
@@ -73,11 +73,13 @@ class TransactionHead extends StatelessWidget {
     }
   }
 
-  cryptoText(CryptoTypes cryptoType) {
-    if (cryptoType == CryptoTypes.eth) {
+  String cryptoText(CryptoTypes cryptoType) {
+    if (cryptoType == CryptoTypes.ethereum) {
       return ' ETH ';
-    } else if (cryptoType == CryptoTypes.btc) {
+    } else if (cryptoType == CryptoTypes.bitcoin) {
       return ' BTC';
+    } else {
+      return "";
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:aomlah/core/services/price_service.dart';
 
 class EthPriceService extends PriceService<Ethereum> {
   @override
-  String get apiKey => APIKeys.cryptoCompKeyEth;
+  final String apiKey = APIKeys.cryptoCompKeyEth;
 
   @override
   Map<String, dynamic> connectionMessage() => {

@@ -32,11 +32,11 @@ class UserService {
     });
     await _realtimeWalletService.connectWallet(
       uuid,
-      user.wallet?.address ?? "",
+      user.btcWallet?.address ?? "",
     );
     await _realtimeEthWalletService.connectWallet(
       uuid,
-      user.walletETH?.address ?? "",
+      user.ethWallet?.address ?? "",
     );
   }
 

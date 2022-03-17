@@ -1,20 +1,12 @@
 import 'dart:convert';
-import 'package:ecdsa/ecdsa.dart';
-import 'package:elliptic/elliptic.dart';
 import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/app/logger.dart';
-import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
-import 'package:stacked_services/stacked_services.dart';
 
+import '../enums/http_verbs.dart';
 import '../models/eth_real_time_wallet.dart';
-
-enum HttpVreb {
-  post,
-  get,
-}
 
 class EthWalletManagmentService {
   final _logger = getLogger("ETHWalletManagmentService");
@@ -44,7 +36,6 @@ class EthWalletManagmentService {
     return decodedRes;
   }
 
-  ///done
   Future<Wallet> createWallet(String uuid) async {
     _logger.i("createETHWallet | args: uuid = $uuid");
 

@@ -28,7 +28,7 @@ class _WithdrawViewState extends State<WithdrawView> {
   @override
   Widget build(BuildContext context) {
     cListVal ??= cryptoList.first;
-    types ??= CryptoTypes.btc;
+    types ??= CryptoTypes.bitcoin;
 
     final walletBTC = Provider.of<BtcRealTimeWallet>(context);
     final walletEth = Provider.of<EthRealTimeWallet>(context);
@@ -126,9 +126,9 @@ class _WithdrawViewState extends State<WithdrawView> {
                       },
                       keyboardType: TextInputType.number,
                       onSaved: (value) {
-                        if (types == CryptoTypes.btc) {
+                        if (types == CryptoTypes.bitcoin) {
                           cryptoAmount = double.parse(value!) * 100000000;
-                        } else if (types == CryptoTypes.eth) {
+                        } else if (types == CryptoTypes.ethereum) {
                           cryptoAmount =
                               double.parse(value!) * 1000000000000000000.0;
                         }
@@ -156,9 +156,9 @@ class _WithdrawViewState extends State<WithdrawView> {
           setState(() {
             cListVal = (value as String?);
             if (value == cryptoList[0]) {
-              types = CryptoTypes.btc;
+              types = CryptoTypes.bitcoin;
             } else if (value == cryptoList[1]) {
-              types = CryptoTypes.eth;
+              types = CryptoTypes.ethereum;
             }
           })
         },
@@ -176,7 +176,7 @@ class _WithdrawViewState extends State<WithdrawView> {
       );
 
   walletBalanceText(BtcRealTimeWallet walletBTC, EthRealTimeWallet walletEth) {
-    if (types == CryptoTypes.btc) {
+    if (types == CryptoTypes.bitcoin) {
       return Text(
         'الكمية في محفظتك ' +
             (walletBTC.balance * 0.00000001).toString() +
@@ -186,7 +186,7 @@ class _WithdrawViewState extends State<WithdrawView> {
           color: Colors.grey,
         ),
       );
-    } else if (types == CryptoTypes.eth) {
+    } else if (types == CryptoTypes.ethereum) {
       return Text(
         'الكمية في محفظتك ' +
             (walletEth.balance * 0.000000000000000001).toString() +

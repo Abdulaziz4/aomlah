@@ -19,8 +19,7 @@ class TransactionBody extends StatelessWidget {
     String from = transaction.from;
     String to = transaction.to;
 
-    String fees;
-    fees = transaction.convert(transaction.fees, cryptoType) +
+    String fees = transaction.convertToWholeCoin(transaction.fees, cryptoType) +
         cryptoText(cryptoType);
 
     return Padding(
@@ -79,11 +78,13 @@ class TransactionBody extends StatelessWidget {
     );
   }
 
-  cryptoText(CryptoTypes cryptoType) {
-    if (cryptoType == CryptoTypes.eth) {
+  String cryptoText(CryptoTypes cryptoType) {
+    if (cryptoType == CryptoTypes.ethereum) {
       return ' ETH ';
-    } else if (cryptoType == CryptoTypes.btc) {
+    } else if (cryptoType == CryptoTypes.bitcoin) {
       return ' BTC';
+    } else {
+      return "";
     }
   }
 }

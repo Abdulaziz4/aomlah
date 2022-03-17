@@ -1,4 +1,4 @@
-import '../models/transactions.dart';
+import 'transactions.dart';
 
 class RealTimeWallet {
   final String address;

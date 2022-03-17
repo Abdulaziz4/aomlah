@@ -1,7 +1,7 @@
 import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/ethereum.dart';
-import 'package:aomlah/core/services/realtime_wallet.dart';
-import 'package:aomlah/core/models/wallet_info.dart';
+import 'package:aomlah/core/models/realtime_wallet.dart';
+import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,13 +32,13 @@ class _EthWalletInfoViewState extends WalletInfoInterface<EthWalletInfoView> {
     return WalletInfo(
         wallet: wallet,
         cryptoType: "ETH",
-        types: CryptoTypes.eth,
+        types: CryptoTypes.ethereum,
         walletBalance: walletBalance,
         walletBalanceSAR: walletBalanceSAR);
   }
 
   @override
-  transactionWidget(RealTimeWallet wallet, CryptoTypes types) {
+  Widget transactionWidget(RealTimeWallet wallet, CryptoTypes types) {
     if (wallet.transactions!.isEmpty) {
       return Center(
         child: Column(

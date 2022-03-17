@@ -6,7 +6,7 @@ class Ethereum extends PriceTicker {
 
   // Calculates the amount you will get in BTC
   double amountToEth(double fiatAmount) {
-    return CurrencyHelper.fiatAmountToEth(
+    return CurrencyHelper.fiatAmountToCoin(
       fiatAmount: fiatAmount,
       price: price,
     );

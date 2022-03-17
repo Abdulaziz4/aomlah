@@ -1,5 +1,5 @@
 import 'package:aomlah/core/models/transactions.dart';
-import 'package:aomlah/core/services/realtime_wallet.dart';
+import 'package:aomlah/core/models/realtime_wallet.dart';
 
 class BtcRealTimeWallet extends RealTimeWallet {
   BtcRealTimeWallet({

@@ -19,18 +19,18 @@ class WithdrawViewModel extends BaseViewModel {
   final ethWalletService = locator<EthWalletManagmentService>();
   final userService = locator<UserService>();
 
-  sendTran(String to, int amount, CryptoTypes types) async {
+  Future<void> sendTran(String to, int amount, CryptoTypes types) async {
     setBusy(true);
     var userAddress, service;
-    if (types == CryptoTypes.btc) {
-      userAddress = userService.user.wallet!.address;
+    if (types == CryptoTypes.bitcoin) {
+      userAddress = userService.user.btcWallet!.address;
       UnconfirmedTransaction transaction =
           await walletService.sendTransaction(userAddress, to, amount);
       setBusy(false);
       navService.replaceWith(Routes.confirmWithdrawView,
           arguments: TransactionObj(transaction, types));
-    } else if (types == CryptoTypes.eth) {
-      userAddress = userService.user.walletETH!.address;
+    } else if (types == CryptoTypes.ethereum) {
+      userAddress = userService.user.ethWallet!.address;
       UnconfirmedTransaction transaction =
           await ethWalletService.sendTransaction(userAddress, to, amount);
       setBusy(false);
@@ -43,19 +43,19 @@ class WithdrawViewModel extends BaseViewModel {
     navService.back();
   }
 
-  void signSendTransaction(
+  Future<void> signSendTransaction(
       UnconfirmedTransaction transaction, CryptoTypes types) async {
     setBusy(true);
     var userWallet;
-    if (types == CryptoTypes.btc) {
-      userWallet = userService.user.wallet!;
+    if (types == CryptoTypes.bitcoin) {
+      userWallet = userService.user.btcWallet!;
       Map<String, dynamic> signedJson =
           transaction.signedTransaction(userWallet);
       await walletService.sendSignedTransaction(signedJson);
       setBusy(false);
       navService.back();
-    } else if (types == CryptoTypes.eth) {
-      userWallet = userService.user.walletETH!;
+    } else if (types == CryptoTypes.ethereum) {
+      userWallet = userService.user.ethWallet!;
       Map<String, dynamic> signedJson =
           transaction.signedTransaction(userWallet);
       await ethWalletService.sendSignedTransaction(signedJson);

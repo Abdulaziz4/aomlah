@@ -1,6 +1,6 @@
 import 'package:aomlah/core/enums/crypto_types.dart';
 
-import '../services/realtime_wallet.dart';
+import '../../../core/models/realtime_wallet.dart';
 
 class WalletInfo {
   final RealTimeWallet wallet;

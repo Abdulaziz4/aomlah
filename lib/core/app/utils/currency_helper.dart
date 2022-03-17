@@ -8,8 +8,12 @@ abstract class CurrencyHelper {
     return sats * 0.00000001;
   }
 
+  static double weiToETH(int wei) {
+    return (wei / 1000000000000000000.0);
+  }
+
   // Calculates the amount you will get in BTC
-  static double fiatAmountToBtc({
+  static double fiatAmountToCoin({
     required double fiatAmount,
     required double price,
   }) {
@@ -30,10 +34,5 @@ abstract class CurrencyHelper {
     required double price,
   }) {
     return (btcAmount * price * 3.75);
-  }
-
-  static double fiatAmountToEth(
-      {required double fiatAmount, required double price}) {
-    return (fiatAmount / 3.75) / price;
   }
 }

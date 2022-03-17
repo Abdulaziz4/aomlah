@@ -106,18 +106,18 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                       CusRow(
                           cryptoTypeID: cryptoType,
                           text1: 'كمية العملة الرقمية',
-                          text2: transaction.transaction.convert(
+                          text2: transaction.transaction.convertToWholeCoin(
                               transaction.transaction.total,
                               transaction.types)),
                       CusRow(
                           cryptoTypeID: cryptoType,
                           text1: 'رسوم التحويل',
-                          text2: transaction.transaction.convert(
+                          text2: transaction.transaction.convertToWholeCoin(
                               transaction.transaction.fees, transaction.types)),
                       CusRow(
                           cryptoTypeID: cryptoType,
                           text1: 'الإجمالي',
-                          text2: transaction.transaction.convert(
+                          text2: transaction.transaction.convertToWholeCoin(
                               transaction.transaction.total -
                                   transaction.transaction.fees,
                               transaction.types)),

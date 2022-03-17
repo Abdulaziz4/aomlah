@@ -1,4 +1,4 @@
-import 'package:aomlah/core/models/wallet_info.dart';
+import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_viewmodel.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
 import '../../../core/enums/crypto_types.dart';
 import '../../../core/models/real_time_wallet.dart';
-import '../../../core/services/realtime_wallet.dart';
+import '../../../core/models/realtime_wallet.dart';
 import 'common/conversion_button.dart';
 import 'common/wallet_container.dart';
 
@@ -128,7 +128,7 @@ abstract class WalletInfoInterface<T extends StatefulWidget> extends State<T> {
         });
   }
 
-  transactionWidget(RealTimeWallet wallet, CryptoTypes types);
+  Widget transactionWidget(RealTimeWallet wallet, CryptoTypes types);
 
   WalletInfo getWalletInfo(BuildContext context);
 }

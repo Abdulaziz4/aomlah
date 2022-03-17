@@ -6,7 +6,7 @@ class Bitcoin extends PriceTicker {
 
   //  Calculates the amount you will get in BTC
   double amountToBtc(double fiatAmount) {
-    return CurrencyHelper.fiatAmountToBtc(
+    return CurrencyHelper.fiatAmountToCoin(
       fiatAmount: fiatAmount,
       price: price,
     );

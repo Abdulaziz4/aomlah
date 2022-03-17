@@ -1,5 +1,5 @@
 import 'package:aomlah/core/models/real_time_wallet.dart';
-import 'package:aomlah/core/models/wallet_info.dart';
+import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../core/app/utils/constants.dart';
 import '../../../core/enums/crypto_types.dart';
 import '../../../core/models/bitcoin.dart';
-import '../../../core/services/realtime_wallet.dart';
+import '../../../core/models/realtime_wallet.dart';
 import 'common/transaction_body.dart';
 import 'common/transaction_card.dart';
 import 'common/transaction_header.dart';
@@ -32,13 +32,13 @@ class _BtcWalletInfoViewState extends WalletInfoInterface<BtcWalletInfoView> {
     return WalletInfo(
         wallet: wallet,
         cryptoType: "BTC",
-        types: CryptoTypes.btc,
+        types: CryptoTypes.bitcoin,
         walletBalance: walletBalance,
         walletBalanceSAR: walletBalanceSAR);
   }
 
   @override
-  transactionWidget(RealTimeWallet wallet, CryptoTypes types) {
+  Widget transactionWidget(RealTimeWallet wallet, CryptoTypes types) {
     if (wallet.transactions!.isEmpty) {
       return Center(
         child: Column(

@@ -9,7 +9,7 @@ class TransactionObj {
   TransactionObj(this.transaction, this.types);
 
   String cryptoType() {
-    if (types == CryptoTypes.btc) {
+    if (types == CryptoTypes.bitcoin) {
       return 'BTC';
     } else {
       return 'ETH';

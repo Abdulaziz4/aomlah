@@ -8,10 +8,7 @@ import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 
-enum HttpVreb {
-  post,
-  get,
-}
+import '../enums/http_verbs.dart';
 
 class WalletManagmentService {
   final _logger = getLogger("WalletManagmentService");

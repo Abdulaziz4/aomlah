@@ -1,6 +1,6 @@
 import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/models/transactions.dart';
-import 'package:aomlah/core/services/realtime_wallet.dart';
+import 'package:aomlah/core/models/realtime_wallet.dart';
 
 class EthRealTimeWallet extends RealTimeWallet {
   EthRealTimeWallet({
