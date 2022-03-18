@@ -2,6 +2,7 @@ import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_row.dart';
 import 'package:aomlah/ui/shared/rounded_button.dart';
+import 'package:aomlah/ui/views/withdraw/common/transaction_obj.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -35,7 +36,8 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transaction =
-        ModalRoute.of(context)!.settings.arguments as UnconfirmedTransaction;
+        ModalRoute.of(context)!.settings.arguments! as TransactionObj;
+    final String cryptoType = transaction.cryptoType();
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
         builder: (context, viewmodel, _) {
@@ -49,14 +51,14 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Text(
                             'تحويل ',
                             style: TextStyle(
                                 fontSize: 20, color: Constants.primaryColor),
                           ),
                           Text(
-                            " BTC",
+                            " $cryptoType",
                             style: TextStyle(fontSize: 20),
                           )
                         ],
@@ -73,7 +75,7 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              transaction.from,
+                              transaction.transaction.from,
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -90,7 +92,7 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              transaction.to,
+                              transaction.transaction.to,
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -102,18 +104,23 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
 
                       ///total
                       CusRow(
-                          cryptoTypeID: 'BTC',
+                          cryptoTypeID: cryptoType,
                           text1: 'كمية العملة الرقمية',
-                          text2: transaction.satsToBTC(transaction.total)),
+                          text2: transaction.transaction.convertToWholeCoin(
+                              transaction.transaction.total,
+                              transaction.types)),
                       CusRow(
-                          cryptoTypeID: 'BTC',
+                          cryptoTypeID: cryptoType,
                           text1: 'رسوم التحويل',
-                          text2: transaction.satsToBTC(transaction.fees)),
+                          text2: transaction.transaction.convertToWholeCoin(
+                              transaction.transaction.fees, transaction.types)),
                       CusRow(
-                          cryptoTypeID: 'BTC',
+                          cryptoTypeID: cryptoType,
                           text1: 'الإجمالي',
-                          text2: transaction
-                              .satsToBTC(transaction.total - transaction.fees)),
+                          text2: transaction.transaction.convertToWholeCoin(
+                              transaction.transaction.total -
+                                  transaction.transaction.fees,
+                              transaction.types)),
                     ],
                   ),
                 ),
@@ -129,7 +136,8 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                             // color: Constants.primaryColor,
                             text: 'تأكيد التحويل',
                             press: () {
-                              viewmodel.signSendTransaction(transaction);
+                              viewmodel.signSendTransaction(
+                                  transaction.transaction, transaction.types);
                             }),
                       ),
                       SizedBox(

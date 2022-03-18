@@ -1,38 +1,66 @@
 import 'dart:convert';
 
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
-import 'package:aomlah/core/models/wallet.dart';
+
 import 'package:aomlah/core/services/user_service.dart';
+import 'package:aomlah/ui/views/withdraw/common/transaction_obj.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../core/app/app.locator.dart';
 import '../../../core/app/app.router.dart';
+import '../../../core/services/eth_wallet_managment_service.dart';
 import '../../../core/services/wallet_managment_service.dart';
 
 class WithdrawViewModel extends BaseViewModel {
   final navService = locator<NavigationService>();
   final walletService = locator<WalletManagmentService>();
+  final ethWalletService = locator<EthWalletManagmentService>();
   final userService = locator<UserService>();
 
-  sendTran(String to, int amount) async {
+  Future<void> sendTran(String to, int amount, CryptoTypes types) async {
     setBusy(true);
-    UnconfirmedTransaction transaction = await walletService.sendTransaction(
-        userService.user.wallet!.address, to, amount);
-    setBusy(false);
-    navService.replaceWith(Routes.confirmWithdrawView, arguments: transaction);
+    var userAddress, service;
+    if (types == CryptoTypes.bitcoin) {
+      userAddress = userService.user.btcWallet!.address;
+      UnconfirmedTransaction transaction =
+          await walletService.sendTransaction(userAddress, to, amount);
+      setBusy(false);
+      navService.replaceWith(Routes.confirmWithdrawView,
+          arguments: TransactionObj(transaction, types));
+    } else if (types == CryptoTypes.ethereum) {
+      userAddress = userService.user.ethWallet!.address;
+      UnconfirmedTransaction transaction =
+          await ethWalletService.sendTransaction(userAddress, to, amount);
+      setBusy(false);
+      navService.replaceWith(Routes.confirmWithdrawView,
+          arguments: TransactionObj(transaction, types));
+    }
   }
 
   returnToWallet() {
     navService.back();
   }
 
-  void signSendTransaction(UnconfirmedTransaction transaction) async {
+  Future<void> signSendTransaction(
+      UnconfirmedTransaction transaction, CryptoTypes types) async {
     setBusy(true);
-    Map<String, dynamic> signedJson =
-        transaction.signedTransaction(userService.user.wallet!);
-    await walletService.sendSignedTransaction(signedJson);
-    setBusy(false);
-    navService.back();
+    var userWallet;
+    if (types == CryptoTypes.bitcoin) {
+      userWallet = userService.user.btcWallet!;
+      Map<String, dynamic> signedJson =
+          transaction.signedTransaction(userWallet);
+      await walletService.sendSignedTransaction(signedJson);
+      setBusy(false);
+      navService.back();
+    } else if (types == CryptoTypes.ethereum) {
+      userWallet = userService.user.ethWallet!;
+      Map<String, dynamic> signedJson =
+          transaction.signedTransaction(userWallet);
+      await ethWalletService.sendSignedTransaction(signedJson);
+      setBusy(false);
+      navService.back();
+    }
   }
 }

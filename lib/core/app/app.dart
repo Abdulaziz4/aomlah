@@ -1,8 +1,8 @@
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/candles_service.dart';
 import 'package:aomlah/core/services/crypto_info_service.dart';
+import 'package:aomlah/core/services/eth_price_service.dart';
 import 'package:aomlah/core/services/offers_service.dart';
-import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
@@ -30,12 +30,16 @@ import 'package:aomlah/ui/views/trading/trader/sell_coin/trader_sell_coin_view.d
 import 'package:aomlah/ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import 'package:aomlah/ui/views/user_offers/user_offers_view.dart';
 import 'package:aomlah/ui/views/user_trades/user_trades_view.dart';
-import 'package:aomlah/ui/views/wallet/wallet_info_view.dart';
+import 'package:aomlah/ui/views/wallet/btc_wallet_info_view.dart';
+import 'package:aomlah/ui/views/wallet/eth_wallet_info_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_view.dart';
 import 'package:aomlah/ui/views/withdraw/confirm_withdraw_view.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+import '../services/btc_price_service.dart';
+import '../services/realtime_eth_wallet_service.dart';
 
 @StackedApp(
   routes: [
@@ -55,7 +59,6 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SettingsHome),
     MaterialRoute(page: UpdateProfileView),
     MaterialRoute(page: UserOffersView),
-    MaterialRoute(page: WalletInfoView),
     MaterialRoute(page: UserBankAccountsView),
     MaterialRoute(page: ConfirmWithdrawView),
     MaterialRoute(page: WithdrawView),
@@ -64,6 +67,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: MerchantSellCoinView),
     MaterialRoute(page: CreateDisputeView),
     MaterialRoute(page: UserTradesView),
+    MaterialRoute(page: BtcWalletInfoView),
+    MaterialRoute(page: EthWalletInfoView),
     MaterialRoute(page: AdminDisputesView),
     MaterialRoute(page: DisputeDetailsView),
   ],
@@ -73,9 +78,13 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton<WalletManagmentService>(classType: WalletManagmentService),
     LazySingleton<AuthService>(classType: AuthService),
     LazySingleton<UserService>(classType: UserService),
-    LazySingleton<PriceService>(classType: PriceService),
+    LazySingleton<BtcPriceService>(classType: BtcPriceService),
+    LazySingleton<EthPriceService>(classType: EthPriceService),
+
     LazySingleton<CryptoInfoService>(classType: CryptoInfoService),
     LazySingleton<RealtimeWalletService>(classType: RealtimeWalletService),
+    LazySingleton<RealtimeEthWalletService>(
+        classType: RealtimeEthWalletService),
     LazySingleton<CandlesService>(classType: CandlesService),
     LazySingleton<TradingService>(classType: TradingService),
     LazySingleton<OffersService>(classType: OffersService),

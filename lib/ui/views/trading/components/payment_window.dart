@@ -50,7 +50,7 @@ class _PaymentWindowState extends State<PaymentWindow> {
 
   @override
   Widget build(BuildContext context) {
-    final wallet = Provider.of<RealTimeWallet>(context);
+    final wallet = Provider.of<BtcRealTimeWallet>(context);
     final btc = Provider.of<Bitcoin>(context);
     return Form(
       key: widget.formKey,

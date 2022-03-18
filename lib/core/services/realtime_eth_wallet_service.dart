@@ -9,22 +9,24 @@ import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/app/utils/pinger.dart';
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
-import 'package:aomlah/core/services/wallet_managment_service.dart';
 
-class RealtimeWalletService {
-  final _logger = getLogger("RealtimeWalletService");
+import '../models/eth_real_time_wallet.dart';
+import 'eth_wallet_managment_service.dart';
 
-  final _walletManager = locator<WalletManagmentService>();
+class RealtimeEthWalletService {
+  final _logger = getLogger("RealtimeEthWalletService");
 
-  static const token = APIKeys.blockcypherKey;
-  static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
-  static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
+  final _walletManager = locator<EthWalletManagmentService>();
 
-  BehaviorSubject<BtcRealTimeWallet> walletController =
-      BehaviorSubject<BtcRealTimeWallet>();
+  static const token = APIKeys.blockcypherKeyEth;
+  static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";
+  static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
+
+  BehaviorSubject<EthRealTimeWallet> walletController =
+      BehaviorSubject<EthRealTimeWallet>();
 
   Future<void> connectWallet(String uuid, String address) async {
-    _logger.i("connectWallet | args: uuid= $uuid , address=$address");
+    _logger.i("connectEthWallet | args: uuid= $uuid , address=$address");
     const socketUrl = "$baseSocketUrl?token=$token";
 
     // Fetch for first time

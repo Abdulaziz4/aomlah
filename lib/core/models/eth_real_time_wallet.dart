@@ -1,33 +1,30 @@
+import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/models/transactions.dart';
 import 'package:aomlah/core/models/realtime_wallet.dart';
 
-class BtcRealTimeWallet extends RealTimeWallet {
-  BtcRealTimeWallet({
+class EthRealTimeWallet extends RealTimeWallet {
+  EthRealTimeWallet({
     required String address,
     required int balance,
     List<Transaction>? transactions,
   }) : super(address: address, balance: balance, transactions: transactions);
-  factory BtcRealTimeWallet.dummy() {
-    return BtcRealTimeWallet(
+
+  factory EthRealTimeWallet.dummy() {
+    return EthRealTimeWallet(
       address: "",
       balance: 0,
     );
   }
-  factory BtcRealTimeWallet.fromJson(Map<String, dynamic> json) {
+  factory EthRealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
+    print(json['txs']);
     transaction =
         (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
 
-    return BtcRealTimeWallet(
+    return EthRealTimeWallet(
       address: json['address'],
       balance: json['balance'],
       transactions: transaction,
     );
   }
-
-  double balanceSR(double price) {
-    return double.parse((balanceBTC * price * 3.75).toStringAsFixed(3));
-  }
-
-  double get balanceBTC => (balance / 100000000);
 }

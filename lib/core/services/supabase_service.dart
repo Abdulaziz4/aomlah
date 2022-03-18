@@ -231,6 +231,10 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  Future<void> createEthWallet(Wallet ethWallet) async {
+    await upsert(AomlahTable.eth_wallets, ethWallet.toJson());
+  }
+
   Future<Trade> createTrade(Trade trade) async {
     final res = await upsert(AomlahTable.trades, trade.toJson());
 

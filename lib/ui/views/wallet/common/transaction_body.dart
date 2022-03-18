@@ -1,3 +1,4 @@
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/transactions.dart';
 import 'package:aomlah/ui/views/wallet/common/blue_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,8 +7,10 @@ import '../../../../core/app/utils/constants.dart';
 
 class TransactionBody extends StatelessWidget {
   final Transaction transaction;
+  final CryptoTypes cryptoType;
   const TransactionBody({
     required this.transaction,
+    required this.cryptoType,
     Key? key,
   }) : super(key: key);
 
@@ -15,7 +18,9 @@ class TransactionBody extends StatelessWidget {
   Widget build(BuildContext context) {
     String from = transaction.from;
     String to = transaction.to;
-    String fees = transaction.satsToBTC(transaction.fees) + ' BTC ';
+
+    String fees = transaction.convertToWholeCoin(transaction.fees, cryptoType) +
+        cryptoText(cryptoType);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -71,5 +76,15 @@ class TransactionBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String cryptoText(CryptoTypes cryptoType) {
+    if (cryptoType == CryptoTypes.ethereum) {
+      return ' ETH ';
+    } else if (cryptoType == CryptoTypes.bitcoin) {
+      return ' BTC';
+    } else {
+      return "";
+    }
   }
 }
