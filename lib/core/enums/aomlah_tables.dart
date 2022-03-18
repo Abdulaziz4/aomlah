@@ -9,4 +9,5 @@ enum AomlahTable {
   view_trades,
   trades,
   disputes,
+  offer_bankaccounts,
 }

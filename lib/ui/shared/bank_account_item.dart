@@ -2,11 +2,11 @@ import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class BankAccountItem extends StatelessWidget {
-  final String bankName;
+  final String? bankName;
   final TextStyle? textStyle;
   const BankAccountItem({
     Key? key,
-    required this.bankName,
+    this.bankName,
     this.textStyle,
   }) : super(key: key);
 
@@ -26,8 +26,11 @@ class BankAccountItem extends StatelessWidget {
         ),
         SizedBox(width: 5),
         Text(
-          bankName,
+          bankName!,
           style: textStyle ?? Constants.smallText,
+        ),
+        SizedBox(
+          width: 15,
         ),
       ],
     );

@@ -140,6 +140,14 @@ class SupabaseService extends AbstractSupabase {
     await insert(AomlahTable.offers, offer.toJson());
   }
 
+  Future<void> createSellOffer(Offer offer, List<BankAccount> bank) async {
+    await insert(AomlahTable.offers, offer.toJson());
+    for (var i in bank) {
+      await insert(AomlahTable.offer_bankaccounts,
+          {"offer_id": offer.offerID, "iban": i.iban});
+    }
+  }
+
   Future<void> updateOfferRemainingQuantity({
     required String offerId,
     required double remaining,
