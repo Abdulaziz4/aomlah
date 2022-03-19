@@ -38,7 +38,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildLabel(),
+          if (widget.label.isNotEmpty) buildLabel(),
           TextFormField(
             textDirection: TextDirection.rtl,
             onSaved: widget.onSave,
