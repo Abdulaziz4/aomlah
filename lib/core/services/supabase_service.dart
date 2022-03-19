@@ -286,11 +286,13 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Future<AdminReport> getAdminReport() async {
-    final res = await callFn<AdminReport>(
-      AomlahFunction.get_admin_report.name,
-      AdminReport.fromJson,
-    );
-    return res.first;
+    var result = await supabase
+        .rpc(
+          AomlahFunction.get_admin_report.name,
+        )
+        .select()
+        .execute();
+    return AdminReport.fromJson(result.data);
   }
 
   late BehaviorSubject<List<Dispute>> disputesController;

@@ -1,3 +1,4 @@
+import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:stacked/stacked.dart';
@@ -8,6 +9,9 @@ import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 
 class DisputesViewModel extends StreamViewModel<List<Dispute>> {
+  DisputesViewModel() {
+    _suabaseService.listenToDisputes();
+  }
   final _logger = getLogger("DisputesViewModel");
 
   final _navService = locator<NavigationService>();
@@ -16,13 +20,21 @@ class DisputesViewModel extends StreamViewModel<List<Dispute>> {
   bool isBusyReport = false;
 
   List<Dispute> disputes = [];
-  late AdminReport report;
+  AdminReport? report;
 
   Future<void> init() async {
-    _suabaseService.listenToDisputes();
     setBusyReport(true);
     report = await _suabaseService.getAdminReport();
     setBusyReport(false);
+  }
+
+  double tradedValueToUsd(double price) {
+    return report == null
+        ? 0
+        : CurrencyHelper.btcToFiat(
+            btcAmount: report!.totalTradedValue,
+            price: price,
+          );
   }
 
   @override

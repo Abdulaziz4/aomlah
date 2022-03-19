@@ -37,6 +37,7 @@ import '../../ui/views/wallet/wallet_view.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 import '../../ui/views/withdraw/withdraw_view.dart';
 import '../models/coin.dart';
+import '../models/dispute.dart';
 import '../models/offer.dart';
 import '../models/trade.dart';
 
@@ -318,8 +319,12 @@ class StackedRouter extends RouterBase {
       );
     },
     DisputeDetailsView: (data) {
+      var args = data.getArgs<DisputeDetailsViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const DisputeDetailsView(),
+        builder: (context) => DisputeDetailsView(
+          key: args.key,
+          dispute: args.dispute,
+        ),
         settings: data,
       );
     },
@@ -384,4 +389,11 @@ class MerchantSellCoinViewArguments {
   final Key? key;
   final Trade trade;
   MerchantSellCoinViewArguments({this.key, required this.trade});
+}
+
+/// DisputeDetailsView arguments holder class
+class DisputeDetailsViewArguments {
+  final Key? key;
+  final Dispute dispute;
+  DisputeDetailsViewArguments({this.key, required this.dispute});
 }

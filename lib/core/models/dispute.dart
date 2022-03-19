@@ -47,6 +47,7 @@ class Dispute {
       cause: json['cause'] ?? '',
       status: DisputeStatus.values.firstWhere(
         (status) => status.name == json["status"],
+        orElse: () => DisputeStatus.waiting,
       ),
       tradeId: json['trade_id'] ?? '',
       openerId: json['opener_id'] ?? '',
@@ -56,7 +57,7 @@ class Dispute {
       updatedAt: json["updated_at"] != null
           ? DateTime.tryParse(json['updated_at'])
           : DateTime.now(),
-      trade: Trade.fromJson(json),
+      trade: json["trade"] != null ? Trade.fromJson(json["trade"]) : null,
     );
   }
   Dispute copyWith({
@@ -75,5 +76,14 @@ class Dispute {
       tradeId: tradeId ?? this.tradeId,
       openerId: openerId ?? this.openerId,
     );
+  }
+
+  String getStatusLabel() {
+    switch (status) {
+      case DisputeStatus.waiting:
+        return "في الانتظار";
+      case DisputeStatus.closed:
+        return "مغلق";
+    }
   }
 }
