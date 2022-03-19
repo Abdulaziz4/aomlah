@@ -8,6 +8,8 @@ enum AomlahTable {
   bank_accounts,
   view_offers,
   view_trades,
+  view_disputes,
+
   trades,
   disputes,
 }
