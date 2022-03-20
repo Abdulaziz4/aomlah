@@ -13,4 +13,5 @@ enum AomlahTable {
 
   trades,
   disputes,
+  offer_bankaccounts,
 }

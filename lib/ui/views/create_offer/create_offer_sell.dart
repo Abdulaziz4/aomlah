@@ -218,7 +218,7 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                             child: CustomButton(
                               color: Constants.lighBlue,
                               onPressed: () {
-                                viewmodel.navigateToBankAccounts();
+                                viewmodel.selectBankAccount();
                               },
                               text: 'اضف',
                             ),
@@ -240,13 +240,16 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                         ],
                       ),
                       Row(
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
-                          Expanded(child: BankAccountItem(bankName: "الراجحي")),
-                          Expanded(child: BankAccountItem(bankName: "البلاد")),
-                          Expanded(child: BankAccountItem(bankName: "الرياض")),
+                          bankItems(viewmodel, context),
+                          // Expanded(
+                          //     child: BankAccountItem(
+                          //         bankName: viewmodel.bankAccount?.bankName)),
+                          // Expanded(child: BankAccountItem(bankName: "البلاد")),
+                          // Expanded(child: BankAccountItem(bankName: "الرياض")),
                         ],
                       ),
                     ],
@@ -342,6 +345,22 @@ class _CreateOfferSellState extends State<CreateOfferSell>
           ),
         ),
       );
+
+  Widget bankItems(CreateOfferViewModel viewmodel, context) {
+    if (viewmodel.bankAccount != null) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: viewmodel.bankAccount
+            .map((e) =>
+                Flexible(flex: 1, child: BankAccountItem(bankName: e.bankName)))
+            .toList(),
+      );
+    } else {
+      return SizedBox(
+        width: 15,
+      );
+    }
+  }
 
   @override
   bool get wantKeepAlive => true;
