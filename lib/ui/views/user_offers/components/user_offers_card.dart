@@ -62,6 +62,12 @@ class UserOffersCard extends StatelessWidget {
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Spacer(),
+                Text(
+                  offer.isClosed ? "مغلق" : "نشط",
+                  style: Constants.verySmallText.copyWith(
+                    color: Constants.darkBlue,
+                  ),
+                ),
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 20,
@@ -86,7 +92,7 @@ class UserOffersCard extends StatelessWidget {
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
                 Text(
-                  offer.cryptoAmount.toString(),
+                  offer.remainingQuantity.toString(),
                   style: Constants.smallText.copyWith(color: Colors.white),
                 ),
               ],

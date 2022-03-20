@@ -114,7 +114,6 @@ abstract class AbstractSupabase {
         )
         .select()
         .execute();
-
     if (result.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
     }
@@ -138,11 +137,11 @@ abstract class AbstractSupabase {
     String match = table.name;
     if (query != null) {
       query.forEach((key, value) {
-        match += ":$key=$value";
+        match += ":$key=eq.$value";
       });
     }
     return supabase
-        .from(table.name)
+        .from(match)
         .stream([primaryKey])
         .execute()
         .map<List<T>>((mapsList) {

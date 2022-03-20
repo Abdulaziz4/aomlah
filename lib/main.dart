@@ -3,15 +3,20 @@ import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/custom_theme.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/ethereum.dart';
 import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
-import 'package:aomlah/core/services/wallet_managment_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+import 'core/models/eth_real_time_wallet.dart';
+import 'core/services/btc_price_service.dart';
+import 'core/services/eth_price_service.dart';
+import 'core/services/realtime_eth_wallet_service.dart';
 
 void main() async {
   // await setupLocator();
@@ -30,13 +35,22 @@ class MyApp extends StatelessWidget {
           initialData: AomlahUser.anonymous(),
         ),
         StreamProvider<Bitcoin>(
-          create: (_) => locator<PriceService>().priceContrller.stream,
+          create: (_) => locator<BtcPriceService>().priceContrller.stream,
           initialData: Bitcoin(0.0),
         ),
-        StreamProvider<RealTimeWallet>(
+        StreamProvider<Ethereum>(
+          create: (_) => locator<EthPriceService>().priceContrller.stream,
+          initialData: Ethereum(0.0),
+        ),
+        StreamProvider<BtcRealTimeWallet>(
           create: (_) =>
               locator<RealtimeWalletService>().walletController.stream,
-          initialData: RealTimeWallet.dummy(),
+          initialData: BtcRealTimeWallet.dummy(),
+        ),
+        StreamProvider<EthRealTimeWallet>(
+          create: (_) =>
+              locator<RealtimeEthWalletService>().walletController.stream,
+          initialData: EthRealTimeWallet.dummy(),
         ),
       ],
       child: ArabicMaterialApp(

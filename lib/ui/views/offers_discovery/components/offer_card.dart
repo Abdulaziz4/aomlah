@@ -24,14 +24,15 @@ class OfferCard extends StatelessWidget {
         .toStringAsFixed(3);
     return GestureDetector(
       onTap: () => {
-        if (offer.isBuy)
+        if (!offer.isBuy)
           {
-            locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView),
+            locator<NavigationService>().navigateTo(Routes.buyCoinOverviewView,
+                arguments: BuyCoinOverviewViewArguments(offer: offer)),
           }
         else
           {
-            locator<NavigationService>()
-                .navigateTo(Routes.sellCoinOverviewView),
+            locator<NavigationService>().navigateTo(Routes.sellCoinOverviewView,
+                arguments: SellCoinOverviewViewArguments(offer: offer)),
           }
       },
       child: Container(
@@ -71,7 +72,7 @@ class OfferCard extends StatelessWidget {
                     children: [
                       buildInfoItem("السعر", "$price ر.س"),
                       Spacer(),
-                      buildInfoItem("الكمية", offer.cryptoAmonutLabel()),
+                      buildInfoItem("الكمية", offer.remainingQuantityLabel()),
                     ],
                   ),
                   Expanded(
@@ -80,7 +81,7 @@ class OfferCard extends StatelessWidget {
                       children: [
                         buildInfoItem("الحد الادنى", "${offer.minTrade} ر.س"),
                         Spacer(),
-                        offer.isBuy
+                        !offer.isBuy
                             ? CustomButton(
                                 onPressed: () {
                                   locator<NavigationService>()
@@ -90,8 +91,12 @@ class OfferCard extends StatelessWidget {
                               )
                             : CustomButton(
                                 onPressed: () {
-                                  locator<NavigationService>()
-                                      .navigateTo(Routes.sellCoinOverviewView);
+                                  locator<NavigationService>().navigateTo(
+                                    Routes.sellCoinOverviewView,
+                                    arguments: SellCoinOverviewViewArguments(
+                                      offer: offer,
+                                    ),
+                                  );
                                 },
                                 text: "بيع",
                                 color: Constants.redColor,

@@ -20,8 +20,8 @@ class RealtimeWalletService {
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
   static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
-  BehaviorSubject<RealTimeWallet> walletController =
-      BehaviorSubject<RealTimeWallet>();
+  BehaviorSubject<BtcRealTimeWallet> walletController =
+      BehaviorSubject<BtcRealTimeWallet>();
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectWallet | args: uuid= $uuid , address=$address");

@@ -2,6 +2,9 @@ import 'package:aomlah/core/models/wallet.dart';
 import 'package:ecdsa/ecdsa.dart';
 import 'package:elliptic/elliptic.dart';
 
+import '../app/utils/currency_helper.dart';
+import '../enums/crypto_types.dart';
+
 class UnconfirmedTransaction {
   final String from;
   final String to;
@@ -21,16 +24,22 @@ class UnconfirmedTransaction {
   factory UnconfirmedTransaction.fromJson(Map<String, dynamic> json) {
     return UnconfirmedTransaction(
       tJson: json,
-      from: (json['tx']['addresses'] as List)[0],
-      to: (json['tx']['addresses'] as List)[1],
+      from: (((json['tx']['inputs'] as List)[0]['addresses'] as List))[0],
+      to: (((json['tx']['outputs'] as List)[0]['addresses'] as List))[0],
       total: json['tx']['outputs'][0]['value'],
       fees: json['tx']['fees'],
       toSign: json['tosign'][0],
     );
   }
-  String satsToBTC(int sats) {
-    double n = sats * 0.00000001;
-    return '$n';
+
+  String convertToWholeCoin(int total, CryptoTypes types) {
+    if (types == CryptoTypes.bitcoin) {
+      return CurrencyHelper.satsToBtc(total).toString();
+    } else if (types == CryptoTypes.ethereum) {
+      return CurrencyHelper.weiToETH(total).toString();
+    } else {
+      return "Cant Convert";
+    }
   }
 
   Map<String, dynamic> signedTransaction(Wallet wallet) {

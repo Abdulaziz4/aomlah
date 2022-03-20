@@ -28,7 +28,8 @@ class CreateOfferViewModel extends BaseViewModel {
         isBuy: true,
         currencyType: currencyType,
         margin: margin,
-        cryptoAmount: cryptoAmount,
+        totalQuantity: cryptoAmount,
+        remainingQuantity: cryptoAmount,
         minTrade: minTrade,
         terms: terms,
       ));
@@ -49,8 +50,9 @@ class CreateOfferViewModel extends BaseViewModel {
         cryptoType: cryptoType,
         isBuy: false,
         currencyType: currencyType,
+        remainingQuantity: cryptoAmount,
         margin: margin,
-        cryptoAmount: cryptoAmount,
+        totalQuantity: cryptoAmount,
         minTrade: minTrade,
         terms: terms,
       ));

@@ -10,6 +10,8 @@ import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 
+import 'eth_wallet_managment_service.dart';
+
 class AuthService {
   final _logger = getLogger("AuthService");
 
@@ -18,6 +20,7 @@ class AuthService {
   final _userService = locator<UserService>();
 
   final _walletService = locator<WalletManagmentService>();
+  final _ethWalletService = locator<EthWalletManagmentService>();
 
   final GoTrueClient _supabaseAuth = Supabase.instance.client.auth;
 
@@ -46,7 +49,9 @@ class AuthService {
       uuid: uuid,
     );
     final wallet = await _walletService.createWallet(uuid);
+    final ethWallet = await _ethWalletService.createWallet(uuid);
     await _supabaseService.createWallet(wallet);
+    await _supabaseService.createEthWallet(ethWallet);
     await setUser();
   }
 

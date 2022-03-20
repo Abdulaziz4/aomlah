@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/wallet.dart';
 
@@ -7,7 +5,9 @@ class AomlahUser {
   final String profileId;
   final String name;
   final bool isVerified;
-  final Wallet? wallet;
+  final Wallet? btcWallet;
+  final Wallet? ethWallet;
+  final double debt;
   final List<BankAccount> bankAccounts;
   final bool isOnline;
   final bool isAdmin;
@@ -16,8 +16,10 @@ class AomlahUser {
     required this.name,
     required this.isVerified,
     required this.bankAccounts,
-    required this.wallet,
+    required this.btcWallet,
+    required this.ethWallet,
     required this.isOnline,
+    required this.debt,
     this.isAdmin = false,
   });
 
@@ -27,8 +29,10 @@ class AomlahUser {
       name: "",
       isVerified: false,
       bankAccounts: [],
-      wallet: Wallet(address: "", privateKey: "", publicKey: ""),
+      btcWallet: Wallet(address: "", privateKey: "", publicKey: ""),
+      ethWallet: Wallet(address: "", privateKey: "", publicKey: ""),
       isOnline: false,
+      debt: 0,
     );
   }
 
@@ -52,10 +56,13 @@ class AomlahUser {
       profileId: map['profile_id'] ?? '',
       name: map['name'] ?? '',
       isVerified: map['is_verified'] ?? false,
-      wallet: map["wallet"] == null ? null : Wallet.fromJson(map['wallet']),
+      btcWallet: map["wallet"] == null ? null : Wallet.fromJson(map['wallet']),
+      ethWallet:
+          map["eth_wallet"] == null ? null : Wallet.fromJson(map['eth_wallet']),
       bankAccounts: accounts,
       isOnline: map['is_online'] ?? false,
       isAdmin: map["is_admin"] ?? false,
+      debt: map["debt"] * 1.0,
     );
   }
 }

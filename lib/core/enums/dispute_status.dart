@@ -1,0 +1,1 @@
+enum DisputeStatus { waiting, closed }

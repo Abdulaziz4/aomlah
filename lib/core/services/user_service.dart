@@ -1,3 +1,9 @@
+import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/services/auth_service.dart';
+import 'package:aomlah/core/services/realtime_eth_wallet_service.dart';
+import 'package:aomlah/core/services/realtime_wallet_service.dart';
+import 'package:aomlah/core/services/supabase_service.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 import 'package:aomlah/core/app/app.locator.dart';
@@ -13,15 +19,31 @@ class UserService {
 
   final _supabaseService = locator<SupabaseService>();
   final _realtimeWalletService = locator<RealtimeWalletService>();
+  final _realtimeEthWalletService = locator<RealtimeEthWalletService>();
 
-  BehaviorSubject<AomlahUser> userController = BehaviorSubject<AomlahUser>();
+  late BehaviorSubject<AomlahUser> userController;
 
   Future<void> initUser(String uuid) async {
-    final user = await _supabaseService.getUser(uuid);
-    updateUser(user);
+    userController = BehaviorSubject<AomlahUser>();
+    final userStream = _supabaseService.getUserStream(uuid);
+
+    // Pipe user stream to the controller stream
+    userStream.listen(userController.sink.add);
+
+    // Wait until first event arrived before ending
+    user = await userController.stream.first;
+
+    userController.sink.add(user);
+    userController.stream.listen((newUser) {
+      user = newUser;
+    });
     await _realtimeWalletService.connectWallet(
       uuid,
-      user.wallet?.address ?? "",
+      user.btcWallet?.address ?? "",
+    );
+    await _realtimeEthWalletService.connectWallet(
+      uuid,
+      user.ethWallet?.address ?? "",
     );
   }
 

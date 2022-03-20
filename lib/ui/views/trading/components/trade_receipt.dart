@@ -50,7 +50,7 @@ class TradeReceipt extends StatelessWidget {
               ),
               RecipteInfoItem(
                 rightText: "كمية العملة الرقمية",
-                leftText: "$cryptoAmount BTC",
+                leftText: cryptoAmount + " BTC",
               ),
             ],
           ),

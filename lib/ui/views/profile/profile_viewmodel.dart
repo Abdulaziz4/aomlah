@@ -16,7 +16,11 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   navigateToWalletInfo() {
-    navService.navigateTo(Routes.walletInfoView);
+    navService.navigateTo(Routes.walletSelectionView);
+  }
+
+  navigateToDashboardInfo() {
+    navService.navigateTo(Routes.adminDisputesView);
   }
 
   navigateToUserOffers() {
@@ -25,5 +29,9 @@ class ProfileViewModel extends BaseViewModel {
 
   navigateToBankAccounts() {
     navService.navigateTo(Routes.userBankAccountsView);
+  }
+
+  void navigateToTrades() {
+    navService.navigateTo(Routes.userTradesView);
   }
 }

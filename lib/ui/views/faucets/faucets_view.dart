@@ -38,6 +38,12 @@ class FaucetsView extends StatelessWidget {
                     },
                     text: "Fund Me",
                   ),
+                  CustomButton(
+                    onPressed: () {
+                      viewmodel.fundEth();
+                    },
+                    text: "Fund Me Eth",
+                  ),
                 ],
               ),
             ),

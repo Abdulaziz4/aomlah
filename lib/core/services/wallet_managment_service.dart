@@ -8,10 +8,7 @@ import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 
-enum HttpVreb {
-  post,
-  get,
-}
+import '../enums/http_verbs.dart';
 
 class WalletManagmentService {
   final _logger = getLogger("WalletManagmentService");
@@ -67,7 +64,10 @@ class WalletManagmentService {
   }
 
   Future<UnconfirmedTransaction> sendTransaction(
-      String from, String to, amount) async {
+    String from,
+    String to,
+    int satAmount,
+  ) async {
     _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrl/txs/new");
     final data = {
@@ -79,7 +79,7 @@ class WalletManagmentService {
       "outputs": [
         {
           "addresses": [to],
-          "value": amount
+          "value": satAmount
         }
       ]
     };
@@ -89,7 +89,7 @@ class WalletManagmentService {
     return trs;
   }
 
-  Future<RealTimeWallet> getWalletInfo(String address) async {
+  Future<BtcRealTimeWallet> getWalletInfo(String address) async {
     _logger.i("getWalletInfo | args: address=$address");
 
     final response = await sendRequest(
@@ -97,7 +97,7 @@ class WalletManagmentService {
       includeToken: false,
       req: HttpVreb.get,
     );
-    final wallet = RealTimeWallet.fromJson(response);
+    final wallet = BtcRealTimeWallet.fromJson(response);
 
     return wallet;
   }
@@ -106,7 +106,16 @@ class WalletManagmentService {
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/txs/send");
 
-    var m = await http.post(url, body: encodedJson);
-    // var decoded = jsonDecode(m.body);
+    await http.post(url, body: encodedJson);
+  }
+
+  Future<void> sendAndSignTransaction({
+    required Wallet from,
+    required String to,
+    required int satAmount,
+  }) async {
+    final unsignedTrans = await sendTransaction(from.address, to, satAmount);
+    final signedData = unsignedTrans.signedTransaction(from);
+    await sendSignedTransaction(signedData);
   }
 }

@@ -1,22 +1,23 @@
 import 'dart:convert';
 
-import 'package:aomlah/core/app/api_keys.dart';
-import 'package:aomlah/core/app/logger.dart';
-import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class PriceService {
+import 'package:aomlah/core/app/api_keys.dart';
+import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/enums/crypto_types.dart';
+import 'package:aomlah/core/models/price_ticker.dart';
+
+abstract class PriceService<T extends PriceTicker> {
   final _logger = getLogger("PriceService");
 
-  final apiKey = APIKeys.cryptoCompKey;
-
+  final String apiKey = APIKeys.cryptoCompKey;
   final baseUrl = "wss://streamer.cryptocompare.com/v2";
 
-  BehaviorSubject<Bitcoin> priceContrller = BehaviorSubject<Bitcoin>();
+  BehaviorSubject<T> priceContrller = BehaviorSubject<T>();
 
-  void connect() {
-    _logger.i("Bitcoin Price Socket Connected");
+  void connect(CryptoTypes types) {
+    _logger.i("$types Price Socket Connected");
     try {
       final url = "$baseUrl?api_key=$apiKey";
       final channel = WebSocketChannel.connect(
@@ -27,8 +28,7 @@ class PriceService {
       channel.stream.listen((event) {
         final Map<String, dynamic> response = jsonDecode(event);
         if (response["TYPE"] == "2" && (response["PRICE"] != null)) {
-          final bitcoin = Bitcoin(response["PRICE"] * 1.0);
-          priceContrller.sink.add(bitcoin);
+          sinkTicker(response["PRICE"] * 1.0);
         }
       });
     } catch (e) {
@@ -36,8 +36,7 @@ class PriceService {
     }
   }
 
-  Map<String, dynamic> connectionMessage() => {
-        "action": "SubAdd",
-        "subs": ["2~Binance~BTC~USDT"]
-      };
+  Map<String, dynamic> connectionMessage();
+
+  void sinkTicker(double price);
 }

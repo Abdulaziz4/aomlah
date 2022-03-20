@@ -1,4 +1,5 @@
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/wallet.dart';
 
 class Offer {
   final String offerID;
@@ -6,15 +7,21 @@ class Offer {
   final String cryptoType;
   final String currencyType;
   final double margin;
-  final double cryptoAmount;
+  final double totalQuantity;
+  final double remainingQuantity;
+
   final double minTrade;
   final String terms;
 
   ///BUY OFFER= TRUE, SELL OFFER= False
   final bool isBuy;
+  final bool isClosed;
+
   final List<BankAccount>? bankAccounts;
   final String? ownerName;
   final DateTime? createAt;
+  final Wallet? ownerWallet;
+  final double ownerDebt;
 
   Offer({
     required this.offerID,
@@ -22,13 +29,17 @@ class Offer {
     required this.cryptoType,
     required this.currencyType,
     required this.margin,
-    required this.cryptoAmount,
+    required this.totalQuantity,
     required this.minTrade,
     required this.terms,
     required this.isBuy,
+    required this.remainingQuantity,
+    this.isClosed = false,
     this.bankAccounts,
     this.createAt,
     this.ownerName,
+    this.ownerWallet,
+    this.ownerDebt = 0,
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) {
@@ -45,13 +56,19 @@ class Offer {
       cryptoType: json['crypto_type'],
       currencyType: json['currency_type'],
       margin: json['margin'] * 1.0,
-      cryptoAmount: json['crypto_amount'] * 1.0,
+      totalQuantity: json['total_quantity'] * 1.0,
+      remainingQuantity: json['remaining_quantity'] * 1.0,
       minTrade: json['min_trade'] * 1.0,
       terms: json['terms'],
       isBuy: json['is_buy'],
+      isClosed: json["is_closed"],
       bankAccounts: accounts,
       ownerName: json["name"],
       createAt: DateTime.parse(json["created_at"]),
+      ownerWallet: json["owner_wallet"] != null
+          ? Wallet.fromJson(json["owner_wallet"])
+          : null,
+      ownerDebt: json["owner_debt"] == null ? 0.0 : json["owner_debt"] * 1.0,
     );
   }
 
@@ -62,14 +79,23 @@ class Offer {
       'crypto_type': cryptoType,
       'currency_type': currencyType,
       'margin': margin,
-      'crypto_amount': cryptoAmount,
+      'total_quantity': totalQuantity,
+      'remaining_quantity': remainingQuantity,
       'min_trade': minTrade,
       'terms': terms,
       'is_buy': isBuy,
     };
   }
 
-  String cryptoAmonutLabel() {
-    return "" + cryptoAmount.toString() + " BTC";
+  // Accomadte different POV for isBuy variable
+  bool get isBuyTrader => !isBuy;
+  bool get isBuyMarchent => isBuy;
+
+  String totalQuantityLabel() {
+    return "⠀" + totalQuantity.toString() + " BTC";
+  }
+
+  String remainingQuantityLabel() {
+    return "⠀" + totalQuantity.toString() + " BTC";
   }
 }
