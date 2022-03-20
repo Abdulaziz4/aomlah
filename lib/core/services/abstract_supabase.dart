@@ -68,8 +68,6 @@ abstract class AbstractSupabase {
       select: select,
     ).execute();
 
-    print(response.data);
-
     if (response.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
     }

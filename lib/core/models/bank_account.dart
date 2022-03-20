@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class BankAccount {
   final String iban;
   final String ownerName;

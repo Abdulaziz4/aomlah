@@ -2,6 +2,7 @@ import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
 import 'package:aomlah/core/enums/trade_status.dart';
+import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/dispute.dart';
@@ -317,7 +318,39 @@ class SupabaseService extends AbstractSupabase {
         "dispute_id": disputeId,
       },
     );
-    print(res);
     return res.first;
+  }
+
+  Future<AdminReport> getAdminReport() async {
+    var result = await supabase
+        .rpc(
+          AomlahFunction.get_admin_report.name,
+        )
+        .select()
+        .execute();
+    return AdminReport.fromJson(result.data);
+  }
+
+  late BehaviorSubject<List<Dispute>> disputesController;
+
+  void listenToDisputes() {
+    disputesController = BehaviorSubject<List<Dispute>>();
+
+    subscribeForChanges<Dispute>(
+      table: AomlahTable.trades,
+      fromJson: Dispute.fromJson,
+      primaryKey: "dispute_id",
+    ).asyncMap((_) {
+      return _getDisputes();
+    }).listen((disputes) {
+      disputesController.sink.add(disputes);
+    });
+  }
+
+  Future<List<Dispute>> _getDisputes() {
+    return get<Dispute>(
+      AomlahTable.view_disputes,
+      Dispute.fromJson,
+    );
   }
 }

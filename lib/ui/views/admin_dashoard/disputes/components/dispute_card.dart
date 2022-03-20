@@ -1,17 +1,26 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:intl/intl.dart' as intl;
 
 class DisputeCard extends StatelessWidget {
-  const DisputeCard({Key? key}) : super(key: key);
+  final Dispute dispute;
+  const DisputeCard({
+    Key? key,
+    required this.dispute,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        locator<NavigationService>().navigateTo(Routes.disputeDetailsView);
+        locator<NavigationService>().navigateTo(
+          Routes.disputeDetailsView,
+          arguments: DisputeDetailsViewArguments(dispute: dispute),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -44,7 +53,7 @@ class DisputeCard extends StatelessWidget {
                           width: 20,
                         ),
                         Text(
-                          "1212   ",
+                          dispute.trade!.tradeId.substring(0, 7),
                           style: Constants.smallText.copyWith(
                             color: Colors.white,
                           ),
@@ -53,7 +62,7 @@ class DisputeCard extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "في الانتظار",
+                      dispute.getStatusLabel(),
                       style: Constants.smallText
                           .copyWith(color: Constants.darkBlue, fontSize: 14),
                     ),
@@ -72,10 +81,13 @@ class DisputeCard extends StatelessWidget {
                     SizedBox(
                       width: 52,
                     ),
-                    Text(
-                      "لا أريد إكمال العملية     ",
-                      style: Constants.smallText.copyWith(
-                        color: Colors.white,
+                    Expanded(
+                      child: Text(
+                        dispute.cause,
+                        style: Constants.smallText.copyWith(
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -85,7 +97,9 @@ class DisputeCard extends StatelessWidget {
                   children: [
                     Spacer(),
                     Text(
-                      "2022-04-01   4:30pm",
+                      intl.DateFormat.yMMMd().add_jm().format(
+                            dispute.createdAt!,
+                          ),
                       style: Constants.smallText.copyWith(
                         color: Color(0xFFC6C6C6),
                         fontSize: 14,

@@ -1,3 +1,4 @@
+import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/ui/views/admin_dashoard/dispute_details/components/dispute_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,7 +6,8 @@ import '../../../../core/app/utils/constants.dart';
 import '../../../shared/custom_button.dart';
 
 class DisputeDetailsView extends StatefulWidget {
-  const DisputeDetailsView({Key? key}) : super(key: key);
+  final Dispute dispute;
+  const DisputeDetailsView({Key? key, required this.dispute}) : super(key: key);
 
   @override
   _DisputeDetailsViewState createState() => _DisputeDetailsViewState();
