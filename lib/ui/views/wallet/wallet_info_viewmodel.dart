@@ -11,4 +11,12 @@ class WalletInfoViewModel extends BaseViewModel {
   navigateToWithdrawView() {
     navService.navigateTo(Routes.withdrawView);
   }
+
+  navigateToWalletEth() {
+    navService.navigateTo(Routes.ethWalletInfoView);
+  }
+
+  navigateToWalletBTC() {
+    navService.navigateTo(Routes.btcWalletInfoView);
+  }
 }

@@ -1,32 +1,12 @@
-import 'dart:convert';
-
 import 'package:aomlah/core/app/utils/currency_helper.dart';
+import 'package:aomlah/core/models/price_ticker.dart';
 
-class Bitcoin {
-  final double price;
+class Bitcoin extends PriceTicker {
+  Bitcoin(double price) : super(price);
 
-  Bitcoin(this.price);
-
-  Map<String, dynamic> toMap() {
-    return {
-      'price': price,
-    };
-  }
-
-  factory Bitcoin.fromMap(Map<String, dynamic> map) {
-    return Bitcoin(
-      map['price'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Bitcoin.fromJson(String source) =>
-      Bitcoin.fromMap(json.decode(source));
-
-  // Calculates the amount you will get in BTC
+  //  Calculates the amount you will get in BTC
   double amountToBtc(double fiatAmount) {
-    return CurrencyHelper.fiatAmountToBtc(
+    return CurrencyHelper.fiatAmountToCoin(
       fiatAmount: fiatAmount,
       price: price,
     );

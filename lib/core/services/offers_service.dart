@@ -1,11 +1,38 @@
 import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:aomlah/core/services/user_service.dart';
 
 class OffersService {
   final _supabaseService = locator<SupabaseService>();
+  final _userService = locator<UserService>();
 
-  // void subscribeToOffers() {
-  //   final subsription = _supabaseService.getOffersSubscription();
-  // }
+  Future<void> closeOffer(Offer offer) async {
+    int numOfDisputedTrades = await _supabaseService.getNumOfDisputedTrades(
+      offer.offerID,
+    );
+    print(numOfDisputedTrades);
+    if (numOfDisputedTrades != 0) {
+      throw Exception("لاتستطلع إغلاق عرض ولازال هناك نزاع على تداول");
+    }
+
+    int numOfOpenTrades = await _supabaseService.getNumOfOpenTrades(
+      offer.offerID,
+    );
+    print(numOfOpenTrades);
+
+    if (numOfOpenTrades != 0) {
+      throw Exception("لاتستطلع إغلاق عرض ولازال هناك تداولات غير مكتملة");
+    }
+
+    await _supabaseService.closeOffer(offerId: offer.offerID);
+
+    if (!offer.isBuyMarchent) {
+      // deduct the remaining offer from debt
+      await _supabaseService.updateUserDebt(
+        _userService.user.profileId,
+        -1 * offer.remainingQuantity,
+      );
+    }
+  }
 }

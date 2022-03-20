@@ -112,7 +112,6 @@ abstract class AbstractSupabase {
         )
         .select()
         .execute();
-
     if (result.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
     }

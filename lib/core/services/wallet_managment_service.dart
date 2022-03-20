@@ -8,10 +8,7 @@ import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 
-enum HttpVreb {
-  post,
-  get,
-}
+import '../enums/http_verbs.dart';
 
 class WalletManagmentService {
   final _logger = getLogger("WalletManagmentService");
@@ -92,7 +89,7 @@ class WalletManagmentService {
     return trs;
   }
 
-  Future<RealTimeWallet> getWalletInfo(String address) async {
+  Future<BtcRealTimeWallet> getWalletInfo(String address) async {
     _logger.i("getWalletInfo | args: address=$address");
 
     final response = await sendRequest(
@@ -100,7 +97,7 @@ class WalletManagmentService {
       includeToken: false,
       req: HttpVreb.get,
     );
-    final wallet = RealTimeWallet.fromJson(response);
+    final wallet = BtcRealTimeWallet.fromJson(response);
 
     return wallet;
   }

@@ -1,27 +1,24 @@
 import 'package:aomlah/core/models/transactions.dart';
+import 'package:aomlah/core/models/realtime_wallet.dart';
 
-class RealTimeWallet {
-  final String address;
-  final int balance;
-  List<Transaction>? transactions;
-
-  RealTimeWallet({
-    required this.address,
-    required this.balance,
-    this.transactions,
-  });
-  factory RealTimeWallet.dummy() {
-    return RealTimeWallet(
+class BtcRealTimeWallet extends RealTimeWallet {
+  BtcRealTimeWallet({
+    required String address,
+    required int balance,
+    List<Transaction>? transactions,
+  }) : super(address: address, balance: balance, transactions: transactions);
+  factory BtcRealTimeWallet.dummy() {
+    return BtcRealTimeWallet(
       address: "",
       balance: 0,
     );
   }
-  factory RealTimeWallet.fromJson(Map<String, dynamic> json) {
+  factory BtcRealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
     transaction =
         (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
 
-    return RealTimeWallet(
+    return BtcRealTimeWallet(
       address: json['address'],
       balance: json['balance'],
       transactions: transaction,

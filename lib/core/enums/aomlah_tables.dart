@@ -7,6 +7,7 @@ enum AomlahTable {
   view_profiles,
   bank_accounts,
   view_offers,
+  eth_wallets,
   view_trades,
   view_disputes,
 
