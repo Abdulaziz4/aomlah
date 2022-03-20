@@ -41,7 +41,7 @@ class WalletButton extends StatelessWidget {
                 // color: Constants.black3dp,
               ),
               Container(width: 10),
-              TextCrypto(
+              buildTextCrypto(
                 cryptoType,
                 style: textStyle,
               ),
@@ -61,7 +61,7 @@ class WalletButton extends StatelessWidget {
   }
 }
 
-Text TextCrypto(String cryptoType, {TextStyle? style}) {
+Text buildTextCrypto(String cryptoType, {TextStyle? style}) {
   String cText = '';
   if (cryptoType.toUpperCase() == 'BTC') {
     cText = ' بتكوين ';

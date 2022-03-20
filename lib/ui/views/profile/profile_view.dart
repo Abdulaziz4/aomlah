@@ -7,8 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-import '../chat_/chat_view.dart';
-
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
   @override

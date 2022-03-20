@@ -1,5 +1,3 @@
-import 'package:aomlah/core/app/utils/currency_helper.dart';
-
 class AdminReport {
   final int tradesNum;
   final int offersNum;

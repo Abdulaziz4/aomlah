@@ -160,10 +160,12 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                     ],
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال الكمية الاجمالية';
-                    else if (double.parse(value) <= 0)
+                    } else if (double.parse(value) <= 0) {
                       return 'الرجاء ادخال كميه صحيحه';
+                    }
+                    return null;
                   },
                   controller: _cryptoAmountController,
                   keyboardType: TextInputType.number,
@@ -189,10 +191,12 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                   hintText: 'ادخل الحد الادنى',
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال الكمية الاجمالية';
-                    else if (double.parse(value) <= 0)
+                    } else if (double.parse(value) <= 0) {
                       return 'الرجاء ادخال كميه صحيحه';
+                    }
+                    return null;
                   },
                   onSaved: (value) {
                     minTrade = double.parse(value!);
@@ -295,8 +299,6 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                               return;
                             }
                             _formKey.currentState?.save();
-                            print('Amount: $cryptoAmount');
-                            print('Min Trade: $minTrade');
 
                             viewmodel.submitSellOffer(
                                 cListVal.toString(),
@@ -325,14 +327,13 @@ class _CreateOfferSellState extends State<CreateOfferSell>
 
   DropdownButton menuCryptoButton() => DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
-        onChanged: (value) => setState(() => this.cListVal = value as String?),
+        onChanged: (value) => setState(() => cListVal = value as String?),
         value: cListVal,
       );
 
   DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
-        onChanged: (value) =>
-            setState(() => this.currListVal = value as String?),
+        onChanged: (value) => setState(() => currListVal = value as String?),
         value: currListVal,
       );
 
@@ -347,19 +348,13 @@ class _CreateOfferSellState extends State<CreateOfferSell>
       );
 
   Widget bankItems(CreateOfferViewModel viewmodel, context) {
-    if (viewmodel.bankAccount != null) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: viewmodel.bankAccount
-            .map((e) =>
-                Flexible(flex: 1, child: BankAccountItem(bankName: e.bankName)))
-            .toList(),
-      );
-    } else {
-      return SizedBox(
-        width: 15,
-      );
-    }
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: viewmodel.bankAccount
+          .map((e) =>
+              Flexible(flex: 1, child: BankAccountItem(bankName: e.bankName)))
+          .toList(),
+    );
   }
 
   @override

@@ -4,7 +4,6 @@ import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/models/coin.dart';
 import 'package:aomlah/core/services/crypto_info_service.dart';
 import 'package:aomlah/ui/views/market/market_view.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

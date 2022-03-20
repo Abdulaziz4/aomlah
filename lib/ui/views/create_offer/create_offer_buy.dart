@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../shared/custom_input_field.dart';
-import '../../shared/rounded_input_field.dart';
 import '../../shared/custom_container.dart';
 
 class CreateOfferBuy extends StatefulWidget {
@@ -101,7 +100,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                               margin++;
                             });
                           }
-                          ;
                         },
                         child: Text(
                           '+',
@@ -115,7 +113,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                               margin--;
                             });
                           }
-                          ;
                         },
                         child: Text(
                           '-',
@@ -159,10 +156,12 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     ],
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال الكمية الاجمالية';
-                    else if (double.parse(value) <= 0)
+                    } else if (double.parse(value) <= 0) {
                       return 'الرجاء ادخال كميه صحيحه';
+                    }
+                    return null;
                   },
                   controller: _cryptoAmountController,
                   keyboardType: TextInputType.number,
@@ -188,10 +187,12 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                   hintText: 'ادخل الحد الادنى',
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال الكمية الاجمالية';
-                    else if (double.parse(value) <= 0)
+                    } else if (double.parse(value) <= 0) {
                       return 'الرجاء ادخال كميه صحيحه';
+                    }
+                    return null;
                   },
                   onSaved: (value) {
                     minTrade = double.parse(value!);
@@ -239,8 +240,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                               return;
                             }
                             _formKey.currentState?.save();
-                            print('Amount: $cryptoAmount');
-                            print('Min Trade: $minTrade');
 
                             viewmodel.submitBuyOffer(
                                 cListVal.toString(),
@@ -269,14 +268,13 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
   DropdownButton menuCurrencyButton() => DropdownButton(
         items: currencyList.map(buildCryptoItems).toList(),
-        onChanged: (value) =>
-            setState(() => this.currListVal = value as String?),
+        onChanged: (value) => setState(() => currListVal = value as String?),
         value: currListVal,
       );
 
   DropdownButton menuCryptoButton() => DropdownButton(
         items: cryptoList.map(buildCryptoItems).toList(),
-        onChanged: (value) => setState(() => this.cListVal = value as String?),
+        onChanged: (value) => setState(() => cListVal = value as String?),
         value: cListVal,
       );
 

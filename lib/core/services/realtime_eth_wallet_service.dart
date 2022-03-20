@@ -1,21 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:rxdart/subjects.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:aomlah/core/app/api_keys.dart';
-import 'package:aomlah/core/app/utils/pinger.dart';
-import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 
 import '../models/eth_real_time_wallet.dart';
-import 'eth_wallet_managment_service.dart';
 
 class RealtimeEthWalletService {
   final _logger = getLogger("RealtimeEthWalletService");
-
-  final _walletManager = locator<EthWalletManagmentService>();
 
   static String token = APIKeys.blockcypherKeyEth;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";

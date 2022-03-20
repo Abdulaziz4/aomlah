@@ -1,4 +1,3 @@
-import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/views/wallet/common/wallet_button.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_viewmodel.dart';
 import 'package:flutter/material.dart';

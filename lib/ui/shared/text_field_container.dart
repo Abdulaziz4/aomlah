@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 // الكلاس خاص ل المدخلات والستايل الخاص بها
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
@@ -11,10 +10,11 @@ class TextFieldContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
       width: 286,
       height: 40,
       decoration: BoxDecoration(

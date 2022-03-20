@@ -1,6 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SummaryCard extends StatelessWidget {
   final String amount;

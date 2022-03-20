@@ -1,7 +1,6 @@
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/ui/views/admin_dashoard/dispute_details/components/dispute_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../../core/app/utils/constants.dart';
 import '../../../shared/custom_button.dart';
 
@@ -113,66 +112,6 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
           height: 45,
         ),
       ),
-    );
-  }
-}
-
-class ItemCard extends StatefulWidget {
-  ItemCard(this.label, this.data, {this.copy = false});
-
-  String label;
-  String data;
-  bool copy;
-
-  @override
-  _ItemCardState createState() => _ItemCardState();
-}
-
-class _ItemCardState extends State<ItemCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.label,
-              style: Constants.mediumText.copyWith(
-                  color: Constants.primaryColor, fontWeight: FontWeight.bold)),
-          // SizedBox(width: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(widget.data,
-                  style: TextStyle(color: Colors.white, fontSize: 18)),
-              Visibility(
-                visible: widget.copy,
-                child: InkWell(
-                  child: Icon(Icons.copy, size: 18, color: Color(0xff16A79E)),
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: widget.data));
-                  },
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class convCard extends StatelessWidget {
-  convCard(this.name, this.message);
-  String name;
-  String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "$name" + " : " + "$message",
-      style: TextStyle(color: Colors.white, fontSize: 18),
     );
   }
 }

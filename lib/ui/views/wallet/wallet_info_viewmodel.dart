@@ -1,5 +1,3 @@
-import 'package:aomlah/core/models/real_time_wallet.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

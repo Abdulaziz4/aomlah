@@ -5,7 +5,6 @@ import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/ethereum.dart';
 import 'package:aomlah/core/models/real_time_wallet.dart';
-import 'package:aomlah/core/services/price_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
@@ -22,7 +21,6 @@ import 'core/services/realtime_eth_wallet_service.dart';
 void main() async {
   // await setupLocator();
   await dotenv.load(fileName: ".env");
-  print(dotenv.env["SUPABASE_URL"].runtimeType);
 
   runApp(const MyApp());
 }

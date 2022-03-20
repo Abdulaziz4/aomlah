@@ -1,7 +1,8 @@
-import 'package:aomlah/ui/shared/rounded_button.dart';
-import 'package:aomlah/ui/views/settings/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+import 'package:aomlah/ui/shared/rounded_button.dart';
+import 'package:aomlah/ui/views/settings/settings_viewmodel.dart';
 
 import '../../../core/app/utils/constants.dart';
 import '../../shared/custom_card_title.dart';
@@ -24,9 +25,15 @@ class UpdateProfileView extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class UpdateProfileViewBody extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   String? name;
+
+  UpdateProfileViewBody({
+    Key? key,
+    this.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +50,10 @@ class UpdateProfileViewBody extends StatelessWidget {
                   CustomInputField(
                     hintText: 'ادخل الاسم',
                     validator: (value) {
-                      if (value == null || value.isEmpty)
+                      if (value == null || value.isEmpty) {
                         return 'الرجاء إدخال الاسم';
+                      }
+                      return null;
                     },
                     onSaved: (value) {
                       name = value!;

@@ -3,8 +3,6 @@ import 'package:aomlah/core/models/transactions.dart';
 import 'package:aomlah/ui/views/wallet/common/blue_text.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/app/utils/constants.dart';
-
 class TransactionBody extends StatelessWidget {
   final Transaction transaction;
   final CryptoTypes cryptoType;
@@ -36,14 +34,14 @@ class TransactionBody extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '$fees',
+                  fees,
                   textAlign: TextAlign.left,
                 ),
               )
             ],
           ),
           Row(
-            children: [
+            children: const [
               BlueText(textAlign: TextAlign.right, text: 'من'),
             ],
           ),
@@ -58,9 +56,10 @@ class TransactionBody extends StatelessWidget {
             ],
           ),
           Row(
-            children: [
+            children: const [
               Expanded(
-                  child: BlueText(textAlign: TextAlign.right, text: 'الى')),
+                child: BlueText(textAlign: TextAlign.right, text: 'الى'),
+              ),
             ],
           ),
           Row(

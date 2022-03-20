@@ -1,7 +1,5 @@
-import 'package:aomlah/core/app/app.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
-import 'package:aomlah/ui/shared/text_field_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
@@ -37,7 +35,7 @@ class ChatView extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   BubbleSpecialThree(
                     text: 'Added iMassage shape bubbles',
                     color: Color(0xFF1B97F3),
@@ -133,7 +131,7 @@ class ChatView extends StatelessWidget {
             ),
           ),
           Container(
-            color: Constants.black2dp,
+              color: Constants.black2dp,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               //height: 70,
               child: Row(

@@ -84,6 +84,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                         } else if (value.length < 30) {
                           return 'الرجاء ادخال عنوان صحيح';
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.text,
                       onSaved: (value) {
@@ -123,6 +124,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                             (walletEth.balance / 1000000000000000000.0)) {
                           return 'أدخل المبلغ تحت رصيدك';
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.number,
                       onSaved: (value) {

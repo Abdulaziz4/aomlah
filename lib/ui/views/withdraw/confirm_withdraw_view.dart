@@ -1,4 +1,3 @@
-import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_row.dart';
 import 'package:aomlah/ui/shared/rounded_button.dart';
@@ -66,7 +65,7 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
 
                       ///from
                       Row(
-                        children: [
+                        children: const [
                           BlueText(textAlign: TextAlign.right, text: 'من'),
                         ],
                       ),
@@ -84,7 +83,7 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
 
                       ///to
                       Row(
-                        children: [
+                        children: const [
                           BlueText(textAlign: TextAlign.right, text: 'الى'),
                         ],
                       ),

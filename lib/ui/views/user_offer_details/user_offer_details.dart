@@ -1,5 +1,4 @@
 import 'package:aomlah/core/models/offer.dart';
-import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/views/user_offer_details/components/offer_details.dart';
 import 'package:aomlah/ui/views/user_offer_details/components/user_offer_trades.dart';
 import 'package:flutter/material.dart';

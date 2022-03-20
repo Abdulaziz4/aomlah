@@ -1,5 +1,4 @@
 import 'package:aomlah/core/models/coin.dart';
-import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
 import 'package:flutter/material.dart';
 
 class CoinCard extends StatelessWidget {

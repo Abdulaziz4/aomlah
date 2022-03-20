@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
+import 'package:aomlah/core/models/wallet.dart';
 
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/views/withdraw/common/transaction_obj.dart';
@@ -21,7 +20,7 @@ class WithdrawViewModel extends BaseViewModel {
 
   Future<void> sendTran(String to, int amount, CryptoTypes types) async {
     setBusy(true);
-    var userAddress, service;
+    String userAddress;
     if (types == CryptoTypes.bitcoin) {
       userAddress = userService.user.btcWallet!.address;
       UnconfirmedTransaction transaction =
@@ -46,7 +45,7 @@ class WithdrawViewModel extends BaseViewModel {
   Future<void> signSendTransaction(
       UnconfirmedTransaction transaction, CryptoTypes types) async {
     setBusy(true);
-    var userWallet;
+    Wallet userWallet;
     if (types == CryptoTypes.bitcoin) {
       userWallet = userService.user.btcWallet!;
       Map<String, dynamic> signedJson =

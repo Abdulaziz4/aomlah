@@ -2,7 +2,6 @@ import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
@@ -14,7 +13,6 @@ class DisputesViewModel extends StreamViewModel<List<Dispute>> {
   }
   final _logger = getLogger("DisputesViewModel");
 
-  final _navService = locator<NavigationService>();
   final _suabaseService = locator<SupabaseService>();
 
   bool isBusyReport = false;
