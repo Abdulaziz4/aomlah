@@ -46,6 +46,7 @@ dependencies:
   secp256k1: ^0.3.0
   ecdsa: ^0.0.4
   elliptic: ^0.3.5
+  chat_bubbles: ^1.2.0
 
 dev_dependencies:
   flutter_test:
