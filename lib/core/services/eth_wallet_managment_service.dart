@@ -100,11 +100,11 @@ class EthWalletManagmentService {
   }
 
   Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
-    print(signedJson);
+    _logger.i("sendSignedTransaction | signedJson=$signedJson");
+
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/txs/send?token=$token");
 
-    var m = await http.post(url, body: encodedJson);
-    print(m.body);
+    await http.post(url, body: encodedJson);
   }
 }

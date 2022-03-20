@@ -22,6 +22,7 @@ import 'core/services/realtime_eth_wallet_service.dart';
 void main() async {
   // await setupLocator();
   await dotenv.load(fileName: ".env");
+  print(dotenv.env["SUPABASE_URL"].runtimeType);
 
   runApp(const MyApp());
 }

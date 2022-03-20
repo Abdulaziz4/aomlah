@@ -25,6 +25,7 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Future<void> initlizeSupabase() async {
+    print(dotenv.env['SUPABASE_URL']);
     await Supabase.initialize(
       url: dotenv.env['SUPABASE_URL'],
       anonKey: dotenv.env['SUPABASE_ANON'],

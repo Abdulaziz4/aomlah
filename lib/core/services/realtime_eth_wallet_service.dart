@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -20,35 +19,34 @@ class RealtimeEthWalletService {
 
   static String token = APIKeys.blockcypherKeyEth;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";
-  static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
 
   BehaviorSubject<EthRealTimeWallet> walletController =
       BehaviorSubject<EthRealTimeWallet>();
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectEthWallet | args: uuid= $uuid , address=$address");
-    final socketUrl = "$baseSocketUrl?token=$token";
+    // final socketUrl = "$baseSocketUrl?token=$token";
+    // print(socketUrl);
+    // // Fetch for first time
+    // final initialData = await _walletManager.getWalletInfo(address);
+    // walletController.sink.add(initialData);
 
-    // Fetch for first time
-    final initialData = await _walletManager.getWalletInfo(address);
-    walletController.sink.add(initialData);
+    // final channel = WebSocketChannel.connect(
+    //   Uri.parse(socketUrl),
+    // );
 
-    final channel = WebSocketChannel.connect(
-      Uri.parse(socketUrl),
-    );
+    // channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
+    // Pinger.ping(channel, ping());
 
-    channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
-    Pinger.ping(channel, ping());
+    // channel.stream.listen((event) async {
+    //   final decodedEvent = jsonDecode(event);
+    //   if (decodedEvent["event"] != "pong") {
+    //     // On new transaction update the wallet balance
+    //     final updatedWallet = await _walletManager.getWalletInfo(address);
 
-    channel.stream.listen((event) async {
-      final decodedEvent = jsonDecode(event);
-      if (decodedEvent["event"] != "pong") {
-        // On new transaction update the wallet balance
-        final updatedWallet = await _walletManager.getWalletInfo(address);
-
-        walletController.sink.add(updatedWallet);
-      }
-    });
+    //     walletController.sink.add(updatedWallet);
+    //   }
+    // });
   }
 
   Map<String, dynamic> connectionMessage(String uuid, String address) {

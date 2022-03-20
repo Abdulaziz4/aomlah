@@ -18,7 +18,6 @@ class RealtimeWalletService {
 
   static String token = APIKeys.blockcypherKey;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
-  static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
   BehaviorSubject<BtcRealTimeWallet> walletController =
       BehaviorSubject<BtcRealTimeWallet>();
