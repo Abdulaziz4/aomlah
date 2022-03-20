@@ -13,8 +13,8 @@ import '../enums/http_verbs.dart';
 class WalletManagmentService {
   final _logger = getLogger("WalletManagmentService");
 
-  static const token = APIKeys.blockcypherKey;
-  static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
+  static String token = APIKeys.blockcypherKey;
+  static String baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
   Future<dynamic> sendRequest({
     required String path,

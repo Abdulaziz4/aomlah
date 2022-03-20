@@ -10,6 +10,7 @@ import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -25,9 +26,8 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> initlizeSupabase() async {
     await Supabase.initialize(
-      url: 'https://ovnvhtboyihfvpujfynw.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzYzNjg5NCwiZXhwIjoxOTU5MjEyODk0fQ.Fgqh3Fs8ovWy0BgSd1FokQimrMNtYPa4_-uPh7B9FtY',
+      url: dotenv.env['SUPABASE_URL'],
+      anonKey: dotenv.env['SUPABASE_ANON'],
       debug: true,
     );
     supabase = Supabase.instance.client;

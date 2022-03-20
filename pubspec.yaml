@@ -47,7 +47,7 @@ dependencies:
   ecdsa: ^0.0.4
   elliptic: ^0.3.5
   chat_bubbles: ^1.2.0
-
+  flutter_dotenv: ^5.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,6 +75,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/icons/
     - assets/images/
 

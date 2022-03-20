@@ -18,7 +18,7 @@ class RealtimeEthWalletService {
 
   final _walletManager = locator<EthWalletManagmentService>();
 
-  static const token = APIKeys.blockcypherKeyEth;
+  static String token = APIKeys.blockcypherKeyEth;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
 
@@ -27,7 +27,7 @@ class RealtimeEthWalletService {
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectEthWallet | args: uuid= $uuid , address=$address");
-    const socketUrl = "$baseSocketUrl?token=$token";
+    final socketUrl = "$baseSocketUrl?token=$token";
 
     // Fetch for first time
     final initialData = await _walletManager.getWalletInfo(address);

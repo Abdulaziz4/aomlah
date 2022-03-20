@@ -11,7 +11,7 @@ import '../models/eth_real_time_wallet.dart';
 class EthWalletManagmentService {
   final _logger = getLogger("ETHWalletManagmentService");
 
-  static const token = APIKeys.blockcypherKeyEth;
+  static String token = APIKeys.blockcypherKeyEth;
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
 
   Future<dynamic> sendRequest({

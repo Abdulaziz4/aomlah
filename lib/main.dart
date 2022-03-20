@@ -12,6 +12,7 @@ import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'core/models/eth_real_time_wallet.dart';
 import 'core/services/btc_price_service.dart';
@@ -20,6 +21,8 @@ import 'core/services/realtime_eth_wallet_service.dart';
 
 void main() async {
   // await setupLocator();
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 
