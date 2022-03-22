@@ -5,6 +5,7 @@ import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/chat_message.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
@@ -63,7 +64,10 @@ class SupabaseService extends AbstractSupabase {
   Future<void> updateUserStatus(
       {required String uuid, required bool status}) async {
     await update(
-        AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
+      AomlahTable.profiles,
+      {"is_online": status},
+      {"profile_id": uuid},
+    );
   }
 
   Future<int> getNumOfDisputedTrades(String offerId) async {
@@ -359,6 +363,16 @@ class SupabaseService extends AbstractSupabase {
     return get<Dispute>(
       AomlahTable.view_disputes,
       Dispute.fromJson,
+    );
+  }
+
+  Stream<List<ChatMessage>> getTradeChatStream(String tradeId) {
+    final query = {"trade_id": tradeId};
+    return subscribeForChanges<ChatMessage>(
+      table: AomlahTable.chat_messages,
+      fromJson: ChatMessage.fromJson,
+      primaryKey: "message_id",
+      query: query,
     );
   }
 }

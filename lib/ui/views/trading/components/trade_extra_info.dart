@@ -3,7 +3,7 @@ import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/ui/shared/bank_account_card.dart';
 import 'package:aomlah/ui/shared/button_tile.dart';
 import 'package:aomlah/ui/shared/expandable_card.dart';
-import 'package:aomlah/ui/views/chat_/chat_view.dart';
+import 'package:aomlah/ui/views/chat/chat_view.dart';
 import 'package:flutter/material.dart';
 
 class TradeExtraInfo extends StatelessWidget {
@@ -45,7 +45,8 @@ class TradeExtraInfo extends StatelessWidget {
         ButtonTile(
           onPressed: () {
             Navigator.push(
-              context,MaterialPageRoute(builder: (context)=> const ChatView()),
+              context,
+              MaterialPageRoute(builder: (context) => const ChatView()),
             );
           },
           text: "المحادثة",
