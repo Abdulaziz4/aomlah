@@ -1,8 +1,9 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/app/utils/form_validator.dart';
+import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
 import 'package:aomlah/ui/views/chat/viewmodels/chat_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:stacked/stacked.dart';
 
@@ -15,151 +16,85 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color receiverColor = Color(0xFFE8E8EE);
+    Color senderColor = Color(0xFF1B97F3);
     return ViewModelBuilder<ChatViewModel>.reactive(
       viewModelBuilder: () => ChatViewModel(tradeId),
-      builder: (BuildContext context, ChatViewModel viewmodel, _) => Scaffold(
-        appBar: AppBar(
-          title: Text("المحادثة"),
-        ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 70,
-              padding: EdgeInsets.all(5),
-              color: Constants.black2dp,
-              child: Row(
-                children: <Widget>[
-                  SvgPicture.asset(
-                    "assets/icons/ProfilePic.svg",
-                    height: 50,
-                    width: 50,
+      builder: (BuildContext context, ChatViewModel viewmodel, _) =>
+          BusyOverlay(
+        isBusy: viewmodel.isBusy,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("المحادثة"),
+          ),
+          body: Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      children: viewmodel.messages
+                          .map(
+                            (message) => Padding(
+                              padding: const EdgeInsets.only(bottom: 3.0),
+                              child: BubbleSpecialThree(
+                                text: message.content,
+                                color: viewmodel
+                                        .isCurrentUserSender(message.senderId)
+                                    ? senderColor
+                                    : receiverColor,
+                                isSender: viewmodel
+                                    .isCurrentUserSender(message.senderId),
+                                textStyle: viewmodel
+                                        .isCurrentUserSender(message.senderId)
+                                    ? Constants.smallText
+                                    : Constants.smallText
+                                        .copyWith(color: Colors.black),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
-                  Container(width: 20),
-                  Text("زياد أحمد"),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: const <Widget>[
-                    BubbleSpecialThree(
-                      text: 'Added iMassage shape bubbles',
-                      color: Color(0xFF1B97F3),
-                      tail: false,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Please try and give some feedback on it!',
-                      color: Color(0xFF1B97F3),
-                      tail: true,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Sure',
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "I tried. It's awesome!!!",
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "Thanks",
-                      color: Color(0xFFE8E8EE),
-                      tail: true,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Added iMassage shape bubbles',
-                      color: Color(0xFF1B97F3),
-                      tail: false,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Please try and give some feedback on it!',
-                      color: Color(0xFF1B97F3),
-                      tail: true,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Sure',
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "I tried. It's awesome!!!",
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "Thanks",
-                      color: Color(0xFFE8E8EE),
-                      tail: true,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Added iMassage shape bubbles',
-                      color: Color(0xFF1B97F3),
-                      tail: false,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Please try and give some feedback on it!',
-                      color: Color(0xFF1B97F3),
-                      tail: true,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    BubbleSpecialThree(
-                      text: 'Sure',
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "I tried. It's awesome!!!",
-                      color: Color(0xFFE8E8EE),
-                      tail: false,
-                      isSender: false,
-                    ),
-                    BubbleSpecialThree(
-                      text: "Thanks",
-                      color: Color(0xFFE8E8EE),
-                      tail: true,
-                      isSender: false,
-                    )
-                  ],
                 ),
               ),
-            ),
-            Container(
-                color: Constants.black2dp,
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                //height: 70,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: RoundedInputField(
-                        label: "",
-                        hintText: "رسالتك",
-                      ),
+              Form(
+                key: viewmodel.formKey,
+                child: Container(
+                    color: Constants.black2dp,
+                    padding: EdgeInsets.only(
+                      top: 5,
+                      left: 10,
+                      right: 10,
+                      bottom: 20,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon:
-                          SvgPicture.asset("assets/icons/Send_Arrow_Icon.svg"),
-                      padding: EdgeInsets.only(right: 5),
-                    )
-                  ],
-                )),
-          ],
+                    //height: 70,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: RoundedInputField(
+                            label: "",
+                            hintText: "رسالتك",
+                            validator: FormValidator.hasValue,
+                            onSave: viewmodel.setCurrentMessage,
+                          ),
+                        ),
+                        Material(
+                          type: MaterialType.transparency,
+                          shape: CircleBorder(),
+                          clipBehavior: Clip.hardEdge,
+                          child: IconButton(
+                            onPressed: viewmodel.sendMessage,
+                            icon: Icon(Icons.send),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );

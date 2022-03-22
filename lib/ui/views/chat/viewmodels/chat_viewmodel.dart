@@ -1,3 +1,5 @@
+import 'package:aomlah/core/services/user_service.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,12 +12,42 @@ class ChatViewModel extends StreamViewModel<List<ChatMessage>> {
   final String tradeId;
   ChatViewModel(this.tradeId);
 
+  final formKey = GlobalKey<FormState>();
+
   final _logger = getLogger("ChatViewModel");
 
-  final _navService = locator<NavigationService>();
+  final _userService = locator<UserService>();
   final _suabaseService = locator<SupabaseService>();
 
-  List<ChatMessage> offers = [];
+  String? currentMessage;
+
+  List<ChatMessage> messages = [];
+
+  void sendMessage() {
+    bool isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    formKey.currentState!.save();
+
+    final message = ChatMessage(
+      content: currentMessage!,
+      senderId: _userService.user.profileId,
+      tradeId: tradeId,
+    );
+    _suabaseService.createChatMessgae(message);
+
+    formKey.currentState!.reset();
+  }
+
+  void setCurrentMessage(String? value) {
+    currentMessage = value;
+  }
+
+  bool isCurrentUserSender(String senderId) {
+    return senderId == _userService.user.profileId;
+  }
 
   @override
   void onSubscribed() {
@@ -31,7 +63,7 @@ class ChatViewModel extends StreamViewModel<List<ChatMessage>> {
     _logger.i("onData");
 
     if (data != null) {
-      offers = data.toList();
+      messages = data.toList();
     }
   }
 

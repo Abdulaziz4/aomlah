@@ -15,6 +15,7 @@ import '../services/btc_price_service.dart';
 import '../services/candles_service.dart';
 import '../services/crypto_info_service.dart';
 import '../services/eth_price_service.dart';
+import '../services/eth_wallet_managment_service.dart';
 import '../services/offers_service.dart';
 import '../services/realtime_eth_wallet_service.dart';
 import '../services/realtime_wallet_service.dart';
@@ -34,6 +35,7 @@ Future setupLocator(
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => WalletManagmentService());
+  locator.registerLazySingleton(() => EthWalletManagmentService());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => BtcPriceService());

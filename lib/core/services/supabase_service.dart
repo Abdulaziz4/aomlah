@@ -375,4 +375,11 @@ class SupabaseService extends AbstractSupabase {
       query: query,
     );
   }
+
+  Future<void> createChatMessgae(ChatMessage message) async {
+    await insert(
+      AomlahTable.chat_messages,
+      message.toJson(),
+    );
+  }
 }
