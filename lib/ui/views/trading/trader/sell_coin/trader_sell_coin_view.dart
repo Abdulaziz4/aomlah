@@ -95,6 +95,7 @@ class _TraderSellCoinViewState extends State<TraderSellCoinView> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TradeExtraInfo(
+                            tradeId: viewmodel.trade.tradeId,
                             terms: viewmodel.trade.offer!.terms,
                           ),
                           buildRecipte(viewmodel.trade),

@@ -10,7 +10,7 @@ enum AomlahTable {
   eth_wallets,
   view_trades,
   view_disputes,
-
+  chat_messages,
   trades,
   disputes,
   offer_bankaccounts,

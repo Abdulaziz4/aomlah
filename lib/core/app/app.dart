@@ -2,6 +2,7 @@ import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/candles_service.dart';
 import 'package:aomlah/core/services/crypto_info_service.dart';
 import 'package:aomlah/core/services/eth_price_service.dart';
+import 'package:aomlah/core/services/eth_wallet_managment_service.dart';
 import 'package:aomlah/core/services/offers_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
@@ -12,6 +13,7 @@ import 'package:aomlah/ui/views/admin_dashoard/dispute_details/dispute_details_v
 import 'package:aomlah/ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import 'package:aomlah/ui/views/auth/welcome/welcome_view.dart';
+import 'package:aomlah/ui/views/chat/chat_view.dart';
 import 'package:aomlah/ui/views/create_dispute/create_dispute_view.dart';
 import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
@@ -32,6 +34,7 @@ import 'package:aomlah/ui/views/user_offers/user_offers_view.dart';
 import 'package:aomlah/ui/views/user_trades/user_trades_view.dart';
 import 'package:aomlah/ui/views/wallet/btc_wallet_info_view.dart';
 import 'package:aomlah/ui/views/wallet/eth_wallet_info_view.dart';
+import 'package:aomlah/ui/views/wallet/wallet_selection_view.dart';
 import 'package:aomlah/ui/views/wallet/wallet_view.dart';
 import 'package:aomlah/ui/views/withdraw/confirm_withdraw_view.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
@@ -71,11 +74,15 @@ import '../services/realtime_eth_wallet_service.dart';
     MaterialRoute(page: EthWalletInfoView),
     MaterialRoute(page: AdminDisputesView),
     MaterialRoute(page: DisputeDetailsView),
+    MaterialRoute(page: ChatView),
+    MaterialRoute(page: WalletSelectionView),
   ],
   dependencies: [
     // Register all services and deps.
     LazySingleton<NavigationService>(classType: NavigationService),
     LazySingleton<WalletManagmentService>(classType: WalletManagmentService),
+    LazySingleton<WalletManagmentService>(classType: EthWalletManagmentService),
+
     LazySingleton<AuthService>(classType: AuthService),
     LazySingleton<UserService>(classType: UserService),
     LazySingleton<BtcPriceService>(classType: BtcPriceService),
