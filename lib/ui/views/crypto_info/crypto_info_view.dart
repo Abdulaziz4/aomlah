@@ -65,7 +65,8 @@ class _CryptoInfoViewState extends State<CryptoInfoView>
       "tab": Tab(
         text: "١ اسبوع",
       ),
-      "value": "1w",
+      //TODO: Change to 1w
+      "value": "4h",
     },
   ];
 
