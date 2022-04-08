@@ -20,6 +20,7 @@ import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/crypto_info/crypto_info_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
+import '../../ui/views/nfad/nfad_mock_view.dart';
 import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/settings/settings_update_profile_view.dart';
 import '../../ui/views/settings/settings_view.dart';
@@ -75,6 +76,7 @@ class Routes {
   static const String disputeDetailsView = '/dispute-details-view';
   static const String chatView = '/chat-view';
   static const String walletSelectionView = '/wallet-selection-view';
+  static const String nfadMocView = '/nfad-moc-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -105,6 +107,7 @@ class Routes {
     disputeDetailsView,
     chatView,
     walletSelectionView,
+    nfadMocView,
   };
 }
 
@@ -142,6 +145,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.disputeDetailsView, page: DisputeDetailsView),
     RouteDef(Routes.chatView, page: ChatView),
     RouteDef(Routes.walletSelectionView, page: WalletSelectionView),
+    RouteDef(Routes.nfadMocView, page: NfadMocView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -359,6 +363,12 @@ class StackedRouter extends RouterBase {
     WalletSelectionView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const WalletSelectionView(),
+        settings: data,
+      );
+    },
+    NfadMocView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const NfadMocView(),
         settings: data,
       );
     },

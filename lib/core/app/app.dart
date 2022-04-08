@@ -19,6 +19,7 @@ import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/crypto_info/crypto_info_view.dart';
 import 'package:aomlah/ui/views/faucets/faucets_view.dart';
 import 'package:aomlah/ui/views/navigation/navigation_view.dart';
+import 'package:aomlah/ui/views/nfad/nfad_mock_view.dart';
 import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_update_profile_view.dart';
 import 'package:aomlah/ui/views/settings/settings_view.dart';
@@ -76,6 +77,7 @@ import '../services/realtime_eth_wallet_service.dart';
     MaterialRoute(page: DisputeDetailsView),
     MaterialRoute(page: ChatView),
     MaterialRoute(page: WalletSelectionView),
+    MaterialRoute(page: NfadMocView),
   ],
   dependencies: [
     // Register all services and deps.

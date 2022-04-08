@@ -70,6 +70,17 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  Future<void> verifyUser({
+    required String uuid,
+    required bool isVerified,
+  }) async {
+    await update(
+      AomlahTable.profiles,
+      {"is_verified": isVerified},
+      {"profile_id": uuid},
+    );
+  }
+
   Future<int> getNumOfDisputedTrades(String offerId) async {
     final res = await supabase
         .rpc(
