@@ -1,3 +1,4 @@
+import 'package:aomlah/core/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -18,12 +19,26 @@ class OffersDiscoveryViewModel extends StreamViewModel<List<Offer>> {
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
   final _suabaseService = locator<SupabaseService>();
+  final _userService = locator<UserService>();
+  final _snakbarService = locator<SnackbarService>();
 
   List<Offer> offers = [];
 
   void logout() {
     _authService.signOut();
     _navService.replaceWith(Routes.welcomeView);
+  }
+
+  void navigateToAddOffer() {
+    if (!_userService.user.isVerified) {
+      _snakbarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من انشاء عرض",
+      );
+      return;
+    }
+
+    locator<NavigationService>().navigateTo(Routes.createOfferView);
   }
 
   List<Offer> get buyOffers => offers.where((offer) => !offer.isBuy).toList();

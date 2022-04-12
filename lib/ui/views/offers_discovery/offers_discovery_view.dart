@@ -22,10 +22,7 @@ class OffersDiscoveryView extends StatelessWidget {
                 title: Text("التداول"),
                 actions: [
                   IconButton(
-                    onPressed: () {
-                      locator<NavigationService>()
-                          .navigateTo(Routes.createOfferView);
-                    },
+                    onPressed: viewmodel.navigateToAddOffer,
                     icon: Icon(Icons.add),
                   ),
                   IconButton(

@@ -17,12 +17,29 @@ class BuyCoinOverviewViewmodel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   final _userService = locator<UserService>();
   final _tradingService = locator<TradingService>();
+  final _snackBarService = locator<SnackbarService>();
 
   final formKey = GlobalKey<FormState>();
 
   double amount = 0;
 
   Future<void> submit(double price, Offer offer) async {
+    if (!_userService.user.isVerified) {
+      _snackBarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من التداول",
+      );
+      return;
+    }
+
+    if (offer.ownerID == _userService.user.profileId) {
+      _snackBarService.showSnackbar(
+        title: "لاتستطيع التداول من العرض الخاص بك",
+        message: "",
+      );
+      return;
+    }
+
     bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;

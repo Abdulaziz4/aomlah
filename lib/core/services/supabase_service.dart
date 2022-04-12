@@ -14,6 +14,7 @@ import 'package:aomlah/core/services/abstract_supabase.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -127,11 +128,12 @@ class SupabaseService extends AbstractSupabase {
     return res.first;
   }
 
-  Future<List<Offer>> _getOffers({Map<String, String>? query}) {
+  Future<List<Offer>> _getOffers({Map<String, dynamic>? query}) {
     return get<Offer>(
       AomlahTable.view_offers,
       Offer.fromJson,
       query: query,
+      orderKey: "margin",
     );
   }
 
@@ -141,12 +143,23 @@ class SupabaseService extends AbstractSupabase {
 
   // Listen for changes on offers table and fetches from view_offers on every offers table change
   void listentoAllOffers() {
-    subscribeForChanges<Offer>(
+    final offersStream = subscribeForChanges<Offer>(
       table: AomlahTable.offers,
       fromJson: Offer.fromJson,
       primaryKey: "offer_id",
-    ).asyncMap((event) {
-      return _getOffers();
+    );
+    final usersStream = subscribeForChanges<AomlahUser>(
+      table: AomlahTable.profiles,
+      fromJson: (_) => AomlahUser.anonymous(),
+      primaryKey: "profile_id",
+    );
+
+    final mergedStream = StreamGroup.merge([offersStream, usersStream]);
+
+    mergedStream.asyncMap((event) {
+      return _getOffers(query: {
+        "is_online": true,
+      });
     }).listen((offers) {
       offersController.sink.add(offers);
     });
@@ -214,12 +227,14 @@ class SupabaseService extends AbstractSupabase {
     offerTradesController = BehaviorSubject<List<Trade>>();
 
     final query = {"offer_id": offerId};
-    subscribeForChanges<Trade>(
+    final offersStream = subscribeForChanges<Trade>(
       table: AomlahTable.trades,
       fromJson: Trade.fromJson,
       primaryKey: "trade_id",
       query: query,
-    ).asyncMap((_) {
+    );
+
+    offersStream.asyncMap((_) {
       return _getOfferTrades(query: query);
     }).listen((trades) {
       offerTradesController.sink.add(trades);

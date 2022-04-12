@@ -15,6 +15,7 @@ class SellCoinOverviewViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   final _tradingService = locator<TradingService>();
   final _userService = locator<UserService>();
+  final _snackBarService = locator<SnackbarService>();
 
   final formKey = GlobalKey<FormState>();
 
@@ -25,6 +26,22 @@ class SellCoinOverviewViewModel extends BaseViewModel {
   String? errorMessage;
 
   void submit({required double price, required Offer offer}) async {
+    if (!_userService.user.isVerified) {
+      _snackBarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من التداول",
+      );
+      return;
+    }
+
+    if (offer.ownerID == _userService.user.profileId) {
+      _snackBarService.showSnackbar(
+        title: "لاتستطيع التداول من العرض الخاص بك",
+        message: "",
+      );
+      return;
+    }
+
     resetBankError();
 
     bool isValid = formKey.currentState!.validate();
