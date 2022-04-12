@@ -10,6 +10,10 @@ class VerifyAccountViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _supabaseService = locator<SupabaseService>();
 
+  void navigateToHome() {
+    navService.navigateTo(Routes.navigationView);
+  }
+
   void verifyUser() async {
     await _supabaseService.verifyUser(
       uuid: _userService.user.profileId,
@@ -22,6 +26,7 @@ class VerifyAccountViewModel extends BaseViewModel {
 
     if (completed) {
       verifyUser();
+      navService.replaceWith(Routes.navigationView);
     }
   }
 }

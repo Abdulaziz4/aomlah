@@ -69,11 +69,11 @@ class VerifyAccountPromotionView extends StatelessWidget {
                     color: Constants.primaryColor,
                     height: 40,
                     width: 200,
-                    onPressed: () {},
+                    onPressed: viewmodel.navigateToNfad,
                   ),
                   SizedBox(height: 20),
                   TextButton(
-                    onPressed: viewmodel.navigateToNfad,
+                    onPressed: viewmodel.navigateToHome,
                     child: Text(
                       "وثق حسابي لاحقاً",
                     ),

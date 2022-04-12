@@ -18,10 +18,6 @@ class StartupViewModel extends BaseViewModel {
     );
     await setupLocator();
 
-    final btcPriceService = locator<BtcPriceService>();
-    btcPriceService.connect(CryptoTypes.bitcoin);
-    final ethPriceService = locator<EthPriceService>();
-    ethPriceService.connect(CryptoTypes.ethereum);
     final _navService = locator<NavigationService>();
     final _authService = locator<AuthService>();
 
