@@ -59,14 +59,21 @@ abstract class AbstractSupabase {
     Map<String, dynamic>? query,
     String? select,
     int? limit,
+    String? orderKey,
   }) async {
     logger.i("GET ${table.name} | query= $query, limit=$limit");
 
-    final response = await selectEq(
+    final selected = selectEq(
       supabase.from(table.name),
       query: query,
       select: select,
-    ).execute();
+    );
+
+    if (orderKey != null) {
+      selected.order(orderKey);
+    }
+
+    final response = await selected.execute();
 
     if (response.error != null) {
       throw Exception("حدث خطأ ما، الرجاء المحاولة لاحقاً");
