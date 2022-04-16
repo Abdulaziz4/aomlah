@@ -16,6 +16,7 @@ class Trade {
   final Offer? offer;
   final BankAccount? bankAccount;
   final String? traderName;
+  final String? traderEmail;
   final Wallet? traderWallet;
   final Dispute? dispute;
 
@@ -34,6 +35,7 @@ class Trade {
     this.createdAt,
     this.traderWallet,
     this.dispute,
+    this.traderEmail,
   });
   factory Trade.fromJson(Map<String, dynamic> json) {
     return Trade(
@@ -45,6 +47,7 @@ class Trade {
       bankAccount: json["bank_account"] != null
           ? BankAccount.fromJson(json["bank_account"])
           : null,
+      traderEmail: json["email"],
       bankIban: json["bank_iban"],
       offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
       traderName: json["name"],

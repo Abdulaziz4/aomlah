@@ -37,8 +37,13 @@ class SupabaseService extends AbstractSupabase {
   Future<void> createUserProfile({
     required String uuid,
     required String name,
+    required String email,
   }) async {
-    await insert(AomlahTable.profiles, {"profile_id": uuid, "name": name});
+    await insert(AomlahTable.profiles, {
+      "profile_id": uuid,
+      "name": name,
+      "email": email,
+    });
   }
 
   Future<void> updateUserProfile(
@@ -360,7 +365,7 @@ class SupabaseService extends AbstractSupabase {
     disputesController = BehaviorSubject<List<Dispute>>();
 
     subscribeForChanges<Dispute>(
-      table: AomlahTable.trades,
+      table: AomlahTable.disputes,
       fromJson: Dispute.fromJson,
       primaryKey: "dispute_id",
     ).asyncMap((_) {
@@ -384,6 +389,16 @@ class SupabaseService extends AbstractSupabase {
       fromJson: ChatMessage.fromJson,
       primaryKey: "message_id",
       query: query,
+    );
+  }
+
+  Future<List<ChatMessage>> getTradeChatMessages(String tradeId) {
+    return get<ChatMessage>(
+      AomlahTable.chat_messages,
+      ChatMessage.fromJson,
+      query: {
+        "trade_id": tradeId,
+      },
     );
   }
 
