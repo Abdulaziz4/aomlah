@@ -19,6 +19,7 @@ class Offer {
 
   final List<BankAccount>? bankAccounts;
   final String? ownerName;
+  final String? ownerEmail;
   final DateTime? createAt;
   final Wallet? ownerWallet;
   final double ownerDebt;
@@ -39,6 +40,7 @@ class Offer {
     this.createAt,
     this.ownerName,
     this.ownerWallet,
+    this.ownerEmail,
     this.ownerDebt = 0,
   });
 
@@ -64,6 +66,7 @@ class Offer {
       isClosed: json["is_closed"],
       bankAccounts: accounts,
       ownerName: json["name"],
+      ownerEmail: json["email"],
       createAt: DateTime.parse(json["created_at"]),
       ownerWallet: json["owner_wallet"] != null
           ? Wallet.fromJson(json["owner_wallet"])
