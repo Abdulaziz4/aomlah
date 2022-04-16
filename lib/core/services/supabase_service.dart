@@ -1,6 +1,7 @@
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
+import 'package:aomlah/core/enums/dispute_status.dart';
 import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
@@ -400,6 +401,17 @@ class SupabaseService extends AbstractSupabase {
         "trade_id": tradeId,
       },
     );
+  }
+
+  Future<void> changeDisputeStatus({
+    required String disputeId,
+    required DisputeStatus status,
+  }) async {
+    await update(AomlahTable.disputes, {
+      "status": status.name,
+    }, {
+      "dispute_id": disputeId,
+    });
   }
 
   Future<void> createChatMessgae(ChatMessage message) async {

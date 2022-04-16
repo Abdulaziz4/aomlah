@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
+import 'package:aomlah/core/enums/dispute_status.dart';
 import 'package:aomlah/core/models/chat_message.dart';
 
 import 'package:aomlah/core/models/dispute.dart';
@@ -15,9 +16,15 @@ class DisputeDetailsViewModel extends StreamViewModel<List<Dispute>> {
 
   List<ChatMessage> chatMessages = [];
 
-  DisputeDetailsViewModel(this.dispute) {
-    // // ignore: unnecessary_this
-    // fetchChatMessages();
+  DisputeDetailsViewModel(this.dispute);
+
+  void resolveDispute() async {
+    setBusy(true);
+    await _supabaseService.changeDisputeStatus(
+      disputeId: dispute.disputeId,
+      status: DisputeStatus.closed,
+    );
+    setBusy(false);
   }
 
   void fetchChatMessages() async {

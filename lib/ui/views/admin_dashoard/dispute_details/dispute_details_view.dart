@@ -1,3 +1,4 @@
+import 'package:aomlah/core/enums/dispute_status.dart';
 import 'package:aomlah/core/models/chat_message.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
@@ -30,7 +31,10 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
             appBar: AppBar(
               title: Text("تفاصيل النزاع"),
             ),
-            bottomNavigationBar: buildBottomButtom(),
+            bottomNavigationBar:
+                viewmodel.dispute.status == DisputeStatus.waiting
+                    ? buildBottomButtom(viewmodel.resolveDispute)
+                    : SizedBox(),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -128,7 +132,7 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
     );
   }
 
-  BottomAppBar buildBottomButtom() {
+  BottomAppBar buildBottomButtom(void Function() onResolve) {
     return BottomAppBar(
       color: Constants.black2dp,
       child: Container(
@@ -138,7 +142,7 @@ class _DisputeDetailsViewState extends State<DisputeDetailsView> {
           color: Constants.black2dp,
         ),
         child: CustomButton(
-          onPressed: () {},
+          onPressed: onResolve,
           text: 'إغلاق النزاع',
           color: Color(0xFF7BB9FA),
           height: 45,
