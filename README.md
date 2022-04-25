@@ -8,6 +8,10 @@ Cryptocurrencies platform that provides a prediction of bitcoin price by analysi
 - Aggregated cryptocurrency realtime market data inclding detailed informations about a coin, price, real time charts and much more.
 - Transfering from Aomlah wallet to any external wallet.
 
+## Included Projects
+Blockchain API: https://github.com/abdulaziz1928/web3Api
+Price Predictor: https://github.com/abdulaziz1928/bitcoin-price-prediction
+
 ### Aomlah is currently cooking and soon will be ready for production 💪🏻
 
 ## License
