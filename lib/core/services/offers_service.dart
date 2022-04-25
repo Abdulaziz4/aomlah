@@ -11,7 +11,6 @@ class OffersService {
     int numOfDisputedTrades = await _supabaseService.getNumOfDisputedTrades(
       offer.offerID,
     );
-    print(numOfDisputedTrades);
     if (numOfDisputedTrades != 0) {
       throw Exception("لاتستطلع إغلاق عرض ولازال هناك نزاع على تداول");
     }
@@ -19,7 +18,6 @@ class OffersService {
     int numOfOpenTrades = await _supabaseService.getNumOfOpenTrades(
       offer.offerID,
     );
-    print(numOfOpenTrades);
 
     if (numOfOpenTrades != 0) {
       throw Exception("لاتستطلع إغلاق عرض ولازال هناك تداولات غير مكتملة");

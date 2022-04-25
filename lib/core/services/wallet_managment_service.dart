@@ -6,15 +6,14 @@ import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:http/http.dart' as http;
-import 'package:stacked_services/stacked_services.dart';
 
 import '../enums/http_verbs.dart';
 
 class WalletManagmentService {
   final _logger = getLogger("WalletManagmentService");
 
-  static const token = APIKeys.blockcypherKey;
-  static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
+  static String token = APIKeys.blockcypherKey;
+  static String baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
   Future<dynamic> sendRequest({
     required String path,

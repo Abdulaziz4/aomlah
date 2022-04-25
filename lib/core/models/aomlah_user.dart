@@ -11,6 +11,7 @@ class AomlahUser {
   final List<BankAccount> bankAccounts;
   final bool isOnline;
   final bool isAdmin;
+  final String email;
   AomlahUser({
     required this.profileId,
     required this.name,
@@ -21,6 +22,7 @@ class AomlahUser {
     required this.isOnline,
     required this.debt,
     this.isAdmin = false,
+    this.email = "",
   });
 
   factory AomlahUser.anonymous() {
@@ -33,6 +35,7 @@ class AomlahUser {
       ethWallet: Wallet(address: "", privateKey: "", publicKey: ""),
       isOnline: false,
       debt: 0,
+      email: "",
     );
   }
 
@@ -42,6 +45,7 @@ class AomlahUser {
       'name': name,
       'is_verified': isVerified,
       'is_online': isOnline,
+      "email": email,
     };
   }
 
@@ -63,6 +67,7 @@ class AomlahUser {
       isOnline: map['is_online'] ?? false,
       isAdmin: map["is_admin"] ?? false,
       debt: map["debt"] * 1.0,
+      email: map["email"],
     );
   }
 }

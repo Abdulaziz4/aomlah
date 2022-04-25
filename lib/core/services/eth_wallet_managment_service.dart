@@ -11,7 +11,7 @@ import '../models/eth_real_time_wallet.dart';
 class EthWalletManagmentService {
   final _logger = getLogger("ETHWalletManagmentService");
 
-  static const token = APIKeys.blockcypherKeyEth;
+  static String token = APIKeys.blockcypherKeyEth;
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
 
   Future<dynamic> sendRequest({
@@ -42,10 +42,10 @@ class EthWalletManagmentService {
     final generatedKeys = await sendRequest(path: "addrs", req: HttpVreb.post);
 
     Wallet wallet = Wallet.fromBlockchainJson(generatedKeys);
-    final walletData = {
-      "name": uuid,
-      "addresses": [wallet.address]
-    };
+    // final walletData = {
+    //   "name": uuid,
+    //   "addresses": [wallet.address]
+    // };
 
     // await sendRequest(
     //     path: "wallets", body: jsonEncode(walletData), req: HttpVreb.post);
@@ -59,8 +59,7 @@ class EthWalletManagmentService {
 
     Uri url = Uri.parse("$baseUrl/faucet?token=$token");
     final data = jsonEncode({"address": address, "amount": 10000000000000000});
-    var m = await http.post(url, body: data);
-    print(jsonDecode(m.body));
+    await http.post(url, body: data);
   }
 
   Future<UnconfirmedTransaction> sendTransaction(
@@ -114,11 +113,11 @@ class EthWalletManagmentService {
   }
 
   Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
-    print(signedJson);
+    _logger.i("sendSignedTransaction | signedJson=$signedJson");
+
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/txs/send?token=$token");
 
-    var m = await http.post(url, body: encodedJson);
-    print(m.body);
+    await http.post(url, body: encodedJson);
   }
 }

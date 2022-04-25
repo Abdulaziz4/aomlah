@@ -53,7 +53,7 @@ class CryptoInfoViewModel extends StreamViewModel<List<Coin>> {
       }
       candles = await _candlesService.getCandles(coinName, interval);
     } catch (exp) {
-      print(exp.toString());
+      _logger.e(exp);
       isNotSupported = true;
     } finally {
       if (isInitial) {
@@ -70,6 +70,5 @@ class CryptoInfoViewModel extends StreamViewModel<List<Coin>> {
   }
 
   @override
-  // TODO: implement stream
   Stream<List<Coin>> get stream => _coinService.cryptoStream.stream;
 }

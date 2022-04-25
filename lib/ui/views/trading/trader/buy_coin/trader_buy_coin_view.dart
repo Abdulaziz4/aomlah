@@ -94,6 +94,7 @@ class _TraderBuyCoinViewState extends State<TraderBuyCoinView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TradeExtraInfo(
+                        tradeId: viewmodel.trade.tradeId,
                         terms: viewmodel.trade.offer?.terms ?? "",
                         bankAccounts: viewmodel.trade.offer?.bankAccounts ?? [],
                       ),

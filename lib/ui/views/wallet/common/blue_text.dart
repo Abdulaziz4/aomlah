@@ -4,8 +4,8 @@ import '../../../../core/app/utils/constants.dart';
 
 class BlueText extends StatelessWidget {
   final String text;
-  TextAlign textAlign;
-  BlueText({
+  final TextAlign textAlign;
+  const BlueText({
     required this.text,
     required this.textAlign,
     Key? key,

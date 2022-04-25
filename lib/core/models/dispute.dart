@@ -1,4 +1,5 @@
 import 'package:aomlah/core/enums/dispute_status.dart';
+import 'package:aomlah/core/models/trade.dart';
 
 class Dispute {
   final String disputeId;
@@ -6,6 +7,7 @@ class Dispute {
   final DisputeStatus status;
   final String tradeId;
   final String openerId;
+  final Trade? trade;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   Dispute({
@@ -14,6 +16,7 @@ class Dispute {
     required this.status,
     required this.tradeId,
     required this.openerId,
+    this.trade,
     this.createdAt,
     this.updatedAt,
   });
@@ -44,6 +47,7 @@ class Dispute {
       cause: json['cause'] ?? '',
       status: DisputeStatus.values.firstWhere(
         (status) => status.name == json["status"],
+        orElse: () => DisputeStatus.waiting,
       ),
       tradeId: json['trade_id'] ?? '',
       openerId: json['opener_id'] ?? '',
@@ -53,6 +57,7 @@ class Dispute {
       updatedAt: json["updated_at"] != null
           ? DateTime.tryParse(json['updated_at'])
           : DateTime.now(),
+      trade: json["trade"] != null ? Trade.fromJson(json["trade"]) : null,
     );
   }
   Dispute copyWith({
@@ -71,5 +76,14 @@ class Dispute {
       tradeId: tradeId ?? this.tradeId,
       openerId: openerId ?? this.openerId,
     );
+  }
+
+  String getStatusLabel() {
+    switch (status) {
+      case DisputeStatus.waiting:
+        return "في الانتظار";
+      case DisputeStatus.closed:
+        return "مغلق";
+    }
   }
 }

@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/services/erc20_wallet_managment_service.dart';
-
+import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/views/withdraw/common/transaction_obj.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../core/app/app.locator.dart';
 import '../../../core/app/app.router.dart';
 import '../../../core/services/eth_wallet_managment_service.dart';
@@ -83,7 +80,7 @@ class WithdrawViewModel extends BaseViewModel {
   Future<void> signSendTransaction(
       UnconfirmedTransaction transaction, CryptoTypes types) async {
     setBusy(true);
-    var userWallet;
+    Wallet userWallet;
     if (types == CryptoTypes.bitcoin) {
       userWallet = userService.user.btcWallet!;
       Map<String, dynamic> signedJson =

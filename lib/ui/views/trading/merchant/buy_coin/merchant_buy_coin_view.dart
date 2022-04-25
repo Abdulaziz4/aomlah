@@ -94,6 +94,7 @@ class _MerchantBuyCoinViewState extends State<MerchantBuyCoinView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TradeExtraInfo(
+                        tradeId: viewmodel.trade.tradeId,
                         bankAccounts: [viewmodel.trade.bankAccount!],
                       ),
                       buildRecipte(viewmodel.trade),

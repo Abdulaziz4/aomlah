@@ -49,7 +49,14 @@ class ProfileView extends StatelessWidget {
                         ],
                       ),
                       Spacer(),
-                      SvgPicture.asset("assets/icons/verifyBadge.svg"),
+                      viewmodel.isUserVerified()
+                          ? SvgPicture.asset("assets/icons/verifyBadge.svg")
+                          : GestureDetector(
+                              onTap: viewmodel.navigateToNfad,
+                              child: SvgPicture.asset(
+                                "assets/icons/unverified.svg",
+                              ),
+                            ),
                     ],
                   ),
                 ),

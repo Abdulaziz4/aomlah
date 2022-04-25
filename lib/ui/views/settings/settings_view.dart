@@ -28,7 +28,7 @@ class _SettingsHomeState extends State<SettingsHome> {
 }
 
 class SettingsHomeBody extends StatefulWidget {
-  SettingsHomeBody({Key? key}) : super(key: key);
+  const SettingsHomeBody({Key? key}) : super(key: key);
 
   @override
   State<SettingsHomeBody> createState() => _SettingsHomeBodyState();
@@ -45,9 +45,7 @@ class _SettingsHomeBodyState extends State<SettingsHomeBody> {
           return Column(
             children: [
               ButtonTile(
-                onPressed: () {
-                  print('fffff');
-                },
+                onPressed: () {},
                 text: 'حالة تواجدك',
                 trailing: Switch.adaptive(
                   onChanged: (value) => setState(() {

@@ -1,7 +1,8 @@
-import 'package:aomlah/core/app/utils/constants.dart';
-import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/enums/crypto_types.dart';
 
 import '../../../../core/models/transactions.dart';
 
@@ -10,10 +11,11 @@ class TransactionHead extends StatelessWidget {
   final Transaction transaction;
   final CryptoTypes cryptoType;
   const TransactionHead({
-    required this.transaction,
+    Key? key,
     required this.address,
+    required this.transaction,
     required this.cryptoType,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class TransactionHead extends StatelessWidget {
             children: [
               transactionType(),
               Text(
-                '$date',
+                date,
                 textAlign: TextAlign.left,
               )
             ],

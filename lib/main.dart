@@ -6,14 +6,14 @@ import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/ethereum.dart';
 import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/core/models/usdt_real_time_wallet.dart';
-import 'package:aomlah/core/services/price_service.dart';
+// import 'package:aomlah/core/models/real_time_wallet.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/shared/arabic_material_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/models/bat_real_time_wallet.dart';
 import 'core/models/eth_real_time_wallet.dart';
 import 'core/models/uni_real_time_wallet.dart';
@@ -24,6 +24,8 @@ import 'core/services/realtime_erc20_wallet_service.dart';
 
 void main() async {
   // await setupLocator();
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 

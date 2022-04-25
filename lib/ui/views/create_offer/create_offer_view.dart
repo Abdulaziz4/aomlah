@@ -20,7 +20,7 @@ class CreateOfferView extends StatelessWidget {
             ),
             centerTitle: true,
             bottom: TabBar(
-              tabs: [
+              tabs: const [
                 Tab(
                   text: 'بيع',
                 ),
@@ -39,7 +39,7 @@ class CreateOfferBody extends StatelessWidget {
   const CreateOfferBody({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return TabBarView(children: [
+    return TabBarView(children: const [
       //SellView
       CreateOfferSell(),
       //BuyView

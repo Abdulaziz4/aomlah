@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-// الكلاس هـذا متعلق بالازرار والكلام اللي فيها والستايل المتعلق بها
 class RoundedButton extends StatelessWidget {
   static const kPrimaryColor = Color(0xFF169c94);
 
   final String text;
   final VoidCallback press;
-  TextStyle? textStyle;
+  final TextStyle? textStyle;
   final Color color, textColor;
-  RoundedButton({
+  const RoundedButton({
     Key? key,
     required this.text,
     required this.press,

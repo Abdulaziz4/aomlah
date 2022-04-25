@@ -43,10 +43,11 @@ class AuthService {
     }
   }
 
-  Future<void> setupNewUser(String uuid, String name) async {
+  Future<void> setupNewUser(String uuid, String name, String email) async {
     await _supabaseService.createUserProfile(
       name: name,
       uuid: uuid,
+      email: email,
     );
     final wallet = await _walletService.createWallet(uuid);
     final ethWallet = await _ethWalletService.createWallet(uuid);
@@ -85,7 +86,7 @@ class AuthService {
       if (hasError || hasNoData) {
         throw AuthException(authRes.error?.message ?? "");
       } else {
-        await setupNewUser(authRes.user?.id ?? "", name);
+        await setupNewUser(authRes.user?.id ?? "", name, email);
       }
     } on AuthException catch (exp) {
       _logger.e(

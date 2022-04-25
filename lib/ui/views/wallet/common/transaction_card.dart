@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCard extends StatefulWidget {

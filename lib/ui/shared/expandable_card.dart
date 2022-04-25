@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'package:aomlah/core/app/utils/constants.dart';
 
 class ExpandableCard extends StatefulWidget {
   final String title;
@@ -9,11 +10,12 @@ class ExpandableCard extends StatefulWidget {
   final Color color;
   final bool expanded;
   const ExpandableCard({
+    Key? key,
     required this.title,
     required this.expandedSection,
     required this.color,
     this.expanded = false,
-  });
+  }) : super(key: key);
 
   @override
   _ExpandableCardState createState() => _ExpandableCardState();

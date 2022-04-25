@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 enum AomlahTable {
   profiles,
   offers,
@@ -7,6 +9,8 @@ enum AomlahTable {
   view_offers,
   eth_wallets,
   view_trades,
+  view_disputes,
+  chat_messages,
   trades,
   disputes,
   offer_bankaccounts,

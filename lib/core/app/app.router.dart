@@ -6,20 +6,19 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:aomlah/ui/views/wallet/btc_wallet_info_view.dart';
-import 'package:aomlah/ui/views/wallet/wallet_selection_view.dart';
-import 'package:aomlah/ui/views/withdraw/withdraw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../ui/views/admin_dashoard/dispute_details/dispute_details_view.dart';
 import '../../ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
 import '../../ui/views/auth/welcome/welcome_view.dart';
+import '../../ui/views/chat/chat_view.dart';
 import '../../ui/views/create_dispute/create_dispute_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/crypto_info/crypto_info_view.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
+import '../../ui/views/nfad/nfad_mock_view.dart';
 import '../../ui/views/profile/profile_view.dart';
 import '../../ui/views/settings/settings_update_profile_view.dart';
 import '../../ui/views/settings/settings_view.dart';
@@ -37,10 +36,13 @@ import '../../ui/views/wallet/bat_wallet_info_view.dart';
 import '../../ui/views/wallet/uni_wallet_info_view.dart';
 import '../../ui/views/wallet/eth_wallet_info_view.dart';
 import '../../ui/views/wallet/usdt_wallet_info_view.dart';
+import '../../ui/views/wallet/btc_wallet_info_view.dart';
+import '../../ui/views/wallet/wallet_selection_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
 import '../../ui/views/withdraw/withdraw_view.dart';
 import '../models/coin.dart';
+import '../models/dispute.dart';
 import '../models/offer.dart';
 import '../models/trade.dart';
 
@@ -57,13 +59,10 @@ class Routes {
   static const String sellCoinOverviewView = '/sell-coin-overview-view';
   static const String traderSellCoinView = '/trader-sell-coin-view';
   static const String walletView = '/wallet-view';
-  static const String walletSelectionView = '/wallet-selection-view';
-
   static const String faucetsView = '/faucets-view';
   static const String settingsHome = '/settings-home';
   static const String updateProfileView = '/update-profile-view';
   static const String userOffersView = '/user-offers-view';
-  static const String walletInfoView = '/wallet-info-view';
   static const String userBankAccountsView = '/user-bank-accounts-view';
   static const String confirmWithdrawView = '/confirm-withdraw-view';
   static const String withdrawView = '/withdraw-view';
@@ -80,6 +79,9 @@ class Routes {
 
   static const String adminDisputesView = '/admin-disputes-view';
   static const String disputeDetailsView = '/dispute-details-view';
+  static const String chatView = '/chat-view';
+  static const String walletSelectionView = '/wallet-selection-view';
+  static const String nfadMocView = '/nfad-moc-view';
   static const all = <String>{
     startupView,
     navigationView,
@@ -92,12 +94,10 @@ class Routes {
     sellCoinOverviewView,
     traderSellCoinView,
     walletView,
-    walletSelectionView,
     faucetsView,
     settingsHome,
     updateProfileView,
     userOffersView,
-    walletInfoView,
     userBankAccountsView,
     confirmWithdrawView,
     withdrawView,
@@ -113,6 +113,9 @@ class Routes {
     batWalletInfoView,
     adminDisputesView,
     disputeDetailsView,
+    chatView,
+    walletSelectionView,
+    nfadMocView,
   };
 }
 
@@ -132,15 +135,11 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.sellCoinOverviewView, page: SellCoinOverviewView),
     RouteDef(Routes.traderSellCoinView, page: TraderSellCoinView),
     RouteDef(Routes.walletView, page: WalletView),
-    RouteDef(Routes.walletSelectionView, page: WalletSelectionView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
     RouteDef(Routes.settingsHome, page: SettingsHome),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
-    RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
-    RouteDef(Routes.withdrawView, page: WithdrawView),
-    RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
     RouteDef(Routes.confirmWithdrawView, page: ConfirmWithdrawView),
     RouteDef(Routes.withdrawView, page: WithdrawView),
     RouteDef(Routes.cryptoInfoView, page: CryptoInfoView),
@@ -155,6 +154,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.batWalletInfoView, page: BatWalletInfoView),
     RouteDef(Routes.adminDisputesView, page: AdminDisputesView),
     RouteDef(Routes.disputeDetailsView, page: DisputeDetailsView),
+    RouteDef(Routes.chatView, page: ChatView),
+    RouteDef(Routes.walletSelectionView, page: WalletSelectionView),
+    RouteDef(Routes.nfadMocView, page: NfadMocView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -265,12 +267,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    // WalletInfoView: (data) {
-    //   return MaterialPageRoute<dynamic>(
-    //     builder: (context) => const WalletInfoView(),
-    //     settings: data,
-    //   );
-    // },
     UserBankAccountsView: (data) {
       var args = data.getArgs<UserBankAccountsViewArguments>(
         orElse: () => UserBankAccountsViewArguments(),
@@ -337,12 +333,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    WalletSelectionView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const WalletSelectionView(),
-        settings: data,
-      );
-    },
     BtcWalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const BtcWalletInfoView(),
@@ -351,7 +341,9 @@ class StackedRouter extends RouterBase {
     },
     EthWalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
-          builder: (context) => const EthWalletInfoView(), settings: data);
+        builder: (context) => const EthWalletInfoView(),
+        settings: data,
+      );
     },
     UsdtWalletInfoView: (data) {
       return MaterialPageRoute<dynamic>(
@@ -372,8 +364,34 @@ class StackedRouter extends RouterBase {
       );
     },
     DisputeDetailsView: (data) {
+      var args = data.getArgs<DisputeDetailsViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const DisputeDetailsView(),
+        builder: (context) => DisputeDetailsView(
+          key: args.key,
+          dispute: args.dispute,
+        ),
+        settings: data,
+      );
+    },
+    ChatView: (data) {
+      var args = data.getArgs<ChatViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChatView(
+          key: args.key,
+          tradeId: args.tradeId,
+        ),
+        settings: data,
+      );
+    },
+    WalletSelectionView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const WalletSelectionView(),
+        settings: data,
+      );
+    },
+    NfadMocView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const NfadMocView(),
         settings: data,
       );
     },
@@ -438,4 +456,18 @@ class MerchantSellCoinViewArguments {
   final Key? key;
   final Trade trade;
   MerchantSellCoinViewArguments({this.key, required this.trade});
+}
+
+/// DisputeDetailsView arguments holder class
+class DisputeDetailsViewArguments {
+  final Key? key;
+  final Dispute dispute;
+  DisputeDetailsViewArguments({this.key, required this.dispute});
+}
+
+/// ChatView arguments holder class
+class ChatViewArguments {
+  final Key? key;
+  final String tradeId;
+  ChatViewArguments({this.key, required this.tradeId});
 }

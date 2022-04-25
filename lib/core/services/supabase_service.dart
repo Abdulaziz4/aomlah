@@ -1,16 +1,21 @@
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/aomlah_functions.dart';
 import 'package:aomlah/core/enums/aomlah_tables.dart';
+import 'package:aomlah/core/enums/dispute_status.dart';
 import 'package:aomlah/core/enums/trade_status.dart';
+import 'package:aomlah/core/models/admin_report.dart';
 import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
+import 'package:aomlah/core/models/chat_message.dart';
 import 'package:aomlah/core/models/dispute.dart';
 import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/core/models/trade.dart';
 import 'package:aomlah/core/models/wallet.dart';
 import 'package:aomlah/core/services/abstract_supabase.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:async/async.dart' show StreamGroup;
 
 class SupabaseService extends AbstractSupabase {
   final _logger = getLogger("SupabaseService");
@@ -24,9 +29,8 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> initlizeSupabase() async {
     await Supabase.initialize(
-      url: 'https://ovnvhtboyihfvpujfynw.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzYzNjg5NCwiZXhwIjoxOTU5MjEyODk0fQ.Fgqh3Fs8ovWy0BgSd1FokQimrMNtYPa4_-uPh7B9FtY',
+      url: dotenv.env['SUPABASE_URL'],
+      anonKey: dotenv.env['SUPABASE_ANON'],
       debug: true,
     );
     supabase = Supabase.instance.client;
@@ -35,8 +39,13 @@ class SupabaseService extends AbstractSupabase {
   Future<void> createUserProfile({
     required String uuid,
     required String name,
+    required String email,
   }) async {
-    await insert(AomlahTable.profiles, {"profile_id": uuid, "name": name});
+    await insert(AomlahTable.profiles, {
+      "profile_id": uuid,
+      "name": name,
+      "email": email,
+    });
   }
 
   Future<void> updateUserProfile(
@@ -62,7 +71,21 @@ class SupabaseService extends AbstractSupabase {
   Future<void> updateUserStatus(
       {required String uuid, required bool status}) async {
     await update(
-        AomlahTable.profiles, {"is_online": status}, {"profile_id": uuid});
+      AomlahTable.profiles,
+      {"is_online": status},
+      {"profile_id": uuid},
+    );
+  }
+
+  Future<void> verifyUser({
+    required String uuid,
+    required bool isVerified,
+  }) async {
+    await update(
+      AomlahTable.profiles,
+      {"is_verified": isVerified},
+      {"profile_id": uuid},
+    );
   }
 
   Future<int> getNumOfDisputedTrades(String offerId) async {
@@ -111,11 +134,12 @@ class SupabaseService extends AbstractSupabase {
     return res.first;
   }
 
-  Future<List<Offer>> _getOffers({Map<String, String>? query}) {
+  Future<List<Offer>> _getOffers({Map<String, dynamic>? query}) {
     return get<Offer>(
       AomlahTable.view_offers,
       Offer.fromJson,
       query: query,
+      orderKey: "margin",
     );
   }
 
@@ -125,12 +149,23 @@ class SupabaseService extends AbstractSupabase {
 
   // Listen for changes on offers table and fetches from view_offers on every offers table change
   void listentoAllOffers() {
-    subscribeForChanges<Offer>(
+    final offersStream = subscribeForChanges<Offer>(
       table: AomlahTable.offers,
       fromJson: Offer.fromJson,
       primaryKey: "offer_id",
-    ).asyncMap((event) {
-      return _getOffers();
+    );
+    final usersStream = subscribeForChanges<AomlahUser>(
+      table: AomlahTable.profiles,
+      fromJson: (_) => AomlahUser.anonymous(),
+      primaryKey: "profile_id",
+    );
+
+    final mergedStream = StreamGroup.merge([offersStream, usersStream]);
+
+    mergedStream.asyncMap((event) {
+      return _getOffers(query: {
+        "is_online": true,
+      });
     }).listen((offers) {
       offersController.sink.add(offers);
     });
@@ -198,12 +233,14 @@ class SupabaseService extends AbstractSupabase {
     offerTradesController = BehaviorSubject<List<Trade>>();
 
     final query = {"offer_id": offerId};
-    subscribeForChanges<Trade>(
+    final offersStream = subscribeForChanges<Trade>(
       table: AomlahTable.trades,
       fromJson: Trade.fromJson,
       primaryKey: "trade_id",
       query: query,
-    ).asyncMap((_) {
+    );
+
+    offersStream.asyncMap((_) {
       return _getOfferTrades(query: query);
     }).listen((trades) {
       offerTradesController.sink.add(trades);
@@ -325,7 +362,77 @@ class SupabaseService extends AbstractSupabase {
         "dispute_id": disputeId,
       },
     );
-    print(res);
     return res.first;
+  }
+
+  Future<AdminReport> getAdminReport() async {
+    var result = await supabase
+        .rpc(
+          AomlahFunction.get_admin_report.name,
+        )
+        .select()
+        .execute();
+    return AdminReport.fromJson(result.data);
+  }
+
+  late BehaviorSubject<List<Dispute>> disputesController;
+
+  void listenToDisputes() {
+    disputesController = BehaviorSubject<List<Dispute>>();
+
+    subscribeForChanges<Dispute>(
+      table: AomlahTable.disputes,
+      fromJson: Dispute.fromJson,
+      primaryKey: "dispute_id",
+    ).asyncMap((_) {
+      return _getDisputes();
+    }).listen((disputes) {
+      disputesController.sink.add(disputes);
+    });
+  }
+
+  Future<List<Dispute>> _getDisputes() {
+    return get<Dispute>(
+      AomlahTable.view_disputes,
+      Dispute.fromJson,
+    );
+  }
+
+  Stream<List<ChatMessage>> getTradeChatStream(String tradeId) {
+    final query = {"trade_id": tradeId};
+    return subscribeForChanges<ChatMessage>(
+      table: AomlahTable.chat_messages,
+      fromJson: ChatMessage.fromJson,
+      primaryKey: "message_id",
+      query: query,
+    );
+  }
+
+  Future<List<ChatMessage>> getTradeChatMessages(String tradeId) {
+    return get<ChatMessage>(
+      AomlahTable.chat_messages,
+      ChatMessage.fromJson,
+      query: {
+        "trade_id": tradeId,
+      },
+    );
+  }
+
+  Future<void> changeDisputeStatus({
+    required String disputeId,
+    required DisputeStatus status,
+  }) async {
+    await update(AomlahTable.disputes, {
+      "status": status.name,
+    }, {
+      "dispute_id": disputeId,
+    });
+  }
+
+  Future<void> createChatMessgae(ChatMessage message) async {
+    await insert(
+      AomlahTable.chat_messages,
+      message.toJson(),
+    );
   }
 }

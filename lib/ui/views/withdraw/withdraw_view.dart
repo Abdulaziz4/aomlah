@@ -130,6 +130,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                         } else if (value.length < 30) {
                           return 'الرجاء ادخال عنوان صحيح';
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.text,
                       onSaved: (value) {
@@ -194,6 +195,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                                         1.0))) {
                           return 'أدخل المبلغ تحت رصيدك';
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.number,
                       onSaved: (value) {

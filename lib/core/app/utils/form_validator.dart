@@ -8,6 +8,14 @@ import 'package:flutter/material.dart';
 class FormValidator {
   const FormValidator._();
 
+  static String? hasValue(String? value) {
+    print(value);
+    if (value == null || value.isEmpty) {
+      return "الرجاء عدم ترك  الخانة فارغة";
+    }
+    return null;
+  }
+
   static String? nameValidator(String? name) {
     if (name == null || name.isEmpty) {
       return "الرجاء إدخال اسم";
@@ -53,74 +61,4 @@ class FormValidator {
     if (inputPw == currentPw) return null;
     return "الرجاء التاكد من كلمة السر";
   }
-
-  // /// A method containing validation logic for new password input.
-  // static String? newPasswordValidator(String? newPw, String currentPw) {
-  //   if (newPw!.isEmpty) {
-  //     return Constants.emptyPasswordInputError;
-  //   } else if (newPw == currentPw) {
-  //     return Constants.invalidNewPwError;
-  //   }
-  //   return null;
-  // }
-
-  // /// A method containing validation logic for full name input.
-  // static String? fullNameValidator(String? fullName) {
-  //   if (fullName != null && fullName.isValidFullName) return null;
-  //   return Constants.invalidFullNameError;
-  // }
-
-  /// A method containing validation logic for address input.
-  // static String? addressValidator(String? address) {
-  //   if (address!.isEmpty) return Constants.emptyAddressInputError;
-  //   return null;
-  // }
-
-  /// A method containing validation logic for contact number input.
-  // static String? contactValidator(String? contact) {
-  //   if (contact != null && contact.isValidContact) return null;
-  //   return Constants.invalidContactError;
-  // }
-
-  // /// A method containing validation logic for zipcode input.
-  // static String? zipCodeValidator(String? zipCode) {
-  //   if (zipCode != null && zipCode.isValidZipCode) return null;
-  //   return Constants.invalidZipCodeError;
-  // }
-
-  // /// A method containing validation logic for promo code input.
-  // static String? promoCodeValidator(String? promoCode) {
-  //   if (promoCode != null && promoCode.length == 6) return null;
-  //   return Constants.invalidPromoCodeError;
-  // }
-
-  // /// A method containing validation logic for cinema branch name input.
-  // static String? branchNameValidator(String? branchName) {
-  //   if (branchName!.isEmpty) return Constants.emptyBranchInputError;
-  //   return null;
-  // }
-
-  // /// A method containing validation logic for credit card number input.
-  // static String? creditCardNumberValidator(String? ccNumber) {
-  //   if (ccNumber != null && ccNumber.isValidCreditCardNumber) return null;
-  //   return Constants.invalidCreditCardNumberError;
-  // }
-
-  // /// A method containing validation logic for credit card CVV input.
-  // static String? creditCardCVVValidator(String? cvv) {
-  //   if (cvv != null && cvv.isValidCreditCardCVV) return null;
-  //   return Constants.invalidCreditCardCVVError;
-  // }
-
-  // /// A method containing validation logic for credit card expiry input.
-  // static String? creditCardExpiryValidator(String? expiry) {
-  //   if (expiry != null && expiry.isValidCreditCardExpiry) return null;
-  //   return Constants.invalidCreditCardExpiryError;
-  // }
-
-  // /// A method containing validation logic for single otp digit input.
-  // static String? otpDigitValidator(String? digit) {
-  //   if (digit != null && digit.isValidOtpDigit) return null;
-  //   return '!';
-  // }
 }

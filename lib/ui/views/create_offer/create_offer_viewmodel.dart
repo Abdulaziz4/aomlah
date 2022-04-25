@@ -50,7 +50,7 @@ class CreateOfferViewModel extends BaseViewModel {
       setBusy(false);
       navService.back();
     } catch (e) {
-      print(e);
+      //TODO: Handle
     }
   }
 
@@ -59,7 +59,7 @@ class CreateOfferViewModel extends BaseViewModel {
     if (counter <= 0) return;
     try {
       setBusy(true);
-      supabaseService.createSellOffer(
+      await supabaseService.createSellOffer(
           Offer(
               offerID: UuidHelper.generate(),
               ownerID: userService.user.profileId,
@@ -76,7 +76,7 @@ class CreateOfferViewModel extends BaseViewModel {
       setBusy(false);
       navService.back();
     } catch (e) {
-      print(e);
+//TODO: Handle
     }
   }
 }

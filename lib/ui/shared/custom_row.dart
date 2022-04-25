@@ -5,10 +5,13 @@ import '../../core/app/utils/constants.dart';
 class CusRow extends StatelessWidget {
   final String text1;
   final String text2;
-  String? cryptoTypeID;
-  CusRow(
-      {Key? key, required this.text1, required this.text2, this.cryptoTypeID})
-      : super(key: key);
+  final String? cryptoTypeID;
+  const CusRow({
+    Key? key,
+    required this.text1,
+    required this.text2,
+    this.cryptoTypeID,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

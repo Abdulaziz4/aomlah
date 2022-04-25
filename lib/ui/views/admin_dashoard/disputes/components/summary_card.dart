@@ -1,6 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SummaryCard extends StatelessWidget {
   final String amount;
@@ -30,19 +29,22 @@ class SummaryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                amount,
-                style: TextStyle(fontSize: 29),
-              ),
-              Text(
-                label,
-                style: Constants.smallText,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  amount,
+                  style: TextStyle(fontSize: 29),
+                  maxLines: 1,
+                ),
+                Text(
+                  label,
+                  style: Constants.smallText,
+                ),
+              ],
+            ),
           ),
           Container(
               height: 65,

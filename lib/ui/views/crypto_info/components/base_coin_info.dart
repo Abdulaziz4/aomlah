@@ -11,7 +11,6 @@ class BaseCoinInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(coin.change24hr.startsWith("+"));
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Padding(

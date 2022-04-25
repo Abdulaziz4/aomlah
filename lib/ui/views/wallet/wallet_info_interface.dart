@@ -86,8 +86,8 @@ abstract class WalletInfoInterface<T extends StatefulWidget> extends State<T> {
                           Flexible(child: Text(walletInfo.wallet.address)),
                           TextButton(
                               onPressed: () {
-                                FlutterClipboard.copy(walletInfo.wallet.address)
-                                    .then((value) => print('copied'));
+                                FlutterClipboard.copy(
+                                    walletInfo.wallet.address);
                               },
                               child: Icon(Icons.copy)),
                         ],

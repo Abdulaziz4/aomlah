@@ -17,9 +17,11 @@ class EthRealTimeWallet extends RealTimeWallet {
   }
   factory EthRealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
-    print(json['txs']);
-    transaction =
-        (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
+
+    if (json["txs"] != null) {
+      transaction =
+          (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
+    }
 
     return EthRealTimeWallet(
       address: json['address'],

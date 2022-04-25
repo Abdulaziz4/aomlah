@@ -39,7 +39,7 @@ class _EthWalletInfoViewState extends WalletInfoInterface<EthWalletInfoView> {
 
   @override
   Widget transactionWidget(RealTimeWallet wallet, CryptoTypes types) {
-    if (wallet.transactions!.isEmpty) {
+    if (wallet.transactions == null || wallet.transactions!.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
