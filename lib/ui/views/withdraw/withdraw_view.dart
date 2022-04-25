@@ -46,28 +46,22 @@ class _WithdrawViewState extends State<WithdrawView> {
     walletBalanceText() {
       String cryptoBalance = '';
       if (types == CryptoTypes.bitcoin) {
-        cryptoBalance =
-            (walletBTC.balance * (1 / pow(10, 8))).toStringAsFixed(6) +
-                ' $cListVal';
+        cryptoBalance = getBalance(walletBTC.balance, 8) + ' $cListVal';
       } else if (types == CryptoTypes.ethereum) {
         cryptoBalance =
-            (walletEth.balance * (1 / pow(10, TokenDecimals.ethTokenDecimals)))
-                    .toStringAsFixed(6) +
+            getBalance(walletEth.balance, TokenDecimals.ethTokenDecimals) +
                 ' $cListVal';
       } else if (types == CryptoTypes.usdt) {
-        cryptoBalance = (walletUsdt.balance *
-                    (1 / pow(10, TokenDecimals.usdtTokenDecimals)))
-                .toStringAsFixed(6) +
-            ' $cListVal';
+        cryptoBalance =
+            getBalance(walletUsdt.balance, TokenDecimals.usdtTokenDecimals) +
+                ' $cListVal';
       } else if (types == CryptoTypes.uni) {
         cryptoBalance =
-            (walletUni.balance * (1 / pow(10, TokenDecimals.uniTokenDecimals)))
-                    .toStringAsFixed(6) +
+            getBalance(walletUni.balance, TokenDecimals.uniTokenDecimals) +
                 ' $cListVal';
       } else if (types == CryptoTypes.bat) {
         cryptoBalance =
-            (walletBat.balance * (1 / pow(10, TokenDecimals.batTokenDecimals)))
-                    .toStringAsFixed(6) +
+            getBalance(walletBat.balance, TokenDecimals.batTokenDecimals) +
                 ' $cListVal';
       }
       return Text(
@@ -262,4 +256,8 @@ class _WithdrawViewState extends State<WithdrawView> {
           ),
         ),
       );
+
+  String getBalance(double balance, int decimals) {
+    return (balance * (1 / pow(10, decimals))).toStringAsFixed(6);
+  }
 }

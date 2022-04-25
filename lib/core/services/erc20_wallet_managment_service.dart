@@ -4,6 +4,7 @@ import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/models/uni_real_time_wallet.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../models/bat_real_time_wallet.dart';
 import '../models/realtime_wallet.dart';
@@ -16,17 +17,18 @@ class Erc20WalletManagmentService {
     "Content-type": "application/json",
     "Accept": "application/json"
   };
-  static const baseUrl = "http://10.0.2.2:8080/api/v1/web3";
+  static final baseUrl = dotenv.env['WEB3_API_URL'] ?? "";
 
   Future<RealTimeWallet> getERC20WalletBalance(
       String address, String tokenAddress) async {
     _logger.i("getETHWalletInfo | args: address=$address");
     Uri url = Uri.parse("$baseUrl/$tokenAddress/balance");
     Map<String, dynamic> body = {'address': address};
-    final r = await http.post(url, body: json.encode(body), headers: header);
+    final result =
+        await http.post(url, body: json.encode(body), headers: header);
 
-    print(r.body);
-    final wallet = initRealTimeWallet(jsonDecode(r.body), tokenAddress);
+    print(result.body);
+    final wallet = initRealTimeWallet(jsonDecode(result.body), tokenAddress);
 
     return wallet;
   }
@@ -48,8 +50,8 @@ class Erc20WalletManagmentService {
     _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrl/fees");
 
-    var m = await http.get(url, headers: header);
-    var fees = jsonDecode(m.body);
+    var result = await http.get(url, headers: header);
+    var fees = jsonDecode(result.body);
     Map<String, dynamic> tx = {
       "from": from,
       "to": to,
@@ -69,8 +71,8 @@ class Erc20WalletManagmentService {
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/tx/$tokenAddress/send");
 
-    var m = await http.post(url, body: encodedJson, headers: header);
-    print(m.body);
+    var result = await http.post(url, body: encodedJson, headers: header);
+    print(result.body);
   }
 
   String getTokenAddress(CryptoTypes types) {

@@ -55,26 +55,6 @@ class _UsdtWalletInfoViewState extends WalletInfoInterface<UsdtWalletInfoView> {
         ],
       ),
     );
-    // }
-    // else {
-    //   return SingleChildScrollView(
-    //     child: Column(
-    //       children: wallet.transactions!
-    //           .map((e) => TransactionCard(
-    //         title: TransactionHead(
-    //             transaction: e,
-    //             address: wallet.address,
-    //             cryptoType: types),
-    //         expandedSection: TransactionBody(
-    //           transaction: e,
-    //           cryptoType: types,
-    //         ),
-    //         color: Constants.black3dp,
-    //       ))
-    //           .toList(),
-    //     ),
-    //   );
-    // }
   }
 
   double convertToWhole(double balance, int decimals) {
