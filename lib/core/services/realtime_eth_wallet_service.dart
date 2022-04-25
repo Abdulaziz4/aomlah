@@ -1,48 +1,52 @@
 import 'dart:async';
-import 'package:aomlah/core/models/btc_real_time_wallet.dart';
+import 'dart:convert';
 import 'package:rxdart/subjects.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:aomlah/core/app/api_keys.dart';
+import 'package:aomlah/core/app/utils/pinger.dart';
+import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 
 import '../models/eth_real_time_wallet.dart';
+import 'eth_wallet_managment_service.dart';
 
 class RealtimeEthWalletService {
   final _logger = getLogger("RealtimeEthWalletService");
 
-  static String token = APIKeys.blockcypherKeyEth;
+  final _walletManager = locator<EthWalletManagmentService>();
+
+  static final token = APIKeys.blockcypherKeyEth;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
-  // static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";
-  // static const baseUrl = "https://api.blockcypher.com/v1/bcy/test";
 
   BehaviorSubject<EthRealTimeWallet> walletController =
       BehaviorSubject<EthRealTimeWallet>();
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectEthWallet | args: uuid= $uuid , address=$address");
-    // final socketUrl = "$baseSocketUrl?token=$token";
-    // print(socketUrl);
-    // // Fetch for first time
-    // final initialData = await _walletManager.getWalletInfo(address);
-    // walletController.sink.add(initialData);
+    final socketUrl = "$baseSocketUrl?token=$token";
 
-    // final channel = WebSocketChannel.connect(
-    //   Uri.parse(socketUrl),
-    // );
+    // Fetch for first time
+    final initialData = await _walletManager.getWalletInfo(address);
+    walletController.sink.add(initialData);
 
-    // channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
-    // Pinger.ping(channel, ping());
+    final channel = WebSocketChannel.connect(
+      Uri.parse(socketUrl),
+    );
 
-    // channel.stream.listen((event) async {
-    //   final decodedEvent = jsonDecode(event);
-    //   if (decodedEvent["event"] != "pong") {
-    //     // On new transaction update the wallet balance
-    //     final updatedWallet = await _walletManager.getWalletInfo(address);
+    channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
+    Pinger.ping(channel, ping());
 
-    //     walletController.sink.add(updatedWallet);
-    //   }
-    // });
+    channel.stream.listen((event) async {
+      final decodedEvent = jsonDecode(event);
+      if (decodedEvent["event"] != "pong") {
+        // On new transaction update the wallet balance
+        final updatedWallet = await _walletManager.getWalletInfo(address);
+
+        walletController.sink.add(updatedWallet);
+      }
+    });
   }
 
   Map<String, dynamic> connectionMessage(String uuid, String address) {
