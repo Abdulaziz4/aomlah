@@ -1,4 +1,7 @@
+import 'package:aomlah/core/enums/token_addresses.dart';
+import 'package:aomlah/core/enums/token_decimals.dart';
 import 'package:aomlah/core/models/wallet.dart';
+import 'package:aomlah/ui/views/wallet/uni_wallet_info_view.dart';
 import 'package:ecdsa/ecdsa.dart';
 import 'package:elliptic/elliptic.dart';
 
@@ -34,9 +37,21 @@ class UnconfirmedTransaction {
 
   String convertToWholeCoin(int total, CryptoTypes types) {
     if (types == CryptoTypes.bitcoin) {
-      return CurrencyHelper.satsToBtc(total).toString();
+      return CurrencyHelper.satsToBtc(total).toStringAsFixed(6);
     } else if (types == CryptoTypes.ethereum) {
-      return CurrencyHelper.weiToETH(total).toString();
+      return CurrencyHelper.weiToETH(total).toStringAsFixed(6);
+    } else if (types == CryptoTypes.usdt) {
+      return CurrencyHelper.convertToWhole(
+              total, TokenDecimals.usdtTokenDecimals)
+          .toStringAsFixed(6);
+    } else if (types == CryptoTypes.uni) {
+      return CurrencyHelper.convertToWhole(
+              total, TokenDecimals.uniTokenDecimals)
+          .toStringAsFixed(6);
+    } else if (types == CryptoTypes.bat) {
+      return CurrencyHelper.convertToWhole(
+              total, TokenDecimals.batTokenDecimals)
+          .toStringAsFixed(6);
     } else {
       return "Cant Convert";
     }

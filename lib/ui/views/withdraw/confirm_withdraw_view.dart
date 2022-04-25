@@ -1,3 +1,4 @@
+import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_row.dart';
@@ -110,17 +111,14 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
                               transaction.transaction.total,
                               transaction.types)),
                       CusRow(
-                          cryptoTypeID: cryptoType,
+                          cryptoTypeID: getCryptoType(cryptoType),
                           text1: 'رسوم التحويل',
                           text2: transaction.transaction.convertToWholeCoin(
                               transaction.transaction.fees, transaction.types)),
                       CusRow(
                           cryptoTypeID: cryptoType,
                           text1: 'الإجمالي',
-                          text2: transaction.transaction.convertToWholeCoin(
-                              transaction.transaction.total -
-                                  transaction.transaction.fees,
-                              transaction.types)),
+                          text2: getTotal(transaction)),
                     ],
                   ),
                 ),
@@ -160,5 +158,29 @@ class ConfirmWithdrawViewBody extends StatelessWidget {
             ),
           );
         });
+  }
+
+  String getTotal(TransactionObj transaction) {
+    if (transaction.types == CryptoTypes.bitcoin ||
+        transaction.types == CryptoTypes.ethereum) {
+      return transaction.transaction.convertToWholeCoin(
+          transaction.transaction.total - transaction.transaction.fees,
+          transaction.types);
+    } else {
+      return transaction.transaction.convertToWholeCoin(
+              transaction.transaction.total, transaction.types) +
+          '  ' +
+          transaction.transaction.convertToWholeCoin(
+              transaction.transaction.fees, CryptoTypes.ethereum) +
+          'ETH    +';
+    }
+  }
+
+  String getCryptoType(String cryptoType) {
+    if (cryptoType == 'BTC' || cryptoType == 'ETH') {
+      return cryptoType;
+    } else {
+      return 'ETH';
+    }
   }
 }

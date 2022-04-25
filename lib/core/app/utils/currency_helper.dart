@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:aomlah/core/enums/token_decimals.dart';
+
 abstract class CurrencyHelper {
   // Convert BTC to Satoshi
   static int btcToSat(double btc) {
@@ -9,7 +13,7 @@ abstract class CurrencyHelper {
   }
 
   static double weiToETH(int wei) {
-    return (wei / 1000000000000000000.0);
+    return (wei / (pow(10, TokenDecimals.ethTokenDecimals) * 1.0));
   }
 
   // Calculates the amount you will get in BTC
@@ -18,6 +22,10 @@ abstract class CurrencyHelper {
     required double price,
   }) {
     return (fiatAmount / 3.75) / price;
+  }
+
+  static double convertToWhole(int balance, int decimals) {
+    return (balance / (pow(10, decimals) * 1.0));
   }
 
   static double usdToSR(double usd) {

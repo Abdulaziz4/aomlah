@@ -1,4 +1,4 @@
-import 'package:aomlah/core/models/real_time_wallet.dart';
+import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -18,5 +18,17 @@ class WalletInfoViewModel extends BaseViewModel {
 
   navigateToWalletBTC() {
     navService.navigateTo(Routes.btcWalletInfoView);
+  }
+
+  navigateToWalletUsdt() {
+    navService.navigateTo(Routes.usdtWalletInfoView);
+  }
+
+  navigateToWalletUni() {
+    navService.navigateTo(Routes.uniWalletInfoView);
+  }
+
+  navigateToWalletBat() {
+    navService.navigateTo(Routes.batWalletInfoView);
   }
 }

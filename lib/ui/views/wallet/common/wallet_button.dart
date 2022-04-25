@@ -31,17 +31,14 @@ class WalletButton extends StatelessWidget {
         child: Container(
           color: Constants.black3dp,
           padding: EdgeInsets.all(16),
-          // margin: EdgeInsets.all(16),
           child: Row(
             children: <Widget>[
-              // SvgPicture.asset("assets/icons/btc.png"),
               Image.asset(
                 image,
                 width: 25,
-                // color: Constants.black3dp,
               ),
               Container(width: 10),
-              TextCrypto(
+              textCrypto(
                 cryptoType,
                 style: textStyle,
               ),
@@ -61,12 +58,18 @@ class WalletButton extends StatelessWidget {
   }
 }
 
-Text TextCrypto(String cryptoType, {TextStyle? style}) {
+Text textCrypto(String cryptoType, {TextStyle? style}) {
   String cText = '';
   if (cryptoType.toUpperCase() == 'BTC') {
     cText = ' بتكوين ';
   } else if (cryptoType.toUpperCase() == 'ETH') {
     cText = ' اثيريوم ';
+  } else if (cryptoType.toUpperCase() == 'USDT') {
+    cText = ' دولار تيذر ';
+  } else if (cryptoType.toUpperCase() == 'UNI') {
+    cText = ' يوني سواب ';
+  } else if (cryptoType.toUpperCase() == 'BAT') {
+    cText = ' بيسك اتنشن ';
   }
   return Text(
     ' $cText ( $cryptoType )',

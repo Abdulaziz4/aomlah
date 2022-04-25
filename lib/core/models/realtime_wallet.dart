@@ -2,7 +2,7 @@ import 'transactions.dart';
 
 class RealTimeWallet {
   final String address;
-  final int balance;
+  final double balance;
   List<Transaction>? transactions;
 
   RealTimeWallet({

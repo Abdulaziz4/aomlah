@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:aomlah/core/enums/crypto_types.dart';
+import 'package:aomlah/core/enums/token_decimals.dart';
+import 'package:aomlah/core/models/usdt_real_time_wallet.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
 import 'package:aomlah/ui/views/withdraw/withdraw_viewmodel.dart';
@@ -6,8 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
+import '../../../core/models/bat_real_time_wallet.dart';
 import '../../../core/models/eth_real_time_wallet.dart';
-import '../../../core/models/real_time_wallet.dart';
+import '../../../core/models/btc_real_time_wallet.dart';
+import '../../../core/models/realtime_wallet.dart';
+import '../../../core/models/uni_real_time_wallet.dart';
 import '../../shared/custom_input_field.dart';
 import '../../shared/custom_menu.dart';
 
@@ -20,7 +27,7 @@ class WithdrawView extends StatefulWidget {
 
 class _WithdrawViewState extends State<WithdrawView> {
   final _formKey = GlobalKey<FormState>();
-  final cryptoList = ['BTC', 'ETH'];
+  final cryptoList = ['BTC', 'ETH', 'USDT', 'UNI', 'BAT'];
   String? cListVal, walletAddress;
   double? cryptoAmount;
   CryptoTypes? types;
@@ -32,6 +39,45 @@ class _WithdrawViewState extends State<WithdrawView> {
 
     final walletBTC = Provider.of<BtcRealTimeWallet>(context);
     final walletEth = Provider.of<EthRealTimeWallet>(context);
+    final walletUsdt = Provider.of<UsdtRealTimeWallet>(context);
+    final walletUni = Provider.of<UniRealTimeWallet>(context);
+    final walletBat = Provider.of<BatRealTimeWallet>(context);
+
+    walletBalanceText() {
+      String cryptoBalance = '';
+      if (types == CryptoTypes.bitcoin) {
+        cryptoBalance =
+            (walletBTC.balance * (1 / pow(10, 8))).toStringAsFixed(6) +
+                ' $cListVal';
+      } else if (types == CryptoTypes.ethereum) {
+        cryptoBalance =
+            (walletEth.balance * (1 / pow(10, TokenDecimals.ethTokenDecimals)))
+                    .toStringAsFixed(6) +
+                ' $cListVal';
+      } else if (types == CryptoTypes.usdt) {
+        cryptoBalance = (walletUsdt.balance *
+                    (1 / pow(10, TokenDecimals.usdtTokenDecimals)))
+                .toStringAsFixed(6) +
+            ' $cListVal';
+      } else if (types == CryptoTypes.uni) {
+        cryptoBalance =
+            (walletUni.balance * (1 / pow(10, TokenDecimals.uniTokenDecimals)))
+                    .toStringAsFixed(6) +
+                ' $cListVal';
+      } else if (types == CryptoTypes.bat) {
+        cryptoBalance =
+            (walletBat.balance * (1 / pow(10, TokenDecimals.batTokenDecimals)))
+                    .toStringAsFixed(6) +
+                ' $cListVal';
+      }
+      return Text(
+        'الكمية في محفظتك ' + cryptoBalance,
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.grey,
+        ),
+      );
+    }
 
     return ViewModelBuilder<WithdrawViewModel>.reactive(
         viewModelBuilder: () => WithdrawViewModel(),
@@ -119,18 +165,52 @@ class _WithdrawViewState extends State<WithdrawView> {
                           return 'الرجاء إدخال الكمية الاجمالية';
                         } else if (double.parse(value) <= 0) {
                           return 'الرجاء ادخال كميه صحيحه';
-                        } else if (double.parse(value) >
-                            (walletEth.balance / 1000000000000000000.0)) {
+                        } else if (types == CryptoTypes.ethereum &&
+                            double.parse(value) >
+                                (walletEth.balance /
+                                    (pow(10, TokenDecimals.ethTokenDecimals) *
+                                        1.0))) {
+                          return 'أدخل المبلغ تحت رصيدك';
+                        } else if (types == CryptoTypes.bitcoin &&
+                            double.parse(value) >
+                                (walletBTC.balance / (pow(10, 8) * 1.0))) {
+                          return 'أدخل المبلغ تحت رصيدك';
+                        } else if (types == CryptoTypes.usdt &&
+                            double.parse(value) >
+                                (walletUsdt.balance /
+                                    (pow(10, TokenDecimals.usdtTokenDecimals) *
+                                        1.0))) {
+                          return 'أدخل المبلغ تحت رصيدك';
+                        } else if (types == CryptoTypes.uni &&
+                            double.parse(value) >
+                                (walletUni.balance /
+                                    (pow(10, TokenDecimals.uniTokenDecimals) *
+                                        1.0))) {
+                          return 'أدخل المبلغ تحت رصيدك';
+                        } else if (types == CryptoTypes.bat &&
+                            double.parse(value) >
+                                (walletBat.balance /
+                                    (pow(10, TokenDecimals.batTokenDecimals) *
+                                        1.0))) {
                           return 'أدخل المبلغ تحت رصيدك';
                         }
                       },
                       keyboardType: TextInputType.number,
                       onSaved: (value) {
                         if (types == CryptoTypes.bitcoin) {
-                          cryptoAmount = double.parse(value!) * 100000000;
+                          cryptoAmount = double.parse(value!) * pow(10, 8);
                         } else if (types == CryptoTypes.ethereum) {
-                          cryptoAmount =
-                              double.parse(value!) * 1000000000000000000.0;
+                          cryptoAmount = double.parse(value!) *
+                              pow(10, TokenDecimals.ethTokenDecimals);
+                        } else if (types == CryptoTypes.usdt) {
+                          cryptoAmount = double.parse(value!) *
+                              pow(10, TokenDecimals.usdtTokenDecimals);
+                        } else if (types == CryptoTypes.uni) {
+                          cryptoAmount = double.parse(value!) *
+                              pow(10, TokenDecimals.uniTokenDecimals);
+                        } else if (types == CryptoTypes.bat) {
+                          cryptoAmount = double.parse(value!) *
+                              pow(10, TokenDecimals.batTokenDecimals);
                         }
                       },
                     ),
@@ -139,7 +219,7 @@ class _WithdrawViewState extends State<WithdrawView> {
                         SizedBox(
                           width: 20,
                         ),
-                        walletBalanceText(walletBTC, walletEth),
+                        walletBalanceText(),
                       ],
                     ),
                   ],
@@ -159,6 +239,12 @@ class _WithdrawViewState extends State<WithdrawView> {
               types = CryptoTypes.bitcoin;
             } else if (value == cryptoList[1]) {
               types = CryptoTypes.ethereum;
+            } else if (value == cryptoList[2]) {
+              types = CryptoTypes.usdt;
+            } else if (value == cryptoList[3]) {
+              types = CryptoTypes.uni;
+            } else if (value == cryptoList[4]) {
+              types = CryptoTypes.bat;
             }
           })
         },
@@ -174,28 +260,4 @@ class _WithdrawViewState extends State<WithdrawView> {
           ),
         ),
       );
-
-  walletBalanceText(BtcRealTimeWallet walletBTC, EthRealTimeWallet walletEth) {
-    if (types == CryptoTypes.bitcoin) {
-      return Text(
-        'الكمية في محفظتك ' +
-            (walletBTC.balance * 0.00000001).toString() +
-            ' $cListVal',
-        style: TextStyle(
-          fontSize: 15,
-          color: Colors.grey,
-        ),
-      );
-    } else if (types == CryptoTypes.ethereum) {
-      return Text(
-        'الكمية في محفظتك ' +
-            (walletEth.balance * 0.000000000000000001).toString() +
-            ' $cListVal',
-        style: TextStyle(
-          fontSize: 15,
-          color: Colors.grey,
-        ),
-      );
-    }
-  }
 }

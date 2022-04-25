@@ -4,7 +4,7 @@ import 'package:aomlah/core/models/realtime_wallet.dart';
 class BtcRealTimeWallet extends RealTimeWallet {
   BtcRealTimeWallet({
     required String address,
-    required int balance,
+    required double balance,
     List<Transaction>? transactions,
   }) : super(address: address, balance: balance, transactions: transactions);
   factory BtcRealTimeWallet.dummy() {
@@ -20,7 +20,7 @@ class BtcRealTimeWallet extends RealTimeWallet {
 
     return BtcRealTimeWallet(
       address: json['address'],
-      balance: json['balance'],
+      balance: double.parse(json['balance'].toString()),
       transactions: transaction,
     );
   }

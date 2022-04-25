@@ -5,4 +5,5 @@ class APIKeys {
       "af86a1499b576f1fec8c58df5cfc702ca2cc714557bebd0f52a8b38752ea6335";
   static const cryptoCompKeyEth =
       "6dac7d551badb052ee4e75a160a8490332152641a48430d874ce368b55bb846d";
+  static const covalenthqKey = "ckey_d0ad1937aee3421eade828aa4bc";
 }

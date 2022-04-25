@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:aomlah/core/models/real_time_wallet.dart';
+import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
