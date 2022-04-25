@@ -53,7 +53,8 @@ class WalletSelectionViewBody extends StatelessWidget {
                       viewmodel.navigateToWalletBTC();
                     },
                     cryptoType: 'BTC',
-                    balance: (walletBTC.balance / 100000000.0),
+                    balance:
+                        (walletBTC.balance / 100000000.0).toStringAsFixed(6),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/btc.png",
                   ),
@@ -66,8 +67,9 @@ class WalletSelectionViewBody extends StatelessWidget {
                     },
                     cryptoType: 'ETH',
                     balance: (walletEth.balance /
-                        pow(10, TokenDecimals.ethTokenDecimals) *
-                        1.0),
+                            pow(10, TokenDecimals.ethTokenDecimals) *
+                            1.0)
+                        .toStringAsFixed(6),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/eth.png",
                   ),
@@ -82,8 +84,9 @@ class WalletSelectionViewBody extends StatelessWidget {
                     },
                     cryptoType: 'USDT',
                     balance: (walletUsdt.balance /
-                        pow(10, TokenDecimals.usdtTokenDecimals) *
-                        1.0),
+                            pow(10, TokenDecimals.usdtTokenDecimals) *
+                            1.0)
+                        .toStringAsFixed(6),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/Tether-USDT-icon.png",
                   ),
@@ -97,10 +100,10 @@ class WalletSelectionViewBody extends StatelessWidget {
                       viewmodel.navigateToWalletUni();
                     },
                     cryptoType: 'UNI',
-                    balance: double.parse(((walletUni.balance /
+                    balance: (walletUni.balance /
                             pow(10, TokenDecimals.uniTokenDecimals) *
                             1.0)
-                        .toStringAsFixed(5))),
+                        .toStringAsFixed(5),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/uniswap-uni-logo.png",
                   ),
@@ -114,10 +117,10 @@ class WalletSelectionViewBody extends StatelessWidget {
                       viewmodel.navigateToWalletBat();
                     },
                     cryptoType: 'BAT',
-                    balance: double.parse(((walletBat.balance /
+                    balance: (walletBat.balance /
                             pow(10, TokenDecimals.batTokenDecimals) *
                             1.0)
-                        .toStringAsFixed(5))),
+                        .toStringAsFixed(5),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/Basic-Attention-Token-icon.png",
                   ), // WalletButton(onPressed: vi, cryptoType: cryptoType, balance: balance, image: image)

@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 class WalletButton extends StatelessWidget {
   final void Function() onPressed;
   final String cryptoType;
-  final double balance;
+  final String balance;
   final String image;
   final Color? color;
   final TextStyle? textStyle;
