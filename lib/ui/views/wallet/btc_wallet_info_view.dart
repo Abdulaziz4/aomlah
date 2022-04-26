@@ -1,4 +1,4 @@
-import 'package:aomlah/core/models/real_time_wallet.dart';
+import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_interface.dart';
 import 'package:flutter/material.dart';

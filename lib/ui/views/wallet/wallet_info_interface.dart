@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_viewmodel.dart';
 import 'package:clipboard/clipboard.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
 import '../../../core/enums/crypto_types.dart';
+import '../../../core/models/btc_real_time_wallet.dart';
 import '../../../core/models/realtime_wallet.dart';
 import 'common/conversion_button.dart';
 import 'common/wallet_container.dart';
@@ -128,6 +131,9 @@ abstract class WalletInfoInterface<T extends StatefulWidget> extends State<T> {
   }
 
   Widget transactionWidget(RealTimeWallet wallet, CryptoTypes types);
+  double convertToWhole(double balance, int decimals) {
+    return (balance / (pow(10, decimals) * 1.0));
+  }
 
   WalletInfo getWalletInfo(BuildContext context);
 }

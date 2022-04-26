@@ -2,7 +2,7 @@ import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
-import 'package:aomlah/core/models/real_time_wallet.dart';
+import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/shared/rounded_input_field.dart';
 import 'package:flutter/material.dart';

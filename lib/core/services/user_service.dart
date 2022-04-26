@@ -1,5 +1,6 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/services/realtime_eth_wallet_service.dart';
+import 'package:aomlah/core/services/realtime_erc20_wallet_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 
@@ -16,6 +17,7 @@ class UserService {
   final _supabaseService = locator<SupabaseService>();
   final _realtimeWalletService = locator<RealtimeWalletService>();
   final _realtimeEthWalletService = locator<RealtimeEthWalletService>();
+  final _realtimeErc20WalletService = locator<ERC20RealtimeWalletService>();
 
   late BehaviorSubject<AomlahUser> userController;
 
@@ -38,6 +40,10 @@ class UserService {
       user.btcWallet?.address ?? "",
     );
     await _realtimeEthWalletService.connectWallet(
+      uuid,
+      user.ethWallet?.address ?? "",
+    );
+    await _realtimeErc20WalletService.connectWallet(
       uuid,
       user.ethWallet?.address ?? "",
     );

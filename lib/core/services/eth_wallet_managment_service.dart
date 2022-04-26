@@ -98,6 +98,20 @@ class EthWalletManagmentService {
     return wallet;
   }
 
+  Future<EthRealTimeWallet> getERC20WalletInfo(
+      String address, String tokenAddress) async {
+    _logger.i("getETHWalletInfo | args: address=$address");
+
+    final response = await sendRequest(
+      path: "addrs/$address/full",
+      includeToken: false,
+      req: HttpVreb.get,
+    );
+    final wallet = EthRealTimeWallet.fromJson(response);
+
+    return wallet;
+  }
+
   Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
     _logger.i("sendSignedTransaction | signedJson=$signedJson");
 

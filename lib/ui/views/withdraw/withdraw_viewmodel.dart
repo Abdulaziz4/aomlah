@@ -1,12 +1,12 @@
 import 'package:aomlah/core/enums/crypto_types.dart';
+import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
+import 'package:aomlah/core/services/erc20_wallet_managment_service.dart';
 import 'package:aomlah/core/models/wallet.dart';
-
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/views/withdraw/common/transaction_obj.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../core/app/app.locator.dart';
 import '../../../core/app/app.router.dart';
 import '../../../core/services/eth_wallet_managment_service.dart';
@@ -16,6 +16,7 @@ class WithdrawViewModel extends BaseViewModel {
   final navService = locator<NavigationService>();
   final walletService = locator<WalletManagmentService>();
   final ethWalletService = locator<EthWalletManagmentService>();
+  final erc20WalletService = locator<Erc20WalletManagmentService>();
   final userService = locator<UserService>();
 
   Future<void> sendTran(String to, int amount, CryptoTypes types) async {
@@ -33,6 +34,40 @@ class WithdrawViewModel extends BaseViewModel {
       UnconfirmedTransaction transaction =
           await ethWalletService.sendTransaction(userAddress, to, amount);
       setBusy(false);
+      navService.replaceWith(Routes.confirmWithdrawView,
+          arguments: TransactionObj(transaction, types));
+    } else if (types == CryptoTypes.usdt) {
+      userAddress = userService.user.ethWallet!.address;
+      if (userAddress.substring(0, 1) != "0x") {
+        userAddress = "0x$userAddress";
+      }
+      UnconfirmedTransaction transaction =
+          await erc20WalletService.sendTransaction(
+              userAddress, to, amount, TokenAddresses.usdtTokenAddress);
+      setBusy(false);
+      navService.replaceWith(Routes.confirmWithdrawView,
+          arguments: TransactionObj(transaction, types));
+    } else if (types == CryptoTypes.uni) {
+      userAddress = userService.user.ethWallet!.address;
+      if (userAddress.substring(0, 1) != "0x") {
+        userAddress = "0x$userAddress";
+      }
+      UnconfirmedTransaction transaction =
+          await erc20WalletService.sendTransaction(
+              userAddress, to, amount, TokenAddresses.uniTokenAddress);
+      setBusy(false);
+      navService.replaceWith(Routes.confirmWithdrawView,
+          arguments: TransactionObj(transaction, types));
+    } else if (types == CryptoTypes.bat) {
+      userAddress = userService.user.ethWallet!.address;
+      if (userAddress.substring(0, 1) != "0x") {
+        userAddress = "0x$userAddress";
+      }
+      UnconfirmedTransaction transaction =
+          await erc20WalletService.sendTransaction(
+              userAddress, to, amount, TokenAddresses.batTokenAddress);
+      setBusy(false);
+      print("$amount    222222222222");
       navService.replaceWith(Routes.confirmWithdrawView,
           arguments: TransactionObj(transaction, types));
     }
@@ -58,6 +93,13 @@ class WithdrawViewModel extends BaseViewModel {
       Map<String, dynamic> signedJson =
           transaction.signedTransaction(userWallet);
       await ethWalletService.sendSignedTransaction(signedJson);
+      setBusy(false);
+      navService.back();
+    } else {
+      userWallet = userService.user.ethWallet!;
+      Map<String, dynamic> signedJson =
+          transaction.signedTransaction(userWallet);
+      await erc20WalletService.sendSignedTransaction(signedJson, types);
       setBusy(false);
       navService.back();
     }

@@ -8,8 +8,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
-
 import '../../ui/views/admin_dashoard/dispute_details/dispute_details_view.dart';
 import '../../ui/views/admin_dashoard/disputes/admin_disputes_view.dart';
 import '../../ui/views/auth/verify_account_promotion/verify_account_promotion_view.dart';
@@ -34,8 +32,11 @@ import '../../ui/views/trading/trader/sell_coin/trader_sell_coin_view.dart';
 import '../../ui/views/user_bank_accounts/user_bank_accounts_view.dart';
 import '../../ui/views/user_offers/user_offers_view.dart';
 import '../../ui/views/user_trades/user_trades_view.dart';
-import '../../ui/views/wallet/btc_wallet_info_view.dart';
+import '../../ui/views/wallet/bat_wallet_info_view.dart';
+import '../../ui/views/wallet/uni_wallet_info_view.dart';
 import '../../ui/views/wallet/eth_wallet_info_view.dart';
+import '../../ui/views/wallet/usdt_wallet_info_view.dart';
+import '../../ui/views/wallet/btc_wallet_info_view.dart';
 import '../../ui/views/wallet/wallet_selection_view.dart';
 import '../../ui/views/wallet/wallet_view.dart';
 import '../../ui/views/withdraw/confirm_withdraw_view.dart';
@@ -72,6 +73,10 @@ class Routes {
   static const String userTradesView = '/user-trades-view';
   static const String btcWalletInfoView = '/btc-wallet-info-view';
   static const String ethWalletInfoView = '/eth-wallet-info-view';
+  static const String usdtWalletInfoView = '/usdt-wallet-info-view';
+  static const String uniWalletInfoView = '/uni-wallet-info-view';
+  static const String batWalletInfoView = '/bat-wallet-info-view';
+
   static const String adminDisputesView = '/admin-disputes-view';
   static const String disputeDetailsView = '/dispute-details-view';
   static const String chatView = '/chat-view';
@@ -103,6 +108,9 @@ class Routes {
     userTradesView,
     btcWalletInfoView,
     ethWalletInfoView,
+    usdtWalletInfoView,
+    uniWalletInfoView,
+    batWalletInfoView,
     adminDisputesView,
     disputeDetailsView,
     chatView,
@@ -141,6 +149,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userTradesView, page: UserTradesView),
     RouteDef(Routes.btcWalletInfoView, page: BtcWalletInfoView),
     RouteDef(Routes.ethWalletInfoView, page: EthWalletInfoView),
+    RouteDef(Routes.usdtWalletInfoView, page: UsdtWalletInfoView),
+    RouteDef(Routes.uniWalletInfoView, page: UniWalletInfoView),
+    RouteDef(Routes.batWalletInfoView, page: BatWalletInfoView),
     RouteDef(Routes.adminDisputesView, page: AdminDisputesView),
     RouteDef(Routes.disputeDetailsView, page: DisputeDetailsView),
     RouteDef(Routes.chatView, page: ChatView),
@@ -333,6 +344,18 @@ class StackedRouter extends RouterBase {
         builder: (context) => const EthWalletInfoView(),
         settings: data,
       );
+    },
+    UsdtWalletInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+          builder: (context) => const UsdtWalletInfoView(), settings: data);
+    },
+    UniWalletInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+          builder: (context) => const UniWalletInfoView(), settings: data);
+    },
+    BatWalletInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+          builder: (context) => const BatWalletInfoView(), settings: data);
     },
     AdminDisputesView: (data) {
       return MaterialPageRoute<dynamic>(
