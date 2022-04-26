@@ -28,6 +28,10 @@ abstract class CurrencyHelper {
     return (balance / (pow(10, decimals) * 1.0));
   }
 
+  static double convertToWhole2(double balance, int decimals) {
+    return (balance / (pow(10, decimals) * 1.0));
+  }
+
   static double usdToSR(double usd) {
     return usd * 3.75;
   }
