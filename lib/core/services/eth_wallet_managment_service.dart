@@ -21,7 +21,6 @@ class EthWalletManagmentService {
   static String token = APIKeys.blockcypherKeyEth;
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
   static final baseUrlWeb3 = dotenv.env['WEB3_API_URL'] ?? "";
-  // "http://10.0.2.2:8080/api/v1/web3";
   Future<dynamic> sendRequest({
     required String path,
     required HttpVreb req,
@@ -65,13 +64,14 @@ class EthWalletManagmentService {
 
   Future<UnconfirmedTransaction> sendTransaction(
       String from, String to, amount) async {
+    _logger.i("transaction | to=$to");
+
     if (from.substring(0, 2) != "0x") {
       from = "0x$from";
     }
     if (to.substring(0, 2) != "0x") {
       to = "0x$to";
     }
-    _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrlWeb3/tx");
     Map<String, dynamic> tx = {
       "from": from,
@@ -80,18 +80,17 @@ class EthWalletManagmentService {
     };
     var m = await http.post(url, body: jsonEncode(tx), headers: header);
 
-    print(m.body);
-
     UnconfirmedTransaction trs =
         UnconfirmedERC20Transaction.fromJson(jsonDecode(m.body));
     return trs;
   }
 
   Future<EthRealTimeWallet> getWalletInfo(String address) async {
+    _logger.i("getETHWalletInfo | args: address=$address");
+
     if (address.substring(0, 2) != "0x") {
       address = "0x$address";
     }
-    _logger.i("getETHWalletInfo | args: address=$address");
 
     Uri url = Uri.parse("$baseUrlWeb3/address/$address/balance");
 
@@ -110,7 +109,6 @@ class EthWalletManagmentService {
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrlWeb3/tx/send");
 
-    var result = await http.post(url, body: encodedJson, headers: header);
-    print(result.body);
+    await http.post(url, body: encodedJson, headers: header);
   }
 }

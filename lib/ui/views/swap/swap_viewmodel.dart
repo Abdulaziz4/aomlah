@@ -20,7 +20,10 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     String private = userService.user.ethWallet!.privateKey;
     double amountToken1 = token1Amount * pow(10, tokenDecimal1);
     Map<String, dynamic> pair = await swapService.getExchangeRate(
-        private, tokenAddress1, tokenAddress2, amountToken1);
+        private: private,
+        tokenAddress1: tokenAddress1,
+        tokenAddress2: tokenAddress2,
+        amountToken1: amountToken1);
     double rate = double.parse(pair['token2'].toString()) /
         double.parse(pair['token1'].toString());
     setBusy(false);
@@ -68,7 +71,8 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     String tokenAddress = getTokenAddress(token);
     double amountEth = tokenAmount * pow(10, TokenDecimals.ethTokenDecimals);
 
-    await swapService.swapExactEthForToken(private, tokenAddress, amountEth);
+    await swapService.swapExactEthForToken(
+        private: private, tokenAddress: tokenAddress, amountEth: amountEth);
     setBusy(false);
   }
 
@@ -80,7 +84,8 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
 
     double amountToken = tokenAmount * pow(10, tokenDecimal);
 
-    await swapService.swapExactTokensForETH(private, tokenAddress, amountToken);
+    await swapService.swapExactTokensForETH(
+        private: private, tokenAddress: tokenAddress, tokenAmount: amountToken);
     setBusy(false);
   }
 
@@ -95,7 +100,10 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     double amountToken0 = tokenAmount * pow(10, token0Decimal);
 
     await swapService.swapExactTokensForTokens(
-        private, token0Address, token1Address, amountToken0);
+        private: private,
+        token0address: token0Address,
+        token1address: token1Address,
+        amountToken0: amountToken0);
     setBusy(false);
   }
 }

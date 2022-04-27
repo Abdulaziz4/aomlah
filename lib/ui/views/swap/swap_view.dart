@@ -21,8 +21,8 @@ class SwapCryptocurrencyView extends StatefulWidget {
 
 class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   final _formKey = GlobalKey<FormState>();
-  double? tokenAmount1 = 0;
-  double? tokenAmount2 = 0;
+  double tokenAmount1 = 0;
+  double tokenAmount2 = 0;
 
   String dropdownValue = 'اختر';
   String dropdownValue2 = 'اختر';
@@ -40,8 +40,8 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
     'UNI',
     'BAT',
   ];
-  double tokenExchangeRate1 = 2;
-  double tokenExchangeRate2 = 0.5;
+  double tokenExchangeRate1 = 0;
+  double tokenExchangeRate2 = 0;
   @override
   Widget build(BuildContext context) {
     final walletEth = Provider.of<EthRealTimeWallet>(context);
@@ -343,13 +343,13 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
 
                         if (dropdownValue == 'ETH') {
                           viewmodel.swapExactEthForToken(
-                              dropdownValue2, tokenAmount1!);
+                              dropdownValue2, tokenAmount1);
                         } else if (dropdownValue2 == 'ETH') {
                           viewmodel.swapExactTokensForETH(
-                              dropdownValue, tokenAmount1!);
+                              dropdownValue, tokenAmount1);
                         } else {
                           viewmodel.swapExactTokensForTokens(
-                              dropdownValue, dropdownValue2, tokenAmount1!);
+                              dropdownValue, dropdownValue2, tokenAmount1);
                         }
                       },
                       text: 'تبديل',

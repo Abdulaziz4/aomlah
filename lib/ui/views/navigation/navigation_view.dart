@@ -17,8 +17,8 @@ class NavigationView extends StatefulWidget {
 
 class _NavigationViewState extends State<NavigationView> {
   final List<Widget> _pagesList = [
-    SwapCryptocurrencyView(),
     OffersDiscoveryView(),
+    SwapCryptocurrencyView(),
     PredictionView(),
     MarketView(),
     ProfileView(),
@@ -43,11 +43,11 @@ class _NavigationViewState extends State<NavigationView> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
-            label: 'تبديل',
+            label: 'التداول',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
-            label: 'التداول',
+            label: 'تبديل',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/prediction-icon.svg"),
