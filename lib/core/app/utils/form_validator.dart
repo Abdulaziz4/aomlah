@@ -9,7 +9,6 @@ class FormValidator {
   const FormValidator._();
 
   static String? hasValue(String? value) {
-    print(value);
     if (value == null || value.isEmpty) {
       return "الرجاء عدم ترك  الخانة فارغة";
     }
