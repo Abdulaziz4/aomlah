@@ -25,42 +25,14 @@ class RealtimeEthWalletService {
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectEthWallet | args: uuid= $uuid , address=$address");
-    final socketUrl = "$baseSocketUrl?token=$token";
 
     // Fetch for first time
     final initialData = await _walletManager.getWalletInfo(address);
     walletController.sink.add(initialData);
 
-    final channel = WebSocketChannel.connect(
-      Uri.parse(socketUrl),
-    );
-
-    channel.sink.add(jsonEncode(connectionMessage(uuid, address)));
-    Pinger.ping(channel, ping());
-
-    channel.stream.listen((event) async {
-      final decodedEvent = jsonDecode(event);
-      if (decodedEvent["event"] != "pong") {
-        // On new transaction update the wallet balance
-        final updatedWallet = await _walletManager.getWalletInfo(address);
-
-        walletController.sink.add(updatedWallet);
-      }
+    Timer.periodic(Duration(seconds: 60), (timer) async {
+      final initialData = await _walletManager.getWalletInfo(address);
+      walletController.sink.add(initialData);
     });
-  }
-
-  Map<String, dynamic> connectionMessage(String uuid, String address) {
-    return {
-      "event": "confirmed-tx",
-      "wallet_name": uuid,
-      "token": token,
-      "address": address,
-    };
-  }
-
-  Map<String, dynamic> ping() {
-    return {
-      "event": "ping",
-    };
   }
 }

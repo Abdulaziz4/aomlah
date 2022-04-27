@@ -118,7 +118,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
         viewModelBuilder: () => SwapCryptocurrencyViewModel(),
         builder: (context, viewmodel, _) {
           return BusyOverlay(
-            isBusy: false,
+            isBusy: viewmodel.isBusy,
 
             ///
             child: Form(
@@ -200,8 +200,15 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         controller: _fromAmountController,
                                         onChanged: (value) {
                                           setState(() {
-                                            valueOneChanged(
-                                                double.parse(value));
+                                            if (_fromAmountController
+                                                .text.isNotEmpty) {
+                                              valueOneChanged(
+                                                  double.parse(value));
+                                            }
+                                            if (_fromAmountController
+                                                .text.isEmpty) {
+                                              _toAmountController.text = '';
+                                            }
                                           });
                                         },
                                         onSaved: (value) {
@@ -277,7 +284,15 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                         controller: _toAmountController,
                                         onChanged: (value) {
-                                          valueTwoChanged(double.parse(value));
+                                          if (_toAmountController
+                                              .text.isNotEmpty) {
+                                            valueTwoChanged(
+                                                double.parse(value));
+                                          }
+                                          if (_toAmountController
+                                              .text.isEmpty) {
+                                            _fromAmountController.text = '';
+                                          }
                                         },
                                         onSaved: (value) {
                                           tokenAmount2 = double.parse(value!);
@@ -449,7 +464,9 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
       tokenExchangeRate1 =
           await viewmodel.getExchangeRate(dropdownValue, dropdownValue2, 1);
       tokenExchangeRate2 = 1 / tokenExchangeRate1;
-      valueOneChanged(double.parse(_fromAmountController.text));
+      if (_fromAmountController.text.isNotEmpty) {
+        valueOneChanged(double.parse(_fromAmountController.text));
+      }
     }
   }
 

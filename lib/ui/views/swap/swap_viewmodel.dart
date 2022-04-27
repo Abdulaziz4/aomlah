@@ -17,7 +17,12 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     setBusy(true);
     String tokenAddress1 = getTokenAddress(token1);
     String tokenAddress2 = getTokenAddress(token2);
-    int tokenDecimal1 = getTokenDecimals(token1);
+    int tokenDecimal1;
+    // if (token1 == 'USDT') {
+    //   tokenDecimal1 = 10;
+    // } else {
+    tokenDecimal1 = getTokenDecimals(token1);
+    // }
     String private = userService.user.ethWallet!.privateKey;
     double amountToken1 = token1Amount * pow(10, tokenDecimal1);
     Map<String, dynamic> pair = await swapService.getExchangeRate(

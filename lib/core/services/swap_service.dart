@@ -11,9 +11,10 @@ class SwapService {
     "Content-type": "application/json",
     "Accept": "application/json"
   };
-  static final baseUrl = dotenv.env['WEB3_API_URL'] ?? "";
+  static final baseUrl =
+      // dotenv.env['WEB3_API_URL'] ?? "";
 
-  // "http://10.0.2.2:8080/api/v1/web3";
+      "http://10.0.2.2:8080/api/v1/web3";
 
   Future<Map<String, dynamic>> getExchangeRate(String private,
       String tokenAddress1, String tokenAddress2, double amountToken1) async {

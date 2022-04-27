@@ -21,7 +21,7 @@ class ERC20RealtimeWalletService {
 
   Future<void> connectWallet(String uuid, String address) async {
     _logger.i("connectERC20Wallet | args: uuid= $uuid , address=$address");
-    if (address.substring(0, 1) != "0x") {
+    if (address.substring(0, 2) != "0x") {
       address = "0x$address";
     }
     // Fetch for first time
