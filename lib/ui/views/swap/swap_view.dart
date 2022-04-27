@@ -3,7 +3,6 @@ import 'package:aomlah/core/enums/token_decimals.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/views/swap/swap_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
@@ -84,8 +83,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
     }
 
     bool checkBalance(String tokenName, double amount) {
-      double balance = 0;
-
       if (tokenName == 'ETH') {
         return amount >
             CurrencyHelper.convertToWhole2(
@@ -108,8 +105,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
       }
       return true;
     }
-
-    ;
 
     balance1 = setBalance(dropdownValue);
     balance2 = setBalance(dropdownValue2);
@@ -267,11 +262,9 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                       flex: 1,
                                       child: TextFormField(
                                         keyboardType: TextInputType.number,
-
                                         decoration: InputDecoration(
                                             hintText: 'ادخل الكميه',
                                             border: InputBorder.none),
-                                        // "1",
                                         style: Constants.largeText
                                             .copyWith(color: Colors.white),
                                         validator: (value) {
@@ -299,22 +292,11 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                       ),
                                     ),
-                                    // Text(
-                                    //   "14.5254009",
-                                    //   style: Constants.largeText
-                                    //       .copyWith(color: Colors.white),
-                                    // ),
                                     Dropdown(dropdownValue2, viewmodel),
                                   ],
                                 ),
                                 Row(
                                   children: [
-                                    // Spacer(),
-                                    // Text(
-                                    //   '(0.108%)',
-                                    //   style: Constants.smallText.copyWith(
-                                    //       color: Constants.primaryColor),
-                                    // ),
                                     Text(
                                       balance2,
                                       style: Constants.smallText.copyWith(
@@ -333,9 +315,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                             children: [
                               Spacer(),
                               Text(
-                                ///make get ratio text    ..  ... .... ... /
                                 getRatioText(),
-
                                 style: Constants.smallText
                                     .copyWith(color: Color(0xFFC6C6C6)),
                               ),
@@ -371,9 +351,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                           viewmodel.swapExactTokensForTokens(
                               dropdownValue, dropdownValue2, tokenAmount1!);
                         }
-
-                        // print(tokenAmount1);
-                        // print(tokenAmount1);
                       },
                       text: 'تبديل',
                       color: Constants.primaryColor,
@@ -444,19 +421,13 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   void valueOneChanged(double tokenAmount1) {
     if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
       _toAmountController.text =
-          // tokenExchangeRate2.toString();
           (tokenAmount1 / tokenExchangeRate2).toStringAsFixed(5);
     }
-  }
-
-  bool checkBalance(String value) {
-    return false;
   }
 
   void valueTwoChanged(double tokenAmount2) {
     _fromAmountController.text =
         (tokenAmount2 / tokenExchangeRate1).toStringAsFixed(5);
-    ;
   }
 
   Future<void> setExchangeRate(SwapCryptocurrencyViewModel viewmodel) async {

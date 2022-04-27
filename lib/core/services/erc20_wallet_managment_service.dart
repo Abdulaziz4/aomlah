@@ -29,7 +29,6 @@ class Erc20WalletManagmentService {
     final result =
         await http.post(url, body: json.encode(body), headers: header);
 
-    print(result.body);
     final wallet = initRealTimeWallet(jsonDecode(result.body), tokenAddress);
 
     return wallet;
@@ -69,12 +68,10 @@ class Erc20WalletManagmentService {
   Future<void> sendSignedTransaction(
       Map<String, dynamic> signedJson, CryptoTypes types) async {
     String tokenAddress = getTokenAddress(types);
-    print(signedJson);
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/tx/$tokenAddress/send");
 
     var result = await http.post(url, body: encodedJson, headers: header);
-    print(result.body);
   }
 
   String getTokenAddress(CryptoTypes types) {

@@ -6,15 +6,13 @@ import '../app/logger.dart';
 import 'package:http/http.dart' as http;
 
 class SwapService {
-  final _logger = getLogger("SwapService");
   final Map<String, String> header = {
     "Content-type": "application/json",
     "Accept": "application/json"
   };
-  static final baseUrl =
-      // dotenv.env['WEB3_API_URL'] ?? "";
+  static final baseUrl = dotenv.env['WEB3_API_URL'] ?? "";
 
-      "http://10.0.2.2:8080/api/v1/web3";
+  // "http://10.0.2.2:8080/api/v1/web3";
 
   Future<Map<String, dynamic>> getExchangeRate(String private,
       String tokenAddress1, String tokenAddress2, double amountToken1) async {
@@ -26,7 +24,6 @@ class SwapService {
       "amount_token0": amountToken1.toStringAsFixed(0),
     };
     var encodedBody = jsonEncode(body);
-    print(body['amount_token0'].toString() + "   sssss");
     var result = await http.post(url, body: encodedBody, headers: header);
 
     var res = jsonDecode(result.body);
