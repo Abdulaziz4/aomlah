@@ -1,9 +1,11 @@
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/candles_service.dart';
 import 'package:aomlah/core/services/crypto_info_service.dart';
+import 'package:aomlah/core/services/erc20_wallet_managment_service.dart';
 import 'package:aomlah/core/services/eth_price_service.dart';
 import 'package:aomlah/core/services/eth_wallet_managment_service.dart';
 import 'package:aomlah/core/services/offers_service.dart';
+import 'package:aomlah/core/services/prediction_service.dart';
 import 'package:aomlah/core/services/realtime_wallet_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/trading_service.dart';
@@ -108,6 +110,9 @@ import '../services/realtime_erc20_wallet_service.dart';
     LazySingleton<TradingService>(classType: TradingService),
     LazySingleton<OffersService>(classType: OffersService),
     LazySingleton<SnackbarService>(classType: SnackbarService),
+    LazySingleton<PredictionService>(classType: PredictionService),
+    LazySingleton<Erc20WalletManagmentService>(
+        classType: Erc20WalletManagmentService),
 
     Presolve(
       classType: SupabaseService,

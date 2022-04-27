@@ -8,10 +8,10 @@ class PredictionService {
   final String apiUrl = dotenv.env['PREDICTION_API_URL'] ?? "";
 
   Future<Prediction> getPrediction() async {
-    final response = await http.get(Uri.parse(apiUrl));
+    final response = await http.get(Uri.parse(apiUrl + "/predict"));
 
     final decodedResponse = jsonDecode(response.body);
-
+    print(decodedResponse);
     return Prediction.fromJson(decodedResponse);
   }
 }

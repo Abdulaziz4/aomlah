@@ -22,8 +22,8 @@ class Prediction {
 
   factory Prediction.fromJson(Map<String, dynamic> map) {
     return Prediction(
-      prediction: map['prediction']?.toDouble() ?? 0.0,
-      sentiment: map['sentiment']?.toDouble() ?? 0.0,
+      prediction: double.parse(map["prediction"]),
+      sentiment: double.parse(map['sentiment']),
       sentimentClass: map['sentimentClass'] ?? '',
     );
   }
