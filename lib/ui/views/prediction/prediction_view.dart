@@ -30,7 +30,6 @@ class PredictionView extends StatelessWidget {
                 : Padding(
                     padding: const EdgeInsets.only(top: 220),
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "سعر اغلاق اليوم المتوقع لعلمة",
