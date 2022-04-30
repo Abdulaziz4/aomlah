@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:aomlah/core/services/swap_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -47,6 +48,7 @@ Future setupLocator(
   locator.registerLazySingleton(() => RealtimeWalletService());
   locator.registerLazySingleton(() => RealtimeEthWalletService());
   locator.registerLazySingleton(() => ERC20RealtimeWalletService());
+  locator.registerLazySingleton(() => SwapService());
   locator.registerLazySingleton(() => CandlesService());
   locator.registerLazySingleton(() => TradingService());
   locator.registerLazySingleton(() => OffersService());

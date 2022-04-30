@@ -21,7 +21,7 @@ class Erc20WalletManagmentService {
 
   Future<RealTimeWallet> getERC20WalletBalance(
       String address, String tokenAddress) async {
-    _logger.i("getETHWalletInfo | args: address=$address");
+    _logger.i("getERC20WalletInfo | args: address=$address");
     Uri url = Uri.parse("$baseUrl/$tokenAddress/balance");
     Map<String, dynamic> body = {'address': address};
     final result =
@@ -45,7 +45,7 @@ class Erc20WalletManagmentService {
   }
 
   Future<UnconfirmedTransaction> sendTransaction(
-      String from, String to, amount, tokenAddress) async {
+      String from, String to, amount) async {
     _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrl/fees");
 

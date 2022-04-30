@@ -31,43 +31,17 @@ class WithdrawViewModel extends BaseViewModel {
           arguments: TransactionObj(transaction, types));
     } else if (types == CryptoTypes.ethereum) {
       userAddress = userService.user.ethWallet!.address;
+
       UnconfirmedTransaction transaction =
           await ethWalletService.sendTransaction(userAddress, to, amount);
       setBusy(false);
       navService.replaceWith(Routes.confirmWithdrawView,
           arguments: TransactionObj(transaction, types));
-    } else if (types == CryptoTypes.usdt) {
+    } else {
       userAddress = userService.user.ethWallet!.address;
-      if (userAddress.substring(0, 1) != "0x") {
-        userAddress = "0x$userAddress";
-      }
       UnconfirmedTransaction transaction =
-          await erc20WalletService.sendTransaction(
-              userAddress, to, amount, TokenAddresses.usdtTokenAddress);
+          await erc20WalletService.sendTransaction(userAddress, to, amount);
       setBusy(false);
-      navService.replaceWith(Routes.confirmWithdrawView,
-          arguments: TransactionObj(transaction, types));
-    } else if (types == CryptoTypes.uni) {
-      userAddress = userService.user.ethWallet!.address;
-      if (userAddress.substring(0, 1) != "0x") {
-        userAddress = "0x$userAddress";
-      }
-      UnconfirmedTransaction transaction =
-          await erc20WalletService.sendTransaction(
-              userAddress, to, amount, TokenAddresses.uniTokenAddress);
-      setBusy(false);
-      navService.replaceWith(Routes.confirmWithdrawView,
-          arguments: TransactionObj(transaction, types));
-    } else if (types == CryptoTypes.bat) {
-      userAddress = userService.user.ethWallet!.address;
-      if (userAddress.substring(0, 1) != "0x") {
-        userAddress = "0x$userAddress";
-      }
-      UnconfirmedTransaction transaction =
-          await erc20WalletService.sendTransaction(
-              userAddress, to, amount, TokenAddresses.batTokenAddress);
-      setBusy(false);
-      print("$amount    222222222222");
       navService.replaceWith(Routes.confirmWithdrawView,
           arguments: TransactionObj(transaction, types));
     }

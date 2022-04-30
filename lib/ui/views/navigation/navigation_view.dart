@@ -6,6 +6,8 @@ import 'package:aomlah/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../swap/swap_view.dart';
+
 class NavigationView extends StatefulWidget {
   const NavigationView({Key? key}) : super(key: key);
 
@@ -16,6 +18,7 @@ class NavigationView extends StatefulWidget {
 class _NavigationViewState extends State<NavigationView> {
   final List<Widget> _pagesList = [
     OffersDiscoveryView(),
+    SwapCryptocurrencyView(),
     PredictionView(),
     MarketView(),
     ProfileView(),
@@ -41,6 +44,10 @@ class _NavigationViewState extends State<NavigationView> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
             label: 'التداول',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
+            label: 'تبديل',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/prediction-icon.svg"),
