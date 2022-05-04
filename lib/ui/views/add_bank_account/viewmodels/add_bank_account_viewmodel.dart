@@ -27,12 +27,16 @@ class AddBankAccountViewmodel extends BaseViewModel {
     'البنك السعودي للإستثمار'
   ];
 
-  void submit() async {
+  void trySubmit() {
     bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
     formKey.currentState!.save();
+    createBankAccount();
+  }
+
+  Future<void> createBankAccount() async {
     setBusy(true);
     final bank = BankAccount(
       iban: iban!,

@@ -83,7 +83,7 @@ class _AddBankAccountViewState extends State<AddBankAccountView> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
-                          onPressed: viewmodel.submit,
+                          onPressed: viewmodel.trySubmit,
                           child: Text("إضافة الحساب"),
                           style:
                               ElevatedButton.styleFrom(onPrimary: Colors.white),
