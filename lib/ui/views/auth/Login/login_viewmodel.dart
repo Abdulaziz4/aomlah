@@ -24,15 +24,20 @@ class LoginViewModel extends BaseViewModel {
     if (!isValid) {
       return;
     }
+    formKey.currentState!.save();
+    login();
+  }
+
+  Future<void> login() async {
     try {
       setBusy(true);
-      formKey.currentState!.save();
+
       await _authService.loginWithEmail(email: email, password: password);
       _navService.navigateTo(Routes.navigationView);
     } on AuthException catch (e) {
       errorMessage = e.message;
     } catch (error) {
-      errorMessage = "جدث خطأ";
+      errorMessage = "حدث خطأ";
     } finally {
       setBusy(false);
     }
