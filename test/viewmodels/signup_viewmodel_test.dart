@@ -51,6 +51,35 @@ void main() {
         );
         verify(() => nav.navigateTo(Routes.verifyAccountPromotionView));
       });
+      test(
+          "singupWithEmail throws an exception then error message is intilized",
+          () async {
+        removeRegistrationIfExists<AuthService>();
+        final auth = MockAuthService();
+        when(
+          () => auth.signUpWithEmail(
+            email: email,
+            password: pass,
+            name: name,
+          ),
+        ).thenThrow(Exception());
+        locator.registerSingleton<AuthService>(auth);
+
+        final viewModel = SignupViewModel();
+        viewModel.email = email;
+        viewModel.password = pass;
+        viewModel.name = name;
+        await viewModel.signup();
+
+        expect(viewModel.errorMessage, "حدث خطأ");
+        verify(
+          () => auth.signUpWithEmail(
+            email: email,
+            password: pass,
+            name: name,
+          ),
+        );
+      });
     },
   );
 }
