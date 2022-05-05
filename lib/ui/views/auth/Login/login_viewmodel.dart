@@ -31,7 +31,6 @@ class LoginViewModel extends BaseViewModel {
   Future<void> login() async {
     try {
       setBusy(true);
-
       await _authService.loginWithEmail(email: email, password: password);
       _navService.navigateTo(Routes.navigationView);
     } on AuthException catch (e) {

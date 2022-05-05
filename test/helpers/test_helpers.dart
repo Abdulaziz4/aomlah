@@ -20,7 +20,7 @@ UserService getAndRegisterUserService() {
 
   when(() => service.user).thenAnswer(
     (_) => AomlahUser(
-      profileId: "1234",
+      profileId: "123456",
       name: "Abdulaziz",
       isVerified: true,
       bankAccounts: [],
