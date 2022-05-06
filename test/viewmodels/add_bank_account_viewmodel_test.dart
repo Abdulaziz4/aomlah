@@ -1,5 +1,7 @@
 import 'package:aomlah/core/app/app.locator.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
+import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/ui/views/add_bank_account/viewmodels/add_bank_account_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,6 +32,26 @@ void main() {
         final nav = MockNavigationService();
         when(() => nav.back()).thenReturn(true);
         locator.registerSingleton<NavigationService>(nav);
+
+        removeRegistrationIfExists<UserService>();
+        final userService = MockUserService();
+
+        when(() => userService.fetchAndUpdateUser()).thenAnswer(
+          (invocation) => Future.value(),
+        );
+        when(() => userService.user).thenAnswer(
+          (_) => AomlahUser(
+            profileId: "123456",
+            name: "Abdulaziz",
+            isVerified: true,
+            bankAccounts: [],
+            btcWallet: null,
+            ethWallet: null,
+            isOnline: true,
+            debt: 0,
+          ),
+        );
+        locator.registerSingleton<UserService>(userService);
 
         final viewmodel = AddBankAccountViewmodel();
         viewmodel.setBank('بنك الاهلي');
