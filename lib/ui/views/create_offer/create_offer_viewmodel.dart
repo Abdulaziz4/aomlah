@@ -11,23 +11,24 @@ import '../../../core/models/bank_account.dart';
 
 class CreateOfferViewModel extends BaseViewModel {
   final UserService userService = locator<UserService>();
+
   final supabaseService = locator<SupabaseService>();
   final navService = locator<NavigationService>();
+  final snackBarService = locator<SnackbarService>();
+
   List<BankAccount> bankAccount = List.empty(growable: true);
-  int counter = 0;
 
   navigatesToBankAccounts() {
     navService.navigateTo(Routes.userBankAccountsView);
   }
 
   void selectBankAccount() async {
-    if (counter >= 3) return;
+    if (bankAccount.length >= 3) return;
     final bank = await navService.navigateTo(
       Routes.userBankAccountsView,
       arguments: UserBankAccountsViewArguments(allowSelection: true),
     );
     bankAccount.add(bank as BankAccount);
-    counter++;
     notifyListeners();
   }
 
@@ -35,7 +36,7 @@ class CreateOfferViewModel extends BaseViewModel {
       double margin, double cryptoAmount, double minTrade, String terms) async {
     try {
       setBusy(true);
-      await supabaseService.createOffer(Offer(
+      await supabaseService.createBuyOffer(Offer(
         offerID: UuidHelper.generate(),
         ownerID: userService.user.profileId,
         cryptoType: cryptoType,
@@ -50,13 +51,14 @@ class CreateOfferViewModel extends BaseViewModel {
       setBusy(false);
       navService.back();
     } catch (e) {
-      //TODO: Handle
+      snackBarService.showSnackbar(message: "حدث خطأ ما");
     }
   }
 
   Future<void> submitSellOffer(String cryptoType, String currencyType,
       double margin, double cryptoAmount, double minTrade, String terms) async {
-    if (counter <= 0) return;
+    if (bankAccount.isEmpty) return;
+
     try {
       setBusy(true);
       await supabaseService.createSellOffer(
@@ -76,7 +78,7 @@ class CreateOfferViewModel extends BaseViewModel {
       setBusy(false);
       navService.back();
     } catch (e) {
-//TODO: Handle
+      snackBarService.showSnackbar(message: "حدث خطأ ما");
     }
   }
 }

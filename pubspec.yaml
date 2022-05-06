@@ -53,6 +53,7 @@ dev_dependencies:
   stacked_generator:
   dependencies:
   json_serializable: ^6.1.4
+  mocktail: ^0.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -1,5 +1,4 @@
 import 'package:aomlah/core/enums/crypto_types.dart';
-import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/models/unconfirmed_transaction.dart';
 import 'package:aomlah/core/services/erc20_wallet_managment_service.dart';
 import 'package:aomlah/core/models/wallet.dart';

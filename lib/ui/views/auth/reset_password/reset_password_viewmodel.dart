@@ -21,9 +21,13 @@ class ResetPasswordViewModel extends BaseViewModel {
     if (!isValid) {
       return;
     }
+    formKey.currentState!.save();
+    await resetPassword();
+  }
+
+  Future<void> resetPassword() async {
     try {
       setBusy(true);
-      formKey.currentState!.save();
       await _authService.sendPasswordResetCode(email: email);
       successMessage = "تم الإرسال";
     } on AuthException catch (e) {
