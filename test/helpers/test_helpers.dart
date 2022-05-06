@@ -58,11 +58,20 @@ AuthService getAndRegisterAuthService() {
   return service;
 }
 
+SnackbarService getAndRegisterSnackbarService() {
+  removeRegistrationIfExists<SnackbarService>();
+
+  final service = MockSnackbarService();
+  locator.registerSingleton<SnackbarService>(service);
+  return service;
+}
+
 void registerServices() {
   getAndRegisterUserService();
   getAndRegisterNavigationService();
   getAndRegisterSupabaseService();
   getAndRegisterAuthService();
+  getAndRegisterSnackbarService();
 }
 
 void unregisterService() {
@@ -70,4 +79,5 @@ void unregisterService() {
   locator.unregister<NavigationService>();
   locator.unregister<SupabaseService>();
   locator.unregister<AuthService>();
+  locator.unregister<SnackbarService>();
 }

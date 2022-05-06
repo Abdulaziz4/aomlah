@@ -36,7 +36,7 @@ class CreateOfferViewModel extends BaseViewModel {
       double margin, double cryptoAmount, double minTrade, String terms) async {
     try {
       setBusy(true);
-      await supabaseService.createOffer(Offer(
+      await supabaseService.createBuyOffer(Offer(
         offerID: UuidHelper.generate(),
         ownerID: userService.user.profileId,
         cryptoType: cryptoType,

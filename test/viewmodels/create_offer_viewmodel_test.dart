@@ -67,5 +67,115 @@ void main() {
         verify(() => nav.back());
       },
     );
+    test(
+      "should not call createSellOffer and navigate back "
+      "when bank account is not selected",
+      () async {
+        removeRegistrationIfExists<NavigationService>();
+        final nav = MockNavigationService();
+        when(() => nav.back()).thenReturn(true);
+        locator.registerSingleton<NavigationService>(nav);
+
+        removeRegistrationIfExists<SupabaseService>();
+        final supabase = MockSupabaseService();
+        when(() => supabase.createSellOffer(any(), any()))
+            .thenAnswer((_) => Future.value());
+        locator.registerSingleton<SupabaseService>(supabase);
+
+        final viewmodel = CreateOfferViewModel();
+        await viewmodel.submitSellOffer(
+          cryptoType,
+          currencyType,
+          margin,
+          amount,
+          minTrade,
+          terms,
+        );
+
+        verifyNever((() => supabase.createSellOffer(any(), any())));
+        verifyNever(() => nav.back());
+      },
+    );
+  });
+
+  group('CreateOfferViewModel tests | submitBuyOffer | ', () {
+    setUp(
+      () {
+        registerFallbackValue(FakeOffer());
+        registerServices();
+      },
+    );
+
+    tearDown(
+      () {
+        unregisterService();
+      },
+    );
+    test(
+      "should call createOffer and navigate back "
+      "when bank account selected",
+      () async {
+        removeRegistrationIfExists<NavigationService>();
+        final nav = MockNavigationService();
+        when(() => nav.back()).thenReturn(true);
+        locator.registerSingleton<NavigationService>(nav);
+
+        removeRegistrationIfExists<SupabaseService>();
+        final supabase = MockSupabaseService();
+        when(() => supabase.createBuyOffer(any()))
+            .thenAnswer((_) => Future.value());
+        locator.registerSingleton<SupabaseService>(supabase);
+
+        final viewmodel = CreateOfferViewModel();
+        viewmodel.bankAccount = [
+          BankAccount(
+            iban: "",
+            ownerName: "",
+            bankName: "",
+            profileId: "",
+          ),
+        ];
+        await viewmodel.submitBuyOffer(
+          cryptoType,
+          currencyType,
+          margin,
+          amount,
+          minTrade,
+          terms,
+        );
+
+        verify((() => supabase.createBuyOffer(any())));
+        verify(() => nav.back());
+      },
+    );
+    test(
+      "should not call createSellOffer and navigate back "
+      "when bank account is not selected",
+      () async {
+        removeRegistrationIfExists<NavigationService>();
+        final nav = MockNavigationService();
+        when(() => nav.back()).thenReturn(true);
+        locator.registerSingleton<NavigationService>(nav);
+
+        removeRegistrationIfExists<SupabaseService>();
+        final supabase = MockSupabaseService();
+        when(() => supabase.createSellOffer(any(), any()))
+            .thenAnswer((_) => Future.value());
+        locator.registerSingleton<SupabaseService>(supabase);
+
+        final viewmodel = CreateOfferViewModel();
+        await viewmodel.submitBuyOffer(
+          cryptoType,
+          currencyType,
+          margin,
+          amount,
+          minTrade,
+          terms,
+        );
+
+        verifyNever((() => supabase.createSellOffer(any(), any())));
+        verifyNever(() => nav.back());
+      },
+    );
   });
 }

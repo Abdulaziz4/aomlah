@@ -14,6 +14,8 @@ class MockSupabaseService extends Mock implements SupabaseService {}
 
 class MockAuthService extends Mock implements AuthService {}
 
+class MockSnackbarService extends Mock implements SnackbarService {}
+
 class FakeBankAccount extends Mock implements BankAccount {}
 
 class FakeOffer extends Mock implements Offer {}
