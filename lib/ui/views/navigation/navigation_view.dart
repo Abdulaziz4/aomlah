@@ -46,7 +46,7 @@ class _NavigationViewState extends State<NavigationView> {
             label: 'التداول',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/offers-icon.svg"),
+            icon: SvgPicture.asset("assets/icons/swap-nav.svg"),
             label: 'تبديل',
           ),
           BottomNavigationBarItem(
@@ -59,7 +59,7 @@ class _NavigationViewState extends State<NavigationView> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/profile-icon.svg"),
-            label: 'الملف الشخصي',
+            label: 'الحساب',
           ),
         ],
         currentIndex: _selectedPage,
