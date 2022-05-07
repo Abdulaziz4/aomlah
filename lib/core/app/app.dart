@@ -102,7 +102,8 @@ import '../services/realtime_erc20_wallet_service.dart';
     LazySingleton<EthPriceService>(classType: EthPriceService),
 
     LazySingleton<CryptoInfoService>(classType: CryptoInfoService),
-    LazySingleton<RealtimeWalletService>(classType: RealtimeWalletService),
+    LazySingleton<RealtimeBtcWalletService>(
+        classType: RealtimeBtcWalletService),
     LazySingleton<RealtimeEthWalletService>(
         classType: RealtimeEthWalletService),
     LazySingleton<ERC20RealtimeWalletService>(

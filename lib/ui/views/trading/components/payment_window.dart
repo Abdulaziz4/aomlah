@@ -1,4 +1,5 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bank_account.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
 import 'package:aomlah/core/models/offer.dart';
@@ -52,6 +53,8 @@ class _PaymentWindowState extends State<PaymentWindow> {
   Widget build(BuildContext context) {
     final wallet = Provider.of<BtcRealTimeWallet>(context);
     final btc = Provider.of<Bitcoin>(context);
+    final user = Provider.of<AomlahUser>(context);
+
     return Form(
       key: widget.formKey,
       child: Container(
@@ -85,7 +88,7 @@ class _PaymentWindowState extends State<PaymentWindow> {
                 final btcAmount = btc.amountToBtc(amount);
 
                 if (!widget.offer.isBuyTrader &&
-                    btcAmount > wallet.balanceBTC) {
+                    btcAmount > wallet.balanceBTC(user.debt)) {
                   return "ادخل مبلغ ضمن رصيد محفظتك";
                 }
 
@@ -166,7 +169,7 @@ class _PaymentWindowState extends State<PaymentWindow> {
                     ),
                   ),
                   Text(
-                    wallet.balanceSR(btc.price).toString(),
+                    wallet.balanceSR(btc.price, user.debt).toString(),
                     style: Constants.verySmallText.copyWith(
                       color: Colors.grey,
                     ),

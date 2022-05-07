@@ -25,9 +25,9 @@ class BtcRealTimeWallet extends RealTimeWallet {
     );
   }
 
-  double balanceSR(double price) {
-    return double.parse((balanceBTC * price * 3.75).toStringAsFixed(3));
+  double balanceSR(double price, double debt) {
+    return double.parse((balanceBTC(debt) * price * 3.75).toStringAsFixed(3));
   }
 
-  double get balanceBTC => (balance / 100000000);
+  double balanceBTC(double debt) => (balance / 100000000) - debt;
 }

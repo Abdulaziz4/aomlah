@@ -45,7 +45,7 @@ Future setupLocator(
   locator.registerLazySingleton(() => BtcPriceService());
   locator.registerLazySingleton(() => EthPriceService());
   locator.registerLazySingleton(() => CryptoInfoService());
-  locator.registerLazySingleton(() => RealtimeWalletService());
+  locator.registerLazySingleton(() => RealtimeBtcWalletService());
   locator.registerLazySingleton(() => RealtimeEthWalletService());
   locator.registerLazySingleton(() => ERC20RealtimeWalletService());
   locator.registerLazySingleton(() => CandlesService());

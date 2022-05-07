@@ -36,9 +36,6 @@ class AuthService {
       }
     } catch (e) {
       _logger.e("Initlizing user failed :" + e.toString());
-      // _dialogService.showCustomDialog(
-      //   variant: DialogType.general_problem,
-      // );
       rethrow;
     }
   }
