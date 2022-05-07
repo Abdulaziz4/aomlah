@@ -24,8 +24,8 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   double tokenAmount1 = 0;
   double tokenAmount2 = 0;
 
-  String dropdownValue = 'اختر';
-  String dropdownValue2 = 'اختر';
+  String dropdownValue = 'أختر';
+  String dropdownValue2 = 'أختر';
 
   String balance1 = '';
   String balance2 = '';
@@ -34,7 +34,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   final _toAmountController = TextEditingController();
 
   var items = [
-    'اختر',
+    'أختر',
     'ETH',
     'USDT',
     'UNI',
@@ -123,7 +123,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                   title: Text(
                     'تبديل العملات',
                   ),
-                  centerTitle: true,
+                  automaticallyImplyLeading: false,
                 ),
                 body: Column(
                   children: [
@@ -156,9 +156,9 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                           /// FROM CONTAINER
                           Container(
                             padding: const EdgeInsets.only(
-                                left: 20, right: 10, top: 10, bottom: 5),
+                                left: 0, right: 10, top: 10, bottom: 5),
                             decoration: BoxDecoration(
-                              color: Constants.black4dp,
+                              color: Constants.black3dp,
                               boxShadow: Constants.shadow,
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -169,7 +169,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                 ///Selecting Menu
                                 Row(
                                   children: [
-                                    // Spacer(),
                                     Expanded(
                                       flex: 1,
                                       child: TextFormField(
@@ -246,9 +245,9 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                           /// TO CONTAINER
                           Container(
                             padding: const EdgeInsets.only(
-                                left: 20, right: 10, top: 10, bottom: 5),
+                                left: 0, right: 10, top: 10, bottom: 5),
                             decoration: BoxDecoration(
-                              color: Constants.black4dp,
+                              color: Constants.black3dp,
                               boxShadow: Constants.shadow,
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -324,36 +323,47 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                               ),
                             ],
                           ),
+
+                          /// INIT SWAP
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomButton(
+                                  onPressed: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    if (dropdownValue == '' ||
+                                        dropdownValue2 == '') {
+                                      return;
+                                    }
+                                    _formKey.currentState?.save();
+
+                                    if (dropdownValue == 'ETH') {
+                                      viewmodel.swapExactEthForToken(
+                                          dropdownValue2, tokenAmount1);
+                                    } else if (dropdownValue2 == 'ETH') {
+                                      viewmodel.swapExactTokensForETH(
+                                          dropdownValue, tokenAmount1);
+                                    } else {
+                                      viewmodel.swapExactTokensForTokens(
+                                          dropdownValue,
+                                          dropdownValue2,
+                                          tokenAmount1);
+                                    }
+                                  },
+                                  text: 'تبديل',
+                                  color: Constants.primaryColor,
+                                  height: 38,
+                                  width: 218,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-
-                    /// INIT SWAP
-                    CustomButton(
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        if (dropdownValue == '' || dropdownValue2 == '') {
-                          return;
-                        }
-                        _formKey.currentState?.save();
-
-                        if (dropdownValue == 'ETH') {
-                          viewmodel.swapExactEthForToken(
-                              dropdownValue2, tokenAmount1);
-                        } else if (dropdownValue2 == 'ETH') {
-                          viewmodel.swapExactTokensForETH(
-                              dropdownValue, tokenAmount1);
-                        } else {
-                          viewmodel.swapExactTokensForTokens(
-                              dropdownValue, dropdownValue2, tokenAmount1);
-                        }
-                      },
-                      text: 'تبديل',
-                      color: Constants.primaryColor,
-                      height: 38,
-                      width: 218,
                     ),
                   ],
                 ),
@@ -365,11 +375,11 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
 
   Widget buildDropdown(String s, SwapCryptocurrencyViewModel viewmodel) {
     return Container(
-      padding: const EdgeInsets.only(right: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 7),
       decoration: BoxDecoration(
         color: Constants.black4dp,
         boxShadow: Constants.shadow,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
       ),
       margin: EdgeInsets.symmetric(horizontal: 15),
       child: DropdownButtonHideUnderline(
@@ -384,7 +394,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                 children: [
                   Text(
                     items,
-                    style: Constants.largeText.copyWith(color: Colors.white),
+                    style: Constants.smallText.copyWith(color: Colors.white),
                   ),
                   SizedBox(
                     width: 6,
@@ -402,7 +412,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
               ),
             );
           }).toList(),
-          hint: Text('select'),
           onChanged: (String? newValue) {
             setState(() {
               if (s == dropdownValue && newValue != dropdownValue2) {
@@ -419,7 +428,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   void valueOneChanged(double tokenAmount1) {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       _toAmountController.text =
           (tokenAmount1 / tokenExchangeRate2).toStringAsFixed(5);
     }
@@ -431,7 +440,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   Future<void> setExchangeRate(SwapCryptocurrencyViewModel viewmodel) async {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       tokenExchangeRate1 =
           await viewmodel.getExchangeRate(dropdownValue, dropdownValue2, 1);
       tokenExchangeRate2 = 1 / tokenExchangeRate1;
@@ -442,10 +451,10 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   String getRatioText() {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       return "1$dropdownValue ≈ " +
           (1 / tokenExchangeRate2).toStringAsFixed(8) +
-          "$dropdownValue2 ";
+          " $dropdownValue2 ";
     } else {
       return '';
     }
