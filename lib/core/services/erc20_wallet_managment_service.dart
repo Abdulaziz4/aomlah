@@ -69,7 +69,7 @@ class Erc20WalletManagmentService {
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrl/tx/$tokenAddress/send");
 
-    var result = await http.post(url, body: encodedJson, headers: header);
+    await http.post(url, body: encodedJson, headers: header);
   }
 
   String getTokenAddress(CryptoTypes types) {

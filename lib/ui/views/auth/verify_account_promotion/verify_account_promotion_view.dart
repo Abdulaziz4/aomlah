@@ -1,12 +1,9 @@
-import 'package:aomlah/core/app/app.locator.dart';
-import 'package:aomlah/core/app/app.router.dart';
 import 'package:aomlah/core/app/utils/constants.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
 import 'package:aomlah/ui/views/auth/verify_account_promotion/verify_account_promotion_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class VerifyAccountPromotionView extends StatelessWidget {
   const VerifyAccountPromotionView({Key? key}) : super(key: key);

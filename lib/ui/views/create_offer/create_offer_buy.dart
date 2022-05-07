@@ -26,10 +26,16 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   double? cryptoAmount, minTrade;
 
   final TextEditingController _cryptoAmountController = TextEditingController();
-  final TextEditingController _minTradeController = TextEditingController();
   final TextEditingController _termsController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _cryptoAmountController.dispose();
+    _termsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
