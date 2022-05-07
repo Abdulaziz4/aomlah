@@ -211,7 +211,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                       ),
                                     ),
-                                    Dropdown(dropdownValue, viewmodel),
+                                    buildDropdown(dropdownValue, viewmodel),
                                   ],
                                 ),
                                 Row(
@@ -292,7 +292,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                       ),
                                     ),
-                                    Dropdown(dropdownValue2, viewmodel),
+                                    buildDropdown(dropdownValue2, viewmodel),
                                   ],
                                 ),
                                 Row(
@@ -338,8 +338,6 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                           return;
                         }
                         _formKey.currentState?.save();
-                        print(tokenAmount1);
-                        print(tokenAmount2);
 
                         if (dropdownValue == 'ETH') {
                           viewmodel.swapExactEthForToken(
@@ -365,7 +363,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
         });
   }
 
-  Widget Dropdown(String s, SwapCryptocurrencyViewModel viewmodel) {
+  Widget buildDropdown(String s, SwapCryptocurrencyViewModel viewmodel) {
     return Container(
       padding: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
@@ -407,9 +405,11 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
           hint: Text('select'),
           onChanged: (String? newValue) {
             setState(() {
-              if (s == dropdownValue && newValue != dropdownValue2)
+              if (s == dropdownValue && newValue != dropdownValue2) {
                 dropdownValue = newValue!;
-              else if (newValue != dropdownValue) dropdownValue2 = newValue!;
+              } else if (newValue != dropdownValue) {
+                dropdownValue2 = newValue!;
+              }
               setExchangeRate(viewmodel);
             });
           },

@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'package:rxdart/subjects.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:aomlah/core/app/api_keys.dart';
-import 'package:aomlah/core/app/utils/pinger.dart';
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 

@@ -13,7 +13,6 @@ import '../../../core/app/utils/constants.dart';
 import '../../../core/models/bat_real_time_wallet.dart';
 import '../../../core/models/eth_real_time_wallet.dart';
 import '../../../core/models/btc_real_time_wallet.dart';
-import '../../../core/models/realtime_wallet.dart';
 import '../../../core/models/uni_real_time_wallet.dart';
 import '../../shared/custom_input_field.dart';
 import '../../shared/custom_menu.dart';

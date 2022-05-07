@@ -57,6 +57,7 @@ class _UsdtWalletInfoViewState extends WalletInfoInterface<UsdtWalletInfoView> {
     );
   }
 
+  @override
   double convertToWhole(double balance, int decimals) {
     return (balance / (pow(10, decimals) * 1.0));
   }

@@ -11,7 +11,6 @@ class PredictionService {
     final response = await http.get(Uri.parse(apiUrl + "/predict"));
 
     final decodedResponse = jsonDecode(response.body);
-    print(decodedResponse);
     return Prediction.fromJson(decodedResponse);
   }
 }

@@ -1,7 +1,5 @@
-import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/enums/token_decimals.dart';
 import 'package:aomlah/core/models/wallet.dart';
-import 'package:aomlah/ui/views/wallet/uni_wallet_info_view.dart';
 import 'package:ecdsa/ecdsa.dart';
 import 'package:elliptic/elliptic.dart';
 
