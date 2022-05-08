@@ -1,13 +1,12 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/services/user_service.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../core/services/eth_wallet_managment_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FacucetsViewmodel extends BaseViewModel {
   final _walletService = locator<WalletManagmentService>();
-  final _ethWalletService = locator<EthWalletManagmentService>();
 
   final _userService = locator<UserService>();
 
@@ -15,7 +14,8 @@ class FacucetsViewmodel extends BaseViewModel {
     _walletService.fundMe(_userService.user.btcWallet!.address);
   }
 
-  void fundEth() {
-    _ethWalletService.fundMe(_userService.user.ethWallet!.address);
+  void fundEth() async {
+    await FlutterClipboard.copy(_userService.user.ethWallet?.address ?? "");
+    launchUrl(Uri.parse("https://rinkebyfaucet.com/"));
   }
 }

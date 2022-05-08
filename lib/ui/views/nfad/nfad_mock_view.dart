@@ -73,6 +73,7 @@ class NfadMocView extends StatelessWidget {
                 ),
                 Container(height: 20),
                 TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 15, horizontal: 10),

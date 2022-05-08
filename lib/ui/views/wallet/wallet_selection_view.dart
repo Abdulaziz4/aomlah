@@ -21,7 +21,7 @@ class WalletSelectionView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.black1dp,
-        title: Text('wallet',
+        title: Text('محفظتك',
             style: TextStyle(
                 color: Constants.darkBlue, fontWeight: FontWeight.bold)),
         centerTitle: true,
