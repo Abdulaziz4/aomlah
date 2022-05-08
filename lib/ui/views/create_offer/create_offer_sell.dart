@@ -188,21 +188,21 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                     cryptoAmount = double.parse(value!);
                   },
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'الكمية في رصيدك ' +
-                          balance.toStringAsFixed(5) +
-                          (cListVal ?? ""),
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'الكمية في محفظتك ' +
+                            walletBTC.balanceBTC(user.debt).toStringAsFixed(7) +
+                            "BTC",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
                 ///min trade amount
@@ -280,11 +280,6 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                             width: 15,
                           ),
                           bankItems(viewmodel, context),
-                          // Expanded(
-                          //     child: BankAccountItem(
-                          //         bankName: viewmodel.bankAccount?.bankName)),
-                          // Expanded(child: BankAccountItem(bankName: "البلاد")),
-                          // Expanded(child: BankAccountItem(bankName: "الرياض")),
                         ],
                       ),
                     ],
@@ -319,8 +314,11 @@ class _CreateOfferSellState extends State<CreateOfferSell>
 
                 ///Submit Form
                 Container(
-                  color: Constants.primaryColor,
                   margin: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Constants.primaryColor,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -339,10 +337,9 @@ class _CreateOfferSellState extends State<CreateOfferSell>
                                 minTrade!,
                                 _termsController.text);
                           },
-                          child: Text(
-                            'إنشاء',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          child: Text('إنشاء',
+                              style: Constants.mediumText
+                                  .copyWith(color: Colors.white)),
                         ),
                       )
                     ],
@@ -379,11 +376,12 @@ class _CreateOfferSellState extends State<CreateOfferSell>
       );
 
   Widget bankItems(CreateOfferViewModel viewmodel, context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Wrap(
       children: viewmodel.bankAccount
-          .map((e) =>
-              Flexible(flex: 1, child: BankAccountItem(bankName: e.bankName)))
+          .map((e) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BankAccountItem(bankName: e.bankName),
+              ))
           .toList(),
     );
   }

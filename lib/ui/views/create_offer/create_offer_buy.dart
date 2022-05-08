@@ -183,21 +183,21 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                     cryptoAmount = double.parse(value!);
                   },
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'الكمية في رصيدك ' +
-                          balance.toStringAsFixed(5) +
-                          (cListVal ?? ""),
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'الكمية في محفظتك ' +
+                            walletBTC.balanceBTC(user.debt).toStringAsFixed(7) +
+                            "BTC",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
                 ///min trade amount

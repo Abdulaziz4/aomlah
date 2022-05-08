@@ -28,8 +28,10 @@ class CreateOfferViewModel extends BaseViewModel {
       Routes.userBankAccountsView,
       arguments: UserBankAccountsViewArguments(allowSelection: true),
     );
-    bankAccount.add(bank as BankAccount);
-    notifyListeners();
+    if (bank != null) {
+      bankAccount.add(bank as BankAccount);
+      notifyListeners();
+    }
   }
 
   Future<void> submitBuyOffer(String cryptoType, String currencyType,

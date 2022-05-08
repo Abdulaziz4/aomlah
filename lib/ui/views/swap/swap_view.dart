@@ -420,6 +420,8 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                 dropdownValue2 = newValue!;
               }
               setExchangeRate(viewmodel);
+              _fromAmountController.clear();
+              _toAmountController.clear();
             });
           },
         ),
