@@ -23,6 +23,7 @@ class UserService {
 
   Future<void> initUser(String uuid) async {
     userController = BehaviorSubject<AomlahUser>();
+
     final userStream = _supabaseService.getUserStream(uuid);
 
     // Pipe user stream to the controller stream

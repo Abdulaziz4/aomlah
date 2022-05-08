@@ -70,7 +70,7 @@ abstract class AbstractSupabase {
     );
 
     if (orderKey != null) {
-      selected.order(orderKey);
+      selected.order(orderKey, ascending: true);
     }
 
     final response = await selected.execute();

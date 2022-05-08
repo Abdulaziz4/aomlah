@@ -165,6 +165,7 @@ class SupabaseService extends AbstractSupabase {
     mergedStream.asyncMap((event) {
       return _getOffers(query: {
         "is_online": true,
+        "is_closed": false,
       });
     }).listen((offers) {
       offersController.sink.add(offers);

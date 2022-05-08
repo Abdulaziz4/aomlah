@@ -25,7 +25,9 @@ class VerifyAccountViewModel extends BaseViewModel {
     final bool completed = await navService.navigateTo(Routes.nfadMocView);
 
     if (completed) {
-      sendVerificationRequest();
+      setBusy(true);
+      await sendVerificationRequest();
+      setBusy(false);
       navService.replaceWith(Routes.navigationView);
     }
   }
