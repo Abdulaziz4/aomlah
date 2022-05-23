@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import '../../../core/services/eth_wallet_managment_service.dart';
 
 class FacucetsViewmodel extends BaseViewModel {
-  final _walletService = locator<WalletManagmentService>();
+  final _walletService = locator<BtcWalletManagmentService>();
   final _ethWalletService = locator<EthWalletManagmentService>();
 
   final _userService = locator<UserService>();

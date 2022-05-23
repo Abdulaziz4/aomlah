@@ -14,10 +14,6 @@ class RealtimeEthWalletService {
 
   final _walletManager = locator<EthWalletManagmentService>();
 
-  static final token = APIKeys.blockcypherKeyEth;
-  static const baseSocketUrl = "wss://socket.blockcypher.com/v1/beth/test";
-  static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
-
   BehaviorSubject<EthRealTimeWallet> walletController =
       BehaviorSubject<EthRealTimeWallet>();
 
@@ -28,7 +24,7 @@ class RealtimeEthWalletService {
     final initialData = await _walletManager.getWalletInfo(address);
     walletController.sink.add(initialData);
 
-    Timer.periodic(Duration(seconds: 60), (timer) async {
+    Timer.periodic(Duration(seconds: 30), (timer) async {
       final initialData = await _walletManager.getWalletInfo(address);
       walletController.sink.add(initialData);
     });

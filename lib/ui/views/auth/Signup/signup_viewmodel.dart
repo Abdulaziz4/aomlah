@@ -16,6 +16,7 @@ class SignupViewModel extends BaseViewModel {
   String password = "";
 
   String? errorMessage;
+
   Future<void> submit() async {
     errorMessage = null;
     notifyListeners();

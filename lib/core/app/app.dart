@@ -67,7 +67,7 @@ import '../services/realtime_erc20_wallet_service.dart';
     MaterialRoute(page: TraderSellCoinView),
     MaterialRoute(page: WalletView),
     MaterialRoute(page: FaucetsView),
-    MaterialRoute(page: SettingsHome),
+    MaterialRoute(page: SettingsHomeView),
     MaterialRoute(page: UpdateProfileView),
     MaterialRoute(page: UserOffersView),
     MaterialRoute(page: UserBankAccountsView),
@@ -93,8 +93,10 @@ import '../services/realtime_erc20_wallet_service.dart';
   dependencies: [
     // Register all services and deps.
     LazySingleton<NavigationService>(classType: NavigationService),
-    LazySingleton<WalletManagmentService>(classType: WalletManagmentService),
-    LazySingleton<WalletManagmentService>(classType: EthWalletManagmentService),
+    LazySingleton<BtcWalletManagmentService>(
+        classType: BtcWalletManagmentService),
+    LazySingleton<BtcWalletManagmentService>(
+        classType: EthWalletManagmentService),
 
     LazySingleton<AuthService>(classType: AuthService),
     LazySingleton<UserService>(classType: UserService),

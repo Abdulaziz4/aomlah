@@ -20,7 +20,9 @@ class EthWalletManagmentService {
 
   static String token = APIKeys.blockcypherKeyEth;
   static const baseUrl = "https://api.blockcypher.com/v1/beth/test";
-  static final baseUrlWeb3 = dotenv.env['WEB3_API_URL'] ?? "";
+  static final baseUrlWeb3 =
+      // "http://10.0.2.2:8080/api/v1/web3";
+      dotenv.env['WEB3_API_URL'] ?? "";
   Future<dynamic> sendRequest({
     required String path,
     required HttpVreb req,

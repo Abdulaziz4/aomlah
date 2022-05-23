@@ -46,6 +46,7 @@ dependencies:
   elliptic: ^0.3.5
   chat_bubbles: ^1.2.0
   flutter_dotenv: ^5.0.2
+  dcdg: ^4.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

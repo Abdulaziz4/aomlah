@@ -210,7 +210,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                       ),
                                     ),
-                                    buildDropdown(dropdownValue, viewmodel),
+                                    buildDropdown(dropdownValue, viewmodel, 1),
                                   ],
                                 ),
                                 Row(
@@ -291,7 +291,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                                         },
                                       ),
                                     ),
-                                    buildDropdown(dropdownValue2, viewmodel),
+                                    buildDropdown(dropdownValue2, viewmodel, 2),
                                   ],
                                 ),
                                 Row(
@@ -373,13 +373,14 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
         });
   }
 
-  Widget buildDropdown(String s, SwapCryptocurrencyViewModel viewmodel) {
+  Widget buildDropdown(
+      String s, SwapCryptocurrencyViewModel viewmodel, int type) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      padding: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         color: Constants.black4dp,
         boxShadow: Constants.shadow,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
       ),
       margin: EdgeInsets.symmetric(horizontal: 15),
       child: DropdownButtonHideUnderline(
@@ -394,7 +395,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                 children: [
                   Text(
                     items,
-                    style: Constants.smallText.copyWith(color: Colors.white),
+                    style: Constants.largeText.copyWith(color: Colors.white),
                   ),
                   SizedBox(
                     width: 6,
@@ -412,13 +413,14 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
               ),
             );
           }).toList(),
+          hint: Text('select'),
           onChanged: (String? newValue) {
             setState(() {
-              if (s == dropdownValue && newValue != dropdownValue2) {
+              if (type == 1 &&
+                  (newValue != dropdownValue2 || newValue == 'أختر'))
                 dropdownValue = newValue!;
-              } else if (newValue != dropdownValue) {
+              else if (newValue != dropdownValue || newValue == 'أختر')
                 dropdownValue2 = newValue!;
-              }
               setExchangeRate(viewmodel);
             });
           },

@@ -14,7 +14,7 @@ import 'package:aomlah/core/services/wallet_managment_service.dart';
 class RealtimeBtcWalletService {
   final _logger = getLogger("RealtimeWalletService");
 
-  final _walletManager = locator<WalletManagmentService>();
+  final _walletManager = locator<BtcWalletManagmentService>();
 
   static String token = APIKeys.blockcypherKey;
   static const baseSocketUrl = "wss://socket.blockcypher.com/v1/bcy/test";

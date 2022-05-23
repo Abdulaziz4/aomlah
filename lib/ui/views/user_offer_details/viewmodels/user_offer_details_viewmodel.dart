@@ -6,12 +6,15 @@ import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../../core/app/app.router.dart';
+
 class UserOffersDetailsViewModel extends StreamViewModel<List<Offer>> {
   final _logger = getLogger("UserOffersDetailsViewModel");
 
   final _supabaseService = locator<SupabaseService>();
   final _offerService = locator<OffersService>();
   final _snackBarService = locator<SnackbarService>();
+  final _navigationService = locator<NavigationService>();
 
   late Offer offer;
   UserOffersDetailsViewModel(this.offer);
@@ -29,6 +32,14 @@ class UserOffersDetailsViewModel extends StreamViewModel<List<Offer>> {
       );
     } finally {
       setBusy(false);
+    }
+  }
+
+  Future<void> editOffer() async {
+    if (offer.isBuy) {
+      _navigationService.navigateTo(Routes.editBuyOffer, arguments: offer);
+    } else {
+      _navigationService.navigateTo(Routes.editSellOffer, arguments: offer);
     }
   }
 

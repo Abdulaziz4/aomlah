@@ -13,12 +13,13 @@ import '../../../core/services/wallet_managment_service.dart';
 
 class WithdrawViewModel extends BaseViewModel {
   final navService = locator<NavigationService>();
-  final walletService = locator<WalletManagmentService>();
+  final walletService = locator<BtcWalletManagmentService>();
   final ethWalletService = locator<EthWalletManagmentService>();
   final erc20WalletService = locator<Erc20WalletManagmentService>();
   final userService = locator<UserService>();
 
-  Future<void> sendTran(String to, int amount, CryptoTypes types) async {
+  Future<void> sendRawTransaction(
+      String to, int amount, CryptoTypes types) async {
     setBusy(true);
     String userAddress;
     if (types == CryptoTypes.bitcoin) {

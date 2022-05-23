@@ -47,7 +47,7 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                         child: Row(
                           children: <Widget>[
                             CustomButton(
-                              onPressed: () {},
+                              onPressed: viewmodel.editOffer,
                               text: 'تعديل',
                               color: Color(0xFF7BB9FA),
                               height: 37,
