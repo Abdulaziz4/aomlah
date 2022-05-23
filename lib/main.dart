@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider<BtcRealTimeWallet>(
           create: (_) =>
-              locator<RealtimeWalletService>().walletController.stream,
+              locator<RealtimeBtcWalletService>().walletController.stream,
           initialData: BtcRealTimeWallet.dummy(),
         ),
         StreamProvider<EthRealTimeWallet>(

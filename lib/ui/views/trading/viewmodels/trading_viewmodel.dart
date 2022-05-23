@@ -13,7 +13,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class TradingViewmodel extends StreamViewModel<Trade> {
-  final _logger = getLogger("MerchantSellCoinViewModel");
+  final _logger = getLogger("TradingViewmodel");
 
   final _navService = locator<NavigationService>();
   final _userService = locator<UserService>();

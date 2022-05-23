@@ -14,18 +14,18 @@ class VerifyAccountViewModel extends BaseViewModel {
     navService.navigateTo(Routes.navigationView);
   }
 
-  void verifyUser() async {
+  Future<void> sendVerificationRequest() async {
     await _supabaseService.verifyUser(
       uuid: _userService.user.profileId,
       isVerified: true,
     );
   }
 
-  void navigateToNfad() async {
+  Future<void> tryVerifyUser() async {
     final bool completed = await navService.navigateTo(Routes.nfadMocView);
 
     if (completed) {
-      verifyUser();
+      sendVerificationRequest();
       navService.replaceWith(Routes.navigationView);
     }
   }

@@ -14,13 +14,16 @@ class AddBankAccountView extends StatefulWidget {
 
 class _AddBankAccountViewState extends State<AddBankAccountView> {
   final bankList = [
-    'بنك الاهلي',
-    'بنك الراجحي',
-    'بنك ساب',
+    'البنك الاهلي التجاري',
     'بنك الرياض',
-    'بنك الإنماء',
     'بنك البلاد',
-    'البنك السعودي للإستثمار'
+    'بنك الراجحي',
+    'بنك الجزيرة',
+    'البنك السعودي للإستثمار',
+    'البنك السعودي البريطاني',
+    'البنك السعودي الهولندي',
+    'البنك السعودي الفرنسي',
+    'البنك العربي الوطني',
   ];
 
   @override
@@ -83,7 +86,7 @@ class _AddBankAccountViewState extends State<AddBankAccountView> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
-                          onPressed: viewmodel.submit,
+                          onPressed: viewmodel.trySubmit,
                           child: Text("إضافة الحساب"),
                           style:
                               ElevatedButton.styleFrom(onPrimary: Colors.white),

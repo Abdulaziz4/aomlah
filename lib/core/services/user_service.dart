@@ -15,7 +15,7 @@ class UserService {
   final _logger = getLogger("UserService");
 
   final _supabaseService = locator<SupabaseService>();
-  final _realtimeWalletService = locator<RealtimeWalletService>();
+  final _realtimeWalletService = locator<RealtimeBtcWalletService>();
   final _realtimeEthWalletService = locator<RealtimeEthWalletService>();
   final _realtimeErc20WalletService = locator<ERC20RealtimeWalletService>();
 
@@ -28,13 +28,15 @@ class UserService {
     // Pipe user stream to the controller stream
     userStream.listen(userController.sink.add);
 
-    // Wait until first event arrived before ending
+    // Wait until first event arrival before ending
     user = await userController.stream.first;
 
     userController.sink.add(user);
     userController.stream.listen((newUser) {
       user = newUser;
+      _realtimeWalletService.updateWallet(user.btcWallet?.address ?? "");
     });
+
     await _realtimeWalletService.connectWallet(
       uuid,
       user.btcWallet?.address ?? "",

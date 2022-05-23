@@ -6,7 +6,6 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:aomlah/core/services/swap_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -24,6 +23,7 @@ import '../services/realtime_erc20_wallet_service.dart';
 import '../services/realtime_eth_wallet_service.dart';
 import '../services/realtime_wallet_service.dart';
 import '../services/supabase_service.dart';
+import '../services/swap_service.dart';
 import '../services/trading_service.dart';
 import '../services/user_service.dart';
 import '../services/wallet_managment_service.dart';
@@ -45,14 +45,14 @@ Future setupLocator(
   locator.registerLazySingleton(() => BtcPriceService());
   locator.registerLazySingleton(() => EthPriceService());
   locator.registerLazySingleton(() => CryptoInfoService());
-  locator.registerLazySingleton(() => RealtimeWalletService());
+  locator.registerLazySingleton(() => RealtimeBtcWalletService());
   locator.registerLazySingleton(() => RealtimeEthWalletService());
   locator.registerLazySingleton(() => ERC20RealtimeWalletService());
-  locator.registerLazySingleton(() => SwapService());
   locator.registerLazySingleton(() => CandlesService());
   locator.registerLazySingleton(() => TradingService());
   locator.registerLazySingleton(() => OffersService());
   locator.registerLazySingleton(() => SnackbarService());
+  locator.registerLazySingleton(() => SwapService());
   locator.registerLazySingleton(() => PredictionService());
   locator.registerLazySingleton(() => Erc20WalletManagmentService());
   final supabaseService = await SupabaseService.getInstance();

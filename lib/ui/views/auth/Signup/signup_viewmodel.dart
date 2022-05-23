@@ -25,7 +25,10 @@ class SignupViewModel extends BaseViewModel {
       return;
     }
     formKey.currentState!.save();
+    await signup();
+  }
 
+  Future<void> signup() async {
     try {
       setBusy(true);
 

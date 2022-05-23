@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../core/app/utils/constants.dart';
 import '../../../core/enums/crypto_types.dart';
-import '../../../core/models/btc_real_time_wallet.dart';
 import '../../../core/models/realtime_wallet.dart';
 import 'common/conversion_button.dart';
 import 'common/wallet_container.dart';

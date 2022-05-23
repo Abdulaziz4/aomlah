@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aomlah/core/enums/token_decimals.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/usdt_real_time_wallet.dart';
 import 'package:aomlah/ui/views/wallet/common/wallet_button.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_viewmodel.dart';
@@ -35,6 +36,8 @@ class WalletSelectionViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AomlahUser>(context);
+
     final walletBTC = Provider.of<BtcRealTimeWallet>(context);
     final walletEth = Provider.of<EthRealTimeWallet>(context);
     final walletUsdt = Provider.of<UsdtRealTimeWallet>(context);
@@ -53,8 +56,7 @@ class WalletSelectionViewBody extends StatelessWidget {
                       viewmodel.navigateToWalletBTC();
                     },
                     cryptoType: 'BTC',
-                    balance:
-                        (walletBTC.balance / 100000000.0).toStringAsFixed(6),
+                    balance: walletBTC.balanceBTC(user.debt).toStringAsFixed(5),
                     textStyle: TextStyle(color: Colors.white, fontSize: 18),
                     image: "assets/icons/btc.png",
                   ),

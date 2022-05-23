@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:aomlah/core/enums/token_addresses.dart';
 import 'package:aomlah/core/enums/token_decimals.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../core/app/app.locator.dart';
 import '../../../core/services/swap_service.dart';
@@ -10,6 +11,7 @@ import '../../../core/services/user_service.dart';
 class SwapCryptocurrencyViewModel extends BaseViewModel {
   final swapService = locator<SwapService>();
   final userService = locator<UserService>();
+  final snackbarService = locator<SnackbarService>();
 
   Future<double> getExchangeRate(
       String token1, String token2, double token1Amount) async {
@@ -66,22 +68,39 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> swapExactEthForToken(String token, double ethAmount) async {
+  Future<void> swapExactEthForToken(String token, double tokenAmount) async {
+    if (!userService.user.isVerified) {
+      snackbarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من تبديل العملات ",
+      );
+      return;
+    }
     setBusy(true);
     String private = userService.user.ethWallet!.privateKey;
     String tokenAddress = getTokenAddress(token);
-    double amountEth = ethAmount * pow(10, TokenDecimals.ethTokenDecimals);
+    double amountEth = tokenAmount * pow(10, TokenDecimals.ethTokenDecimals);
+
     await swapService.swapExactEthForToken(
         private: private, tokenAddress: tokenAddress, amountEth: amountEth);
     setBusy(false);
   }
 
   Future<void> swapExactTokensForETH(String token, double tokenAmount) async {
+    if (!userService.user.isVerified) {
+      snackbarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من تبديل العملات ",
+      );
+      return;
+    }
     setBusy(true);
     String private = userService.user.ethWallet!.privateKey;
     String tokenAddress = getTokenAddress(token);
     int tokenDecimal = getTokenDecimals(token);
+
     double amountToken = tokenAmount * pow(10, tokenDecimal);
+
     await swapService.swapExactTokensForETH(
         private: private, tokenAddress: tokenAddress, tokenAmount: amountToken);
     setBusy(false);
@@ -89,12 +108,21 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
 
   Future<void> swapExactTokensForTokens(
       String token0, String token1, double tokenAmount) async {
+    if (!userService.user.isVerified) {
+      snackbarService.showSnackbar(
+        title: "حسابك غير موثق",
+        message: "الرجاء توثيق حسابك لتتمكن من تبديل العملات ",
+      );
+      return;
+    }
     setBusy(true);
     String private = userService.user.ethWallet!.privateKey;
     String token0Address = getTokenAddress(token0);
     String token1Address = getTokenAddress(token1);
     int token0Decimal = getTokenDecimals(token0);
+
     double amountToken0 = tokenAmount * pow(10, token0Decimal);
+
     await swapService.swapExactTokensForTokens(
         private: private,
         token0address: token0Address,

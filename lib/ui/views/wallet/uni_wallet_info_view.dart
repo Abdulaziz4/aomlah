@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:aomlah/core/app/utils/currency_helper.dart';
 import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/models/realtime_wallet.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info.dart';

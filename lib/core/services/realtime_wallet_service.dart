@@ -11,7 +11,7 @@ import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/services/wallet_managment_service.dart';
 
-class RealtimeWalletService {
+class RealtimeBtcWalletService {
   final _logger = getLogger("RealtimeWalletService");
 
   final _walletManager = locator<BtcWalletManagmentService>();
@@ -46,6 +46,11 @@ class RealtimeWalletService {
         walletController.sink.add(updatedWallet);
       }
     });
+  }
+
+  Future<void> updateWallet(String address) async {
+    final initialData = await _walletManager.getWalletInfo(address);
+    walletController.sink.add(initialData);
   }
 
   Map<String, dynamic> connectionMessage(String uuid, String address) {

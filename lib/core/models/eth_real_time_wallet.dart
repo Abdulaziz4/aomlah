@@ -1,4 +1,3 @@
-import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/core/models/transactions.dart';
 import 'package:aomlah/core/models/realtime_wallet.dart';
 
@@ -17,9 +16,6 @@ class EthRealTimeWallet extends RealTimeWallet {
   }
   factory EthRealTimeWallet.fromJson(Map<String, dynamic> json) {
     List<Transaction> transaction = [];
-    // print(json['txs']);
-    // transaction =
-    //     (json["txs"] as List).map((e) => Transaction.fromJson(e)).toList();
 
     return EthRealTimeWallet(
       address: json['address'],

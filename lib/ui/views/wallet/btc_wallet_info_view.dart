@@ -1,3 +1,4 @@
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info.dart';
 import 'package:aomlah/ui/views/wallet/wallet_info_interface.dart';
@@ -24,11 +25,11 @@ class _BtcWalletInfoViewState extends WalletInfoInterface<BtcWalletInfoView> {
   @override
   WalletInfo getWalletInfo(BuildContext context) {
     final wallet = Provider.of<BtcRealTimeWallet>(context);
-    double walletBalance = convertToBTC(wallet.balance * 1.0);
+    final user = Provider.of<AomlahUser>(context);
+
+    double walletBalance = wallet.balanceBTC(user.debt);
     double realTimePrice = Provider.of<Bitcoin>(context).price;
-    double walletBalanceSAR = double.parse(
-        (convertToBTC(wallet.balance * realTimePrice) * 3.75)
-            .toStringAsFixed(2));
+    double walletBalanceSAR = wallet.balanceSR(realTimePrice, user.debt);
     return WalletInfo(
         wallet: wallet,
         cryptoType: "BTC",

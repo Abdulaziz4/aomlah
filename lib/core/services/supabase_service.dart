@@ -171,7 +171,7 @@ class SupabaseService extends AbstractSupabase {
     });
   }
 
-  Future<void> createOffer(Offer offer) async {
+  Future<void> createBuyOffer(Offer offer) async {
     await insert(AomlahTable.offers, offer.toJson());
   }
 

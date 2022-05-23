@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:aomlah/core/enums/crypto_types.dart';
 import 'package:aomlah/core/enums/token_decimals.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/usdt_real_time_wallet.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
@@ -13,7 +14,6 @@ import '../../../core/app/utils/constants.dart';
 import '../../../core/models/bat_real_time_wallet.dart';
 import '../../../core/models/eth_real_time_wallet.dart';
 import '../../../core/models/btc_real_time_wallet.dart';
-import '../../../core/models/realtime_wallet.dart';
 import '../../../core/models/uni_real_time_wallet.dart';
 import '../../shared/custom_input_field.dart';
 import '../../shared/custom_menu.dart';
@@ -34,6 +34,8 @@ class _WithdrawViewState extends State<WithdrawView> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AomlahUser>(context);
+
     cListVal ??= cryptoList.first;
     types ??= CryptoTypes.bitcoin;
 
@@ -46,7 +48,8 @@ class _WithdrawViewState extends State<WithdrawView> {
     walletBalanceText() {
       String cryptoBalance = '';
       if (types == CryptoTypes.bitcoin) {
-        cryptoBalance = getBalance(walletBTC.balance, 8) + ' $cListVal';
+        cryptoBalance =
+            getBalance(walletBTC.balanceBTC(user.debt), 8) + ' $cListVal';
       } else if (types == CryptoTypes.ethereum) {
         cryptoBalance =
             getBalance(walletEth.balance, TokenDecimals.ethTokenDecimals) +
@@ -169,7 +172,8 @@ class _WithdrawViewState extends State<WithdrawView> {
                           return 'أدخل المبلغ تحت رصيدك';
                         } else if (types == CryptoTypes.bitcoin &&
                             double.parse(value) >
-                                (walletBTC.balance / (pow(10, 8) * 1.0))) {
+                                (walletBTC.balanceBTC(user.debt) /
+                                    (pow(10, 8) * 1.0))) {
                           return 'أدخل المبلغ تحت رصيدك';
                         } else if (types == CryptoTypes.usdt &&
                             double.parse(value) >

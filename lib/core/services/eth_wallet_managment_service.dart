@@ -97,9 +97,7 @@ class EthWalletManagmentService {
     Uri url = Uri.parse("$baseUrlWeb3/address/$address/balance");
 
     final result = await http.get(url, headers: header);
-    print(result.body);
     var resultF = jsonDecode(result.body);
-    print(resultF);
     final wallet = EthRealTimeWallet.fromJson(resultF);
 
     return wallet;
@@ -107,7 +105,6 @@ class EthWalletManagmentService {
 
   Future<void> sendSignedTransaction(Map<String, dynamic> signedJson) async {
     _logger.i("sendSignedTransaction | signedJson=$signedJson");
-    print(signedJson);
     var encodedJson = jsonEncode(signedJson);
     Uri url = Uri.parse("$baseUrlWeb3/tx/send");
 

@@ -24,8 +24,8 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   double tokenAmount1 = 0;
   double tokenAmount2 = 0;
 
-  String dropdownValue = 'اختر';
-  String dropdownValue2 = 'اختر';
+  String dropdownValue = 'أختر';
+  String dropdownValue2 = 'أختر';
 
   String balance1 = '';
   String balance2 = '';
@@ -34,7 +34,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   final _toAmountController = TextEditingController();
 
   var items = [
-    'اختر',
+    'أختر',
     'ETH',
     'USDT',
     'UNI',
@@ -123,254 +123,249 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
                   title: Text(
                     'تبديل العملات',
                   ),
-                  centerTitle: true,
+                  automaticallyImplyLeading: false,
                 ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Constants.black2dp,
-                          boxShadow: Constants.shadow,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            /// FROM
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  'من',
-                                  style: Constants.largeText
-                                      .copyWith(color: Colors.white),
-                                ),
-                              ],
-                            ),
-
-                            /// FROM CONTAINER
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 10, top: 10, bottom: 5),
-                              decoration: BoxDecoration(
-                                color: Constants.black4dp,
-                                boxShadow: Constants.shadow,
-                                borderRadius: BorderRadius.circular(12),
+                body: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Constants.black2dp,
+                        boxShadow: Constants.shadow,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// FROM
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 15,
                               ),
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              child: Column(
-                                children: [
-                                  ///Selecting Menu
-                                  Row(
-                                    children: [
-                                      // Spacer(),
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.number,
+                              Text(
+                                'من',
+                                style: Constants.largeText
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
 
-                                          decoration: InputDecoration(
-                                              hintText: 'ادخل الكميه',
-                                              border: InputBorder.none),
-                                          // "1",
-                                          style: Constants.largeText
-                                              .copyWith(color: Colors.white),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'الرجاء إدخال الكمية الاجمالية';
-                                            } else if (double.parse(value) <=
-                                                0) {
-                                              return 'الرجاء ادخال كميه صحيحه';
-                                            } else if (checkBalance(
-                                                dropdownValue,
-                                                double.parse(value))) {
-                                              return 'الرجاء ادخال كميه تحت رصيدك';
+                          /// FROM CONTAINER
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 10, top: 10, bottom: 5),
+                            decoration: BoxDecoration(
+                              color: Constants.black3dp,
+                              boxShadow: Constants.shadow,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 5),
+                            child: Column(
+                              children: [
+                                ///Selecting Menu
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+
+                                        decoration: InputDecoration(
+                                            hintText: 'ادخل الكميه',
+                                            border: InputBorder.none),
+                                        // "1",
+                                        style: Constants.largeText
+                                            .copyWith(color: Colors.white),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'الرجاء إدخال الكمية الاجمالية';
+                                          } else if (double.parse(value) <= 0) {
+                                            return 'الرجاء ادخال كميه صحيحه';
+                                          } else if (checkBalance(dropdownValue,
+                                              double.parse(value))) {
+                                            return 'الرجاء ادخال كميه تحت رصيدك';
+                                          }
+                                          return null;
+                                        },
+                                        controller: _fromAmountController,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            if (_fromAmountController
+                                                .text.isNotEmpty) {
+                                              valueOneChanged(
+                                                  double.parse(value));
                                             }
-                                            return null;
-                                          },
-                                          controller: _fromAmountController,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              if (_fromAmountController
-                                                  .text.isNotEmpty) {
-                                                valueOneChanged(
-                                                    double.parse(value));
-                                              }
-                                              if (_fromAmountController
-                                                  .text.isEmpty) {
-                                                _toAmountController.text = '';
-                                              }
-                                            });
-                                          },
-                                          onSaved: (value) {
-                                            tokenAmount1 = double.parse(value!);
-                                          },
-                                        ),
+                                            if (_fromAmountController
+                                                .text.isEmpty) {
+                                              _toAmountController.text = '';
+                                            }
+                                          });
+                                        },
+                                        onSaved: (value) {
+                                          tokenAmount1 = double.parse(value!);
+                                        },
                                       ),
-                                      dropDown(dropdownValue, viewmodel),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        balance1,
-                                        style: Constants.smallText.copyWith(
-                                            color: Color(0xFFC6C6C6),
-                                            fontSize: 15),
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            /// TO
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 15,
+                                    ),
+                                    buildDropdown(dropdownValue, viewmodel, 1),
+                                  ],
                                 ),
-                                Text(
-                                  'إلى',
-                                  style: Constants.largeText
-                                      .copyWith(color: Colors.white),
+                                Row(
+                                  children: [
+                                    Text(
+                                      balance1,
+                                      style: Constants.smallText.copyWith(
+                                          color: Color(0xFFC6C6C6),
+                                          fontSize: 15),
+                                    ),
+                                    Spacer(),
+                                  ],
                                 ),
                               ],
                             ),
+                          ),
 
-                            /// TO CONTAINER
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 10, top: 10, bottom: 5),
-                              decoration: BoxDecoration(
-                                color: Constants.black4dp,
-                                boxShadow: Constants.shadow,
-                                borderRadius: BorderRadius.circular(12),
+                          /// TO
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 15,
                               ),
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                color: Constants.lighBlue,
-                                              )),
-                                          child: TextFormField(
-                                            keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
-                                                hintText: 'ادخل الكميه',
-                                                border: InputBorder.none),
-                                            style: Constants.largeText
-                                                .copyWith(color: Colors.white),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'الرجاء إدخال الكمية الاجمالية';
-                                              } else if (double.parse(value) <=
-                                                  0) {
-                                                return 'الرجاء ادخال كميه صحيحه';
-                                              }
-                                              return null;
-                                            },
-                                            controller: _toAmountController,
-                                            onChanged: (value) {
-                                              if (_toAmountController
-                                                  .text.isNotEmpty) {
-                                                valueTwoChanged(
-                                                    double.parse(value));
-                                              }
-                                              if (_toAmountController
-                                                  .text.isEmpty) {
-                                                _fromAmountController.text = '';
-                                              }
-                                            },
-                                            onSaved: (value) {
-                                              tokenAmount2 =
-                                                  double.parse(value!);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      dropDown(dropdownValue2, viewmodel),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        balance2,
-                                        style: Constants.smallText.copyWith(
-                                            color: Color(0xFFC6C6C6),
-                                            fontSize: 15),
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                ],
+                              Text(
+                                'إلى',
+                                style: Constants.largeText
+                                    .copyWith(color: Colors.white),
                               ),
+                            ],
+                          ),
+
+                          /// TO CONTAINER
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 10, top: 10, bottom: 5),
+                            decoration: BoxDecoration(
+                              color: Constants.black3dp,
+                              boxShadow: Constants.shadow,
+                              borderRadius: BorderRadius.circular(12),
                             ),
-
-                            /// TOKEN RATIO
-                            Row(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 5),
+                            child: Column(
                               children: [
-                                Spacer(),
-                                Text(
-                                  getRatioText(),
-                                  style: Constants.smallText
-                                      .copyWith(color: Color(0xFFC6C6C6)),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                            hintText: 'ادخل الكميه',
+                                            border: InputBorder.none),
+                                        style: Constants.largeText
+                                            .copyWith(color: Colors.white),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'الرجاء إدخال الكمية الاجمالية';
+                                          } else if (double.parse(value) <= 0) {
+                                            return 'الرجاء ادخال كميه صحيحه';
+                                          }
+                                          return null;
+                                        },
+                                        controller: _toAmountController,
+                                        onChanged: (value) {
+                                          if (_toAmountController
+                                              .text.isNotEmpty) {
+                                            valueTwoChanged(
+                                                double.parse(value));
+                                          }
+                                          if (_toAmountController
+                                              .text.isEmpty) {
+                                            _fromAmountController.text = '';
+                                          }
+                                        },
+                                        onSaved: (value) {
+                                          tokenAmount2 = double.parse(value!);
+                                        },
+                                      ),
+                                    ),
+                                    buildDropdown(dropdownValue2, viewmodel, 2),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 20,
+                                Row(
+                                  children: [
+                                    Text(
+                                      balance2,
+                                      style: Constants.smallText.copyWith(
+                                          color: Color(0xFFC6C6C6),
+                                          fontSize: 15),
+                                    ),
+                                    Spacer(),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
-                      /// INIT SWAP
-                      CustomButton(
-                        onPressed: () {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
-                          if (dropdownValue == '' || dropdownValue2 == '') {
-                            return;
-                          }
-                          _formKey.currentState?.save();
-                          if (dropdownValue == 'ETH') {
-                            viewmodel.swapExactEthForToken(
-                                dropdownValue2, tokenAmount1);
-                          } else if (dropdownValue2 == 'ETH') {
-                            viewmodel.swapExactTokensForETH(
-                                dropdownValue, tokenAmount1);
-                          } else {
-                            viewmodel.swapExactTokensForTokens(
-                                dropdownValue, dropdownValue2, tokenAmount1);
-                          }
-                        },
-                        text: 'تبديل',
-                        color: Constants.primaryColor,
-                        height: 38,
-                        width: 218,
+                          /// TOKEN RATIO
+                          Row(
+                            children: [
+                              Spacer(),
+                              Text(
+                                getRatioText(),
+                                style: Constants.smallText
+                                    .copyWith(color: Color(0xFFC6C6C6)),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+
+                          /// INIT SWAP
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomButton(
+                                  onPressed: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    if (dropdownValue == '' ||
+                                        dropdownValue2 == '') {
+                                      return;
+                                    }
+                                    _formKey.currentState?.save();
+
+                                    if (dropdownValue == 'ETH') {
+                                      viewmodel.swapExactEthForToken(
+                                          dropdownValue2, tokenAmount1);
+                                    } else if (dropdownValue2 == 'ETH') {
+                                      viewmodel.swapExactTokensForETH(
+                                          dropdownValue, tokenAmount1);
+                                    } else {
+                                      viewmodel.swapExactTokensForTokens(
+                                          dropdownValue,
+                                          dropdownValue2,
+                                          tokenAmount1);
+                                    }
+                                  },
+                                  text: 'تبديل',
+                                  color: Constants.primaryColor,
+                                  height: 38,
+                                  width: 218,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -378,7 +373,8 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
         });
   }
 
-  Widget dropDown(String dropDownValue, SwapCryptocurrencyViewModel viewmodel) {
+  Widget buildDropdown(
+      String s, SwapCryptocurrencyViewModel viewmodel, int type) {
     return Container(
       padding: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
@@ -390,7 +386,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           icon: const Icon(Icons.keyboard_arrow_down),
-          value: dropDownValue,
+          value: s,
           dropdownColor: Constants.black5dp,
           items: items.map((String items) {
             return DropdownMenuItem(
@@ -420,9 +416,11 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
           hint: Text('select'),
           onChanged: (String? newValue) {
             setState(() {
-              if (dropDownValue == dropdownValue && newValue != dropdownValue2)
+              if (type == 1 &&
+                  (newValue != dropdownValue2 || newValue == 'أختر'))
                 dropdownValue = newValue!;
-              else if (newValue != dropdownValue) dropdownValue2 = newValue!;
+              else if (newValue != dropdownValue || newValue == 'أختر')
+                dropdownValue2 = newValue!;
               setExchangeRate(viewmodel);
             });
           },
@@ -432,7 +430,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   void valueOneChanged(double tokenAmount1) {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       _toAmountController.text =
           (tokenAmount1 / tokenExchangeRate2).toStringAsFixed(5);
     }
@@ -444,7 +442,7 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   Future<void> setExchangeRate(SwapCryptocurrencyViewModel viewmodel) async {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       tokenExchangeRate1 =
           await viewmodel.getExchangeRate(dropdownValue, dropdownValue2, 1);
       tokenExchangeRate2 = 1 / tokenExchangeRate1;
@@ -455,10 +453,10 @@ class _SwapCryptocurrencyViewState extends State<SwapCryptocurrencyView> {
   }
 
   String getRatioText() {
-    if (dropdownValue != 'اختر' && dropdownValue2 != 'اختر') {
+    if (dropdownValue != 'أختر' && dropdownValue2 != 'أختر') {
       return "1$dropdownValue ≈ " +
           (1 / tokenExchangeRate2).toStringAsFixed(8) +
-          "$dropdownValue2 ";
+          " $dropdownValue2 ";
     } else {
       return '';
     }
