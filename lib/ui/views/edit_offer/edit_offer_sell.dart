@@ -40,11 +40,13 @@ class _EditSellOfferViewState extends State<EditSellOfferView> {
     }
     double realTimePrice;
     if (offer!.currencyType == 'ر.س') {
-      realTimePrice =
-          Provider.of<Bitcoin>(context).price * (offer!.margin / 100) * 3.75;
+      realTimePrice = double.parse(
+          (Provider.of<Bitcoin>(context).price * (margin / 100) * 3.75)
+              .toStringAsFixed(2));
     } else {
-      realTimePrice =
-          Provider.of<Bitcoin>(context).price * (offer!.margin / 100);
+      realTimePrice = double.parse(
+          (Provider.of<Bitcoin>(context).price * (margin / 100))
+              .toStringAsFixed(2));
     }
     return ViewModelBuilder<EditOfferViewModel>.reactive(viewModelBuilder: () {
       return EditOfferViewModel();

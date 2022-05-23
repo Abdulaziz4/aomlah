@@ -46,7 +46,6 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
     } else {
       realTimePrice = Provider.of<Bitcoin>(context).price * (margin / 100);
     }
-
     realTimePrice = double.parse(realTimePrice.toStringAsFixed(3));
 
     cListVal ??= cryptoList.first;
