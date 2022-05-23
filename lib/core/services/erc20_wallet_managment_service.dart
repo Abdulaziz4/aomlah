@@ -17,7 +17,9 @@ class Erc20WalletManagmentService {
     "Content-type": "application/json",
     "Accept": "application/json"
   };
-  static final baseUrl = dotenv.env['WEB3_API_URL'] ?? "";
+  static final baseUrl =
+      // "http://10.0.2.2:8080/api/v1/web3";
+      dotenv.env['WEB3_API_URL'] ?? "";
 
   Future<RealTimeWallet> getERC20WalletBalance(
       String address, String tokenAddress) async {

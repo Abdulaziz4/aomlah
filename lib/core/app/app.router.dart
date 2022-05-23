@@ -18,6 +18,8 @@ import '../../ui/views/chat/chat_view.dart';
 import '../../ui/views/create_dispute/create_dispute_view.dart';
 import '../../ui/views/create_offer/create_offer_view.dart';
 import '../../ui/views/crypto_info/crypto_info_view.dart';
+import '../../ui/views/edit_offer/edit_offer_buy.dart';
+import '../../ui/views/edit_offer/edit_offer_sell.dart';
 import '../../ui/views/faucets/faucets_view.dart';
 import '../../ui/views/navigation/navigation_view.dart';
 import '../../ui/views/nfad/nfad_mock_view.dart';
@@ -83,6 +85,8 @@ class Routes {
   static const String chatView = '/chat-view';
   static const String walletSelectionView = '/wallet-selection-view';
   static const String nfadMocView = '/nfad-moc-view';
+  static const String editBuyOffer = '/edit-buy-offer';
+  static const String editSellOffer = '/edit-sell-offer';
   static const all = <String>{
     startupView,
     navigationView,
@@ -117,6 +121,8 @@ class Routes {
     chatView,
     walletSelectionView,
     nfadMocView,
+    editBuyOffer,
+    editSellOffer,
   };
 }
 
@@ -137,7 +143,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.traderSellCoinView, page: TraderSellCoinView),
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.faucetsView, page: FaucetsView),
-    RouteDef(Routes.settingsHome, page: SettingsHome),
+    RouteDef(Routes.settingsHome, page: SettingsHomeView),
     RouteDef(Routes.updateProfileView, page: UpdateProfileView),
     RouteDef(Routes.userOffersView, page: UserOffersView),
     RouteDef(Routes.userBankAccountsView, page: UserBankAccountsView),
@@ -158,6 +164,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.chatView, page: ChatView),
     RouteDef(Routes.walletSelectionView, page: WalletSelectionView),
     RouteDef(Routes.nfadMocView, page: NfadMocView),
+    RouteDef(Routes.editBuyOffer, page: EditBuyOfferView),
+    RouteDef(Routes.editSellOffer, page: EditSellOfferView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -250,9 +258,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    SettingsHome: (data) {
+    SettingsHomeView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const SettingsHome(),
+        builder: (context) => const SettingsHomeView(),
         settings: data,
       );
     },
@@ -399,6 +407,18 @@ class StackedRouter extends RouterBase {
     NfadMocView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const NfadMocView(),
+        settings: data,
+      );
+    },
+    EditBuyOfferView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const EditBuyOfferView(),
+        settings: data,
+      );
+    },
+    EditSellOfferView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const EditSellOfferView(),
         settings: data,
       );
     },

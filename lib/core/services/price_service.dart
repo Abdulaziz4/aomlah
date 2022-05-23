@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 import 'package:aomlah/core/app/api_keys.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/crypto_types.dart';

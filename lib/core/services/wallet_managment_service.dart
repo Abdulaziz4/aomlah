@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../enums/http_verbs.dart';
 
-class WalletManagmentService {
+class BtcWalletManagmentService {
   final _logger = getLogger("WalletManagmentService");
 
   static String token = APIKeys.blockcypherKey;
@@ -65,7 +65,7 @@ class WalletManagmentService {
   Future<UnconfirmedTransaction> sendTransaction(
     String from,
     String to,
-    int satAmount,
+    int amount,
   ) async {
     _logger.i("transaction | to=$to");
     Uri url = Uri.parse("$baseUrl/txs/new");
@@ -78,7 +78,7 @@ class WalletManagmentService {
       "outputs": [
         {
           "addresses": [to],
-          "value": satAmount
+          "value": amount
         }
       ]
     };

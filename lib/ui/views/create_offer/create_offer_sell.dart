@@ -350,7 +350,7 @@ class _CreateOfferSellState extends State<CreateOfferSell>
   Widget bankItems(CreateOfferViewModel viewmodel, context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: viewmodel.bankAccount
+      children: viewmodel.bankAccounts
           .map((e) =>
               Flexible(flex: 1, child: BankAccountItem(bankName: e.bankName)))
           .toList(),

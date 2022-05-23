@@ -19,7 +19,7 @@ class AuthService {
   // final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
 
-  final _walletService = locator<WalletManagmentService>();
+  final _walletService = locator<BtcWalletManagmentService>();
   final _ethWalletService = locator<EthWalletManagmentService>();
 
   final GoTrueClient _supabaseAuth = Supabase.instance.client.auth;

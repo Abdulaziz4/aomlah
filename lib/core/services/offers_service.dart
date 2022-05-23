@@ -14,17 +14,13 @@ class OffersService {
     if (numOfDisputedTrades != 0) {
       throw Exception("لاتستطلع إغلاق عرض ولازال هناك نزاع على تداول");
     }
-
     int numOfOpenTrades = await _supabaseService.getNumOfOpenTrades(
       offer.offerID,
     );
-
     if (numOfOpenTrades != 0) {
       throw Exception("لاتستطلع إغلاق عرض ولازال هناك تداولات غير مكتملة");
     }
-
     await _supabaseService.closeOffer(offerId: offer.offerID);
-
     if (!offer.isBuyMarchent) {
       // deduct the remaining offer from debt
       await _supabaseService.updateUserDebt(

@@ -13,7 +13,7 @@ class CreateOfferViewModel extends BaseViewModel {
   final UserService userService = locator<UserService>();
   final supabaseService = locator<SupabaseService>();
   final navService = locator<NavigationService>();
-  List<BankAccount> bankAccount = List.empty(growable: true);
+  List<BankAccount> bankAccounts = List.empty(growable: true);
   int counter = 0;
 
   navigatesToBankAccounts() {
@@ -26,7 +26,7 @@ class CreateOfferViewModel extends BaseViewModel {
       Routes.userBankAccountsView,
       arguments: UserBankAccountsViewArguments(allowSelection: true),
     );
-    bankAccount.add(bank as BankAccount);
+    bankAccounts.add(bank as BankAccount);
     counter++;
     notifyListeners();
   }
@@ -71,8 +71,8 @@ class CreateOfferViewModel extends BaseViewModel {
               totalQuantity: cryptoAmount,
               minTrade: minTrade,
               terms: terms,
-              bankAccounts: bankAccount),
-          bankAccount);
+              bankAccounts: bankAccounts),
+          bankAccounts);
       setBusy(false);
       navService.back();
     } catch (e) {

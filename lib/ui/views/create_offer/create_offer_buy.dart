@@ -267,18 +267,18 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
   }
 
   DropdownButton menuCurrencyButton() => DropdownButton(
-        items: currencyList.map(buildCryptoItems).toList(),
+        items: currencyList.map(buildItems).toList(),
         onChanged: (value) => setState(() => currListVal = value as String?),
         value: currListVal,
       );
 
   DropdownButton menuCryptoButton() => DropdownButton(
-        items: cryptoList.map(buildCryptoItems).toList(),
+        items: cryptoList.map(buildItems).toList(),
         onChanged: (value) => setState(() => cListVal = value as String?),
         value: cListVal,
       );
 
-  DropdownMenuItem<String> buildCryptoItems(String item) => DropdownMenuItem(
+  DropdownMenuItem<String> buildItems(String item) => DropdownMenuItem(
         value: item,
         child: Text(
           item,

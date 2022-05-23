@@ -99,7 +99,8 @@ class _WithdrawViewState extends State<WithdrawView> {
                       }
                       _formKey.currentState?.save();
                       int amount = (cryptoAmount!).round();
-                      viewmodel.sendTran(walletAddress!, amount, types!);
+                      viewmodel.sendRawTransaction(
+                          walletAddress!, amount, types!);
                     },
                     child: Text(
                       'تحويل',

@@ -12,15 +12,17 @@ class SwapService {
     "Content-type": "application/json",
     "Accept": "application/json"
   };
-  static final baseUrl = dotenv.env['WEB3_API_URL'] ?? "";
+  static final baseUrl =
+      // "http://10.0.2.2:8080/api/v1/web3";
+      dotenv.env['WEB3_API_URL'] ?? "";
 
   Future<Map<String, dynamic>> getExchangeRate(
       {required String private,
       required String tokenAddress1,
       required String tokenAddress2,
       required double amountToken1}) async {
-    _logger.i(
-        "getExchangeRate | args: tokenAddress1=$tokenAddress1 , tokenAddress2=$tokenAddress2 , amountToken1=$amountToken1");
+    _logger.i("getExchangeRate | args: tokenAddress1=$tokenAddress1 "
+        ", tokenAddress2=$tokenAddress2 , amountToken1=$amountToken1");
     Uri url = Uri.parse("$baseUrl/pairrate");
     Map<String, dynamic> body = {
       "private": private,
@@ -44,7 +46,6 @@ class SwapService {
       required double amountEth}) async {
     _logger.i(
         "swapExactEthForToken | args: tokenAddress=$tokenAddress , amountEth=$amountEth ");
-
     Uri url = Uri.parse("$baseUrl/swap/ethtoken");
     Map<String, dynamic> body = {
       "private": private,
@@ -52,7 +53,6 @@ class SwapService {
       "amount_eth": amountEth.toStringAsFixed(0),
     };
     var encodedBody = jsonEncode(body);
-
     await http.post(url, body: encodedBody, headers: header);
   }
 
@@ -62,7 +62,6 @@ class SwapService {
       required double tokenAmount}) async {
     _logger.i(
         "swapExactTokensForETH | args: tokenAddress=$tokenAddress , tokenAmount=$tokenAmount ");
-
     Uri url = Uri.parse("$baseUrl/swap/tokeneth");
     Map<String, dynamic> body = {
       "private": private,
@@ -70,7 +69,6 @@ class SwapService {
       "amount_token": tokenAmount.toStringAsFixed(0),
     };
     var encodedBody = jsonEncode(body);
-
     await http.post(url, body: encodedBody, headers: header);
   }
 
@@ -79,9 +77,8 @@ class SwapService {
       required String token0address,
       required String token1address,
       required double amountToken0}) async {
-    _logger.i(
-        "swapExactTokensForTokens | args: token0address=$token0address , token1address=$token1address , amountToken0=$amountToken0 ");
-
+    _logger.i("swapExactTokensForTokens | args: token0address=$token0address "
+        ", token1address=$token1address , amountToken0=$amountToken0 ");
     Uri url = Uri.parse("$baseUrl/swap/token");
     Map<String, dynamic> body = {
       "private": private,

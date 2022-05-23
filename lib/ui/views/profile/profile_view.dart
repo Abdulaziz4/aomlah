@@ -12,7 +12,6 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AomlahUser>(context);
-
     return ViewModelBuilder<ProfileViewModel>.reactive(
         viewModelBuilder: () => ProfileViewModel(),
         builder: (context, viewmodel, _) {

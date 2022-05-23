@@ -13,7 +13,7 @@ class TradingService {
 
   final _supabaseService = locator<SupabaseService>();
   final _userService = locator<UserService>();
-  final _walletManService = locator<WalletManagmentService>();
+  final _walletManService = locator<BtcWalletManagmentService>();
 
   Future<Trade> createTrade(Trade trade) async {
     _logger.i("createTrade");

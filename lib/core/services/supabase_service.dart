@@ -194,6 +194,34 @@ class SupabaseService extends AbstractSupabase {
     );
   }
 
+  Future<void> updateBuyOffer(
+      {required String offerID,
+      required double margin,
+      required double minTrade,
+      required String terms}) async {
+    await update(
+        AomlahTable.offers,
+        {"margin": margin, "min_trade": minTrade, "terms": terms},
+        {"offer_id": offerID});
+  }
+
+  Future<void> updateSellOffer(
+      {required String offerID,
+      required double margin,
+      required double minTrade,
+      required List<BankAccount> bankAccounts,
+      required String terms}) async {
+    await update(
+        AomlahTable.offers,
+        {"margin": margin, "min_trade": minTrade, "terms": terms},
+        {"offer_id": offerID});
+    await delete(AomlahTable.offer_bankaccounts, {"offer_id": offerID});
+    for (var i in bankAccounts) {
+      await insert(AomlahTable.offer_bankaccounts,
+          {"offer_id": offerID, "iban": i.iban});
+    }
+  }
+
   Future<void> closeOffer({
     required String offerId,
   }) async {

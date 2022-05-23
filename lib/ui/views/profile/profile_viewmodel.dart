@@ -1,3 +1,4 @@
+import 'package:aomlah/core/models/realtime_wallet.dart';
 import 'package:aomlah/core/services/auth_service.dart';
 import 'package:aomlah/core/services/supabase_service.dart';
 import 'package:aomlah/core/services/user_service.dart';

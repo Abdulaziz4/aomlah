@@ -10,6 +10,7 @@ import '../../../core/services/user_service.dart';
 class SwapCryptocurrencyViewModel extends BaseViewModel {
   final swapService = locator<SwapService>();
   final userService = locator<UserService>();
+
   Future<double> getExchangeRate(
       String token1, String token2, double token1Amount) async {
     setBusy(true);
@@ -65,12 +66,11 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> swapExactEthForToken(String token, double tokenAmount) async {
+  Future<void> swapExactEthForToken(String token, double ethAmount) async {
     setBusy(true);
     String private = userService.user.ethWallet!.privateKey;
     String tokenAddress = getTokenAddress(token);
-    double amountEth = tokenAmount * pow(10, TokenDecimals.ethTokenDecimals);
-
+    double amountEth = ethAmount * pow(10, TokenDecimals.ethTokenDecimals);
     await swapService.swapExactEthForToken(
         private: private, tokenAddress: tokenAddress, amountEth: amountEth);
     setBusy(false);
@@ -81,9 +81,7 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     String private = userService.user.ethWallet!.privateKey;
     String tokenAddress = getTokenAddress(token);
     int tokenDecimal = getTokenDecimals(token);
-
     double amountToken = tokenAmount * pow(10, tokenDecimal);
-
     await swapService.swapExactTokensForETH(
         private: private, tokenAddress: tokenAddress, tokenAmount: amountToken);
     setBusy(false);
@@ -96,9 +94,7 @@ class SwapCryptocurrencyViewModel extends BaseViewModel {
     String token0Address = getTokenAddress(token0);
     String token1Address = getTokenAddress(token1);
     int token0Decimal = getTokenDecimals(token0);
-
     double amountToken0 = tokenAmount * pow(10, token0Decimal);
-
     await swapService.swapExactTokensForTokens(
         private: private,
         token0address: token0Address,

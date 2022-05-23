@@ -5,14 +5,14 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/app/utils/constants.dart';
 
-class SettingsHome extends StatefulWidget {
-  const SettingsHome({Key? key}) : super(key: key);
+class SettingsHomeView extends StatefulWidget {
+  const SettingsHomeView({Key? key}) : super(key: key);
 
   @override
-  State<SettingsHome> createState() => _SettingsHomeState();
+  State<SettingsHomeView> createState() => _SettingsHomeViewState();
 }
 
-class _SettingsHomeState extends State<SettingsHome> {
+class _SettingsHomeViewState extends State<SettingsHomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

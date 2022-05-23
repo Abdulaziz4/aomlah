@@ -41,7 +41,7 @@ class ERC20RealtimeWalletService {
         address, TokenAddresses.batTokenAddress);
     batWalletController.sink.add(initialBatData as BatRealTimeWallet);
 
-    Timer.periodic(Duration(seconds: 60), (timer) async {
+    Timer.periodic(Duration(seconds: 30), (timer) async {
       ///USDT REALTIME WALLET
       final initialUsdtData = await _walletManager.getERC20WalletBalance(
           address, TokenAddresses.usdtTokenAddress);

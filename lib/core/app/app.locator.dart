@@ -38,7 +38,7 @@ Future setupLocator(
 
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
-  locator.registerLazySingleton(() => WalletManagmentService());
+  locator.registerLazySingleton(() => BtcWalletManagmentService());
   locator.registerLazySingleton(() => EthWalletManagmentService());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => UserService());
