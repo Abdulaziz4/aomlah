@@ -267,12 +267,12 @@ class SupabaseService extends AbstractSupabase {
   }
 
   Future<void> deleteBankAccount(
-    BankAccount wallet,
+    BankAccount bankAccount,
   ) async {
     await delete(
       AomlahTable.bank_accounts,
       {
-        "iban": wallet.iban,
+        "iban": bankAccount.iban,
       },
     );
   }

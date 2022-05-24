@@ -11,8 +11,9 @@ class CryptoInfoService {
   final _logger = getLogger("CryptoInfoService");
 
   final apiKey = APIKeys.cryptoCompKey;
+  //TODO: change to fullmarketcap
   final baseUrl =
-      "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=99&tsym=USD";
+      "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=99&tsym=USD";
 
   BehaviorSubject<List<Coin>> cryptoStream = BehaviorSubject<List<Coin>>();
 

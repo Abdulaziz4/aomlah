@@ -43,6 +43,8 @@ void main() {
         final supabase = MockSupabaseService();
         when(() => supabase.createSellOffer(any(), any()))
             .thenAnswer((_) => Future.value());
+        when(() => supabase.updateUserDebt(any(), any()))
+            .thenAnswer((_) => Future.value());
         locator.registerSingleton<SupabaseService>(supabase);
 
         final viewmodel = CreateOfferViewModel();
