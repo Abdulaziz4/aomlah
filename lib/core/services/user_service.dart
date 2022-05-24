@@ -63,6 +63,7 @@ class UserService {
     _logger.i("fetchAndUpdateUser");
 
     final newUser = await _supabaseService.getUser(user.profileId);
+
     updateUser(newUser);
   }
 }

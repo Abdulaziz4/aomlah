@@ -19,6 +19,7 @@ class VerifyAccountViewModel extends BaseViewModel {
       uuid: _userService.user.profileId,
       isVerified: true,
     );
+    await _userService.fetchAndUpdateUser();
   }
 
   Future<void> tryVerifyUser() async {

@@ -3,6 +3,7 @@ import 'package:aomlah/core/models/offer.dart';
 import 'package:aomlah/ui/shared/bank_account_card.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_button.dart';
+import 'package:aomlah/ui/views/create_offer/create_offer_view.dart';
 import 'package:aomlah/ui/views/user_offer_details/viewmodels/user_offer_details_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,13 @@ class _SellingDetailsState extends State<OfferDetailsSection> {
                         child: Row(
                           children: <Widget>[
                             CustomButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => CreateOfferView(),
+                                  ),
+                                );
+                              },
                               text: 'تعديل',
                               color: Color(0xFF7BB9FA),
                               height: 37,

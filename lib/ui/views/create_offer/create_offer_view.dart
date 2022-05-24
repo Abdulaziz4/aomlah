@@ -11,26 +11,27 @@ class CreateOfferView extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Constants.black1dp,
-            title: Text(
-              'انشاء اعلان',
-              style: TextStyle(
-                  color: Constants.darkBlue, fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true,
-            bottom: TabBar(
-              tabs: const [
-                Tab(
-                  text: 'بيع',
-                ),
-                Tab(
-                  text: 'شراء',
-                )
-              ],
-            ),
+        appBar: AppBar(
+          backgroundColor: Constants.black1dp,
+          title: Text(
+            'انشاء اعلان',
+            style: TextStyle(
+                color: Constants.darkBlue, fontWeight: FontWeight.bold),
           ),
-          body: CreateOfferBody()),
+          centerTitle: true,
+          bottom: TabBar(
+            tabs: const [
+              Tab(
+                text: 'بيع',
+              ),
+              Tab(
+                text: 'شراء',
+              )
+            ],
+          ),
+        ),
+        body: CreateOfferBody(),
+      ),
     );
   }
 }
