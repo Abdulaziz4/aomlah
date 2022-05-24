@@ -12,6 +12,7 @@ class CustomInputField extends StatefulWidget {
   final bool obscure;
   final Widget? suffix;
   final TextInputType? keyboardType;
+  final EdgeInsetsGeometry? margin;
   const CustomInputField({
     Key? key,
     this.onSaved,
@@ -24,6 +25,7 @@ class CustomInputField extends StatefulWidget {
     this.obscure = false,
     this.suffix,
     this.keyboardType,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+      margin: widget.margin ?? EdgeInsets.fromLTRB(20, 0, 20, 15),
       padding: EdgeInsets.symmetric(vertical: 0),
       child: TextFormField(
         textDirection: TextDirection.rtl,

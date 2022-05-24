@@ -80,11 +80,12 @@ class ProfileView extends StatelessWidget {
                   leadingIcon: "assets/icons/BankAcc_profile.svg",
                   title: "الحسابات البنكية",
                 ),
-                NavigationListTile(
-                  onPress: viewmodel.navigateToDashboardInfo,
-                  leadingIcon: "assets/icons/ControlPannel_profile.svg",
-                  title: "لوحة التحكم",
-                ),
+                if (viewmodel.showAdmin())
+                  NavigationListTile(
+                    onPress: viewmodel.navigateToDashboardInfo,
+                    leadingIcon: "assets/icons/ControlPannel_profile.svg",
+                    title: "لوحة التحكم",
+                  ),
                 NavigationListTile(
                   onPress: viewmodel.navigateToSettings,
                   leadingIcon: "assets/icons/Settings_profile.svg",

@@ -57,4 +57,6 @@ class ProfileViewModel extends BaseViewModel {
   void navigateToTrades() {
     navService.navigateTo(Routes.userTradesView);
   }
+
+  bool showAdmin() => _userService.user.isAdmin;
 }

@@ -15,7 +15,7 @@ class VerifyAccountPromotionView extends StatelessWidget {
         builder: (context, viewmodel, _) {
           return Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: true,
+              automaticallyImplyLeading: false,
               elevation: 0,
             ),
             body: Container(
@@ -51,10 +51,10 @@ class VerifyAccountPromotionView extends StatelessWidget {
                         height: 50,
                       ),
                       Text(
-                        "لحماية مستخمين عملة الرجاء إكمال عملية التحقق من الهوية عن طريق النفاذ الوطني الموحد لتتمكن من إستخدام كافة مميزات عملة",
+                        "لحماية مستخدمين عملة الرجاء إكمال عملية التحقق من الهوية عن طريق النفاذ الوطني الموحد لتتمكن من إستخدام كافة مميزات عملة",
                         style: Constants.mediumText.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w100,
                         ),
                         textAlign: TextAlign.center,
                       ),

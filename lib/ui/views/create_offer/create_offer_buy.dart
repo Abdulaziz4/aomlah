@@ -1,5 +1,7 @@
 import 'package:aomlah/core/app/utils/constants.dart';
+import 'package:aomlah/core/models/aomlah_user.dart';
 import 'package:aomlah/core/models/bitcoin.dart';
+import 'package:aomlah/core/models/btc_real_time_wallet.dart';
 import 'package:aomlah/ui/shared/busy_overlay.dart';
 import 'package:aomlah/ui/shared/custom_card_title.dart';
 import 'package:aomlah/ui/shared/custom_menu.dart';
@@ -39,6 +41,9 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
   @override
   Widget build(BuildContext context) {
+    final walletBTC = Provider.of<BtcRealTimeWallet>(context);
+    final user = Provider.of<AomlahUser>(context);
+
     double realTimePrice;
     if (currListVal == 'ر.س') {
       realTimePrice =
@@ -51,6 +56,8 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
     cListVal ??= cryptoList.first;
     currListVal ??= currencyList.first;
+
+    final balance = walletBTC.balanceBTC(user.debt);
 
     return ViewModelBuilder<CreateOfferViewModel>.reactive(
         viewModelBuilder: () {
@@ -151,6 +158,7 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
 
                 ///Amount of Crypto text form
                 CustomInputField(
+                  margin: EdgeInsets.fromLTRB(20, 0, 20, 5),
                   hintText: 'ادخل الكمية الاجمالية',
                   suffix: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,6 +182,22 @@ class _CreateOfferBuyState extends State<CreateOfferBuy> {
                   onSaved: (value) {
                     cryptoAmount = double.parse(value!);
                   },
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'الكمية في رصيدك ' +
+                          balance.toStringAsFixed(5) +
+                          (cListVal ?? ""),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
 
                 ///min trade amount
