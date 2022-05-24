@@ -22,8 +22,8 @@ class _CreateDisputeViewState extends State<CreateDisputeView> {
 
   List<String> options = [
     "لا أريد إكمال العملية",
-    "أخذ وقت أطول من المتوقع",
-    "عدم الجدية",
+    "أخذ وقت أطول في الدفع من المتوقع",
+    "عدم  الجدية في الدفع",
     "أخرى",
   ];
 

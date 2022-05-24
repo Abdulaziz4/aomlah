@@ -421,12 +421,19 @@ class SupabaseService extends AbstractSupabase {
 
   Future<void> changeDisputeStatus({
     required String disputeId,
+    required String tradeId,
     required DisputeStatus status,
+    required TradeStatus tradeStatus,
   }) async {
     await update(AomlahTable.disputes, {
       "status": status.name,
     }, {
       "dispute_id": disputeId,
+    });
+    await update(AomlahTable.trades, {
+      "status": tradeStatus.name,
+    }, {
+      "trade_id": tradeId,
     });
   }
 

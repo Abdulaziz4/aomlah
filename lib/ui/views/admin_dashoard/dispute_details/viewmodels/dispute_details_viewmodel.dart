@@ -1,6 +1,7 @@
 import 'package:aomlah/core/app/app.locator.dart';
 import 'package:aomlah/core/app/logger.dart';
 import 'package:aomlah/core/enums/dispute_status.dart';
+import 'package:aomlah/core/enums/trade_status.dart';
 import 'package:aomlah/core/models/chat_message.dart';
 
 import 'package:aomlah/core/models/dispute.dart';
@@ -23,6 +24,8 @@ class DisputeDetailsViewModel extends StreamViewModel<List<Dispute>> {
     await _supabaseService.changeDisputeStatus(
       disputeId: dispute.disputeId,
       status: DisputeStatus.closed,
+      tradeId: dispute.trade!.tradeId,
+      tradeStatus: TradeStatus.completed,
     );
     setBusy(false);
   }

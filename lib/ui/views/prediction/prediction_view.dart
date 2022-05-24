@@ -32,7 +32,7 @@ class PredictionView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "سعر اغلاق اليوم المتوقع لعلمة",
+                          "سعر اغلاق اليوم المتوقع لعملة",
                           style: Constants.largeText,
                         ),
                         Text(
